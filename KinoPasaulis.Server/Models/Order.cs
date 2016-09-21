@@ -9,6 +9,7 @@ namespace KinoPasaulis.Server.Models
     {
         public int Id { get; set; }
         public ApplicationUser User { get; set; }
+        public Auditorium Auditorium { get; set; }
         public DateTime OrderDate { get; set; }
         public Show Show { get; set; }
 

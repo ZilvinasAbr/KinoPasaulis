@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
+using KinoPasaulis.Server.Repositories.Theather;
 using KinoPasaulis.Server.Services;
 
 namespace KinoPasaulis.Server
@@ -58,6 +59,8 @@ namespace KinoPasaulis.Server
 
             // Add application services.
             services.AddTransient<IApplicationService, ApplicationService>();
+            services.AddTransient<ITheatherService, TheatherService>();
+            services.AddTransient<IEventRepository, EventRepository>();
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();
         }

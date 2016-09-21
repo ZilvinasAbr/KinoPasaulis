@@ -11,6 +11,11 @@ namespace KinoPasaulis.Server.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Auditorium> Auditoriums { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Show> Shows { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

@@ -60,7 +60,11 @@ namespace KinoPasaulis.Server
             // Add application services.
             services.AddTransient<IApplicationService, ApplicationService>();
             services.AddTransient<ITheatherService, TheatherService>();
+
+            // Repositories
             services.AddTransient<IEventRepository, EventRepository>();
+            services.AddTransient<IAudtoriumRepository, AuditoriumRepository>();
+
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();
         }

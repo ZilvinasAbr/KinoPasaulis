@@ -11,10 +11,12 @@ namespace KinoPasaulis.Server.Services
     public class TheatherService : ITheatherService
     {
         private readonly IEventRepository _eventRepository;
+        private readonly IAudtoriumRepository _auditoriumRepository;
 
-        public TheatherService(IEventRepository eventRepository)
+        public TheatherService(IEventRepository eventRepository, IAudtoriumRepository auditoriumRepository)
         {
             _eventRepository = eventRepository;
+            _auditoriumRepository = auditoriumRepository;
         }
 
         public void AddNewEvent(EventCreation eventCreation)
@@ -60,6 +62,11 @@ namespace KinoPasaulis.Server.Services
             };
 
             _eventRepository.InsertEvent(Event);
+        }
+
+        public void AddNewAuditorium(Auditorium auditorium)
+        {
+            _auditoriumRepository.InsertAuditorium(auditorium);
         }
 
         private IEnumerable<DateTime> EachDay(DateTime thru, DateTime from)

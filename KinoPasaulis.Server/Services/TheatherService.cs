@@ -62,5 +62,15 @@ namespace KinoPasaulis.Server.Services
         {
             _auditoriumRepository.InsertAuditorium(auditorium);
         }
+
+        public IEnumerable<Event> GetAllEvents()
+        {
+            return _eventRepository.GetEvents();
+        }
+
+        public Event GetEventById(int id)
+        {
+            return _eventRepository.GetEventById(id);
+        }
     }
 }

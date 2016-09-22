@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Repositories.Theather
 {
@@ -24,12 +25,20 @@ namespace KinoPasaulis.Server.Repositories.Theather
 
         public Event GetEventById(int eventId)
         {
-            return _context.Events.Single(x => x.Id == eventId);
+            return _context.Events
+                .Include(x => x.Movie)
+                .Include(x => x.Shows)
+                .ThenInclude(x => x.Auditoriums)
+                .Single(x => x.Id == eventId);
         }
 
         public IEnumerable<Event> GetEvents()
         {
-            return _context.Events.ToList();
+            return _context.Events
+                .Include(x => x.Movie)
+                .Include(x => x.Shows)
+                .ThenInclude(x => x.Auditoriums)
+                .ToList();
         }
 
         public void InsertEvent(Event Event)

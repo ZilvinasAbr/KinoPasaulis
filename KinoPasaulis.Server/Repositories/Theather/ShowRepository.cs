@@ -7,41 +7,46 @@ using KinoPasaulis.Server.Models;
 
 namespace KinoPasaulis.Server.Repositories.Theather
 {
-    public class AuditoriumRepository : IAuditoriumRepository, IDisposable
+    public class ShowRepository : IShowRepository, IDisposable
     {
         private readonly ApplicationDbContext _context;
-        public AuditoriumRepository(ApplicationDbContext context)
+        public ShowRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-
-        public void DeleteAudtorium(int auditoriumId)
+        public void DeleteShow(int showId)
         {
-            var auditorium = _context.Auditoriums.SingleOrDefault(x => x.Id == auditoriumId);
-            if (auditorium == null) throw new ArgumentNullException(nameof(auditorium));
-            _context.Auditoriums.Remove(auditorium);
+            var show = _context.Shows.SingleOrDefault(x => x.Id == showId);
+            if (show == null) throw new ArgumentNullException(nameof(show));
+            _context.Shows.Remove(show);
             _context.SaveChanges();
         }
 
-        public Auditorium GetAuditoriumById(int auditoriumId)
+        public IEnumerable<Show> GetEvents()
         {
-            return _context.Auditoriums.SingleOrDefault(x => x.Id == auditoriumId);
+            return _context.Shows.ToList();
         }
 
-        public IEnumerable<Auditorium> GetAuditoriums()
+        public Show GetShowById(int showId)
         {
-            return _context.Auditoriums.ToList();
+            return _context.Shows.SingleOrDefault(x => x.Id == showId);
         }
 
-        public void InsertAuditorium(Auditorium auditorium)
+        public void InsertShow(Show show)
         {
-            _context.Auditoriums.Add(auditorium);
+            _context.Shows.Add(show);
             _context.SaveChanges();
         }
 
-        public void UpdateAuditorium(Auditorium auditorium)
+        public void InsertShows(List<Show> shows)
         {
-            _context.Auditoriums.Update(auditorium);
+            _context.Shows.AddRange(shows);
+            _context.SaveChanges();
+        }
+
+        public void UpdateShow(Show show)
+        {
+            _context.Update(show);
             _context.SaveChanges();
         }
 
@@ -65,13 +70,13 @@ namespace KinoPasaulis.Server.Repositories.Theather
         }
 
         // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~AuditoriumRepository() {
+        // ~ShowRepository() {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         //   Dispose(false);
         // }
 
         // This code added to correctly implement the disposable pattern.
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);

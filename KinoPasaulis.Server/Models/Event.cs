@@ -9,6 +9,11 @@ namespace KinoPasaulis.Server.Models
 {
     public class Event
     {
+        public Event()
+        {
+            Shows = new List<Show>();    
+        }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key, Column(Order = 0)]
         public int Id { get; set; }

@@ -4,7 +4,7 @@ using KinoPasaulis.Server.Models;
 
 namespace KinoPasaulis.Server.Repositories.Theather
 {
-    public interface IAudtoriumRepository : IDisposable
+    public interface IAuditoriumRepository : IDisposable
     {
         IEnumerable<Auditorium> GetAuditoriums();
         Auditorium GetAuditoriumById(int auditoriumId);

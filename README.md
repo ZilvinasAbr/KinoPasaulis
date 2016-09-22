@@ -8,6 +8,7 @@ How to run the project:
 <h1> 5. cd ../KinoPasaulis.Server && dotnet restore && dotnet run </h1
 <h1> 6. Celebrate! </h1
 
+<p> For migrations use these commands http://benjii.me/2016/05/dotnet-ef-migrations-for-asp-net-core/ </p>
 <p> Database file is located in this folder: </p>
 C:\%yourdir%\KinoPasaulis\KinoPasaulis.Server\bin\KinoPasaulis.Server\bin\Debug\netcoreapp1.0
 

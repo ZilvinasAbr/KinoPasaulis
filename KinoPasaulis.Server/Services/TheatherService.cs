@@ -10,11 +10,13 @@ namespace KinoPasaulis.Server.Services
     {
         private readonly IEventRepository _eventRepository;
         private readonly IAuditoriumRepository _auditoriumRepository;
+        private readonly IShowRepository _showRepository;
 
-        public TheatherService(IEventRepository eventRepository, IAuditoriumRepository auditoriumRepository)
+        public TheatherService(IEventRepository eventRepository, IAuditoriumRepository auditoriumRepository, IShowRepository showRepository)
         {
             _eventRepository = eventRepository;
             _auditoriumRepository = auditoriumRepository;
+            _showRepository = showRepository;
         }
 
         public void AddNewEvent(EventCreation eventCreation)
@@ -74,6 +76,11 @@ namespace KinoPasaulis.Server.Services
         public Event GetEventById(int id)
         {
             return _eventRepository.GetEventById(id);
+        }
+
+        public Show GetShowById(int id)
+        {
+            return _showRepository.GetShowById(id);
         }
     }
 }

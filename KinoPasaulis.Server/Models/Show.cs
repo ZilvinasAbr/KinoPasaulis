@@ -14,6 +14,7 @@ namespace KinoPasaulis.Server.Models
         public int Id { get; set; }
         public DateTime StartTime { get; set; }
         public Auditorium Auditorium { get; set; }
+        public Event Event { get; set; }
         public List<Order> Orders { get; set; }
     }
 }

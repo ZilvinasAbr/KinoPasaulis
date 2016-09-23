@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Repositories.Theather
 {
@@ -29,7 +31,10 @@ namespace KinoPasaulis.Server.Repositories.Theather
 
         public Show GetShowById(int showId)
         {
-            return _context.Shows.SingleOrDefault(x => x.Id == showId);
+            return _context.Shows
+                .Include(x => x.Event.Movie)
+                .Include(x => x.Auditorium)
+                .Single(x => x.Id == showId);
         }
 
         public void InsertShow(Show show)

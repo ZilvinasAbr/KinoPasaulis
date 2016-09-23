@@ -43,5 +43,11 @@ namespace KinoPasaulis.Server.Controllers.Api
         {
             return _theatherService.GetEventById(id);
         }
+
+        [HttpGet("getShow")]
+        public Show GetShowById(int id)
+        {
+            return _theatherService.GetShowById(id);
+        }
     }
 }

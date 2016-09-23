@@ -13,7 +13,7 @@ namespace KinoPasaulis.Server.Models
         [Key, Column(Order = 0)]
         public int Id { get; set; }
         public DateTime StartTime { get; set; }
-        public List<Auditorium> Auditoriums { get; set; }
+        public Auditorium Auditorium { get; set; }
         public List<Order> Orders { get; set; }
     }
 }

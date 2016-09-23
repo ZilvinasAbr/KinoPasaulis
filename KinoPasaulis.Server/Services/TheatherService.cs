@@ -37,13 +37,16 @@ namespace KinoPasaulis.Server.Services
                 {
                     var day = eventCreation.StartTime.AddDays(i);
                     var dateTime = day.Add(timeSpan);
-                    var show = new Show
+                    foreach (var auditorium in auditoriasList)
                     {
-                        Auditoriums = auditoriasList.ToList(),
-                        StartTime = dateTime
-                    };
+                        var show = new Show
+                        {
+                            Auditorium = auditorium,
+                            StartTime = dateTime
+                        };
 
-                    shows.Add(show);
+                        shows.Add(show);
+                    }
                 }
             }
 

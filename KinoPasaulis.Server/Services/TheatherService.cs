@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Repositories.Theather;
@@ -11,12 +9,14 @@ namespace KinoPasaulis.Server.Services
     public class TheatherService : ITheatherService
     {
         private readonly IEventRepository _eventRepository;
-        private readonly IAudtoriumRepository _auditoriumRepository;
+        private readonly IAuditoriumRepository _auditoriumRepository;
+        private readonly IShowRepository _showRepository;
 
-        public TheatherService(IEventRepository eventRepository, IAudtoriumRepository auditoriumRepository)
+        public TheatherService(IEventRepository eventRepository, IAuditoriumRepository auditoriumRepository, IShowRepository showRepository)
         {
             _eventRepository = eventRepository;
             _auditoriumRepository = auditoriumRepository;
+            _showRepository = showRepository;
         }
 
         public void AddNewEvent(EventCreation eventCreation)
@@ -25,31 +25,30 @@ namespace KinoPasaulis.Server.Services
             var addedMovie = new Movie {Title = "Suicide Squad"};
             var auditoriasList = new List<Auditorium>();
             foreach (var auditoriumId in eventCreation.AuditoriumIds)
-            {
-                // Get this from auditorium repo (get existing auditorium)
-                var auditorium = new Auditorium
-                {
-                    Seats = 150,
-                    Name = "Sale 1"
-                };
+            { 
+                var auditorium = _auditoriumRepository.GetAuditoriumById(auditoriumId);
 
                 auditoriasList.Add(auditorium);
             }
 
             var shows = new List<Show>();
-                 
-            foreach (DateTime day in EachDay(eventCreation.StartTime, eventCreation.EndTime))
+            var days = (eventCreation.EndTime - eventCreation.StartTime).TotalDays;
+            for (int i = 0; i < days; i++)
             {
                 foreach (var timeSpan in eventCreation.Times)
                 {
+                    var day = eventCreation.StartTime.AddDays(i);
                     var dateTime = day.Add(timeSpan);
-                    var show = new Show
+                    foreach (var auditorium in auditoriasList)
                     {
-                        Auditoriums = auditoriasList,
-                        StartTime = dateTime
-                    };
+                        var show = new Show
+                        {
+                            Auditorium = auditorium,
+                            StartTime = dateTime
+                        };
 
-                    shows.Add(show);
+                        shows.Add(show);
+                    }
                 }
             }
 
@@ -69,10 +68,19 @@ namespace KinoPasaulis.Server.Services
             _auditoriumRepository.InsertAuditorium(auditorium);
         }
 
-        private IEnumerable<DateTime> EachDay(DateTime thru, DateTime from)
+        public IEnumerable<Event> GetAllEvents()
         {
-            for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
-                yield return day;
+            return _eventRepository.GetEvents();
+        }
+
+        public Event GetEventById(int id)
+        {
+            return _eventRepository.GetEventById(id);
+        }
+
+        public Show GetShowById(int id)
+        {
+            return _showRepository.GetShowById(id);
         }
     }
 }

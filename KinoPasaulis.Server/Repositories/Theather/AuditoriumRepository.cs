@@ -7,7 +7,7 @@ using KinoPasaulis.Server.Models;
 
 namespace KinoPasaulis.Server.Repositories.Theather
 {
-    public class AuditoriumRepository : IAudtoriumRepository, IDisposable
+    public class AuditoriumRepository : IAuditoriumRepository, IDisposable
     {
         private readonly ApplicationDbContext _context;
         public AuditoriumRepository(ApplicationDbContext context)

@@ -1,64 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Repositories.Theather
 {
-    public class EventRepository : IEventRepository, IDisposable
+    public class ShowRepository : IShowRepository, IDisposable
     {
         private readonly ApplicationDbContext _context;
-        public EventRepository(ApplicationDbContext context)
+        public ShowRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-        public void DeleteEvent(int eventId)
+        public void DeleteShow(int showId)
         {
-            var Event = _context.Events.Single(x => x.Id == eventId);
-            if (Event == null) throw new ArgumentNullException(nameof(Event));
-
-            _context.Events.Remove(Event);
+            var show = _context.Shows.SingleOrDefault(x => x.Id == showId);
+            if (show == null) throw new ArgumentNullException(nameof(show));
+            _context.Shows.Remove(show);
             _context.SaveChanges();
         }
 
-        public Event GetEventById(int eventId)
+        public IEnumerable<Show> GetEvents()
         {
-            return _context.Events
-                .Include(x => x.Movie)
-                .Include(x => x.Shows)
-                .ThenInclude(x => x.Auditorium)
-                .Single(x => x.Id == eventId);
+            return _context.Shows.ToList();
         }
 
-        public IEnumerable<Event> GetEvents()
+        public Show GetShowById(int showId)
         {
-            return _context.Events
-                .Include(x => x.Movie)
-                .Include(x => x.Shows)
-                .ThenInclude(x => x.Auditorium)
-                .ToList();
+            return _context.Shows
+                .Include(x => x.Event.Movie)
+                .Include(x => x.Auditorium)
+                .Single(x => x.Id == showId);
         }
 
-        public void InsertEvent(Event Event)
+        public void InsertShow(Show show)
         {
-            _context.Events.Add(Event);
+            _context.Shows.Add(show);
             _context.SaveChanges();
         }
 
-        public void UpdateEvent(Event Event)
+        public void InsertShows(List<Show> shows)
         {
-            _context.Events.Update(Event);
+            _context.Shows.AddRange(shows);
+            _context.SaveChanges();
+        }
+
+        public void UpdateShow(Show show)
+        {
+            _context.Update(show);
             _context.SaveChanges();
         }
 
         #region IDisposable Support
-        private bool _disposedValue = false; // To detect redundant calls
+        private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
+            if (!disposedValue)
             {
                 if (disposing)
                 {
@@ -68,12 +70,12 @@ namespace KinoPasaulis.Server.Repositories.Theather
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
 
-                _disposedValue = true;
+                disposedValue = true;
             }
         }
 
         // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~EventRepository() {
+        // ~ShowRepository() {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         //   Dispose(false);
         // }

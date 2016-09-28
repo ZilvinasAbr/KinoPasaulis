@@ -63,7 +63,8 @@ namespace KinoPasaulis.Server
 
             // Repositories
             services.AddTransient<IEventRepository, EventRepository>();
-            services.AddTransient<IAudtoriumRepository, AuditoriumRepository>();
+            services.AddTransient<IAuditoriumRepository, AuditoriumRepository>();
+            services.AddTransient<IShowRepository, ShowRepository>();
 
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();

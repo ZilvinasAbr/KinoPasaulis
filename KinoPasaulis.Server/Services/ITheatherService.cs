@@ -1,4 +1,5 @@
-﻿using KinoPasaulis.Server.Models;
+﻿using System.Collections.Generic;
+using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 
 namespace KinoPasaulis.Server.Services
@@ -7,5 +8,8 @@ namespace KinoPasaulis.Server.Services
     {
         void AddNewEvent(EventCreation eventCreation);
         void AddNewAuditorium(Auditorium auditorium);
+        IEnumerable<Event> GetAllEvents();
+        Event GetEventById(int id);
+        Show GetShowById(int id);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
@@ -29,6 +30,24 @@ namespace KinoPasaulis.Server.Controllers.Api
         public void AddAudotirum([FromBody] Auditorium auditorium)
         {
             _theatherService.AddNewAuditorium(auditorium);
+        }
+
+        [HttpGet("events")]
+        public IEnumerable<Event> GetAllEvents()
+        {
+            return _theatherService.GetAllEvents();
+        }
+
+        [HttpGet("getEvent")]
+        public Event GetEventById(int id)
+        {
+            return _theatherService.GetEventById(id);
+        }
+
+        [HttpGet("getShow")]
+        public Show GetShowById(int id)
+        {
+            return _theatherService.GetShowById(id);
         }
     }
 }

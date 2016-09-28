@@ -10,17 +10,25 @@ namespace KinoPasaulis.Server.Repositories.Theather
     public class EventRepository : IEventRepository, IDisposable
     {
         private readonly ApplicationDbContext _context;
-        public EventRepository(ApplicationDbContext context)
+        private readonly IShowRepository _showRepository;
+        public EventRepository(ApplicationDbContext context, IShowRepository showRepository)
         {
             _context = context;
+            _showRepository = showRepository;
         }
-        public void DeleteEvent(int eventId)
+        public bool DeleteEvent(int eventId)
         {
             var Event = _context.Events.Single(x => x.Id == eventId);
-            if (Event == null) throw new ArgumentNullException(nameof(Event));
 
+            if (Event == null)
+            {
+                return false;
+            }
+            _showRepository.DeleteAllShowsByEventId(eventId);
             _context.Events.Remove(Event);
             _context.SaveChanges();
+
+            return true;
         }
 
         public Event GetEventById(int eventId)
@@ -29,6 +37,8 @@ namespace KinoPasaulis.Server.Repositories.Theather
                 .Include(x => x.Movie)
                 .Include(x => x.Shows)
                     .ThenInclude(x => x.Auditorium)
+                .Include(x => x.Shows)
+                    .ThenInclude(x => x.Orders)
                 .Single(x => x.Id == eventId);
         }
 

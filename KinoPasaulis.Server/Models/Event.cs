@@ -17,6 +17,8 @@ namespace KinoPasaulis.Server.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key, Column(Order = 0)]
         public int Id { get; set; }
+
+        public Theather Theather { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public Movie Movie { get; set; }

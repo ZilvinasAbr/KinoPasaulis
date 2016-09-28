@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +14,18 @@ namespace KinoPasaulis.Server.Repositories.Theather
         {
             _context = context;
         }
-        public void DeleteShow(int showId)
+        public bool DeleteShow(int showId)
         {
             var show = _context.Shows.SingleOrDefault(x => x.Id == showId);
-            if (show == null) throw new ArgumentNullException(nameof(show));
+            if (show == null)
+            {
+                return false;
+            }
+
             _context.Shows.Remove(show);
             _context.SaveChanges();
+
+            return true;
         }
 
         public IEnumerable<Show> GetEvents()
@@ -34,6 +38,7 @@ namespace KinoPasaulis.Server.Repositories.Theather
             return _context.Shows
                 .Include(x => x.Event.Movie)
                 .Include(x => x.Auditorium)
+                .Include(x => x.Orders)
                 .Single(x => x.Id == showId);
         }
 
@@ -53,6 +58,13 @@ namespace KinoPasaulis.Server.Repositories.Theather
         {
             _context.Update(show);
             _context.SaveChanges();
+        }
+
+        public void DeleteAllShowsByEventId(int eventId)
+        {
+            var shows = _context.Shows.Where(x => x.Event.Id == eventId);
+
+            _context.Shows.RemoveRange(shows);
         }
 
         #region IDisposable Support

@@ -9,7 +9,7 @@ namespace KinoPasaulis.Server.Repositories.Theather
         IEnumerable<Event> GetEvents();
         Event GetEventById(int eventId);
         void InsertEvent(Event Event);
-        void DeleteEvent(int eventId);
+        bool DeleteEvent(int eventId);
         void UpdateEvent(Event Event);
     }
 }

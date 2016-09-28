@@ -14,5 +14,6 @@ namespace KinoPasaulis.Server.Models
         public int Id { get; set; }
         public int Seats { get; set; }
         public string Name { get; set; }
+        public Theather Theather { get; set; }
     }
 }

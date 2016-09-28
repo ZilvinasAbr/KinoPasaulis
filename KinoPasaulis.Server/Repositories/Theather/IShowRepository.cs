@@ -12,7 +12,8 @@ namespace KinoPasaulis.Server.Repositories.Theather
         Show GetShowById(int showId);
         void InsertShow(Show show);
         void InsertShows(List<Show> shows);
-        void DeleteShow(int showId);
+        bool DeleteShow(int showId);
+        void DeleteAllShowsByEventId(int eventId);
         void UpdateShow(Show show);
     }
 }

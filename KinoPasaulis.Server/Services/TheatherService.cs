@@ -82,5 +82,41 @@ namespace KinoPasaulis.Server.Services
         {
             return _showRepository.GetShowById(id);
         }
+
+        public bool DeleteAuditorium(int id)
+        {
+            bool deleted = _auditoriumRepository.DeleteAudtorium(id);
+
+            return deleted;
+        }
+
+        public bool UpdateAutorium(Auditorium auditorium)
+        {
+            // Check if auditorium exists first..... Couldnt do that becouse of entity framework error then updating auditorium
+            _auditoriumRepository.UpdateAuditorium(auditorium);
+
+            return true;
+        }
+
+        public bool UpdateShow(Show show)
+        {
+            _showRepository.UpdateShow(show);
+
+            return true;
+        }
+
+        public bool DeleteEvent(int id)
+        {
+            bool deleted = _eventRepository.DeleteEvent(id);
+
+            return deleted;
+        }
+
+        public bool DeleteShow(int id)
+        {
+            bool deleted = _showRepository.DeleteShow(id);
+
+            return deleted;
+        }
     }
 }

@@ -49,5 +49,35 @@ namespace KinoPasaulis.Server.Controllers.Api
         {
             return _theatherService.GetShowById(id);
         }
+
+        [HttpDelete("deleteAuditorium")]
+        public bool DeleteAuditorium([FromBody] int id)
+        {
+            return _theatherService.DeleteAuditorium(id);
+        }
+
+        [HttpPut("updateAuditorium")]
+        public bool UpdateAuditorium([FromBody] Auditorium auditorium)
+        {
+            return _theatherService.UpdateAutorium(auditorium);
+        }
+
+        [HttpDelete("deleteEvent")]
+        public bool DeleteEvent([FromBody] int id)
+        {
+            return _theatherService.DeleteEvent(id);
+        }
+
+        [HttpPut("updateShow")]
+        public bool UpdateShow([FromBody] Show show)
+        {
+            return _theatherService.UpdateShow(show);
+        }
+
+        [HttpDelete("deleteShow")]
+        public bool DeleteShow([FromBody] int id)
+        {
+            return _theatherService.DeleteShow(id);
+        }
     }
 }

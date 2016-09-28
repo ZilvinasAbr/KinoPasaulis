@@ -9,7 +9,7 @@ namespace KinoPasaulis.Server.Repositories.Theather
         IEnumerable<Auditorium> GetAuditoriums();
         Auditorium GetAuditoriumById(int auditoriumId);
         void InsertAuditorium(Auditorium auditorium);
-        void DeleteAudtorium(int auditoriumId);
+        bool DeleteAudtorium(int auditoriumId);
         void UpdateAuditorium(Auditorium auditorium);
     }
 }

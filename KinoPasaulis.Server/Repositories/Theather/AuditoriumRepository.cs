@@ -15,12 +15,19 @@ namespace KinoPasaulis.Server.Repositories.Theather
             _context = context;
         }
 
-        public void DeleteAudtorium(int auditoriumId)
+        public bool DeleteAudtorium(int auditoriumId)
         {
             var auditorium = _context.Auditoriums.SingleOrDefault(x => x.Id == auditoriumId);
-            if (auditorium == null) throw new ArgumentNullException(nameof(auditorium));
+
+            if (auditorium == null)
+            {
+                return false;
+            }
+
             _context.Auditoriums.Remove(auditorium);
             _context.SaveChanges();
+
+            return true;
         }
 
         public Auditorium GetAuditoriumById(int auditoriumId)

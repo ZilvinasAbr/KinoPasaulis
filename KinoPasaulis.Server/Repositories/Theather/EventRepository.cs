@@ -28,7 +28,7 @@ namespace KinoPasaulis.Server.Repositories.Theather
             return _context.Events
                 .Include(x => x.Movie)
                 .Include(x => x.Shows)
-                .ThenInclude(x => x.Auditorium)
+                    .ThenInclude(x => x.Auditorium)
                 .Single(x => x.Id == eventId);
         }
 
@@ -37,7 +37,9 @@ namespace KinoPasaulis.Server.Repositories.Theather
             return _context.Events
                 .Include(x => x.Movie)
                 .Include(x => x.Shows)
-                .ThenInclude(x => x.Auditorium)
+                    .ThenInclude(x => x.Auditorium)
+                .Include(x => x.Shows)
+                    .ThenInclude(x => x.Orders)
                 .ToList();
         }
 

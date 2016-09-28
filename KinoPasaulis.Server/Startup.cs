@@ -13,6 +13,7 @@ using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Repositories.Theather;
 using KinoPasaulis.Server.Services;
+using Newtonsoft.Json;
 
 namespace KinoPasaulis.Server
 {
@@ -43,6 +44,9 @@ namespace KinoPasaulis.Server
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddMvc()
+                .AddJsonOptions(o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.AddIdentity<ApplicationUser, IdentityRole>(o =>
             {

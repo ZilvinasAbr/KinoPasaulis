@@ -12,16 +12,6 @@ namespace KinoPasaulis.Server.Services
 {
     public class ApplicationService : IApplicationService
     {
-        private readonly ITheatherRepository _theatherRepository;
 
-        public ApplicationService(ITheatherRepository theatherRepository)
-        {
-            _theatherRepository = theatherRepository;
-        }
-
-        public Theather GetTheatherByUserId(string id)
-        {
-            return _theatherRepository.GetTheatherByUserId(id);
-        }
     }
 }

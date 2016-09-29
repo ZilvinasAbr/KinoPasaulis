@@ -17,13 +17,15 @@ namespace KinoPasaulis.Server.Controllers.Api
     {
         private readonly ITheatherService _theatherService;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IApplicationService _applicationService;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserService _userService;
 
-        public TheatherController(ITheatherService theatherService, UserManager<ApplicationUser> userManager, IApplicationService applicationService)
+        public TheatherController(ITheatherService theatherService, IApplicationService applicationService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserService userService)
         {
             _theatherService = theatherService;
             _userManager = userManager;
-            _applicationService = applicationService;
+            _userService = userService;
+            _signInManager = signInManager;
         }
 
         [HttpPost("addEvent")]
@@ -33,12 +35,15 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpPost("addAuditorium")]
-        public async void AddAudotirum([FromBody] Auditorium auditorium)
+        public void AddAudotirum([FromBody] Auditorium auditorium)
         {
-            var user = await _userManager.FindByIdAsync(HttpContext.User.GetUserId());
-            var theather = _applicationService.GetTheatherByUserId(user.Id);
-
-            _theatherService.AddNewAuditorium(auditorium);
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                Theather theather = _userService.GetTheatherByUserId(userId);
+                auditorium.Theather = theather;
+                _theatherService.AddNewAuditorium(auditorium);
+            }
         }
 
         [HttpGet("events")]

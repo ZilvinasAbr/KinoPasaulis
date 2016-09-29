@@ -8,6 +8,5 @@ namespace KinoPasaulis.Server.Services
 {
     public interface IApplicationService
     {
-        Theather GetTheatherByUserId(string id);
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModels;
 using KinoPasaulis.Server.Services;
+using KinoPasaulis.Server.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,41 @@ namespace KinoPasaulis.Server.Controllers
             }
 
             var user = new ApplicationUser { UserName = model.UserName };
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return true;
+            }
+
+            return false;
+        }
+
+        [HttpPost("registerTheather")]
+        public async Task<bool> RegisterTheather([FromBody] TheatherRegisterViewModel model)
+        {
+            if (model.Password != model.ConfirmPassword)
+            {
+                return false;
+            }
+
+            var theater = new Theather
+            {
+                City = model.City,
+                Address = model.Address,
+                Country = model.Country,
+                Email = model.Email,
+                Phone = model.Phone,
+                Title = model.Title
+            };
+
+            var user = new ApplicationUser
+            {
+                UserName = model.UserName,
+                Theather = theater
+            };
+
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)

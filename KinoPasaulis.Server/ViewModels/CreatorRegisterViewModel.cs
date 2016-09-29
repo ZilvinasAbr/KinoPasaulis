@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace KinoPasaulis.Server.ViewModels
 {
-    public class TheatherRegisterViewModel
+    public class CreatorRegisterViewModel
     {
-        [Required(ErrorMessage = "User name is required")]
+        [Required(ErrorMessage = "Username is required")]
         [Display(Name = "Username")]
         public string UserName { get; set; }
 
@@ -21,26 +21,22 @@ namespace KinoPasaulis.Server.ViewModels
         [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
-        public string Title { get; set; }
+        [Display(Name = "Name")]
+        public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "City is required")]
-        public string City { get; set; }
-
-        [Required(ErrorMessage = "Country is required")]
-        public string Country { get; set; }
-
-        [Required(ErrorMessage = "Adress is required")]
-        public string Address { get; set; }
+        [Display(Name = "Surname")]
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "E-mail adress is required")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Phone number is required")]
-        [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Phone number")]
-        public string Phone { get; set; }
+        [Required(ErrorMessage = "Birth date is required")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Birth Date")]
+        public DateTime BirthDate { get; set; }
+
+
     }
 }

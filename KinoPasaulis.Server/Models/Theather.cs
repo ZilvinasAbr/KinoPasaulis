@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KinoPasaulis.Server.Models
 {
@@ -13,5 +14,8 @@ namespace KinoPasaulis.Server.Models
         public string Phone { get; set; }
         public List<Event> Events { get; set; }
         public List<Auditorium> Auditoriums { get; set; }
+        [ForeignKey("UserId")]
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using KinoPasaulis.Server.Models;
 
-namespace KinoPasaulis.Server.Services
+namespace KinoPasaulis.Server.Repositories.Theather
 {
-    public interface IApplicationService
+    public interface ITheatherRepository
     {
-        Theather GetTheatherByUserId(string id);
+        Models.Theather GetTheatherByUserId(string id);
     }
 }

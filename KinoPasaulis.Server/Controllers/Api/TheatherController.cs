@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace KinoPasaulis.Server.Controllers.Api
 {
@@ -14,10 +16,14 @@ namespace KinoPasaulis.Server.Controllers.Api
     public class TheatherController : Controller
     {
         private readonly ITheatherService _theatherService;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IApplicationService _applicationService;
 
-        public TheatherController(ITheatherService theatherService)
+        public TheatherController(ITheatherService theatherService, UserManager<ApplicationUser> userManager, IApplicationService applicationService)
         {
             _theatherService = theatherService;
+            _userManager = userManager;
+            _applicationService = applicationService;
         }
 
         [HttpPost("addEvent")]
@@ -27,8 +33,11 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpPost("addAuditorium")]
-        public void AddAudotirum([FromBody] Auditorium auditorium)
+        public async void AddAudotirum([FromBody] Auditorium auditorium)
         {
+            var user = await _userManager.FindByIdAsync(HttpContext.User.GetUserId());
+            var theather = _applicationService.GetTheatherByUserId(user.Id);
+
             _theatherService.AddNewAuditorium(auditorium);
         }
 

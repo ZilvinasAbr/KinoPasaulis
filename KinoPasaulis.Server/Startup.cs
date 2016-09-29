@@ -13,6 +13,7 @@ using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Repositories.Theather;
 using KinoPasaulis.Server.Services;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 
 namespace KinoPasaulis.Server
@@ -69,6 +70,7 @@ namespace KinoPasaulis.Server
             services.AddTransient<IEventRepository, EventRepository>();
             services.AddTransient<IAuditoriumRepository, AuditoriumRepository>();
             services.AddTransient<IShowRepository, ShowRepository>();
+            services.AddTransient<ITheatherRepository, TheatherRepository>();
 
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();

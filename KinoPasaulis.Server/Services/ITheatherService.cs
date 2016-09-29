@@ -8,8 +8,9 @@ namespace KinoPasaulis.Server.Services
     {
         void AddNewEvent(EventCreation eventCreation);
         void AddNewAuditorium(Auditorium auditorium);
-        IEnumerable<Event> GetAllEvents();
         Event GetEventById(int id);
+        IEnumerable<Event> GetAllEvents();
+        IEnumerable<Event> GetEventsByTheatherId(int id);
         Show GetShowById(int id);
 
         bool DeleteAuditorium(int id);

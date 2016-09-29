@@ -8,6 +8,7 @@ namespace KinoPasaulis.Server.Repositories.Theather
     {
         IEnumerable<Event> GetEvents();
         Event GetEventById(int eventId);
+        IEnumerable<Event> GetEventsByTheatherId(int id);
         void InsertEvent(Event Event);
         bool DeleteEvent(int eventId);
         void UpdateEvent(Event Event);

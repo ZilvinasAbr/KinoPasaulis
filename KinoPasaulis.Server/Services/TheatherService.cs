@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Repositories.Theather;
@@ -57,7 +57,8 @@ namespace KinoPasaulis.Server.Services
                 Shows = shows,
                 Movie = addedMovie,
                 StartTime = eventCreation.StartTime,
-                EndTime = eventCreation.EndTime
+                EndTime = eventCreation.EndTime,
+                Theather = eventCreation.Theather
             };
 
             _eventRepository.InsertEvent(Event);
@@ -117,6 +118,11 @@ namespace KinoPasaulis.Server.Services
             bool deleted = _showRepository.DeleteShow(id);
 
             return deleted;
+        }
+
+        public IEnumerable<Event> GetEventsByTheatherId(int id)
+        {
+            return _eventRepository.GetEventsByTheatherId(id);
         }
     }
 }

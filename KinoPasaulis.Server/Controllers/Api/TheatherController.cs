@@ -31,7 +31,13 @@ namespace KinoPasaulis.Server.Controllers.Api
         [HttpPost("addEvent")]
         public void AddEvent([FromBody] EventCreation eventCreation)
         {
-            _theatherService.AddNewEvent(eventCreation);
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                Theather theather = _userService.GetTheatherByUserId(userId);
+                eventCreation.Theather = theather;
+                _theatherService.AddNewEvent(eventCreation);
+            }
         }
 
         [HttpPost("addAuditorium")]
@@ -50,6 +56,12 @@ namespace KinoPasaulis.Server.Controllers.Api
         public IEnumerable<Event> GetAllEvents()
         {
             return _theatherService.GetAllEvents();
+        }
+
+        [HttpGet("getTheatherEvents")]
+        public IEnumerable<Event> GetEventsById(int id)
+        {
+            return _theatherService.GetEventsByTheatherId(id);
         }
 
         [HttpGet("getEvent")]

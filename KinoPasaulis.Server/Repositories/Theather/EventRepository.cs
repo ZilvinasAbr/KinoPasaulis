@@ -42,6 +42,18 @@ namespace KinoPasaulis.Server.Repositories.Theather
                 .Single(x => x.Id == eventId);
         }
 
+        public IEnumerable<Event> GetEventsByTheatherId(int id)
+        {
+            return _context.Events
+                .Include(x => x.Movie)
+                .Include(x => x.Shows)
+                    .ThenInclude(x => x.Auditorium)
+                .Include(x => x.Shows)
+                    .ThenInclude(x => x.Orders)
+                .Where(x => x.Theather.Id == id)
+                .ToList();
+        }
+
         public IEnumerable<Event> GetEvents()
         {
             return _context.Events
@@ -98,6 +110,7 @@ namespace KinoPasaulis.Server.Repositories.Theather
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }

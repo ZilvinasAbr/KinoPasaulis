@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace KinoPasaulis.Server.ViewModels
 {
-    public class TheatherRegisterViewModel
+    public class CompanyRegisterViewModel
     {
-        [Required(ErrorMessage = "User name is required")]
+        [Required(ErrorMessage = "Username is required")]
         [Display(Name = "Username")]
         public string UserName { get; set; }
 
@@ -21,8 +21,8 @@ namespace KinoPasaulis.Server.ViewModels
         [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
-        public string Title { get; set; }
+        [Required(ErrorMessage = "Name of the company is required")]
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "City is required")]
         public string City { get; set; }
@@ -31,9 +31,9 @@ namespace KinoPasaulis.Server.ViewModels
         public string Country { get; set; }
 
         [Required(ErrorMessage = "Adress is required")]
-        public string Address { get; set; }
+        public string Adress { get; set; }
 
-        [Required(ErrorMessage = "E-mail adress is required")]
+        [Required(ErrorMessage = "Email adress is required")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "E-mail")]
         public string Email { get; set; }

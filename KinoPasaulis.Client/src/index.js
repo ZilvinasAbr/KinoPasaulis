@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import reducer from './reducers/index';
 import HomePage from './components/home/HomePage';
 import LandingPage from './components/landing/LandingPage';
+import LoginPage from './components/login/LoginPage';
+import RegisterPage from './components/register/RegisterPage';
 
 import { Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
@@ -29,6 +31,8 @@ render(
 			{ /* Tell the Router to use our enhanced history */}
 			<Router history={history}>
 				<Route path="/" component={LandingPage} />
+				<Route path="login" component={LoginPage} />
+				<Route path="register" component={RegisterPage} />
 				<Route path="home" component={HomePage} />
 			</Router>
 		</Provider>

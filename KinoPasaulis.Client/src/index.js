@@ -25,9 +25,9 @@ render(
 			{ /* Tell the Router to use our enhanced history */}
 			<Router history={history}>
 				<Route path="/" component={LandingPage} />
-				<Route path="login" component={LoginPage} />
-				<Route path="register" component={RegisterPage} />
 				<Route path="home" component={HomePage} />
+				<Route path="register" component={RegisterPage} />
+				<Route path="login" component={LoginPage} />
 			</Router>
 		</Provider>
 	),

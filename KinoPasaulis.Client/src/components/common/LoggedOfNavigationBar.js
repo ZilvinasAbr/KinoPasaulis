@@ -1,28 +1,23 @@
 import React from 'react';
-import Link from './Link';
+import { Navbar, Nav, NavItem} from 'react-bootstrap';
 
 const LoggedOfNavigationBar = ({changePageToLanding, changePageToLogin, changePageToRegister}) => {
   return (
-    <nav className="navbar navbar-inverse navbar-fixed-top">
-      <div className="container">
-        <div className="navbar-header">
-          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span className="sr-only">Toggle navigation</span>
-            <span className="icon-bar" />
-            <span className="icon-bar" />
-            <span className="icon-bar" />
-          </button>
-          <a className="navbar-brand" href="#">Kino Pasaulis</a>
-        </div>
-        <div id="navbar" className="navbar-collapse collapse">
-          <ul className="nav navbar-nav navbar-right">
-            <li><Link onClick={changePageToLogin}>Prisijungti</Link></li>
-            <li><Link onClick={changePageToRegister}>Registruotis</Link></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  )
+    <Navbar inverse>
+      <Navbar.Header>
+        <Navbar.Brand>
+          <a href="javascript:void(0)" onClick={changePageToLanding}>Kino Pasaulis</a>
+        </Navbar.Brand>
+        <Navbar.Toggle />
+      </Navbar.Header>
+      <Navbar.Collapse>
+        <Nav pullRight>
+          <NavItem eventKey={1} onClick={changePageToLogin}>Prisijungti</NavItem>
+          <NavItem eventKey={2} onClick={changePageToRegister}>Registruotis</NavItem>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
+  );
 };
 
 LoggedOfNavigationBar.propTypes = {

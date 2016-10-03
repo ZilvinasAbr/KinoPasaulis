@@ -1,15 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import {
-  changeViewToUserRegister,
-  changeViewToTheaterRegister,
-  changeViewToCinemaStudioRegister
-} from '../../actionCreators/registerActionCreators';
-import Main from './Main';
-import UserRegister from './UserRegister';
-import TheaterRegister from './TheaterRegister';
-import CinemaStudioRegister from './CinemaStudioRegister';
 import LoggedOfNavigationBar from '../common/LoggedOfNavigationBar';
 
 class RegisterPage extends React.Component {
@@ -17,31 +8,17 @@ class RegisterPage extends React.Component {
     super(props);
   }
 
-  renderView() {
-    const view = this.props.view;
-    switch(view) {
-      case 'main':
-        return <Main
-          changeViewToUser={this.props.changeViewToUserRegister}
-          changeViewToTheater={this.props.changeViewToTheaterRegister}
-          changeViewToCinemaStudio={this.props.changeViewToCinemaStudioRegister}
-        />;
-      case 'user':
-        return <UserRegister />;
-      case 'theater':
-        return <TheaterRegister />;
-      case 'cinemaStudio':
-        return <CinemaStudioRegister />;
-      default:
-        return <div>Error</div>;
-    }
-  }
-
   render() {
     return (
       <div>
         <LoggedOfNavigationBar changePageToLanding={this.props.changePageToLanding} changePageToLogin={this.props.changePageToLogin} changePageToRegister={this.props.changePageToRegister} />
-        {this.renderView()}
+        <div className="container">
+          <div className="row">
+            <button type="button" className="btn btn-primary">Vartotojo registracija</button>
+            <button type="button" className="btn btn-primary">Kino teatro registracija</button>
+            <button type="button" className="btn btn-primary" onClick={this.props.changePageToCinemaStudio}>Kino studijos registracija</button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -49,22 +26,11 @@ class RegisterPage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    view: state.registerPage.view
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    changeViewToUserRegister: () => {
-      dispatch(changeViewToUserRegister());
-    },
-    changeViewToTheaterRegister: () => {
-      dispatch(changeViewToTheaterRegister());
-    },
-    changeViewToCinemaStudioRegister: () => {
-      dispatch(changeViewToCinemaStudioRegister());
-    },
-
     changePageToLanding: () => {
       dispatch(push('/'));
     },
@@ -73,6 +39,9 @@ function mapDispatchToProps(dispatch) {
     },
     changePageToRegister: () => {
       dispatch(push('register'));
+    },
+    changePageToCinemaStudio: () => {
+      dispatch(push('register/cinemastudio'));
     }
   }
 }

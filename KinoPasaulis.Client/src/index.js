@@ -8,8 +8,9 @@ import HomePage from './components/home/HomePage';
 import LandingPage from './components/landing/LandingPage';
 import LoginPage from './components/login/LoginPage';
 import RegisterPage from './components/register/RegisterPage';
+import CinemaStudioRegisterPage from './components/register/cinemaStudio/CinemaStudioRegisterPage';
 
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 
 const store = createStore(reducer, initialState, compose(
@@ -27,6 +28,7 @@ render(
 				<Route path="/" component={LandingPage} />
 				<Route path="home" component={HomePage} />
 				<Route path="register" component={RegisterPage} />
+				<Route path="register/cinemastudio" component={CinemaStudioRegisterPage} />
 				<Route path="login" component={LoginPage} />
 			</Router>
 		</Provider>

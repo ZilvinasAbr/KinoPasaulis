@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import LoggedOfNavigationBar from '../common/LoggedOfNavigationBar';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -9,6 +11,7 @@ class LoginPage extends React.Component {
   render() {
     return (
       <div>
+        <LoggedOfNavigationBar changePageToLanding={this.props.changePageToLanding} changePageToLogin={this.props.changePageToLogin} changePageToRegister={this.props.changePageToRegister} />
         LoginPage
       </div>
     );
@@ -22,6 +25,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    changePageToLanding: () => {
+      dispatch(push('/'));
+    },
+    changePageToLogin: () => {
+      dispatch(push('login'));
+    },
+    changePageToRegister: () => {
+      dispatch(push('register'));
+    }
   }
 }
 

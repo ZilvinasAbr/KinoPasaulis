@@ -9,6 +9,7 @@ import LandingPage from './components/landing/LandingPage';
 import LoginPage from './components/login/LoginPage';
 import RegisterPage from './components/register/RegisterPage';
 import CinemaStudioRegisterPage from './components/register/cinemaStudio/CinemaStudioRegisterPage';
+import TheatherRegisterPage from './components/register/theather/TheatherRegisterPage';
 
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
@@ -29,6 +30,7 @@ render(
 				<Route path="home" component={HomePage} />
 				<Route path="register" component={RegisterPage} />
 				<Route path="register/cinemastudio" component={CinemaStudioRegisterPage} />
+				<Route path="register/theather" component={TheatherRegisterPage} />
 				<Route path="login" component={LoginPage} />
 			</Router>
 		</Provider>

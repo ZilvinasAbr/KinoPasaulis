@@ -15,7 +15,7 @@ class RegisterPage extends React.Component {
         <div className="container">
           <div className="row">
             <button type="button" className="btn btn-primary">Vartotojo registracija</button>
-            <button type="button" className="btn btn-primary">Kino teatro registracija</button>
+            <button type="button" className="btn btn-primary" onClick={this.props.changePageToTheather}>Kino teatro registracija</button>
             <button type="button" className="btn btn-primary" onClick={this.props.changePageToCinemaStudio}>Kino studijos registracija</button>
           </div>
         </div>
@@ -42,6 +42,9 @@ function mapDispatchToProps(dispatch) {
     },
     changePageToCinemaStudio: () => {
       dispatch(push('register/cinemastudio'));
+    },
+    changePageToTheather: () => {
+      dispatch(push('register/theather'));
     }
   }
 }

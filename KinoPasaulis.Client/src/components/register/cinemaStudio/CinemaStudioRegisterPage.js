@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import LoggedOfNavigationBar from '../../common/LoggedOfNavigationBar';
+import { Button } from 'react-bootstrap';
 
 const CinemaStudioRegisterPage = (props) => {
   return (
@@ -20,7 +21,7 @@ const CinemaStudioRegisterPage = (props) => {
           <div className="form-group">
             <input type="password" placeholder="Pakartoti slaptažodį" className="form-control" name="Repeat" />
           </div>
-          <button type="submit" className="btn btn-primary">Registruotis</button>
+          <Button bsStyle="primary">Registruotis</Button>
         </div>
       </div>
     </div>

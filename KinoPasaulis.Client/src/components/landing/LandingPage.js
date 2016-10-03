@@ -12,6 +12,7 @@ class LandingPage extends React.Component {
     return (
       <div>
         <LoggedOfNavigationBar
+          changePageToLanding={this.props.changePageToLanding}
           changePageToLogin={this.props.changePageToLogin}
           changePageToRegister={this.props.changePageToRegister} />
       </div>
@@ -26,6 +27,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    changePageToLanding: () => {
+      dispatch(push('/'));
+    },
+
     changePageToLogin: () => {
       dispatch(push('login'));
     },

@@ -72,10 +72,10 @@ function mapDispatchToProps(dispatch) {
             dispatch(push('/'));
         },
         changePageToLogin: () => {
-            dispatch(push('login'));
+            dispatch(push('/login'));
         },
         changePageToRegister: () => {
-            dispatch(push('register'));
+            dispatch(push('/register'));
         }
     }
 }

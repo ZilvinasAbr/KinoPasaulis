@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import TheatherNavigationBar from '../register/theather/TheatherNavigationBar';
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -9,7 +10,8 @@ class HomePage extends React.Component {
   render() { 
     return (
       <div>
-        HomePage
+        <TheatherNavigationBar
+          changePageToLanding={this.props.changePageToLanding}/>
       </div>
     );
   }

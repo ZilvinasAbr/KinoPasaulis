@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../register/theather/TheatherNavigationBar';
 
 class HomePage extends React.Component {
@@ -11,7 +12,12 @@ class HomePage extends React.Component {
     return (
       <div>
         <TheatherNavigationBar
-          changePageToLanding={this.props.changePageToLanding}/>
+          changePageToLanding={this.props.changePageToLanding}
+          goToAuditoriums={this.props.goToAuditoriums}
+          goToEvents={this.props.goToEvents}
+          goToSubscriptions={this.props.goToSubscriptions}
+          logOut={this.props.logOut}
+        />
       </div>
     );
   }
@@ -24,6 +30,25 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    changePageToLanding: () => {
+      dispatch(push('/'));
+    },
+
+    goToAuditoriums: () => {
+      dispatch(push('/auditoriums'));
+    },
+
+    goToEvents: () => {
+      dispatch(push('/events'));
+    },
+
+    goToSubscriptions: () => {
+      dispatch(push('/subscriptions'));
+    },
+
+    logOut: () => {
+      dispatch(push('/logout'));
+    }
   }
 }
 

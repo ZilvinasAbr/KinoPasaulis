@@ -25,8 +25,11 @@ const TheatherNavigationBar = ({logOut, changePageToLanding, goToAuditoriums, go
 };
 
 TheatherNavigationBar.propTypes = {
-  //changePageToLanding: React.PropTypes.func.isRequired,
-  //logOut: React.PropTypes.func.isRequired,
+  changePageToLanding: React.PropTypes.func.isRequired,
+  logOut: React.PropTypes.func.isRequired,
+  goToAuditoriums: React.PropTypes.func.isRequired,
+  goToEvents: React.PropTypes.func.isRequired,
+  goToSubscriptions: React.PropTypes.func.isRequired
 };
 
 export default TheatherNavigationBar;

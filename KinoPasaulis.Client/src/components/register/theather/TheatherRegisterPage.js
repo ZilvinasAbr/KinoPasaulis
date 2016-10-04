@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { reduxForm } from 'redux-form';
-import { registerTheather } from '../../../actions/registerActions';
 import LoggedOfNavigationBar from '../../common/LoggedOfNavigationBar';
 import TheatherRegisterForm from './TheatherRegisterForm';
 
@@ -13,7 +11,6 @@ class TheaterRegisterPage extends React.Component {
   }
 
   render() {
-    // const {fields: {username, password, confirm} } = this.props;
 
     return (
         <div>

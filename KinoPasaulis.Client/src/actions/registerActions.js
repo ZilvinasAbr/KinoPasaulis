@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 
 export function registerTheather(userName, password, confirmPassword, city, address, email, phone, title) {
   return dispatch => {
-    return axios.post('api/account/registerTheather', {
+    return axios.post('/api/account/registerTheather', {
       UserName: userName,
       Password: password,
       ConfirmPassword: confirmPassword,

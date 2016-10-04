@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { registerTheather } from '../../../actions/registerActions';
 
@@ -13,7 +12,7 @@ class TheatherRegisterForm extends React.Component {
   handleSubmit() {
     const {fields: {username, password, repeat, email, title, city, address, phone} } = this.props;
     //
-    // this.props.dispatch(register(username.value, password.value, confirm.value));
+    this.props.dispatch(registerTheather(username.value, password.value, repeat.value, email.value, title.value, city.value, address.value, phone.value));
   }
 
   render() {
@@ -78,7 +77,7 @@ TheatherRegisterForm.propTypes = {
 
 const config = { // <----- THIS IS THE IMPORTANT PART!
   form: 'registerTheather',                   // a unique name for this form
-  fields: ['username', 'password','repeat', 'title', 'city', 'address', 'phone'] // all the fields in your form
+  fields: ['username', 'password', 'email', 'repeat', 'title', 'city', 'address', 'phone'] // all the fields in your form
 };
 
 export default reduxForm(config)(TheatherRegisterForm);

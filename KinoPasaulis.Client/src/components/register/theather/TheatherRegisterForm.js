@@ -1,6 +1,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { registerTheather } from '../../../actions/registerActions';
+import { Button, Form, FormGroup, Col, FormControl, ControlLabel, Checkbox } from 'react-bootstrap';
 
 class TheatherRegisterForm extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class TheatherRegisterForm extends React.Component {
   handleSubmit() {
     const {fields: {username, password, repeat, email, title, city, address, phone} } = this.props;
     //
-    this.props.dispatch(registerTheather(username.value, password.value, repeat.value, email.value, title.value, city.value, address.value, phone.value));
+    this.props.dispatch(registerTheather(username.value, password.value, repeat.value, city.value, address.value, email.value, phone.value, title.value));
   }
 
   render() {
@@ -24,45 +25,70 @@ class TheatherRegisterForm extends React.Component {
           <h1> Kino teatro registracija </h1>
           <hr />
           <div className="row">
-            <div className="form-group">
-              <label htmlFor="username">Vartotojo vardas</label>
-              <input type="text" placeholder="Vartotojo vardas" className="form-control" id="username" name="Username" { ...username } />
-            </div>
-            <div className="form-group">
-              <label for="email">Elektroninis paštas</label>
-              <input type="email" placeholder="El. paštas" className="form-control" id="email" name="Email" { ...email } />
-            </div>
-            <div className="form-group">
-              <label for="username">Slaptažodis</label>
-              <input type="password" placeholder="Slaptažodis" className="form-control" name="Password" { ...password } />
-            </div>
-            <div className="form-group">
-              <label for="username">Pakartoti slaptažodi</label>
-              <input type="password" placeholder="Pakartoti slaptažodi" className="form-control" name="Repeat" { ...repeat } />
-            </div>
-            <div className="form-group">
-              <label for="username">Pavadinimas</label>
-              <input type="text" placeholder="Pavadinimas" className="form-control" name="Title" { ...title } />
-            </div>
-            <div className="form-group">
-              <select name="City" className="form-control" { ...city }>
+
+            <FormGroup controlId="username">
+              <ControlLabel>
+                Vartotojo vardas
+              </ControlLabel>
+              <FormControl type="text" placeholder="Vartotojo vardas" { ...username } />
+            </FormGroup>
+
+            <FormGroup controlId="username">
+              <ControlLabel>
+                Elektroninis paštas
+              </ControlLabel>
+              <FormControl type="email" placeholder="El. paštas" { ...email } />
+            </FormGroup>
+
+            <FormGroup controlId="password">
+              <ControlLabel>
+                Slaptažodis
+              </ControlLabel>
+              <FormControl type="password" placeholder="Slaptažodis" { ...password } />
+            </FormGroup>
+
+            <FormGroup controlId="password">
+              <ControlLabel>
+                Pakartoti slaptažodi
+              </ControlLabel>
+              <FormControl type="password" placeholder="Pakartoti slaptažodi" { ...repeat } />
+            </FormGroup>
+
+            <FormGroup controlId="password">
+              <ControlLabel>
+                Pavadinimas
+              </ControlLabel>
+              <FormControl type="text" placeholder="Pavadinimas" { ...title } />
+            </FormGroup>
+
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Miestas</ControlLabel>
+              <FormControl componentClass="select" placeholder="select" { ...city }>
                 <option hidden >Miestas</option>
                 <option value="Vilnius">Vilnius</option>
                 <option value="Kaunas">Kaunas</option>
                 <option value="Šiauliai">Šiauliai</option>
                 <option value="Panevežys">Panevežys</option>
                 <option value="Klaipeda">Klaipeda</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label for="username">Adresas</label>
-              <input type="text" placeholder="Adresas" className="form-control" name="Address" { ...address } />
-            </div>
-            <div className="form-group">
-              <label for="username">Telefonas</label>
-              <input type="text" placeholder="Telefonas" className="form-control" name="Phone" { ...phone } />
-            </div>
-            <button type="submit" className="btn btn-primary btn-lg" onClick={this.handleSubmit}>Registruotis</button>
+              </FormControl>
+            </FormGroup>
+
+            <FormGroup controlId="password">
+              <ControlLabel>
+                Adresas
+              </ControlLabel>
+              <FormControl type="text" placeholder="Adresas" { ...address } />
+            </FormGroup>
+
+            <FormGroup controlId="password">
+              <ControlLabel>
+                Telefonas
+              </ControlLabel>
+              <FormControl type="text" placeholder="Telefonas" { ...phone } />
+            </FormGroup>
+
+            <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}> Registruotis </Button>
+
           </div>
         </div>
       </div>

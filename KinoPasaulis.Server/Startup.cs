@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using KinoPasaulis.Server.Data;
+using KinoPasaulis.Server.Mapper;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Repositories.Theather;
 using KinoPasaulis.Server.Services;
@@ -61,6 +62,8 @@ namespace KinoPasaulis.Server
             .AddDefaultTokenProviders();
 
             services.AddMvc();
+            // Mappers
+            services.AddTransient<ITheatherMapper, TheatherMapper>();
 
             // Add application services.
             services.AddTransient<IApplicationService, ApplicationService>();

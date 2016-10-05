@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using KinoPasaulis.Server.Mapper;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Repositories.Theather;
+using KinoPasaulis.Server.ViewModels.Theather;
 
 namespace KinoPasaulis.Server.Services
 {
@@ -11,12 +13,14 @@ namespace KinoPasaulis.Server.Services
         private readonly IEventRepository _eventRepository;
         private readonly IAuditoriumRepository _auditoriumRepository;
         private readonly IShowRepository _showRepository;
+        private readonly ITheatherMapper _theatherMapper;
 
-        public TheatherService(IEventRepository eventRepository, IAuditoriumRepository auditoriumRepository, IShowRepository showRepository)
+        public TheatherService(IEventRepository eventRepository, IAuditoriumRepository auditoriumRepository, IShowRepository showRepository, ITheatherMapper theatherMapper)
         {
             _eventRepository = eventRepository;
             _auditoriumRepository = auditoriumRepository;
             _showRepository = showRepository;
+            _theatherMapper = theatherMapper;
         }
 
         public void AddNewEvent(EventCreation eventCreation)
@@ -123,6 +127,18 @@ namespace KinoPasaulis.Server.Services
         public IEnumerable<Event> GetEventsByTheatherId(int id)
         {
             return _eventRepository.GetEventsByTheatherId(id);
+        }
+
+        public IEnumerable<AuditoriumViewModel> GetMappedAuditoriums(IEnumerable<Auditorium> auditoriums)
+        {
+            var viewModels = new List<AuditoriumViewModel>();
+
+            foreach (var auditorium in auditoriums)
+            {
+                viewModels.Add(_theatherMapper.MapOneAuditorium(auditorium));
+            }
+
+            return viewModels;
         }
     }
 }

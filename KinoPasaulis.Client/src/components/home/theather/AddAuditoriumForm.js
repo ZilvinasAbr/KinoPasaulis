@@ -1,7 +1,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { registerTheather } from '../../../actions/theather/auditoriumActions';
-import { Button, FormControl } from 'react-bootstrap';
+import { addAuditorium } from '../../../actions/theather/auditoriumActions';
+import { Button, FormControl, Form, FormGroup, Row } from 'react-bootstrap';
 
 class AddAuditoriumForm extends React.Component {
   constructor(props) {
@@ -13,7 +13,8 @@ class AddAuditoriumForm extends React.Component {
   handleSubmit() {
     const {fields: {title, seats} } = this.props;
     //
-    this.props.dispatch(registerTheather(username.value, password.value, repeat.value, city.value, address.value, email.value, phone.value, title.value));
+    console.log('sdfsdf');
+    this.props.dispatch(addAuditorium(title.value, seats.value));
   }
 
   render() {
@@ -21,9 +22,19 @@ class AddAuditoriumForm extends React.Component {
 
     return (
       <div>
-        <FormControl type="text" placeholder="Auditorijos pavadinimas" />
-        <FormControl type="number" placeholder="Vietu skaicius" />
-        <Button> Patvirtinti </Button>
+        <Form>
+            <FormGroup>
+              <FormControl type="text" placeholder="Auditorijos pavadinimas" { ...title } />
+            </FormGroup>
+
+            <FormGroup>
+              <FormControl type="number" placeholder="Vietu skaicius" { ...seats } />
+            </FormGroup>
+
+            <FormGroup>
+              <Button onClick={this.handleSubmit}> Patvirtinti </Button>
+            </FormGroup>
+        </Form>
       </div>
     );
   }

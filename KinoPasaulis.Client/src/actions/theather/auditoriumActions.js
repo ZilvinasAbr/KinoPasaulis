@@ -1,23 +1,16 @@
 //This is just an example code from another project, so it is commented out.
 
 import axios from 'axios';
-import { push } from 'react-router-redux';
 
-export function registerTheather(userName, password, confirmPassword, city, address, email, phone, title) {
+export function addAuditorium(name, seats) {
   return dispatch => {
-    return axios.post('/api/account/registerTheather', {
-      UserName: userName,
-      Password: password,
-      ConfirmPassword: confirmPassword,
-      City: city,
-      Address: address,
-      Email: email,
-      Phone: phone,
-      Title: title
+    return axios.post('/api/theathers/addAuditorium', {
+      Name: name,
+      Seats: seats
     })
       .then(response => {
         if(response.data === true) {
-          dispatch(push('/home'));
+          console.log('success');
         }else {
 
         }

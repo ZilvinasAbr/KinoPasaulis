@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
+using KinoPasaulis.Server.ViewModels.Theather;
 
 namespace KinoPasaulis.Server.Services
 {
@@ -18,5 +19,7 @@ namespace KinoPasaulis.Server.Services
         bool UpdateShow(Show show);
         bool DeleteEvent(int id);
         bool DeleteShow(int id);
+
+        IEnumerable<AuditoriumViewModel> GetMappedAuditoriums(IEnumerable<Auditorium> auditoriums);
     }
 }

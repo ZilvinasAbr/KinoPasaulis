@@ -9,6 +9,7 @@ using KinoPasaulis.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using KinoPasaulis.Server.ViewModels.Theather;
 
 namespace KinoPasaulis.Server.Controllers.Api
 {
@@ -50,6 +51,20 @@ namespace KinoPasaulis.Server.Controllers.Api
                 auditorium.Theather = theather;
                 _theatherService.AddNewAuditorium(auditorium);
             }
+        }
+
+        [HttpGet("getTheatherAuditoriums")]
+        public IEnumerable<AuditoriumViewModel> GetTheatherAuditoriums()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                var theather = _userService.GetTheatherByUserId(userId);
+                return _theatherService.GetMappedAuditoriums(theather.Auditoriums);
+            }
+
+            // Kazkaip kitaip reiketu sita padaryt, kolkas nezinau kaip, kolkas px nes veikia
+            return new List<AuditoriumViewModel>();
         }
 
         [HttpGet("events")]

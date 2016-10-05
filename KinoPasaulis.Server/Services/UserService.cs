@@ -21,6 +21,7 @@ namespace KinoPasaulis.Server.Services
             return _dbContext
                 .Users
                 .Include(x => x.Theather)
+                    .ThenInclude(x => x.Auditoriums)
                 .SingleOrDefault(x => x.Id == id)
                 .Theather;
         }

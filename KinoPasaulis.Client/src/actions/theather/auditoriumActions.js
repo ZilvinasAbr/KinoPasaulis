@@ -1,5 +1,3 @@
-//This is just an example code from another project, so it is commented out.
-
 import axios from 'axios';
 
 export function addAuditorium(name, seats) {
@@ -14,6 +12,18 @@ export function addAuditorium(name, seats) {
         }else {
 
         }
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+export function getAuditoriums() {
+  return dispatch => {
+    return axios.get('/api/theathers/getTheatherAuditoriums')
+      .then(response => {
+        return response.data;
       })
       .catch(error => {
         console.log(error);

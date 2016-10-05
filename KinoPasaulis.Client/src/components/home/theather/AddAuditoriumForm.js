@@ -12,8 +12,7 @@ class AddAuditoriumForm extends React.Component {
 
   handleSubmit() {
     const {fields: {title, seats} } = this.props;
-    //
-    console.log('sdfsdf');
+
     this.props.dispatch(addAuditorium(title.value, seats.value));
   }
 

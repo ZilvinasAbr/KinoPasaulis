@@ -4,6 +4,7 @@ import { push } from 'react-router-redux';
 import TheatherNavigationBar from './TheatherNavigationBar';
 import AddAuditoriumForm from './AddAuditoriumForm';
 import { Button, Popover, ButtonToolbar, OverlayTrigger } from 'react-bootstrap';
+import { getAuditoriums } from '../../../actions/theather/auditoriumActions';
 
 class Auditoriums extends React.Component {
   constructor(props) {

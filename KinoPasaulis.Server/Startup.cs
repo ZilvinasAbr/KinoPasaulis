@@ -80,7 +80,7 @@ namespace KinoPasaulis.Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -109,6 +109,25 @@ namespace KinoPasaulis.Server
                     template: "{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute("Error", "{*url}", new { controller = "Home", action = "Index" });
             });
+
+            await CreateRoles(serviceProvider);
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            string[] roleNames = { "Client", "Theather", "Company", "Creators", "VoteAdmin" };
+            IdentityResult roleResult;
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
         }
     }
 }

@@ -8,7 +8,7 @@ namespace KinoPasaulis.Server.Models.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "User name is required")]
+        [Required(ErrorMessage = "Username is required")]
         [Display(Name = "Username")]
         public string UserName { get; set; }
 

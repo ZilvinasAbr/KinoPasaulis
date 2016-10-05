@@ -43,6 +43,7 @@ namespace KinoPasaulis.Server.Controllers
 
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, "Client");
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return true;
             }
@@ -78,6 +79,77 @@ namespace KinoPasaulis.Server.Controllers
 
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, "Theather");
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return true;
+            }
+
+            return false;
+        }
+
+        [HttpPost("registerCreator")]
+        public async Task<bool> RegisterCreator([FromBody] CreatorRegisterViewModel model)
+        {
+            if (model.Password != model.ConfirmPassword)
+            {
+                return false;
+            }
+
+            var creator = new Creator
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                BirthDate = model.BirthDate
+            };
+
+            var user = new ApplicationUser
+            {
+                UserName = model.UserName,
+                Creator = creator
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "Creator");
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return true;
+            }
+
+            return false;
+        }
+
+        [HttpPost("registerCompany")]
+        public async Task<bool> RegisterCompany([FromBody] CompanyRegisterViewModel model)
+        {
+            if (model.Password != model.ConfirmPassword)
+            {
+                return false;
+            }
+
+            var company = new Company
+            {
+                Name = model.Name,
+                City = model.City,
+                Country = model.Country,
+                Address = model.Address,
+                Email = model.Email,
+                Phone = model.Phone
+            };
+
+            var user = new ApplicationUser
+            {
+                UserName = model.UserName,
+                Company = company
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "Company");
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return true;
             }

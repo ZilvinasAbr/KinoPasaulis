@@ -31,7 +31,7 @@ namespace KinoPasaulis.Server.ViewModels
         public string Country { get; set; }
 
         [Required(ErrorMessage = "Adress is required")]
-        public string Adress { get; set; }
+        public string Address { get; set; }
 
         [Required(ErrorMessage = "Email adress is required")]
         [DataType(DataType.EmailAddress)]

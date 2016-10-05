@@ -12,5 +12,9 @@ namespace KinoPasaulis.Server.Models
     public class ApplicationUser : IdentityUser
     {
         public Theather Theather { get; set; }
+
+        public Creator Creator { get; set; }
+
+        public Company Company { get; set; }
     }
 }

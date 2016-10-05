@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from './TheatherNavigationBar';
-import { Button, Form, FormGroup, Col, FormControl, ControlLabel, Popover, ButtonToolbar, OverlayTrigger } from 'react-bootstrap';
+import AddAuditoriumForm from './AddAuditoriumForm';
+import { Button, Popover, ButtonToolbar, OverlayTrigger } from 'react-bootstrap';
 
 class Auditoriums extends React.Component {
   constructor(props) {
@@ -35,11 +36,7 @@ class Auditoriums extends React.Component {
 
 const addNewForm = (
   <Popover id="popover-positioned-left" title="Prideti nauja auditorija">
-    <FormControl type="text" placeholder="Auditorijos pavadinimas" />
-
-    <FormControl type="number" placeholder="Vietu skaicius" />
-
-    <Button> Patvirtinti </Button>
+    <AddAuditoriumForm/>
   </Popover>
 );
 

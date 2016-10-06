@@ -15,9 +15,9 @@ function receiveShowAuditoriums(state, auditoriums) {
 }
 
 function addAuditorium(state, auditorium) {
-  let nextState = Object.assign({}, state);
-
-  debugger;
+  let nextState = Object.assign({}, state, {
+    auditoriums: state.auditoriums.slice()
+  });
 
   nextState.auditoriums.push(auditorium);
 

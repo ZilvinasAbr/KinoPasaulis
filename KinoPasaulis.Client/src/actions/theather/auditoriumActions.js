@@ -14,8 +14,7 @@ export function addAuditorium(name, seats) {
       .then(response => {
         if(response.data === true) {
           console.log('success');
-          // dispatch(addAuditoriumToAuditoriums({name, seats}));
-          dispatch(getAuditoriums());
+          dispatch(addAuditoriumToAuditoriums({name, seats}));
         }else {
           console.log('response.data returned false')
         }

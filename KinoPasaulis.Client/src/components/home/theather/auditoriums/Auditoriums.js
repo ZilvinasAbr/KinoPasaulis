@@ -12,7 +12,8 @@ class Auditoriums extends React.Component {
     super(props);
     this.state = {
       modalOpen: false,
-      idToBeDeleted: 0
+      idToBeDeleted: 0,
+      editAuditorium: {}
     };
   }
 
@@ -21,13 +22,19 @@ class Auditoriums extends React.Component {
     this.setState({idToBeDeleted:index});
   }
 
+  assignAuditorium(auditoriumIndex) {
+    console.log(auditoriumIndex);
+
+    let auditorium = this.props.auditoriums[auditoriumIndex];
+   // this.setState({editAuditorium: auditorium});
+  }
+
   _closeModal() {
     this.setState({modalOpen: false});
   }
 
   deleteAuditorium() {
     this.setState({modalOpen: false});
-    deleteAuditorium(this.state.idToBeDeleted);
   }
 
   componentDidMount() {
@@ -42,9 +49,12 @@ class Auditoriums extends React.Component {
         <td>{a.name} </td>
         <td> {a.seats} </td>
         <td>
-          <Button bsStyle="danger" onClick={this._openModal.bind(this, a.id)}> <span className="glyphicon glyphicon-remove"></span> </Button>
-
-          <Button> <span className="glyphicon glyphicon-pencil"></span> </Button>
+          <ButtonToolbar>
+            <Button bsStyle="danger" onClick={this._openModal.bind(this, a.id)}> <span className="glyphicon glyphicon-remove"></span> </Button>
+            <OverlayTrigger trigger="click" rootClose placement="left" overlay={editForm}>
+              <Button onClick={this.assignAuditorium(index)}> <span className="glyphicon glyphicon-pencil"></span> </Button>
+            </OverlayTrigger>
+          </ButtonToolbar>
         </td>
       </tr>
     });
@@ -111,6 +121,12 @@ class Auditoriums extends React.Component {
 
 const addNewForm = (
   <Popover id="popover-positioned-left" title="Prideti nauja auditorija">
+    <AddAuditoriumForm/>
+  </Popover>
+);
+
+const editForm = (
+  <Popover id="popover-positioned-left" title="Redaguoti pasirinktą auditoriją">
     <AddAuditoriumForm/>
   </Popover>
 );

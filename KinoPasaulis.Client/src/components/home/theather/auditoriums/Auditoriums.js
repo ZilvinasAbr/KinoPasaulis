@@ -3,12 +3,24 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
 import AddAuditoriumForm from '../AddAuditoriumForm';
-import { Button, Popover, ButtonToolbar, OverlayTrigger, Col, Table } from 'react-bootstrap';
+import { Button, Popover, ButtonToolbar, OverlayTrigger, Col, Table, Modal } from 'react-bootstrap';
 import { getAuditoriums } from '../../../../actions/theather/auditoriumActions';
 
 class Auditoriums extends React.Component {
+
   constructor(props) {
     super(props);
+    this.state = {
+      modalOpen: false
+    };
+  }
+
+  _openModal() {
+    this.setState({modalOpen: true});
+  }
+
+  _closeModal() {
+    this.setState({modalOpen: false});
   }
 
   componentDidMount() {
@@ -19,11 +31,21 @@ class Auditoriums extends React.Component {
     let auditoriums = this.props.auditoriums;
 
     return auditoriums.map((a, index) => {
-      return <tr key={index}><td>{a.name} </td> <td> {a.seats} </td> <td><Button bsStyle="danger"> <span className="glyphicon glyphicon-remove"></span> </Button> <Button> <span className="glyphicon glyphicon-pencil"></span> </Button></td></tr>
+      return <tr key={index}>
+        <td>{a.name} </td>
+        <td> {a.seats} </td>
+        <td>
+          <Button bsStyle="danger" onClick={this._openModal.bind(this)}> <span className="glyphicon glyphicon-remove"></span> </Button>
+
+          <Button> <span className="glyphicon glyphicon-pencil"></span> </Button>
+        </td>
+      </tr>
     });
   }
 
   render() {
+    let close = () => this.setState({ show: false});
+
     return (
       <div>
         <TheatherNavigationBar
@@ -59,6 +81,23 @@ class Auditoriums extends React.Component {
             </Table>
           </div>
         </Col>
+        <Modal
+          show={this.state.modalOpen}
+          closeModal={this._closeModal.bind(this)}
+          container={this}
+          aria-labelledby="contained-modal-title"
+        >
+          <Modal.Header>
+            <Modal.Title id="contained-modal-title">Auditorium is about to be deleted</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Proceed?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button bsStyle="danger">Delete</Button>
+            <Button onClick={this._closeModal.bind(this)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }

@@ -38,3 +38,14 @@ export function getAuditoriums() {
       })
   }
 }
+
+export function deleteAuditorium(id) {
+    return axios({
+      method: 'delete',
+      url: '/api/theathers/deleteAuditorium',
+      data: id,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+}

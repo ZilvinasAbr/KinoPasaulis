@@ -4,23 +4,30 @@ import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
 import AddAuditoriumForm from '../AddAuditoriumForm';
 import { Button, Popover, ButtonToolbar, OverlayTrigger, Col, Table, Modal } from 'react-bootstrap';
-import { getAuditoriums } from '../../../../actions/theather/auditoriumActions';
+import { getAuditoriums, deleteAuditorium } from '../../../../actions/theather/auditoriumActions';
 
 class Auditoriums extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false
+      modalOpen: false,
+      idToBeDeleted: 0
     };
   }
 
-  _openModal() {
+  _openModal(index) {
     this.setState({modalOpen: true});
+    this.setState({idToBeDeleted:index});
   }
 
   _closeModal() {
     this.setState({modalOpen: false});
+  }
+
+  deleteAuditorium() {
+    console.log(this.state.idToBeDeleted);
+    deleteAuditorium(this.state.idToBeDeleted);
   }
 
   componentDidMount() {
@@ -35,7 +42,7 @@ class Auditoriums extends React.Component {
         <td>{a.name} </td>
         <td> {a.seats} </td>
         <td>
-          <Button bsStyle="danger" onClick={this._openModal.bind(this)}> <span className="glyphicon glyphicon-remove"></span> </Button>
+          <Button bsStyle="danger" onClick={this._openModal.bind(this, a.id)}> <span className="glyphicon glyphicon-remove"></span> </Button>
 
           <Button> <span className="glyphicon glyphicon-pencil"></span> </Button>
         </td>
@@ -83,7 +90,6 @@ class Auditoriums extends React.Component {
         </Col>
         <Modal
           show={this.state.modalOpen}
-          closeModal={this._closeModal.bind(this)}
           container={this}
           aria-labelledby="contained-modal-title"
         >
@@ -94,7 +100,7 @@ class Auditoriums extends React.Component {
             Proceed?
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="danger">Delete</Button>
+            <Button onClick={this.deleteAuditorium.bind(this)} bsStyle="danger">Delete</Button>
             <Button onClick={this._closeModal.bind(this)}>Close</Button>
           </Modal.Footer>
         </Modal>

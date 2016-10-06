@@ -12,3 +12,11 @@ export function receiveShowAuditoriums(auditoriums) {
     auditoriums
   };
 }
+
+export const ADD_AUDITORIUM = 'ADD_AUDITORIUM';
+export function addAuditorium(auditorium) {
+  return {
+    type: ADD_AUDITORIUM,
+    auditorium
+  };
+}

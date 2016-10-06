@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
   requestShowAuditoriums,
-  receiveShowAuditoriums
+  receiveShowAuditoriums,
+  addAuditorium as addAuditoriumToAuditoriums
 } from '../../actionCreators/theaterActionCreators';
 
 export function addAuditorium(name, seats) {
@@ -13,8 +14,10 @@ export function addAuditorium(name, seats) {
       .then(response => {
         if(response.data === true) {
           console.log('success');
+          // dispatch(addAuditoriumToAuditoriums({name, seats}));
+          dispatch(getAuditoriums());
         }else {
-
+          console.log('response.data returned false')
         }
       })
       .catch(error => {

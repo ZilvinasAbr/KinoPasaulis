@@ -16,10 +16,10 @@ class Auditoriums extends React.Component {
   }
 
   renderAuditoriums() {
-    const auditoriums = this.props.auditoriums;
+    let auditoriums = this.props.auditoriums;
 
     return auditoriums.map((a, index) => {
-      return <div key={index}>{a.id} {a.name} {a.seats}</div>
+      return <div key={index}>{a.name} {a.seats}</div>
     });
   }
 

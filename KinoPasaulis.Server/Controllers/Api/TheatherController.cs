@@ -42,7 +42,7 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpPost("addAuditorium")]
-        public void AddAudotirum([FromBody] Auditorium auditorium)
+        public bool AddAudotirum([FromBody] Auditorium auditorium)
         {
             if (_signInManager.IsSignedIn(User))
             {
@@ -50,7 +50,11 @@ namespace KinoPasaulis.Server.Controllers.Api
                 Theather theather = _userService.GetTheatherByUserId(userId);
                 auditorium.Theather = theather;
                 _theatherService.AddNewAuditorium(auditorium);
+
+                return true;
             }
+
+            return false;
         }
 
         [HttpGet("getTheatherAuditoriums")]

@@ -10,7 +10,7 @@ import LoginPage from './components/login/LoginPage';
 import RegisterPage from './components/register/RegisterPage';
 import CinemaStudioRegisterPage from './components/register/cinemaStudio/CinemaStudioRegisterPage';
 import TheatherRegisterPage from './components/register/theather/TheatherRegisterPage';
-import Auditoriums from './components/home/theather/Auditoriums';
+import Auditoriums from './components/home/theather/auditoriums/Auditoriums';
 import Events from './components/home/theather/Events';
 import Subscriptions from './components/home/theather/Subscriptions';
 

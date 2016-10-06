@@ -1,4 +1,8 @@
 import axios from 'axios';
+import {
+  requestShowAuditoriums,
+  receiveShowAuditoriums
+} from '../../actionCreators/theaterActionCreators';
 
 export function addAuditorium(name, seats) {
   return dispatch => {
@@ -21,9 +25,11 @@ export function addAuditorium(name, seats) {
 
 export function getAuditoriums() {
   return dispatch => {
+    dispatch(requestShowAuditoriums());
+
     return axios.get('/api/theathers/getTheatherAuditoriums')
       .then(response => {
-        return response.data;
+        dispatch(receiveShowAuditoriums(response.data));
       })
       .catch(error => {
         console.log(error);

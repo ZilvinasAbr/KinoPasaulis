@@ -11,6 +11,18 @@ class Auditoriums extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.getAuditoriums();
+  }
+
+  renderAuditoriums() {
+    const auditoriums = this.props.auditoriums;
+
+    return auditoriums.map((a, index) => {
+      return <div key={index}>{a.id} {a.name} {a.seats}</div>
+    });
+  }
+
   render() {
     return (
       <div>
@@ -30,6 +42,9 @@ class Auditoriums extends React.Component {
             </OverlayTrigger>
           </ButtonToolbar>
         </div>
+        <div className="container">
+          {this.renderAuditoriums()}
+        </div>
       </div>
     );
   }
@@ -43,6 +58,7 @@ const addNewForm = (
 
 function mapStateToProps(state) {
   return {
+    auditoriums: state.theaterPage.auditoriums || []
   }
 }
 
@@ -66,6 +82,10 @@ function mapDispatchToProps(dispatch) {
 
     logOut: () => {
       dispatch(push('/theather/logout'));
+    },
+
+    getAuditoriums: () => {
+      dispatch(getAuditoriums());
     }
   }
 }

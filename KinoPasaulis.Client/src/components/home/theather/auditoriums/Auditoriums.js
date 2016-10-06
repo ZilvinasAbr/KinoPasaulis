@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
 import AddAuditoriumForm from '../AddAuditoriumForm';
-import { Button, Popover, ButtonToolbar, OverlayTrigger } from 'react-bootstrap';
+import { Button, Popover, ButtonToolbar, OverlayTrigger, Col, Table } from 'react-bootstrap';
 import { getAuditoriums } from '../../../../actions/theather/auditoriumActions';
 
 class Auditoriums extends React.Component {
@@ -19,7 +19,7 @@ class Auditoriums extends React.Component {
     let auditoriums = this.props.auditoriums;
 
     return auditoriums.map((a, index) => {
-      return <div key={index}>{a.name} {a.seats}</div>
+      return <tr key={index}><td>{a.name} </td> <td> {a.seats} </td> <td><Button bsStyle="danger"> <span className="glyphicon glyphicon-remove"></span> </Button> <Button> <span className="glyphicon glyphicon-pencil"></span> </Button></td></tr>
     });
   }
 
@@ -33,18 +33,32 @@ class Auditoriums extends React.Component {
           goToSubscriptions={this.props.goToSubscriptions}
           logOut={this.props.logOut}
         />
-
-        <div className="container">
-          <h1> Auditoriums </h1>
-          <ButtonToolbar>
-            <OverlayTrigger trigger="click" rootClose placement="right" overlay={addNewForm}>
-              <Button>Nauja</Button>
-            </OverlayTrigger>
-          </ButtonToolbar>
-        </div>
-        <div className="container">
-          {this.renderAuditoriums()}
-        </div>
+        <Col md={3}>
+          <div className="container">
+            <h1> Auditoriums </h1>
+            <ButtonToolbar>
+              <OverlayTrigger trigger="click" rootClose placement="right" overlay={addNewForm}>
+                <Button>Nauja</Button>
+              </OverlayTrigger>
+            </ButtonToolbar>
+          </div>
+        </Col>
+        <Col md={9}>
+          <div className="container">
+            <Table responsive hover>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Seats</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderAuditoriums()}
+              </tbody>
+            </Table>
+          </div>
+        </Col>
       </div>
     );
   }

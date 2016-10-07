@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
   requestShowAuditoriums,
   receiveShowAuditoriums,
-  addAuditorium as addAuditoriumToAuditoriums
+  addAuditorium as addAuditoriumToAuditoriums,
+  deleteAuditorium as deleteAuditoriumFromAuditoriums
 } from '../../actionCreators/theaterActionCreators';
 
 export function addAuditorium(name, seats) {
@@ -47,5 +48,7 @@ export function deleteAuditorium(id) {
       headers: {
         'Content-type': 'application/json'
       }
+    }).then(response => {
+      dispatch(deleteAuditoriumFromAuditoriums(id));
     });
 }

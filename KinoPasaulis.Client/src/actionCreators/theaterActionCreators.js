@@ -20,3 +20,11 @@ export function addAuditorium(auditorium) {
     auditorium
   };
 }
+
+export const DELETE_AUDITORIUM = 'DELETE_AUDITORIUM';
+export function deleteAuditorium(auditorium) {
+  return {
+    type: DELETE_AUDITORIUM,
+    auditorium
+  };
+}

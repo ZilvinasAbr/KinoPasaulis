@@ -1,7 +1,8 @@
 import {
   REQUEST_SHOW_AUDITORIUMS,
   RECEIVE_SHOW_AUDITORIUMS,
-  ADD_AUDITORIUM
+  ADD_AUDITORIUM,
+  DELETE_AUDITORIUM
 } from '../actionCreators/theaterActionCreators';
 
 export const initialState = {};
@@ -15,6 +16,17 @@ function receiveShowAuditoriums(state, auditoriums) {
 }
 
 function addAuditorium(state, auditorium) {
+  let nextState = Object.assign({}, state, {
+    auditoriums: state.auditoriums.slice()
+  });
+
+  nextState.auditoriums.push(auditorium);
+
+  return nextState;
+}
+
+function deleteAuditorium(state, auditorium) {
+
   let nextState = Object.assign({}, state, {
     auditoriums: state.auditoriums.slice()
   });
@@ -38,6 +50,8 @@ export function theaterPage(state = initialState, action) {
       return receiveShowAuditoriums(state, action.auditoriums);
     case ADD_AUDITORIUM:
       return addAuditorium(state, action.auditorium);
+    case DELETE_AUDITORIUM:
+      return deleteAuditorium(state, action.auditorium);
     default:
       return state;
   }

@@ -4,3 +4,4 @@ KinoPasaulis.Server/Migrations/
 KinoPasaulis.Server/wwwroot/bundle.js
 KinoPasaulis.Client/.idea/
 KinoPasaulis.Server/.vs/
+.idea/

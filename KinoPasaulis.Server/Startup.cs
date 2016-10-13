@@ -45,21 +45,21 @@ namespace KinoPasaulis.Server
         {
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc()
                 .AddJsonOptions(o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.AddIdentity<ApplicationUser, IdentityRole>(o =>
-            {
-                o.Password.RequireDigit = false;
-                o.Password.RequireLowercase = false;
-                o.Password.RequireUppercase = false;
-                o.Password.RequireNonAlphanumeric = false; ;
-                o.Password.RequiredLength = 6;
-            })
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
+                {
+                    o.Password.RequireDigit = false;
+                    o.Password.RequireLowercase = false;
+                    o.Password.RequireUppercase = false;
+                    o.Password.RequireNonAlphanumeric = false;
+                    o.Password.RequiredLength = 6;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc();
             // Mappers
@@ -80,7 +80,8 @@ namespace KinoPasaulis.Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+            IServiceProvider serviceProvider)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -107,7 +108,7 @@ namespace KinoPasaulis.Server
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-                routes.MapRoute("Error", "{*url}", new { controller = "Home", action = "Index" });
+                routes.MapRoute("Error", "{*url}", new {controller = "Home", action = "Index"});
             });
 
             await CreateRoles(serviceProvider);
@@ -115,19 +116,18 @@ namespace KinoPasaulis.Server
 
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            string[] roleNames = { "Client", "Theather", "Company", "Creators", "VoteAdmin" };
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+//            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            string[] roleNames = {"Client", "Theather", "Company", "Creators", "VoteAdmin"};
             IdentityResult roleResult;
             foreach (var roleName in roleNames)
             {
-                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                var roleExist = await roleManager.RoleExistsAsync(roleName);
                 if (!roleExist)
                 {
-                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                    roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
             }
-
         }
     }
 }

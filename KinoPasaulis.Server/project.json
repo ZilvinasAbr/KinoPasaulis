@@ -18,11 +18,7 @@
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
     "Microsoft.AspNetCore.StaticFiles": "1.0.0",
-    "Microsoft.EntityFrameworkCore.Sqlite": "1.0.0",
-    "Microsoft.EntityFrameworkCore.Sqlite.Design": {
-      "version": "1.0.0",
-      "type": "build"
-    },
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1", 
     "Microsoft.EntityFrameworkCore.Tools": {
       "version": "1.0.0-preview2-final",
       "type": "build"
@@ -45,7 +41,7 @@
       "type": "build"
     },
     "Microsoft.AspNet.Identity": "3.0.0-rc1-final",
-    "Microsoft.EntityFrameworkCore": "1.0.0"
+    "Microsoft.EntityFrameworkCore": "1.0.1"
   },
 
   "tools": {

@@ -3,7 +3,8 @@ import {
   requestShowAuditoriums,
   receiveShowAuditoriums,
   addAuditorium as addAuditoriumToAuditoriums,
-  deleteAuditorium as deleteAuditoriumFromAuditoriums
+  deleteAuditorium as deleteAuditoriumFromAuditoriums,
+  requestUpdateAuditorium as requestUpdate
 } from '../../actionCreators/theaterActionCreators';
 
 export function addAuditorium(name, seats) {
@@ -40,7 +41,9 @@ export function getAuditoriums() {
   }
 }
 
-export function deleteAuditorium(id) {
+export function deleteAuditorium(id, arrayId) {
+  return dispatch => {
+
     return axios({
       method: 'delete',
       url: '/api/theathers/deleteAuditorium',
@@ -49,6 +52,14 @@ export function deleteAuditorium(id) {
         'Content-type': 'application/json'
       }
     }).then(response => {
-      dispatch(deleteAuditoriumFromAuditoriums(id));
+      dispatch(deleteAuditoriumFromAuditoriums(arrayId));
     });
+  }
+}
+
+export function requestUpdateAuditorium(a)
+{
+  return dispatch => {
+    dispatch(requestUpdate(a));
+  }
 }

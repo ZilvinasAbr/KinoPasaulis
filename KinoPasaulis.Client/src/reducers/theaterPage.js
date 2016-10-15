@@ -31,7 +31,7 @@ function deleteAuditorium(state, auditorium) {
     auditoriums: state.auditoriums.slice()
   });
 
-  nextState.auditoriums.push(auditorium);
+  nextState.auditoriums.splice(auditorium, 1);
 
   return nextState;
 }

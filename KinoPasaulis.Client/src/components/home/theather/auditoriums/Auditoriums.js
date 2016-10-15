@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
 import AddAuditoriumForm from '../AddAuditoriumForm';
+//import UpdateAuditoriumForm from '../UpdateAuditoriumForm';
 import { Button, Popover, ButtonToolbar, OverlayTrigger, Col, Table, Modal } from 'react-bootstrap';
-import { getAuditoriums, deleteAuditorium } from '../../../../actions/theather/auditoriumActions';
+import { getAuditoriums, deleteAuditorium, requestUpdateAuditorium } from '../../../../actions/theather/auditoriumActions';
 
 class Auditoriums extends React.Component {
 
@@ -13,20 +14,22 @@ class Auditoriums extends React.Component {
     this.state = {
       modalOpen: false,
       idToBeDeleted: 0,
+      idArrayDeleted: 0,
       editAuditorium: {}
     };
   }
 
-  _openModal(index) {
+  _openModal(index, arrayIndex) {
     this.setState({modalOpen: true});
     this.setState({idToBeDeleted:index});
+    this.setState({idArrayDeleted:arrayIndex});
   }
 
-  assignAuditorium(auditoriumIndex) {
-    console.log(auditoriumIndex);
-
-    let auditorium = this.props.auditoriums[auditoriumIndex];
-   // this.setState({editAuditorium: auditorium});
+  assignAuditorium(arrayIndex) {
+    console.log(arrayIndex);
+    let auditorium = this.props.auditoriums[arrayIndex];
+    this.setState({editAuditorium: auditorium});
+    console.log(this.state.editAuditorium);
   }
 
   _closeModal() {
@@ -36,7 +39,7 @@ class Auditoriums extends React.Component {
   deleteAuditorium() {
     this.setState({modalOpen: false});
     //deleteAuditorium(this.state.idToBeDeleted);
-    this.props.dispatch(deleteAuditorium(this.state.idToBeDeleted));
+    this.props.deleteAuditoriumFromList(this.state.idToBeDeleted, this.state.idArrayDeleted);
   }
 
   componentDidMount() {
@@ -52,9 +55,9 @@ class Auditoriums extends React.Component {
         <td> {a.seats} </td>
         <td>
           <ButtonToolbar>
-            <Button bsStyle="danger" onClick={this._openModal.bind(this, a.id)}> <span className="glyphicon glyphicon-remove"></span> </Button>
+            <Button bsStyle="danger" onClick={this._openModal.bind(this, a.id, index)}> <span className="glyphicon glyphicon-remove"></span> </Button>
             <OverlayTrigger trigger="click" rootClose placement="left" overlay={editForm}>
-              <Button onClick={this.assignAuditorium(index)}> <span className="glyphicon glyphicon-pencil"></span> </Button>
+              <Button onClick={this.props.requestUpdateAuditorium.bind(this, a)}> <span className="glyphicon glyphicon-pencil"></span> </Button>
             </OverlayTrigger>
           </ButtonToolbar>
         </td>
@@ -129,7 +132,7 @@ const addNewForm = (
 
 const editForm = (
   <Popover id="popover-positioned-left" title="Redaguoti pasirinktą auditoriją">
-    <AddAuditoriumForm/>
+    <AddAuditoriumForm />
   </Popover>
 );
 
@@ -163,6 +166,14 @@ function mapDispatchToProps(dispatch) {
 
     getAuditoriums: () => {
       dispatch(getAuditoriums());
+    },
+
+    requestUpdateAuditorium: (auditorium) => {
+      dispatch(requestUpdateAuditorium(auditorium));
+    },
+
+    deleteAuditoriumFromList: (id, arrayId) => {
+      dispatch(deleteAuditorium(id, arrayId))
     }
   }
 }

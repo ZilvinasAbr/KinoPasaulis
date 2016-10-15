@@ -28,3 +28,11 @@ export function deleteAuditorium(auditorium) {
     auditorium
   };
 }
+
+export const REQUEST_UPDATE_AUDITORIUM = 'REQUEST_UPDATE_AUDITORIUM';
+export function requestUpdateAuditorium(auditorium) {
+  return {
+    type: REQUEST_UPDATE_AUDITORIUM,
+    auditorium
+  };
+}

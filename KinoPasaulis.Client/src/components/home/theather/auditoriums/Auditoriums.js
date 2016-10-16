@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
 import AddAuditoriumForm from '../AddAuditoriumForm';
-//import UpdateAuditoriumForm from '../UpdateAuditoriumForm';
+import UpdateAuditoriumForm from '../UpdateAuditoriumForm';
 import { Button, Popover, ButtonToolbar, OverlayTrigger, Col, Table, Modal } from 'react-bootstrap';
 import { getAuditoriums, deleteAuditorium, requestUpdateAuditorium } from '../../../../actions/theather/auditoriumActions';
 
@@ -56,7 +56,7 @@ class Auditoriums extends React.Component {
         <td>
           <ButtonToolbar>
             <Button bsStyle="danger" onClick={this._openModal.bind(this, a.id, index)}> <span className="glyphicon glyphicon-remove"></span> </Button>
-            <OverlayTrigger trigger="click" rootClose placement="left" overlay={editForm}>
+            <OverlayTrigger trigger="click" rootClose placement="left" overlay={editForm(this.props.auditoriumToBeUpdated)}>
               <Button onClick={this.props.requestUpdateAuditorium.bind(this, a)}> <span className="glyphicon glyphicon-pencil"></span> </Button>
             </OverlayTrigger>
           </ButtonToolbar>
@@ -130,15 +130,16 @@ const addNewForm = (
   </Popover>
 );
 
-const editForm = (
+const editForm = (auditorium) => (
   <Popover id="popover-positioned-left" title="Redaguoti pasirinktą auditoriją">
-    <AddAuditoriumForm />
+    <UpdateAuditoriumForm auditorium={auditorium} />
   </Popover>
 );
 
 function mapStateToProps(state) {
   return {
-    auditoriums: state.theaterPage.auditoriums || []
+    auditoriums: state.theaterPage.auditoriums || [],
+    auditoriumToBeUpdated: state.theaterPage.auditoriumToBeUpdated || {}
   }
 }
 

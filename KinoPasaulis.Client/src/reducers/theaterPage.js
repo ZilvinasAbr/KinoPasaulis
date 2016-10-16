@@ -2,7 +2,9 @@ import {
   REQUEST_SHOW_AUDITORIUMS,
   RECEIVE_SHOW_AUDITORIUMS,
   ADD_AUDITORIUM,
-  DELETE_AUDITORIUM
+  DELETE_AUDITORIUM,
+  REQUEST_UPDATE_AUDITORIUM,
+  UPDATE_AUDITORIUM
 } from '../actionCreators/theaterActionCreators';
 
 export const initialState = {};
@@ -36,6 +38,26 @@ function deleteAuditorium(state, auditorium) {
   return nextState;
 }
 
+function requestUpdateAuditorium(state, auditorium) {
+  let nextState = Object.assign({}, state, {
+    auditoriumToBeUpdated: auditorium
+  });
+
+  return nextState;
+}
+
+function updateAuditorium(state, auditorium) {
+  let nextState = Object.assign({}, state, {
+    auditoriums: state.auditoriums.slice()
+  });
+
+  let findById = nextState.auditoriums.find(x => x.id === auditorium.Id);
+  let index = nextState.auditoriums.indexOf(findById);
+  nextState.auditoriums[index].name = auditorium.Name;
+  nextState.auditoriums[index].seats = auditorium.Seats;
+  return nextState;
+}
+
 /**
  * TheaterPage reducer.
  * @param state state before dispatching action
@@ -52,6 +74,10 @@ export function theaterPage(state = initialState, action) {
       return addAuditorium(state, action.auditorium);
     case DELETE_AUDITORIUM:
       return deleteAuditorium(state, action.auditorium);
+    case REQUEST_UPDATE_AUDITORIUM:
+      return requestUpdateAuditorium(state, action.auditorium);
+    case UPDATE_AUDITORIUM:
+      return updateAuditorium(state, action.auditorium)
     default:
       return state;
   }

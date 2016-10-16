@@ -36,3 +36,11 @@ export function requestUpdateAuditorium(auditorium) {
     auditorium
   };
 }
+
+export const UPDATE_AUDITORIUM = 'UPDATE_AUDITORIUM';
+export function updateAuditorium(auditorium) {
+  return {
+    type: UPDATE_AUDITORIUM,
+    auditorium
+  };
+}

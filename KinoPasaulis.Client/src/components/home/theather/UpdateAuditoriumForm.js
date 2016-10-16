@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { addAuditorium } from '../../../actions/theather/auditoriumActions';
+import { updateAuditorium } from '../../../actions/theather/auditoriumActions';
 import { Button, FormControl, Form, FormGroup, Row } from 'react-bootstrap';
 
 class UpdateAuditoriumForm extends React.Component {
@@ -12,8 +12,7 @@ class UpdateAuditoriumForm extends React.Component {
 
   handleSubmit() {
     const {fields: {title, seats} } = this.props;
-
-    this.props.dispatch(addAuditorium(title.value, seats.value));
+    this.props.dispatch(updateAuditorium(this.props.auditorium.id, title.value, seats.value));
   }
 
   render() {

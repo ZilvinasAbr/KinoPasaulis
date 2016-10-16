@@ -4,7 +4,8 @@ import {
   receiveShowAuditoriums,
   addAuditorium as addAuditoriumToAuditoriums,
   deleteAuditorium as deleteAuditoriumFromAuditoriums,
-  requestUpdateAuditorium as requestUpdate
+  requestUpdateAuditorium as requestUpdate,
+  updateAuditorium as update
 } from '../../actionCreators/theaterActionCreators';
 
 export function addAuditorium(name, seats) {
@@ -61,5 +62,23 @@ export function requestUpdateAuditorium(a)
 {
   return dispatch => {
     dispatch(requestUpdate(a));
+  }
+}
+
+export function updateAuditorium(id, name, seats)
+{
+  return dispatch => {
+
+    return axios({
+      method: 'put',
+      url: '/api/theathers/updateAuditorium',
+      data: { Id: id, Name: name, Seats: seats },
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }).then(response => {
+      dispatch(update({ Id: id, Name: name, Seats: seats }))
+    });
+
   }
 }

@@ -11,8 +11,9 @@ import RegisterPage from './components/register/RegisterPage';
 import CinemaStudioRegisterPage from './components/register/cinemaStudio/CinemaStudioRegisterPage';
 import TheatherRegisterPage from './components/register/theather/TheatherRegisterPage';
 import Auditoriums from './components/home/theather/auditoriums/Auditoriums';
-import Events from './components/home/theather/Events';
+import Events from './components/home/theather/events/Events';
 import Subscriptions from './components/home/theather/Subscriptions';
+import NewEvent from './components/home/theather/events/NewEvent';
 
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
@@ -38,6 +39,7 @@ render(
 				<Route path="theather/auditoriums" component={Auditoriums} />
 				<Route path="theather/events" component={Events} />
 				<Route path="theather/subscriptions" component={Subscriptions} />
+				<Route path="theather/newEvent" component={NewEvent} />
 			</Router>
 		</Provider>
 	),

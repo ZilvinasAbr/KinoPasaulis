@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import TheatherNavigationBar from './TheatherNavigationBar';
+import TheatherNavigationBar from '../TheatherNavigationBar';
+import { Button } from 'react-bootstrap';
 
 class Events extends React.Component {
   constructor(props) {
@@ -18,7 +19,10 @@ class Events extends React.Component {
           goToSubscriptions={this.props.goToSubscriptions}
           logOut={this.props.logOut}
         />
-        <h1> Events </h1>
+        <div className="container">
+          <h1> Events </h1>
+          <Button bsStyle="primary" onClick={this.props.goToEventCreateForm}> Create new event</Button>
+        </div>
       </div>
     );
   }
@@ -49,6 +53,10 @@ function mapDispatchToProps(dispatch) {
 
     logOut: () => {
       dispatch(push('/theather/logout'));
+    },
+
+    goToEventCreateForm: () => {
+      dispatch(push('/theather/newEvent'));
     }
   }
 }

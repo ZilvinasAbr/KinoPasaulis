@@ -16,5 +16,7 @@ namespace KinoPasaulis.Server.Models
         public Creator Creator { get; set; }
 
         public Company Company { get; set; }
+
+        public Client Client { get; set; }
     }
 }

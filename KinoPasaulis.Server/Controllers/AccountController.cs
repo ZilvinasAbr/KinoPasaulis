@@ -38,7 +38,20 @@ namespace KinoPasaulis.Server.Controllers
                 return false;
             }
 
-            var user = new ApplicationUser { UserName = model.UserName };
+			var client = new Client
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Phone = model.Phone
+            };
+			
+			var user = new ApplicationUser
+            {
+                UserName = model.UserName,
+                Client = client
+            };
+			
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)

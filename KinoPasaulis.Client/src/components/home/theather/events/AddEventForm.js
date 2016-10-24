@@ -1,20 +1,42 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { Button, FormControl, Form, FormGroup, Row, Col, Well } from 'react-bootstrap';
+import { DateRangePicker } from 'react-dates';
+import TagsInput from 'react-tagsinput'
+import moment from 'moment';
+import 'react-dates/css/variables.scss';
+import 'react-tagsinput/react-tagsinput.css'
+import 'react-dates/css/styles.scss';
 
-class AddAuditoriumForm extends React.Component {
+class AddEventForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       auditoriumIds: [],
-      hover: 'nothovered'
+      hover: 'nothovered',
+      focusedInput: null,
+      startDate: null,
+      endDate: null,
+      showTimes: []
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.onDatesChange = this.onDatesChange.bind(this);
+    this.onFocusChange = this.onFocusChange.bind(this);
   }
 
   handleSubmit() {
-    const {fields: {title, seats} } = this.props;
+    moment().toDate();
+    console.log(this.state.auditoriumIds);
+    console.log(this.state.showTimes);
+    console.log(this.state.startDate.format("YYYY-MM-DD"));
+    console.log(this.state.endDate.format("YYYY-MM-DD"));
+  }
+
+  handleChange(tags) {
+    this.setState({showTimes: tags})
   }
 
   addOrRemoveFromAuditoriumList(id, index)
@@ -64,21 +86,41 @@ class AddAuditoriumForm extends React.Component {
     });
   }
 
+  onDatesChange({ startDate, endDate }) {
+    console.log(startDate);
+    console.log(endDate);
+    this.setState({ startDate: startDate, endDate: endDate });
+  }
+
+  onFocusChange(focusedInput) {
+    this.setState({ focusedInput });
+  }
+
   render() {
     const {fields: {title, seats} } = this.props;
-
+    const { focusedInput, startDate, endDate } = this.state;
     return (
       <div>
         <Form>
-          <div> {this.renderAuditoriums()} </div>
-          <FormGroup>
-            <FormControl type="text" placeholder="Auditorijos pavadinimas" { ...title } />
-          </FormGroup>
-
-          <FormGroup>
-            <FormControl type="number" placeholder="Vietu skaicius" { ...seats } />
-          </FormGroup>
-
+          <h3> Pasirinkite norimas auditorijas </h3>
+          <Row> {this.renderAuditoriums()} </Row>
+          <Row>
+            <h3> Pasirinkite norima rodymo laikotarpi </h3>
+            <FormGroup>
+              <DateRangePicker
+                {...this.props}
+                onDatesChange={this.onDatesChange}
+                onFocusChange={this.onFocusChange}
+                focusedInput={focusedInput}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </FormGroup>
+          </Row>
+          <Row>
+            <h3> Pasirinkite seansų laikus </h3>
+            <TagsInput value={this.state.showTimes} onChange={this.handleChange} />
+          </Row>
           <FormGroup>
             <Button onClick={this.handleSubmit}> Patvirtinti </Button>
           </FormGroup>
@@ -88,14 +130,14 @@ class AddAuditoriumForm extends React.Component {
   }
 }
 
-AddAuditoriumForm.propTypes = {
+AddEventForm.propTypes = {
   fields: React.PropTypes.object.isRequired,
   handleSubmit: React.PropTypes.func.isRequired
 };
 
 const config = { // <----- THIS IS THE IMPORTANT PART!
-  form: 'addAuditorium',                   // a unique name for this form
-  fields: ['title', 'seats'] // all the fields in your form
+  form: 'addEvent',                   // a unique name for this form
+  fields: [] // all the fields in your form
 };
 
-export default reduxForm(config)(AddAuditoriumForm);
+export default reduxForm(config)(AddEventForm);

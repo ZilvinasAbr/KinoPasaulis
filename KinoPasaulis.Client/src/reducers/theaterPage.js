@@ -4,7 +4,9 @@ import {
   ADD_AUDITORIUM,
   DELETE_AUDITORIUM,
   REQUEST_UPDATE_AUDITORIUM,
-  UPDATE_AUDITORIUM
+  UPDATE_AUDITORIUM,
+  REQUEST_SHOW_EVENTS,
+  RECEIVE_SHOW_EVENTS
 } from '../actionCreators/theaterActionCreators';
 
 export const initialState = {};
@@ -46,6 +48,17 @@ function requestUpdateAuditorium(state, auditorium) {
   return nextState;
 }
 
+function requestShowEvents(state)
+{
+  return state;
+}
+
+function receiveShowEvents(state, events) {
+  console.log(state);
+  console.log(events);
+  return Object.assign({}, state, {events});
+}
+
 function updateAuditorium(state, auditorium) {
   let nextState = Object.assign({}, state, {
     auditoriums: state.auditoriums.slice()
@@ -78,6 +91,10 @@ export function theaterPage(state = initialState, action) {
       return requestUpdateAuditorium(state, action.auditorium);
     case UPDATE_AUDITORIUM:
       return updateAuditorium(state, action.auditorium)
+    case REQUEST_SHOW_EVENTS:
+      return requestShowEvents(state)
+    case RECEIVE_SHOW_EVENTS:
+      return receiveShowEvents(state, action.events)
     default:
       return state;
   }

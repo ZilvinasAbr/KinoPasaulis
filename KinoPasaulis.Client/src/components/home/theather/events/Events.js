@@ -3,10 +3,31 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
 import { Button } from 'react-bootstrap';
+import { getEvents } from '../../../../actions/theather/eventActions';
+import { Well, Col } from 'react-bootstrap';
+import moment from 'moment';
 
 class Events extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.props.getEvents();
+  }
+
+  renderEvents() {
+    let events = this.props.events;
+    return events.map((event, index) => {
+      return <div key={index}>
+        <Col md={4}>
+          <Well>
+            {moment(event.startTime).format('YYYY/MM/DD')} -
+            {moment(event.endTime).format('YYYY/MM/DD')}
+          </Well>
+        </Col>
+      </div>
+    });
   }
 
   render() {
@@ -21,7 +42,13 @@ class Events extends React.Component {
         />
         <div className="container">
           <h1> Events </h1>
-          <Button bsStyle="primary" onClick={this.props.goToEventCreateForm}> Create new event</Button>
+          <Col md={3}>
+            <Button bsStyle="primary" onClick={this.props.goToEventCreateForm}> Create new event</Button>
+          </Col>
+
+          <Col md={9}>
+            {this.renderEvents()}
+          </Col>
         </div>
       </div>
     );
@@ -30,6 +57,7 @@ class Events extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    events: state.theaterPage.events || [],
   }
 }
 
@@ -57,7 +85,12 @@ function mapDispatchToProps(dispatch) {
 
     goToEventCreateForm: () => {
       dispatch(push('/theather/newEvent'));
-    }
+    },
+
+    getEvents: () => {
+      dispatch(getEvents());
+    },
+
   }
 }
 

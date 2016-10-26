@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
-
 import {
-  addEvent as addEventToReducer
+  addEvent as addEventToReducer,
+  requestShowEvents,
+  receiveShowEvents
 } from '../../actionCreators/theaterActionCreators';
 
 export function addEvent(movie, times, startTime, endTime, auditoriums) {
@@ -18,6 +19,20 @@ export function addEvent(movie, times, startTime, endTime, auditoriums) {
           console.log('success');
           dispatch(push('/theather/events'));
           //dispatch(addEventToReducer({name, seats}));
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+export function getEvents() {
+  return dispatch => {
+    dispatch(requestShowEvents());
+
+    return axios.get('/api/theathers/getActiveTheatherEvents')
+      .then(response => {
+        dispatch(receiveShowEvents(response.data));
       })
       .catch(error => {
         console.log(error);

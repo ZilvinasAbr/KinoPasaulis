@@ -52,3 +52,18 @@ export function addEvent(event) {
     event
   };
 }
+
+export const REQUEST_SHOW_EVENTS = 'REQUEST_SHOW_EVENTS';
+export function requestShowEvents() {
+  return {
+    type: REQUEST_SHOW_EVENTS
+  };
+}
+
+export const RECEIVE_SHOW_EVENTS = 'RECEIVE_SHOW_EVENTS';
+export function receiveShowEvents(events) {
+  return {
+    type: RECEIVE_SHOW_EVENTS,
+    events
+  };
+}

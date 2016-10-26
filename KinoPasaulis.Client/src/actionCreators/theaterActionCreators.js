@@ -67,3 +67,11 @@ export function receiveShowEvents(events) {
     events
   };
 }
+
+export const RECEIVE_ONE_EVENT = 'RECEIVE_ONE_SHOW';
+export function receiveOneEvent(event) {
+  return {
+    type: RECEIVE_ONE_EVENT,
+    event
+  };
+}

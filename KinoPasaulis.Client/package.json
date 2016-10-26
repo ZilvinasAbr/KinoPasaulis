@@ -22,11 +22,13 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
+    "@types/react-addons-create-fragment": "^0.14.14",
     "axios": "^0.12.0",
     "bootstrap": "^3.3.7",
     "immutable": "^3.8.1",
     "moment": "^2.15.2",
     "react": "^15.3.2",
+    "react-addons-create-fragment": "^15.3.2",
     "react-addons-shallow-compare": "^15.3.2",
     "react-bootstrap": "^0.30.3",
     "react-dates": "^3.4.0",

@@ -3,35 +3,32 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
 import { Button } from 'react-bootstrap';
-import { getEvents } from '../../../../actions/theather/eventActions';
+import { getEventById } from '../../../../actions/theather/eventActions';
 import { Well, Col } from 'react-bootstrap';
 import moment from 'moment';
+import createFragment from 'react-addons-create-fragment';
 
-class Events extends React.Component {
+class EventDetails extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    this.props.getEvents();
+    this.props.getEvent(this.props.params.id);
   }
 
-  renderEvents() {
-    let events = this.props.events;
-    return events.map((event, index) => {
-      return <div key={index}>
-        <Col md={4}>
-          <Well>
-            {moment(event.startTime).format('YYYY/MM/DD')} -
-            {moment(event.endTime).format('YYYY/MM/DD')}
-            <a className="btn btn-primary" onClick={this.props.goToEventDetails.bind(this, event.id)}> Details </a>
-          </Well>
-        </Col>
-      </div>
+  getMovieOfEvent(props) {
+    let movie;
+
+    movie = createFragment({
+      movieDetails: props.movie,
     });
+
+    return movie;
   }
 
   render() {
+    console.log(this.getMovieOfEvent(this.props.event).title);
     return (
       <div>
         <TheatherNavigationBar
@@ -41,16 +38,9 @@ class Events extends React.Component {
           goToSubscriptions={this.props.goToSubscriptions}
           logOut={this.props.logOut}
         />
-        <div className="container">
-          <h1> Events </h1>
-          <Col md={3}>
-            <Button bsStyle="primary" onClick={this.props.goToEventCreateForm}> Create new event</Button>
-          </Col>
 
-          <Col md={9}>
-            {this.renderEvents()}
-          </Col>
-        </div>
+        {moment(this.props.event.startTime).format('YYYY/MM/DD')} -
+        {moment(this.props.event.endTime).format('YYYY/MM/DD')}
       </div>
     );
   }
@@ -58,7 +48,7 @@ class Events extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    events: state.theaterPage.events || [],
+    event: state.theaterPage.event || [],
   }
 }
 
@@ -88,15 +78,11 @@ function mapDispatchToProps(dispatch) {
       dispatch(push('/theather/newEvent'));
     },
 
-    getEvents: () => {
-      dispatch(getEvents());
-    },
-
-    goToEventDetails: (id) => {
-      dispatch(push('/theather/eventDetails/'+id))
+    getEvent: (id) => {
+      dispatch(getEventById(id));
     }
 
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Events);
+export default connect(mapStateToProps, mapDispatchToProps)(EventDetails);

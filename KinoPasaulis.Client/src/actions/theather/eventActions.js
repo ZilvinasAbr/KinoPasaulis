@@ -3,7 +3,8 @@ import { push } from 'react-router-redux';
 import {
   addEvent as addEventToReducer,
   requestShowEvents,
-  receiveShowEvents
+  receiveShowEvents,
+  receiveOneEvent
 } from '../../actionCreators/theaterActionCreators';
 
 export function addEvent(movie, times, startTime, endTime, auditoriums) {
@@ -33,6 +34,19 @@ export function getEvents() {
     return axios.get('/api/theathers/getActiveTheatherEvents')
       .then(response => {
         dispatch(receiveShowEvents(response.data));
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+export function getEventById(id) {
+  return dispatch => {
+
+    return axios.get('/api/theathers/getEvent?id=' + id)
+      .then(response => {
+        dispatch(receiveOneEvent(response.data));
       })
       .catch(error => {
         console.log(error);

@@ -6,7 +6,8 @@ import {
   REQUEST_UPDATE_AUDITORIUM,
   UPDATE_AUDITORIUM,
   REQUEST_SHOW_EVENTS,
-  RECEIVE_SHOW_EVENTS
+  RECEIVE_SHOW_EVENTS,
+  RECEIVE_ONE_EVENT
 } from '../actionCreators/theaterActionCreators';
 
 export const initialState = {};
@@ -54,8 +55,6 @@ function requestShowEvents(state)
 }
 
 function receiveShowEvents(state, events) {
-  console.log(state);
-  console.log(events);
   return Object.assign({}, state, {events});
 }
 
@@ -68,6 +67,15 @@ function updateAuditorium(state, auditorium) {
   let index = nextState.auditoriums.indexOf(findById);
   nextState.auditoriums[index].name = auditorium.Name;
   nextState.auditoriums[index].seats = auditorium.Seats;
+  return nextState;
+}
+
+function receiveOneEvent(state, event) {
+
+  let nextState = Object.assign({}, state, {
+    event: event,
+  });
+
   return nextState;
 }
 
@@ -90,11 +98,13 @@ export function theaterPage(state = initialState, action) {
     case REQUEST_UPDATE_AUDITORIUM:
       return requestUpdateAuditorium(state, action.auditorium);
     case UPDATE_AUDITORIUM:
-      return updateAuditorium(state, action.auditorium)
+      return updateAuditorium(state, action.auditorium);
     case REQUEST_SHOW_EVENTS:
-      return requestShowEvents(state)
+      return requestShowEvents(state);
     case RECEIVE_SHOW_EVENTS:
-      return receiveShowEvents(state, action.events)
+      return receiveShowEvents(state, action.events);
+    case RECEIVE_ONE_EVENT:
+      return receiveOneEvent(state, action.event);
     default:
       return state;
   }

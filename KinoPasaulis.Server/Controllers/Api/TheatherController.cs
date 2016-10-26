@@ -66,7 +66,7 @@ namespace KinoPasaulis.Server.Controllers.Api
                 var theather = _userService.GetTheatherByUserId(userId);
                 return _theatherService.GetMappedAuditoriums(theather.Auditoriums);
             }
-
+            
             // Kazkaip kitaip reiketu sita padaryt, kolkas nezinau kaip, kolkas px nes veikia
             return new List<AuditoriumViewModel>();
         }
@@ -75,6 +75,19 @@ namespace KinoPasaulis.Server.Controllers.Api
         public IEnumerable<Event> GetAllEvents()
         {
             return _theatherService.GetAllEvents();
+        }
+
+        [HttpGet("getActiveTheatherEvents")]
+        public IEnumerable<Event> GetTheatherEvents()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                var theather = _userService.GetTheatherByUserIdIncludeEvents(userId);
+                return theather.Events;
+            }
+
+            return new List<Event>();
         }
 
         [HttpGet("getTheatherEvents")]

@@ -25,5 +25,16 @@ namespace KinoPasaulis.Server.Services
                 .SingleOrDefault(x => x.Id == id)
                 .Theather;
         }
+
+        public Theather GetTheatherByUserIdIncludeEvents(string id)
+        {
+            return _dbContext
+                .Users
+                .Include(x => x.Theather)
+                    .ThenInclude(x => x.Events)
+                        .ThenInclude(x => x.Shows)
+                .SingleOrDefault(x => x.Id == id)
+                .Theather;
+        }
     }
 }

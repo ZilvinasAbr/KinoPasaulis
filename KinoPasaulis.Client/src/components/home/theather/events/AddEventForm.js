@@ -1,6 +1,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { Button, FormControl, Form, FormGroup, Row, Col, Well } from 'react-bootstrap';
+import { addEvent } from '../../../../actions/theather/eventActions';
 import { DateRangePicker } from 'react-dates';
 import TagsInput from 'react-tagsinput'
 import moment from 'moment';
@@ -29,10 +30,11 @@ class AddEventForm extends React.Component {
 
   handleSubmit() {
     moment().toDate();
-    console.log(this.state.auditoriumIds);
-    console.log(this.state.showTimes);
-    console.log(this.state.startDate.format("YYYY-MM-DD"));
-    console.log(this.state.endDate.format("YYYY-MM-DD"));
+    let auditoriums = this.state.auditoriumIds;
+    let showTimes = this.state.showTimes;
+    let startDate = this.state.startDate.format("YYYY-MM-DD");
+    let endDate = this.state.endDate.format("YYYY-MM-DD");
+    this.props.dispatch(addEvent(1, showTimes, startDate, endDate, auditoriums));
   }
 
   handleChange(tags) {

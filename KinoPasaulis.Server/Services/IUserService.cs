@@ -9,5 +9,6 @@ namespace KinoPasaulis.Server.Services
     public interface IUserService
     {
         Theather GetTheatherByUserId(string id);
+        Theather GetTheatherByUserIdIncludeEvents(string id);
     }
 }

@@ -22,6 +22,7 @@ class Events extends React.Component {
       return <div key={index}>
         <Col md={4}>
           <Well>
+            <h2> {event.movie.title} </h2>
             {moment(event.startTime).format('YYYY/MM/DD')} -
             {moment(event.endTime).format('YYYY/MM/DD')}
             <a className="btn btn-primary" onClick={this.props.goToEventDetails.bind(this, event.id)}> Details </a>
@@ -42,12 +43,12 @@ class Events extends React.Component {
           logOut={this.props.logOut}
         />
         <div className="container">
-          <h1> Events </h1>
           <Col md={3}>
             <Button bsStyle="primary" onClick={this.props.goToEventCreateForm}> Create new event</Button>
           </Col>
 
           <Col md={9}>
+            <h2> Event list </h2>
             {this.renderEvents()}
           </Col>
         </div>

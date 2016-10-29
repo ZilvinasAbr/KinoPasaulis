@@ -74,6 +74,8 @@ function receiveOneEvent(state, event) {
 
   let nextState = Object.assign({}, state, {
     event: event,
+    movie: event.movie,
+    shows: event.shows,
   });
 
   return nextState;

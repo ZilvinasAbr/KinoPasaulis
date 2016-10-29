@@ -99,7 +99,9 @@ namespace KinoPasaulis.Server.Controllers.Api
         [HttpGet("getEvent")]
         public Event GetEventById(int id)
         {
-            return _theatherService.GetEventById(id);
+            var Event = _theatherService.GetEventById(id);
+            Event.Shows.Sort((x, y) => DateTime.Compare(x.StartTime, y.StartTime));
+            return Event;
         }
 
         [HttpGet("getShow")]

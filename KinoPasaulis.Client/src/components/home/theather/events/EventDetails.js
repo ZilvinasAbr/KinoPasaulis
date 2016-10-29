@@ -17,18 +17,23 @@ class EventDetails extends React.Component {
     this.props.getEvent(this.props.params.id);
   }
 
-  getMovieOfEvent(props) {
-    let movie;
-
-    movie = createFragment({
-      movieDetails: props.movie,
+  renderShows() {
+    let shows = this.props.shows;
+    console.log(shows);
+    return shows.map((show, index) => {
+      return <div key={index}>
+        <Col md={4}>
+          <Well bsSize={"lg"}>
+            <p> Auditorijos pavadinimas: {show.auditorium.name} </p>
+            <p> Vietų skaičius: {show.auditorium.seats} </p>
+            <p> Seanso pradžia: {moment(show.startTime).format('YYYY/MM/DD HH:MM')}</p>
+          </Well>
+        </Col>
+      </div>
     });
-
-    return movie;
   }
 
   render() {
-    console.log(this.getMovieOfEvent(this.props.event).title);
     return (
       <div>
         <TheatherNavigationBar
@@ -38,9 +43,14 @@ class EventDetails extends React.Component {
           goToSubscriptions={this.props.goToSubscriptions}
           logOut={this.props.logOut}
         />
-
-        {moment(this.props.event.startTime).format('YYYY/MM/DD')} -
-        {moment(this.props.event.endTime).format('YYYY/MM/DD')}
+        <div className="container">
+          <h1>{this.props.movie.title}</h1>
+          Rodymo laikotarpis:
+          {moment(this.props.event.startTime).format('YYYY/MM/DD')} -
+          {moment(this.props.event.endTime).format('YYYY/MM/DD')}
+          <h1> Seansai </h1>
+          {this.renderShows()}
+        </div>
       </div>
     );
   }
@@ -48,7 +58,9 @@ class EventDetails extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    event: state.theaterPage.event || [],
+    event: state.theaterPage.event || {},
+    movie: state.theaterPage.movie || {},
+    shows: state.theaterPage.shows || []
   }
 }
 

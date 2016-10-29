@@ -32,7 +32,7 @@ namespace KinoPasaulis.Server.Services
                 .Users
                 .Include(x => x.Theather)
                     .ThenInclude(x => x.Events)
-                        .ThenInclude(x => x.Shows)
+                        .ThenInclude(x => x.Movie)
                 .SingleOrDefault(x => x.Id == id)
                 .Theather;
         }

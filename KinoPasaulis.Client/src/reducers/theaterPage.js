@@ -7,7 +7,8 @@ import {
   UPDATE_AUDITORIUM,
   REQUEST_SHOW_EVENTS,
   RECEIVE_SHOW_EVENTS,
-  RECEIVE_ONE_EVENT
+  RECEIVE_ONE_EVENT,
+  DELETE_ONE_SHOW
 } from '../actionCreators/theaterActionCreators';
 
 export const initialState = {};
@@ -37,6 +38,16 @@ function deleteAuditorium(state, auditorium) {
   });
 
   nextState.auditoriums.splice(auditorium, 1);
+
+  return nextState;
+}
+
+function deleteOneShow(state, show) {
+  let nextState = Object.assign({}, state, {
+    shows: state.shows.slice()
+  });
+
+  nextState.shows.splice(show, 1);
 
   return nextState;
 }
@@ -107,6 +118,8 @@ export function theaterPage(state = initialState, action) {
       return receiveShowEvents(state, action.events);
     case RECEIVE_ONE_EVENT:
       return receiveOneEvent(state, action.event);
+    case DELETE_ONE_SHOW:
+      return deleteOneShow(state, action.show);
     default:
       return state;
   }

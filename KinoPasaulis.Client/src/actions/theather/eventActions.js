@@ -4,7 +4,8 @@ import {
   addEvent as addEventToReducer,
   requestShowEvents,
   receiveShowEvents,
-  receiveOneEvent
+  receiveOneEvent,
+  deleteOneShow
 } from '../../actionCreators/theaterActionCreators';
 
 export function addEvent(movie, times, startTime, endTime, auditoriums) {
@@ -51,5 +52,24 @@ export function getEventById(id) {
       .catch(error => {
         console.log(error);
       })
+  }
+}
+
+export function deleteShowById(id, arrayId) {
+  return dispatch => {
+
+    return axios({
+      method: 'delete',
+      url: '/api/theathers/deleteShow',
+      data: id,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }).then(response => {
+      dispatch(deleteOneShow(arrayId));
+    })
+      .catch(error => {
+        console.log(error);
+      });
   }
 }

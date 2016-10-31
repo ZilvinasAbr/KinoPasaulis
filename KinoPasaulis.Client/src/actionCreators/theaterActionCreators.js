@@ -75,3 +75,12 @@ export function receiveOneEvent(event) {
     event
   };
 }
+
+export const DELETE_ONE_SHOW = 'DELETE_ONE_SHOW';
+export function deleteOneShow(show) {
+  console.log(show);
+  return {
+    type: DELETE_ONE_SHOW,
+    show
+  }
+}

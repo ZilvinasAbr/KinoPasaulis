@@ -38,7 +38,6 @@ class Auditoriums extends React.Component {
 
   deleteAuditorium() {
     this.setState({modalOpen: false});
-    //deleteAuditorium(this.state.idToBeDeleted);
     this.props.deleteAuditoriumFromList(this.state.idToBeDeleted, this.state.idArrayDeleted);
   }
 

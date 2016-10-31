@@ -3,26 +3,46 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
 import { getEventById } from '../../../../actions/theather/eventActions';
-import { Well, Col, ButtonToolbar, OverlayTrigger, Button, Popover } from 'react-bootstrap';
+import { Well, Col, ButtonToolbar, OverlayTrigger, Button, Popover, Modal } from 'react-bootstrap';
 import moment from 'moment';
-import createFragment from 'react-addons-create-fragment';
+import { deleteShowById } from '../../../../actions/theather/eventActions'
 import './eventsStyles.scss';
 
 class EventDetails extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      modalOpen: false,
+      idToBeDeleted: 0,
+      idArrayDeleted: 0
+    };
   }
 
   componentDidMount() {
     this.props.getEvent(this.props.params.id);
   }
 
-  renderEditDeleteButtons(showOver) {
+  _openModal(index, arrayIndex) {
+    this.setState({modalOpen: true});
+    this.setState({idToBeDeleted:index});
+    this.setState({idArrayDeleted:arrayIndex});
+  }
+
+  _closeModal() {
+    this.setState({modalOpen: false});
+  }
+
+  deleteShow() {
+    this.setState({modalOpen: false});
+    this.props.deleteShow(this.state.idToBeDeleted, this.state.idArrayDeleted);
+  }
+
+  renderEditDeleteButtons(showOver, showId, index) {
     if(showOver == null)
     {
       return (
         <ButtonToolbar>
-          <Button bsStyle="danger"> <span className="glyphicon glyphicon-remove"></span> </Button>
+          <Button bsStyle="danger" onClick={this._openModal.bind(this, showId, index)}> <span className="glyphicon glyphicon-remove"></span> </Button>
           <OverlayTrigger trigger="click" rootClose placement="left" overlay={editForm()}>
             <Button> <span className="glyphicon glyphicon-pencil"></span> </Button>
           </OverlayTrigger>
@@ -33,11 +53,10 @@ class EventDetails extends React.Component {
 
   renderShows() {
     let shows = this.props.shows;
-    console.log(shows);
     return shows.map((show, index) => {
       var now = new Date();
       let showOver = null;
-      if(moment(show.startTime).format('YYYY/MM/DD HH:MM') < moment(now).format('YYYY/MM/DD HH:MM'))
+      if(moment(show.startTime).format('YYYY/MM/DD HH:MM') < moment(now).format('YYYY/MM/DD HH:mm'))
       {
         showOver = "showOver";
       }
@@ -46,8 +65,8 @@ class EventDetails extends React.Component {
           <Well bsSize={"lg"} className={showOver}>
             <p> Auditorijos pavadinimas: {show.auditorium.name} </p>
             <p> Vietų skaičius: {show.auditorium.seats} </p>
-            <p> Seanso pradžia: {moment(show.startTime).format('YYYY/MM/DD HH:MM')}</p>
-            {this.renderEditDeleteButtons(showOver)}
+            <p> Seanso pradžia: {moment(show.startTime).format('YYYY/MM/DD HH:mm')}</p>
+            {this.renderEditDeleteButtons(showOver, show.id, index)}
           </Well>
         </Col>
       </div>
@@ -72,6 +91,22 @@ class EventDetails extends React.Component {
           <h1> Seansai </h1>
           {this.renderShows()}
         </div>
+        <Modal
+          show={this.state.modalOpen}
+          container={this}
+          aria-labelledby="contained-modal-title"
+        >
+          <Modal.Header>
+            <Modal.Title id="contained-modal-title">Show is about to be deleted</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Proceed?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.deleteShow.bind(this)} bsStyle="danger">Delete</Button>
+            <Button onClick={this._closeModal.bind(this)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
@@ -121,6 +156,10 @@ function mapDispatchToProps(dispatch) {
 
     getEvent: (id) => {
       dispatch(getEventById(id));
+    },
+
+    deleteShow: (id, index) => {
+      dispatch(deleteShowById(id, index));
     }
 
   }

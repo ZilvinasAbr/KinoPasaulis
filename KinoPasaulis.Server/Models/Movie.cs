@@ -13,7 +13,14 @@ namespace KinoPasaulis.Server.Models
         [Key, Column(Order = 0)]
         public int Id { get; set; }
         public string Title { get; set; }
-        public TimeSpan RunTime { get; set; }
-        // KRC NE MANO POSISTEME :)))))) Kurkit Enumus i filmu ratingus (PG-13 ir tt.. zanrus)
+        public DateTime ReleaseDate { get; set; }
+        public decimal Budget { get; set; }
+        public string Description { get; set; }
+        public decimal Gross { get; set; }
+        public string Language { get; set; }
+        public string AgeRequirement { get; set; }
+        
+        public int CinemaStudioId { get; set; }
+        public CinemaStudio CinemaStudio { get; set; }
     }
 }

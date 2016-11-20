@@ -1,3 +1,4 @@
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
@@ -20,8 +21,13 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   output: {
-    path: __dirname + '/../KinoPasaulis.Server/wwwroot',
-    publicPath: '/',
+    path: path.resolve(__dirname, '../KinoPasaulis.Server/wwwroot'),
     filename: 'bundle.js'
   },
+  devtool: 'source-map',
+
+  devServer: {
+    inline: true,
+    contentBase: path.resolve(__dirname, '../KinoPasaulis.Server/wwwroot')
+  }
 };

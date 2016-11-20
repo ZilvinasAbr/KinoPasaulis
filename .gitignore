@@ -2,6 +2,7 @@ KinoPasaulis.Client/dist/bundle.js
 KinoPasaulis.Client/node_modules
 KinoPasaulis.Server/Migrations/
 KinoPasaulis.Server/wwwroot/bundle.js
+KinoPasaulis.Server/wwwroot/bundle.js.map
 KinoPasaulis.Client/.idea/
 KinoPasaulis.Server/.vs/
 .idea/

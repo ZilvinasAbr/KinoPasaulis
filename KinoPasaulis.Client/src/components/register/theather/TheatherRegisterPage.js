@@ -14,7 +14,10 @@ class TheaterRegisterPage extends React.Component {
 
     return (
         <div>
-            <LoggedOfNavigationBar changePageToLanding={this.props.changePageToLanding} changePageToLogin={this.props.changePageToLogin} changePageToRegister={this.props.changePageToRegister} />
+            <LoggedOfNavigationBar
+              changePageToLanding={this.props.changePageToLanding}
+              changePageToLogin={this.props.changePageToLogin}
+              changePageToRegister={this.props.changePageToRegister} />
             <TheatherRegisterForm  />
         </div>
     );

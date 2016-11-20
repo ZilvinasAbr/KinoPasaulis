@@ -134,15 +134,20 @@ namespace KinoPasaulis.Server.Controllers
             return false;
         }
 
-        [HttpPost("registerCompany")]
-        public async Task<bool> RegisterCompany([FromBody] CompanyRegisterViewModel model)
+        [HttpPost("registerCinemaStudio")]
+        public async Task<bool> RegisterCinemaStudio([FromBody] CinemaStudioRegisterViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return false;
+            }
+
             if (model.Password != model.ConfirmPassword)
             {
                 return false;
             }
 
-            var company = new Company
+            var company = new CinemaStudio
             {
                 Name = model.Name,
                 City = model.City,
@@ -155,14 +160,14 @@ namespace KinoPasaulis.Server.Controllers
             var user = new ApplicationUser
             {
                 UserName = model.UserName,
-                Company = company
+                CinemaStudio = company
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "Company");
+                await _userManager.AddToRoleAsync(user, "CinemaStudio");
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return true;
             }

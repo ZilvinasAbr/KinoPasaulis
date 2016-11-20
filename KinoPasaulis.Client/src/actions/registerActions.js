@@ -27,3 +27,39 @@ export function registerTheather(userName, password, confirmPassword, city, addr
       })
   }
 }
+
+export function registerCinemaStudio(
+  userName,
+  email,
+  password,
+  confirmPassword,
+  name,
+  city,
+  country,
+  address,
+  phone
+) {
+  return dispatch => {
+    return axios.post('/api/account/registerCinemaStudio', {
+      UserName: userName,
+      Email: email,
+      Password: password,
+      ConfirmPassword: confirmPassword,
+      Name: name,
+      City: city,
+      Country: country,
+      Address: address,
+      Phone: phone
+    })
+      .then(response => {
+        if(response.data === true) {
+          dispatch(push('/home'));
+        }else {
+
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+}

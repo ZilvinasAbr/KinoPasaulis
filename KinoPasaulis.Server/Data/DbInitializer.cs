@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KinoPasaulis.Server.Models;
+using KinoPasaulis.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -29,11 +30,26 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(cinemaStudios);
             context.SaveChanges();
 
+            var theathers = AddTheathers();
+            context.AddRange(theathers);
+            context.SaveChanges();
+
             await AddCinemaStudioUsers(cinemaStudios, userManager);
+            await AddTheatherUsers(theathers, userManager);
 
             var movies = AddMovies(cinemaStudios);
             context.AddRange(movies);
             context.SaveChanges();
+        }
+
+        private static List<Theather> AddTheathers()
+        {
+            var theathers = new List<Theather>
+            {
+                new Theather { Title = "Kino teatras 1", City = "Kaunas", Country = "Lietuva", Address = "Adreso g. 1", Email = "kinoTeatras@kinoTeatras.com", Phone = "+37066666666"}
+            };
+
+            return theathers;
         }
 
         private static List<Movie> AddMovies(List<CinemaStudio> cinemaStudios)
@@ -70,6 +86,22 @@ namespace KinoPasaulis.Server.Data
             {
                 await userManager.CreateAsync(user, "testas");
                 await userManager.AddToRoleAsync(user, "CinemaStudio");
+            }
+
+            return users;
+        }
+
+        private static async Task< List<ApplicationUser> >  AddTheatherUsers(List<Theather> theathers, UserManager<ApplicationUser> userManager)
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser {UserName = "KinoTeatras1", Theather= theathers[0]}
+            };
+
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "testas");
+                await userManager.AddToRoleAsync(user, "Theather");
             }
 
             return users;

@@ -11,7 +11,10 @@ class LoginPage extends React.Component {
   render() {
     return (
       <div>
-        <LoggedOfNavigationBar changePageToLanding={this.props.changePageToLanding} changePageToLogin={this.props.changePageToLogin} changePageToRegister={this.props.changePageToRegister} />
+        <LoggedOfNavigationBar
+          changePageToLanding={this.props.changePageToLanding}
+          changePageToLogin={this.props.changePageToLogin}
+          changePageToRegister={this.props.changePageToRegister} />
         LoginPage
       </div>
     );

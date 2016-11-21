@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from './theather/TheatherNavigationBar';
 
-class HomePage extends React.Component {
+class TheatherHomePage extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -18,7 +18,7 @@ class HomePage extends React.Component {
           goToSubscriptions={this.props.goToSubscriptions}
           logOut={this.props.logOut}
         />
-        <h1> HomePage </h1>
+        <h1> Theather Home Page </h1>
       </div>
     );
   }
@@ -53,4 +53,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(TheatherHomePage);

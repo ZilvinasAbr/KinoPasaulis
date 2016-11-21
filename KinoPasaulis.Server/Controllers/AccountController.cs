@@ -208,5 +208,26 @@ namespace KinoPasaulis.Server.Controllers
 
             return false;
         }
+
+        [HttpGet("userData")]
+        public async Task<object> GetUserData()
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return null;
+            }
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var result = new
+            {
+                user.UserName,
+                role = roles[0]
+            };
+
+            return result;
+        }
     }
 }

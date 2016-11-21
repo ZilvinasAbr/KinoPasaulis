@@ -1,56 +1,50 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
-import TheatherNavigationBar from './theather/TheatherNavigationBar';
+import TheatherHomePage from './TheatherHomePage';
+import CinemaStudioHomePage from './CinemaStudioHomePage';
+import { fetchUserData } from '../../actions/home/actions';
+import axios from 'axios';
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  render() { 
-    return (
-      <div>
-        <TheatherNavigationBar
-          changePageToLanding={this.props.changePageToLanding}
-          goToAuditoriums={this.props.goToAuditoriums}
-          goToEvents={this.props.goToEvents}
-          goToSubscriptions={this.props.goToSubscriptions}
-          logOut={this.props.logOut}
-        />
-        <h1> HomePage </h1>
-      </div>
-    );
+  componentDidMount() {
+    axios.post('/api/account/login', {
+      // UserName: 'KinoStudija1',
+      UserName: 'KinoTeatras1',
+      Password: 'testas'
+    })
+      .then(response => {
+        if(response.data === true) {
+          this.props.dispatch(fetchUserData());
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  render() {
+    if(this.props.userData === undefined) {
+      return <div>Loading...</div>
+    }
+    switch(this.props.userData.role) {
+      case 'Theather':
+        return <TheatherHomePage />;
+      case 'CinemaStudio':
+        return <CinemaStudioHomePage />
+      default:
+        return <div>Error</div>;
+    }
   }
 }
 
 function mapStateToProps(state) {
   return {
+    userData: state.homePage.userData
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    changePageToLanding: () => {
-      dispatch(push('/'));
-    },
-
-    goToAuditoriums: () => {
-      dispatch(push('theather/auditoriums'));
-    },
-
-    goToEvents: () => {
-      dispatch(push('theather/events'));
-    },
-
-    goToSubscriptions: () => {
-      dispatch(push('theather/subscriptions'));
-    },
-
-    logOut: () => {
-      dispatch(push('theather/logout'));
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps)(HomePage);

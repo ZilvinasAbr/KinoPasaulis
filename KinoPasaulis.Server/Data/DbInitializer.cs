@@ -31,7 +31,20 @@ namespace KinoPasaulis.Server.Data
 
             await AddCinemaStudioUsers(cinemaStudios, userManager);
 
+            var movies = AddMovies(cinemaStudios);
+            context.AddRange(movies);
             context.SaveChanges();
+        }
+
+        private static List<Movie> AddMovies(List<CinemaStudio> cinemaStudios)
+        {
+            var movies = new List<Movie>
+            {
+                new Movie { Title = "Filmas 1", ReleaseDate = new DateTime(1995, 11, 08), Budget = 1000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 2000000, Language = "anglų", AgeRequirement = "PG-13", CinemaStudio = cinemaStudios[0]},
+                new Movie { Title = "Filmas 2", ReleaseDate = new DateTime(1995, 11, 08), Budget = 2000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 500000, Language = "lietuvių", AgeRequirement = "R", CinemaStudio = cinemaStudios[0]}
+            };
+
+            return movies;
         }
 
         private static List<CinemaStudio> AddCinemaStudios()

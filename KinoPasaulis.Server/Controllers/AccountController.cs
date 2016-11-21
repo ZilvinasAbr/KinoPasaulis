@@ -147,7 +147,7 @@ namespace KinoPasaulis.Server.Controllers
                 return false;
             }
 
-            var company = new CinemaStudio
+            var cinemaStudio = new CinemaStudio
             {
                 Name = model.Name,
                 City = model.City,
@@ -160,7 +160,7 @@ namespace KinoPasaulis.Server.Controllers
             var user = new ApplicationUser
             {
                 UserName = model.UserName,
-                CinemaStudio = company
+                CinemaStudio = cinemaStudio
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import LoggedOfNavigationBar from '../common/LoggedOfNavigationBar';
+import LoginForm from './LoginForm';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class LoginPage extends React.Component {
           changePageToLanding={this.props.changePageToLanding}
           changePageToLogin={this.props.changePageToLogin}
           changePageToRegister={this.props.changePageToRegister} />
-        LoginPage
+        <LoginForm />
       </div>
     );
   }

@@ -43,7 +43,10 @@ namespace KinoPasaulis.Server.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                Phone = model.Phone
+                Phone = model.Phone,
+                RegisterDate = DateTime.Now,
+                Active = true,
+                Blocked = false
             };
 			
 			var user = new ApplicationUser

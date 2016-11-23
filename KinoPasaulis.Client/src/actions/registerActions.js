@@ -63,3 +63,37 @@ export function registerCinemaStudio(
       });
   }
 }
+
+export function registerCinemaCreator(
+    userName,
+    email,
+    password,
+    confirmPassword,
+    firstName,
+    lastName,
+    birthDate,
+    description
+) {
+    return dispatch => {
+        return axios.post('/api/account/registerCinemaCreator', {
+            UserName: userName,
+            Email: email,
+            Password: password,
+            ConfirmPassword: confirmPassword,
+            FirstName: firstName,
+            LastName: lastName,
+            BirthDate: birthDate,
+            Description: description
+        })
+            .then(response => {
+                if(response.data === true) {
+                    dispatch(push('/home'));
+                }else {
+
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+}

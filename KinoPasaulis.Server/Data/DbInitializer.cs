@@ -111,7 +111,7 @@ namespace KinoPasaulis.Server.Data
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             //            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            string[] roleNames = { "Client", "Theather", "CinemaStudio", "Creators", "VoteAdmin" };
+            string[] roleNames = { "Client", "Theather", "CinemaStudio", "CinemaCreator", "VoteAdmin" };
             IdentityResult roleResult;
             foreach (var roleName in roleNames)
             {

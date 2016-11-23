@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KinoPasaulis.Server.ViewModels
 {
-    public class CreatorRegisterViewModel
+    public class CinemaCreatorRegisterViewModel
     {
         [Required(ErrorMessage = "Username is required")]
         [Display(Name = "Username")]
@@ -32,11 +32,16 @@ namespace KinoPasaulis.Server.ViewModels
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone number")]
+        public string Phone { get; set; }
+
         [Required(ErrorMessage = "Birth date is required")]
         [DataType(DataType.Date)]
         [Display(Name = "Birth Date")]
         public DateTime BirthDate { get; set; }
 
+        public string Description { get; set; }
 
     }
 }

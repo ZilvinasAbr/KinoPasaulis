@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace KinoPasaulis.Server.Models
 {
-    public class Creator
+    public class CinemaCreator
     {
         public int Id { get; set; }
 
@@ -15,6 +15,14 @@ namespace KinoPasaulis.Server.Models
 
         public string Email { get; set; }
 
+        public string Phone { get; set; }
+
         public DateTime BirthDate { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime RegisterDate { get; set; }
+
+        public DateTime LastEditDate { get; set; }
     }
 }

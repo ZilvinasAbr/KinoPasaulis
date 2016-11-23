@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import TheatherHomePage from './TheatherHomePage';
 import CinemaStudioHomePage from './CinemaStudioHomePage';
 import { fetchUserData } from '../../actions/home/actions';
-import axios from 'axios';
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -11,19 +10,7 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    axios.post('/api/account/login', {
-      // UserName: 'KinoStudija1',
-      UserName: 'KinoTeatras1',
-      Password: 'testas'
-    })
-      .then(response => {
-        if(response.data === true) {
-          this.props.dispatch(fetchUserData());
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    this.props.dispatch(fetchUserData());
   }
 
   render() {

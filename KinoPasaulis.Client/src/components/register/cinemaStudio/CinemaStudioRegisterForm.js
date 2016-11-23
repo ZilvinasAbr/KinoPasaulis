@@ -69,7 +69,7 @@ class CinemaStudioRegisterForm extends React.Component {
 
             <FormGroup controlId="email">
               <ControlLabel>
-                Elektroninis paštas
+                Elektroninis paštasssssssasha
               </ControlLabel>
               <FormControl type="email" placeholder="El. paštas" { ...email } />
             </FormGroup>

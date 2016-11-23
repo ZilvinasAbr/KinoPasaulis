@@ -10,7 +10,7 @@ import LoginPage from './components/login/LoginPage';
 import RegisterPage from './components/register/RegisterPage';
 import CinemaStudioRegisterPage from './components/register/cinemaStudio/CinemaStudioRegisterPage';
 import TheatherRegisterPage from './components/register/theather/TheatherRegisterPage';
-import CinemaCreatorRegisterPage from './components/register/cinemaCreator/CinemaCreatorRegisterForm';
+import MovieCreatorRegisterPage from './components/register/movieCreator/MovieCreatorRegisterPage';
 import Auditoriums from './components/home/theather/auditoriums/Auditoriums';
 import Events from './components/home/theather/events/Events';
 import Subscriptions from './components/home/theather/Subscriptions';
@@ -37,7 +37,7 @@ render(
 				<Route path="register" component={RegisterPage} />
 				<Route path="register/cinemastudio" component={CinemaStudioRegisterPage} />
 				<Route path="register/theather" component={TheatherRegisterPage} />
-				<Route path="register/cinemacreator" component={CinemaCreatorRegisterPage} />
+				<Route path="register/moviecreator" component={MovieCreatorRegisterPage} />
 				<Route path="login" component={LoginPage} />
 				<Route path="theather/auditoriums" component={Auditoriums} />
 				<Route path="theather/events" component={Events} />

@@ -13,7 +13,7 @@ namespace KinoPasaulis.Server.Models
     {
         public Theather Theather { get; set; }
 
-        public CinemaCreator CinemaCreator { get; set; }
+        public MovieCreator MovieCreator { get; set; }
 
         public CinemaStudio CinemaStudio { get; set; }
 

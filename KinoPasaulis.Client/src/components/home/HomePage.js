@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TheatherHomePage from './TheatherHomePage';
 import CinemaStudioHomePage from './CinemaStudioHomePage';
+import MovieCreatorHomePage from './MovieCreatorHomePage';
 import { fetchUserData } from '../../actions/home/actions';
 
 class HomePage extends React.Component {
@@ -21,7 +22,9 @@ class HomePage extends React.Component {
       case 'Theather':
         return <TheatherHomePage />;
       case 'CinemaStudio':
-        return <CinemaStudioHomePage />
+        return <CinemaStudioHomePage />;
+      case 'MovieCreator':
+        return <MovieCreatorHomePage />;
       default:
         return <div>Error</div>;
     }

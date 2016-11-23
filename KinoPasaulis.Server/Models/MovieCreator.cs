@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace KinoPasaulis.Server.Models
 {
-    public class CinemaCreator
+    public class MovieCreator
     {
         public int Id { get; set; }
 

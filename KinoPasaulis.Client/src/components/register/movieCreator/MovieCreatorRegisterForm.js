@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { registerMovieCreator } from '../../../actions/registerActions';
+import { registerMovieCreator } from '../../../actions/account/registerActions';
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 class MovieCreatorRegisterForm extends React.Component {

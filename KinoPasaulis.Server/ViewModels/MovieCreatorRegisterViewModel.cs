@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KinoPasaulis.Server.ViewModels
 {
-    public class CinemaCreatorRegisterViewModel
+    public class MovieCreatorRegisterViewModel
     {
         [Required(ErrorMessage = "Username is required")]
         [Display(Name = "Username")]

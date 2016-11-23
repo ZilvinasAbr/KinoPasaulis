@@ -1,9 +1,9 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { registerCinemaCreator } from '../../../actions/registerActions';
+import { registerMovieCreator } from '../../../actions/registerActions';
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
-class CinemaCreatorRegisterForm extends React.Component {
+class MovieCreatorRegisterForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,18 +19,20 @@ class CinemaCreatorRegisterForm extends React.Component {
         confirmPassword,
         firstName,
         lastName,
+        phone,
         birthDate,
         description
       }
     } = this.props;
 
-    this.props.dispatch(registerCinemaCreator(
+    this.props.dispatch(registerMovieCreator(
       userName.value,
       email.value,
       password.value,
       confirmPassword.value,
       firstName.value,
       lastName.value,
+      phone.value,
       birthDate.value,
       description.value
     ));
@@ -45,6 +47,7 @@ class CinemaCreatorRegisterForm extends React.Component {
         confirmPassword,
         firstName,
         lastName,
+        phone,
         birthDate,
         description
       }
@@ -99,6 +102,13 @@ class CinemaCreatorRegisterForm extends React.Component {
               <FormControl type="text" placeholder="Pavardė" { ...lastName } />
             </FormGroup>
 
+            <FormGroup controlId="phone">
+              <ControlLabel>
+                Telefonas
+              </ControlLabel>
+              <FormControl type="text" placeholder="Telefonas" { ...phone } />
+            </FormGroup>
+
             <FormGroup controlId="birthDate">
               <ControlLabel>
                 Gimimo data
@@ -122,13 +132,13 @@ class CinemaCreatorRegisterForm extends React.Component {
   }
 }
 
-CinemaCreatorRegisterForm.propTypes = {
+MovieCreatorRegisterForm.propTypes = {
   fields: React.PropTypes.object.isRequired,
   handleSubmit: React.PropTypes.func.isRequired
 };
 
 const config = { // <----- THIS IS THE IMPORTANT PART!
-  form: 'registerCinemaCreator',                   // a unique name for this form
+  form: 'registerMovieCreator',                   // a unique name for this form
   fields: [
     'userName',
     'email',
@@ -136,9 +146,10 @@ const config = { // <----- THIS IS THE IMPORTANT PART!
     'confirmPassword',
     'firstName',
     'lastName',
+    'phone',
     'birthDate',
     'description'
   ] // all the fields in your form
 };
 
-export default reduxForm(config)(CinemaCreatorRegisterForm);
+export default reduxForm(config)(MovieCreatorRegisterForm);

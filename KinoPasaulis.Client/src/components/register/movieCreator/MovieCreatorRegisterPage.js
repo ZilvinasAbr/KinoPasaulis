@@ -2,16 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import LoggedOfNavigationBar from '../../common/LoggedOfNavigationBar';
-import CinemaCreatorRegisterForm from './CinemaCreatorRegisterForm';
+import MovieCreatorRegisterForm from './MovieCreatorRegisterForm';
 
-const CinemaCreatorRegisterPage = (props) => {
+const MovieCreatorRegisterPage = (props) => {
   return (
     <div>
       <LoggedOfNavigationBar
         changePageToLanding={props.changePageToLanding}
         changePageToLogin={props.changePageToLogin}
         changePageToRegister={props.changePageToRegister} />
-      <CinemaCreatorRegisterForm />
+      <MovieCreatorRegisterForm />
     </div>
   );
 };
@@ -36,4 +36,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CinemaCreatorRegisterPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MovieCreatorRegisterPage);

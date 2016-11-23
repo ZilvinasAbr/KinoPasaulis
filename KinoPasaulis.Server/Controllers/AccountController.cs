@@ -103,15 +103,15 @@ namespace KinoPasaulis.Server.Controllers
             return false;
         }
 
-        [HttpPost("registerCinemaCreator")]
-        public async Task<bool> RegisterCinemaCreator([FromBody] CinemaCreatorRegisterViewModel model)
+        [HttpPost("registerMovieCreator")]
+        public async Task<bool> RegisterMovieCreator([FromBody] MovieCreatorRegisterViewModel model)
         {
             if (model.Password != model.ConfirmPassword)
             {
                 return false;
             }
 
-            var cinemaCreator = new CinemaCreator
+            var movieCreator = new MovieCreator
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -125,14 +125,14 @@ namespace KinoPasaulis.Server.Controllers
             var user = new ApplicationUser
             {
                 UserName = model.UserName,
-                CinemaCreator = cinemaCreator
+                MovieCreator = movieCreator
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "CinemaCreator");
+                await _userManager.AddToRoleAsync(user, "MovieCreator");
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return true;
             }

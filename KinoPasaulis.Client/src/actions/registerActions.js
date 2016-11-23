@@ -64,7 +64,7 @@ export function registerCinemaStudio(
   }
 }
 
-export function registerCinemaCreator(
+export function registerMovieCreator(
     userName,
     email,
     password,
@@ -75,7 +75,7 @@ export function registerCinemaCreator(
     description
 ) {
     return dispatch => {
-        return axios.post('/api/account/registerCinemaCreator', {
+        return axios.post('/api/account/registerMovieCreator', {
             UserName: userName,
             Email: email,
             Password: password,

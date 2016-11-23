@@ -12,7 +12,7 @@ class TheatherHomePage extends React.Component {
     return (
       <div>
         <TheatherNavigationBar
-          changePageToLanding={this.props.changePageToLanding}
+          changePageToHome={this.props.changePageToHome}
           goToAuditoriums={this.props.goToAuditoriums}
           goToEvents={this.props.goToEvents}
           goToSubscriptions={this.props.goToSubscriptions}
@@ -31,24 +31,24 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    changePageToLanding: () => {
-      dispatch(push('/'));
+    changePageToHome: () => {
+      dispatch(push('/home'));
     },
 
     goToAuditoriums: () => {
-      dispatch(push('theather/auditoriums'));
+      dispatch(push('/theather/auditoriums'));
     },
 
     goToEvents: () => {
-      dispatch(push('theather/events'));
+      dispatch(push('/theather/events'));
     },
 
     goToSubscriptions: () => {
-      dispatch(push('theather/subscriptions'));
+      dispatch(push('/theather/subscriptions'));
     },
 
     logOut: () => {
-      dispatch(push('theather/logout'));
+      dispatch(push('/theather/logout'));
     }
   }
 }

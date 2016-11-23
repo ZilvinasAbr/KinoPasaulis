@@ -36,7 +36,7 @@ class Events extends React.Component {
     return (
       <div>
         <TheatherNavigationBar
-          changePageToLanding={this.props.changePageToLanding}
+          changePageToHome={this.props.changePageToHome}
           goToAuditoriums={this.props.goToAuditoriums}
           goToEvents={this.props.goToEvents}
           goToSubscriptions={this.props.goToSubscriptions}
@@ -65,8 +65,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    changePageToLanding: () => {
-      dispatch(push('/'));
+    changePageToHome: () => {
+      dispatch(push('/home'));
     },
 
     goToAuditoriums: () => {

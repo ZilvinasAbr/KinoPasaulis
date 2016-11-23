@@ -1,12 +1,12 @@
 import React from 'react';
 import { Navbar, Nav, NavItem} from 'react-bootstrap';
 
-const TheatherNavigationBar = ({logOut, changePageToLanding, goToAuditoriums, goToEvents, goToSubscriptions}) => {
+const TheatherNavigationBar = ({logOut, changePageToHome, goToAuditoriums, goToEvents, goToSubscriptions}) => {
   return (
     <Navbar inverse>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="javascript:void(0)" onClick={changePageToLanding}>Kino Pasaulis</a>
+          <a href="javascript:void(0)" onClick={changePageToHome}>Kino Pasaulis</a>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
@@ -25,7 +25,7 @@ const TheatherNavigationBar = ({logOut, changePageToLanding, goToAuditoriums, go
 };
 
 TheatherNavigationBar.propTypes = {
-  changePageToLanding: React.PropTypes.func.isRequired,
+  changePageToHome: React.PropTypes.func.isRequired,
   logOut: React.PropTypes.func.isRequired,
   goToAuditoriums: React.PropTypes.func.isRequired,
   goToEvents: React.PropTypes.func.isRequired,

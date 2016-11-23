@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { registerCinemaStudio } from '../../../actions/registerActions';
+import { registerCinemaStudio } from '../../../actions/account/registerActions';
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 class CinemaStudioRegisterForm extends React.Component {

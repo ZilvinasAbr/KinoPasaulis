@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
 import { getEventById } from '../../../../actions/theather/eventActions';
+import { logout } from '../../../../actions/account/logoutActions';
 import { Well, Col, ButtonToolbar, OverlayTrigger, Button, Popover, Modal } from 'react-bootstrap';
 import moment from 'moment';
 import { deleteShowById } from '../../../../actions/theather/eventActions'
@@ -81,7 +82,7 @@ class EventDetails extends React.Component {
           goToAuditoriums={this.props.goToAuditoriums}
           goToEvents={this.props.goToEvents}
           goToSubscriptions={this.props.goToSubscriptions}
-          logOut={this.props.logOut}
+          logout={this.props.logout}
         />
         <div className="container">
           <h1>{this.props.movie.title}</h1>
@@ -146,8 +147,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(push('/theather/subscriptions'));
     },
 
-    logOut: () => {
-      dispatch(push('/theather/logout'));
+    logout: () => {
+      dispatch(logout());
     },
 
     goToEventCreateForm: () => {

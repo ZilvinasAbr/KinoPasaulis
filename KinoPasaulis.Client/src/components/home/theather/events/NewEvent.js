@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
 import AddEventForm from './AddEventForm';
+import { logout } from '../../../../actions/account/logoutActions';
 import { getAuditoriums } from '../../../../actions/theather/auditoriumActions';
 
 class NewEvent extends React.Component {
@@ -22,7 +23,7 @@ class NewEvent extends React.Component {
           goToAuditoriums={this.props.goToAuditoriums}
           goToEvents={this.props.goToEvents}
           goToSubscriptions={this.props.goToSubscriptions}
-          logOut={this.props.logOut}
+          logout={this.props.logout}
         />
         <div className="container">
           <h1> New event form </h1>
@@ -57,8 +58,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(push('/theather/subscriptions'));
     },
 
-    logOut: () => {
-      dispatch(push('/theather/logout'));
+    logout: () => {
+      dispatch(logout());
     },
 
     getAuditoriums: () => {

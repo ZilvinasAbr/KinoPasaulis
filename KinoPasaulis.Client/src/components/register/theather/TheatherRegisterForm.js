@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { registerTheather } from '../../../actions/registerActions';
+import { registerTheather } from '../../../actions/account/registerActions';
 import { Button, Form, FormGroup, Col, FormControl, ControlLabel, Checkbox } from 'react-bootstrap';
 
 class TheatherRegisterForm extends React.Component {

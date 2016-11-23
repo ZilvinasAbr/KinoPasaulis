@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { logout } from '../../../actions/account/logoutActions';
 import TheatherNavigationBar from './TheatherNavigationBar';
 
 class Subscriptions extends React.Component {
@@ -16,7 +17,7 @@ class Subscriptions extends React.Component {
           goToAuditoriums={this.props.goToAuditoriums}
           goToEvents={this.props.goToEvents}
           goToSubscriptions={this.props.goToSubscriptions}
-          logOut={this.props.logOut}
+          logout={this.props.logout}
         />
         <h1> Subscriptions </h1>
       </div>
@@ -47,8 +48,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(push('/theather/subscriptions'));
     },
 
-    logOut: () => {
-      dispatch(push('/theather/logout'));
+    logout: () => {
+      dispatch(logout());
     }
   }
 }

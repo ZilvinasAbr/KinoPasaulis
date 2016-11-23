@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 import { getEvents } from '../../../../actions/theather/eventActions';
 import { Well, Col } from 'react-bootstrap';
 import moment from 'moment';
+import { logout } from '../../../../actions/account/logoutActions';
 
 class Events extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class Events extends React.Component {
           goToAuditoriums={this.props.goToAuditoriums}
           goToEvents={this.props.goToEvents}
           goToSubscriptions={this.props.goToSubscriptions}
-          logOut={this.props.logOut}
+          logout={this.props.logout}
         />
         <div className="container">
           <Col md={3}>
@@ -81,8 +82,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(push('/theather/subscriptions'));
     },
 
-    logOut: () => {
-      dispatch(push('/theather/logout'));
+    logout: () => {
+      dispatch(logout());
     },
 
     goToEventCreateForm: () => {

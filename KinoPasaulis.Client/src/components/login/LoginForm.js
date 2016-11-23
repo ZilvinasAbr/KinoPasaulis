@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { login } from '../../actions/loginActions';
+import { login } from '../../actions/account/loginActions';
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 class LoginForm extends React.Component {

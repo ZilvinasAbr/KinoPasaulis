@@ -6,6 +6,7 @@ import AddAuditoriumForm from '../AddAuditoriumForm';
 import UpdateAuditoriumForm from '../UpdateAuditoriumForm';
 import { Button, Popover, ButtonToolbar, OverlayTrigger, Col, Table, Modal } from 'react-bootstrap';
 import { getAuditoriums, deleteAuditorium, requestUpdateAuditorium } from '../../../../actions/theather/auditoriumActions';
+import { logout } from '../../../../actions/account/logoutActions';
 
 class Auditoriums extends React.Component {
 
@@ -74,7 +75,7 @@ class Auditoriums extends React.Component {
           goToAuditoriums={this.props.goToAuditoriums}
           goToEvents={this.props.goToEvents}
           goToSubscriptions={this.props.goToSubscriptions}
-          logOut={this.props.logOut}
+          logout={this.props.logout}
         />
         <Col md={3}>
           <div className="container">
@@ -160,8 +161,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(push('/theather/subscriptions'));
     },
 
-    logOut: () => {
-      dispatch(push('/theather/logout'));
+    logout: () => {
+      dispatch(logout());
     },
 
     getAuditoriums: () => {

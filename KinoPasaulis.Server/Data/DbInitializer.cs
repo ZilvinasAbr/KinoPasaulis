@@ -34,6 +34,10 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(theathers);
             context.SaveChanges();
 
+            var auditoriums = AddAuditoriums(theathers[0]);
+            context.AddRange(auditoriums);
+            context.SaveChanges();
+
             await AddCinemaStudioUsers(cinemaStudios, userManager);
             await AddTheatherUsers(theathers, userManager);
 
@@ -50,6 +54,18 @@ namespace KinoPasaulis.Server.Data
             };
 
             return theathers;
+        }
+
+        private static List<Auditorium> AddAuditoriums(Theather theather)
+        {
+            var auditoriums = new List<Auditorium>
+            {
+                new Auditorium {Name = "Sale 1", Seats = 100, Theather = theather},
+                new Auditorium {Name = "Sale 2", Seats = 75, Theather = theather},
+                new Auditorium {Name = "Sale 3", Seats = 125, Theather = theather}
+            };
+
+            return auditoriums;
         }
 
         private static List<Movie> AddMovies(List<CinemaStudio> cinemaStudios)

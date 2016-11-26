@@ -23,7 +23,10 @@ namespace KinoPasaulis.Server.Repositories.CinemaStudio
 
         public Movie GetMovieById(int movieId)
         {
-            throw new NotImplementedException();
+            var movie = _dbContext.Movies
+                .SingleOrDefault(mv => mv.Id == movieId);
+
+            return movie;
         }
 
         public IEnumerable<Movie> GetMoviesByTitle(string title)

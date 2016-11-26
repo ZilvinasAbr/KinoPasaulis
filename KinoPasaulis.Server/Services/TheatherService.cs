@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using KinoPasaulis.Server.Mapper;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
+using KinoPasaulis.Server.Repositories.CinemaStudio;
 using KinoPasaulis.Server.Repositories.Theather;
 using KinoPasaulis.Server.ViewModels.Theather;
 
@@ -14,19 +15,20 @@ namespace KinoPasaulis.Server.Services
         private readonly IAuditoriumRepository _auditoriumRepository;
         private readonly IShowRepository _showRepository;
         private readonly ITheatherMapper _theatherMapper;
+        private readonly IMovieRepository _movieRepository;
 
-        public TheatherService(IEventRepository eventRepository, IAuditoriumRepository auditoriumRepository, IShowRepository showRepository, ITheatherMapper theatherMapper)
+        public TheatherService(IEventRepository eventRepository, IAuditoriumRepository auditoriumRepository, IShowRepository showRepository, ITheatherMapper theatherMapper, IMovieRepository movieRepository)
         {
             _eventRepository = eventRepository;
             _auditoriumRepository = auditoriumRepository;
             _showRepository = showRepository;
             _theatherMapper = theatherMapper;
+            _movieRepository = movieRepository;
         }
 
         public void AddNewEvent(EventCreation eventCreation)
         {
-            // Get Movie by Id from another repo
-            var addedMovie = new Movie {Title = "Suicide Squad"};
+            var addedMovie = _movieRepository.GetMovieById(1);
             var auditoriasList = new List<Auditorium>();
             foreach (var auditoriumId in eventCreation.AuditoriumIds)
             { 

@@ -5,9 +5,32 @@ import { addEvent } from '../../../../actions/theather/eventActions';
 import { DateRangePicker } from 'react-dates';
 import TagsInput from 'react-tagsinput'
 import moment from 'moment';
+import Autosuggest from 'react-autosuggest';
 import 'react-dates/css/variables.scss';
 import 'react-tagsinput/react-tagsinput.css'
 import 'react-dates/css/styles.scss';
+import './autosuggest.scss';
+
+const escapeRegexCharacters = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const getSuggestions = value => {
+  const escapedValue = escapeRegexCharacters(value.trim());
+
+  if (escapedValue === '') {
+    return [];
+  }
+
+  const regex = new RegExp('^' + escapedValue, 'i');
+
+  return languages.filter(language => regex.test(language.name));
+};
+
+const getSuggestionValue = suggestion => suggestion.name;
+
+const renderSuggestion = suggestion => (
+  <span>{suggestion.name}</span>
+);
+
 
 class AddEventForm extends React.Component {
   constructor(props) {
@@ -20,13 +43,35 @@ class AddEventForm extends React.Component {
       focusedInput: null,
       startDate: null,
       endDate: null,
-      showTimes: []
+      showTimes: [],
+      value: '',
+      suggestions: getSuggestions('')
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onDatesChange = this.onDatesChange.bind(this);
     this.onFocusChange = this.onFocusChange.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
+    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
   }
+  onChange(event, { newValue }){
+    this.setState({
+      value: newValue
+    });
+  };
+
+  onSuggestionsFetchRequested ({ value }) {
+    this.setState({
+      suggestions: getSuggestions(value)
+    });
+  };
+
+  onSuggestionsClearRequested(){
+    this.setState({
+      suggestions: []
+    });
+  };
 
   handleSubmit() {
     moment().toDate();
@@ -101,6 +146,12 @@ class AddEventForm extends React.Component {
   render() {
     const {fields: {title, seats} } = this.props;
     const { focusedInput, startDate, endDate } = this.state;
+    const { value, suggestions } = this.state;
+    const inputProps = {
+      placeholder: 'Type a programming language',
+      value,
+      onChange: this.onChange
+    };
     return (
       <div>
         <Form>
@@ -119,6 +170,15 @@ class AddEventForm extends React.Component {
               />
             </FormGroup>
           </Row>
+          <h3> Pasirinkite filma </h3>
+          <Autosuggest
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            inputProps={inputProps}
+          />
           <Row>
             <h3> Pasirinkite seansų laikus </h3>
             <TagsInput value={this.state.showTimes} onChange={this.handleChange} />
@@ -141,5 +201,20 @@ const config = { // <----- THIS IS THE IMPORTANT PART!
   form: 'addEvent',                   // a unique name for this form
   fields: [] // all the fields in your form
 };
+
+const languages = [
+  {
+    name: 'C',
+    year: 1972
+  },
+  {
+    name: 'Elm',
+    year: 2012
+  },
+  {
+    name: 'Ce',
+    year: 1972
+  }
+];
 
 export default reduxForm(config)(AddEventForm);

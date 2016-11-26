@@ -30,12 +30,7 @@ namespace KinoPasaulis.Server.Services
         {
             var addedMovie = _movieRepository.GetMovieById(1);
             var auditoriasList = new List<Auditorium>();
-            foreach (var auditoriumId in eventCreation.AuditoriumIds)
-            { 
-                var auditorium = _auditoriumRepository.GetAuditoriumById(auditoriumId);
-
-                auditoriasList.Add(auditorium);
-            }
+            auditoriasList = _auditoriumRepository.GetAuditoriumsByIds(eventCreation.AuditoriumIds);
 
             var shows = new List<Show>();
             var days = (eventCreation.EndTime - eventCreation.StartTime).TotalDays;
@@ -45,15 +40,18 @@ namespace KinoPasaulis.Server.Services
                 {
                     var day = eventCreation.StartTime.AddDays(i);
                     var dateTime = day.Add(timeSpan);
-                    foreach (var auditorium in auditoriasList)
+                    if (dateTime > DateTime.Now)
                     {
-                        var show = new Show
+                        foreach (var auditorium in auditoriasList)
                         {
-                            Auditorium = auditorium,
-                            StartTime = dateTime
-                        };
+                            var show = new Show
+                            {
+                                Auditorium = auditorium,
+                                StartTime = dateTime
+                            };
 
-                        shows.Add(show);
+                            shows.Add(show);
+                        }
                     }
                 }
             }

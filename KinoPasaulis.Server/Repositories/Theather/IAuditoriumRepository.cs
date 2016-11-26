@@ -11,5 +11,6 @@ namespace KinoPasaulis.Server.Repositories.Theather
         void InsertAuditorium(Auditorium auditorium);
         bool DeleteAudtorium(int auditoriumId);
         void UpdateAuditorium(Auditorium auditorium);
+        List<Auditorium> GetAuditoriumsByIds(List<int> auditoriumIds);
     }
 }

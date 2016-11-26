@@ -35,6 +35,13 @@ namespace KinoPasaulis.Server.Repositories.Theather
             return _context.Auditoriums.SingleOrDefault(x => x.Id == auditoriumId);
         }
 
+        public List<Auditorium> GetAuditoriumsByIds(List<int> auditoriumIds)
+        {
+            return _context.Auditoriums
+                .Where(aud => auditoriumIds.Contains(aud.Id))
+                .ToList();
+        }
+
         public IEnumerable<Auditorium> GetAuditoriums()
         {
             return _context.Auditoriums.ToList();

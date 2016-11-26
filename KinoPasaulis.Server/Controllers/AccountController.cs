@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModels;
 using KinoPasaulis.Server.Services;
 using KinoPasaulis.Server.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace KinoPasaulis.Server.Controllers
 {

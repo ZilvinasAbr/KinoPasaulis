@@ -30,11 +30,19 @@ namespace KinoPasaulis.Server.Repositories.CinemaStudio
 
         public IEnumerable<Movie> GetMoviesByTitle(string title)
         {
-            var movies = _dbContext.Movies
-                .Where(movie => movie.Title.Contains(title))
-                .ToList();
+            IEnumerable<Movie> result;
 
-            return movies;
+            if(string.IsNullOrEmpty(title))
+            {
+                result = _dbContext.Movies.ToList();
+            }else
+            {
+                result = _dbContext.Movies
+                    .Where(movie => movie.Title.Contains(title))
+                    .ToList();
+            }
+
+            return result;
         }
 
         public void InsertMovie(Movie movie)

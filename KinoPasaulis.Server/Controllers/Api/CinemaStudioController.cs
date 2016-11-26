@@ -20,7 +20,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             _signInManager = signInManager;
         }
 
-        [HttpGet("searchMovies/{query}")]
+        [HttpGet("searchMovies/{query?}")]
         public IEnumerable<Movie> SearchMovies(string query)
         {
             if (_signInManager.IsSignedIn(User))

@@ -16,6 +16,7 @@ import Events from './components/home/theather/events/Events';
 import Subscriptions from './components/home/theather/Subscriptions';
 import NewEvent from './components/home/theather/events/NewEvent';
 import EventDetails from './components/home/theather/events/EventDetails';
+import MoviesPage from './components/home/cinemaStudio/movies/MoviesPage';
 
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
@@ -44,6 +45,7 @@ render(
 				<Route path="theather/subscriptions" component={Subscriptions} />
 				<Route path="theather/newEvent" component={NewEvent} />
 				<Route path="theather/eventDetails/:id" component={EventDetails}/>
+				<Route path="cinemaStudio/movies" component={MoviesPage} />
 			</Router>
 		</Provider>
 	),

@@ -1,9 +1,9 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import { registerCinemaStudio } from '../../../actions/account/registerActions';
+import { registerClient } from '../../../actions/account/registerActions';
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
-class CinemaStudioRegisterForm extends React.Component {
+class ClientRegisterForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,23 +17,19 @@ class CinemaStudioRegisterForm extends React.Component {
         email,
         password,
         confirmPassword,
-        name,
-        city,
-        country,
-        address,
+        firstName,
+        lastName,
         phone
       }
     } = this.props;
 
-    this.props.dispatch(registerCinemaStudio(
+    this.props.dispatch(registerClient(
       userName.value,
       email.value,
       password.value,
       confirmPassword.value,
-      name.value,
-      city.value,
-      country.value,
-      address.value,
+      firstName.value,
+      lastName.value,
       phone.value
     ));
   }
@@ -45,10 +41,8 @@ class CinemaStudioRegisterForm extends React.Component {
         email,
         password,
         confirmPassword,
-        name,
-        city,
-        country,
-        address,
+        firstName,
+        lastName,
         phone
       }
     } = this.props;
@@ -56,7 +50,7 @@ class CinemaStudioRegisterForm extends React.Component {
     return (
       <div>
         <div className="container col-md-4 col-md-offset-4">
-          <h1> Kino studijos registracija </h1>
+          <h1> Vartotojo registracija </h1>
           <hr />
           <div className="row">
 
@@ -88,32 +82,18 @@ class CinemaStudioRegisterForm extends React.Component {
               <FormControl type="password" placeholder="Pakartoti slaptažodį" { ...confirmPassword } />
             </FormGroup>
 
-            <FormGroup controlId="name">
+            <FormGroup controlId="firstName">
               <ControlLabel>
-                Kino studijos pavadinimas
+                Vardas
               </ControlLabel>
-              <FormControl type="text" placeholder="Kino studijos pavadinimas" { ...name } />
+              <FormControl type="text" placeholder="Vardas" { ...firstName } />
             </FormGroup>
 
-            <FormGroup controlId="city">
+            <FormGroup controlId="lastName">
               <ControlLabel>
-                Miestas
+                Pavardė
               </ControlLabel>
-              <FormControl type="text" placeholder="Miestas" { ...city } />
-            </FormGroup>
-
-            <FormGroup controlId="country">
-              <ControlLabel>
-                Valstybė
-              </ControlLabel>
-              <FormControl type="text" placeholder="Valstybė" { ...country } />
-            </FormGroup>
-
-            <FormGroup controlId="address">
-              <ControlLabel>
-                Adresas
-              </ControlLabel>
-              <FormControl type="text" placeholder="Adresas" { ...address } />
+              <FormControl type="text" placeholder="Pavardė" { ...lastName } />
             </FormGroup>
 
             <FormGroup controlId="phone">
@@ -132,24 +112,22 @@ class CinemaStudioRegisterForm extends React.Component {
   }
 }
 
-CinemaStudioRegisterForm.propTypes = {
+ClientRegisterForm.propTypes = {
   fields: React.PropTypes.object.isRequired,
   handleSubmit: React.PropTypes.func.isRequired
 };
 
 const config = { // <----- THIS IS THE IMPORTANT PART!
-  form: 'registerCinemaStudio',                   // a unique name for this form
+  form: 'registerClient',                   // a unique name for this form
   fields: [
     'userName',
     'email',
     'password',
     'confirmPassword',
-    'name',
-    'city',
-    'country',
-    'address',
+    'firstName',
+    'lastName',
     'phone'
   ] // all the fields in your form
 };
 
-export default reduxForm(config)(CinemaStudioRegisterForm);
+export default reduxForm(config)(ClientRegisterForm);

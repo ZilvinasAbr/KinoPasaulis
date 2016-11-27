@@ -71,6 +71,7 @@ export function registerMovieCreator(
     confirmPassword,
     firstName,
     lastName,
+    phone,
     birthDate,
     description
 ) {
@@ -82,6 +83,7 @@ export function registerMovieCreator(
             ConfirmPassword: confirmPassword,
             FirstName: firstName,
             LastName: lastName,
+            Phone: phone,
             BirthDate: birthDate,
             Description: description
         })
@@ -96,4 +98,36 @@ export function registerMovieCreator(
                 console.log(error);
             });
     }
+}
+
+export function registerClient(
+  userName,
+  email,
+  password,
+  confirmPassword,
+  firstName,
+  lastName,
+  phone
+) {
+  return dispatch => {
+    return axios.post('/api/account/register', {
+      UserName: userName,
+      Email: email,
+      Password: password,
+      ConfirmPassword: confirmPassword,
+      FirstName: firstName,
+      LastName: lastName,
+      Phone: phone
+    })
+      .then(response => {
+        if(response.data === true) {
+          dispatch(push('/home'));
+        }else {
+
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 }

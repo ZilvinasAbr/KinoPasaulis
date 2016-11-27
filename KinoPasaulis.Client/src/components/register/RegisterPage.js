@@ -15,7 +15,7 @@ class RegisterPage extends React.Component {
         <LoggedOfNavigationBar changePageToLanding={this.props.changePageToLanding} changePageToLogin={this.props.changePageToLogin} changePageToRegister={this.props.changePageToRegister} />
         <div className="container">
           <div className="row">
-            <Button bsStyle="primary">Vartotojo registracija</Button>
+            <Button bsStyle="primary" onClick={this.props.changePageToClient}>Vartotojo registracija</Button>
             <Button bsStyle="primary" onClick={this.props.changePageToTheather}>Kino teatro registracija</Button>
             <Button bsStyle="primary" onClick={this.props.changePageToCinemaStudio}>Kino studijos registracija</Button>
             <Button bsStyle="primary" onClick={this.props.changePageToMovieCreator}>Kino kūrėjo registracija</Button>
@@ -50,6 +50,9 @@ function mapDispatchToProps(dispatch) {
     },
     changePageToMovieCreator: () => {
       dispatch(push('/register/moviecreator'));
+    },
+    changePageToClient: () => {
+      dispatch(push('/register/client'));
     }
   }
 }

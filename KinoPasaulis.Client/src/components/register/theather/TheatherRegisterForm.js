@@ -49,9 +49,9 @@ class TheatherRegisterForm extends React.Component {
 
             <FormGroup controlId="password">
               <ControlLabel>
-                Pakartoti slaptažodi
+                Pakartoti slaptažodį
               </ControlLabel>
-              <FormControl type="password" placeholder="Pakartoti slaptažodi" { ...repeat } />
+              <FormControl type="password" placeholder="Pakartoti slaptažodį" { ...repeat } />
             </FormGroup>
 
             <FormGroup controlId="password">

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import LoggedOfNavigationBar from '../../common/LoggedOfNavigationBar';
 import MovieCreatorRegisterForm from './MovieCreatorRegisterForm';
+import ErrorMessage from '../ErrorMessage';
 
 const MovieCreatorRegisterPage = (props) => {
   return (
@@ -11,7 +12,14 @@ const MovieCreatorRegisterPage = (props) => {
         changePageToLanding={props.changePageToLanding}
         changePageToLogin={props.changePageToLogin}
         changePageToRegister={props.changePageToRegister} />
-      <MovieCreatorRegisterForm />
+      <div>
+        <div className="container col-md-4 col-md-offset-4">
+          <h1> Kino kūrėjo registracija </h1>
+          <hr />
+          {props.message && <ErrorMessage message={props.message} />}
+          <MovieCreatorRegisterForm />
+        </div>
+      </div>
     </div>
   );
 };

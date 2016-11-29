@@ -20,10 +20,6 @@ class TheatherRegisterForm extends React.Component {
     const {fields: {username, password, repeat, email, title, city, address, phone} } = this.props;
 
     return (
-      <div>
-        <div className="container col-md-4 col-md-offset-4">
-          <h1> Kino teatro registracija </h1>
-          <hr />
           <div className="row">
 
             <FormGroup controlId="username">
@@ -90,8 +86,6 @@ class TheatherRegisterForm extends React.Component {
             <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}> Registruotis </Button>
 
           </div>
-        </div>
-      </div>
     );
   }
 }

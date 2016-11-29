@@ -4,6 +4,7 @@ import { landingPage, initialState as landingPageInitialState } from './landingP
 import { registerPage, initialState as registerPageInitialState } from './registerPage';
 import { theaterPage, initialState as theaterPageInitialState } from './theaterPage';
 import { cinemaStudioPage, initialState as cinemaStudioPageInitialState } from './cinemaStudioPage';
+import { registerLoginError, initialState as registerLoginErrorInitialState } from './registerLoginError';
 import { reducer as formReducer } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
 
@@ -13,6 +14,7 @@ const reducers = {
   registerPage,
   theaterPage,
   cinemaStudioPage,
+  registerLoginError,
   form: formReducer,
   routing: routerReducer
 };
@@ -25,5 +27,6 @@ export const initialState = {
   registerPage: registerPageInitialState,
   theaterPage: theaterPageInitialState,
   cinemaStudioPage: cinemaStudioPageInitialState,
+  registerLoginError: registerLoginErrorInitialState,
   form: {}
 };

@@ -1,7 +1,6 @@
-//This is just an example code from another project, so it is commented out.
-
 import axios from 'axios';
 import { push } from 'react-router-redux';
+import { addErrorMessage } from '../../actionCreators/registerLoginError';
 
 export function registerTheather(userName, password, confirmPassword, city, address, email, phone, title) {
   return dispatch => {
@@ -19,7 +18,7 @@ export function registerTheather(userName, password, confirmPassword, city, addr
         if(response.data === true) {
           dispatch(push('/home'));
         }else {
-
+          dispatch(addErrorMessage('Blogai įvesti registracijos duomenys'));
         }
       })
       .catch(error => {
@@ -55,7 +54,7 @@ export function registerCinemaStudio(
         if(response.data === true) {
           dispatch(push('/home'));
         }else {
-
+          dispatch(addErrorMessage('Blogai įvesti registracijos duomenys'));
         }
       })
       .catch(error => {
@@ -65,39 +64,39 @@ export function registerCinemaStudio(
 }
 
 export function registerMovieCreator(
-    userName,
-    email,
-    password,
-    confirmPassword,
-    firstName,
-    lastName,
-    phone,
-    birthDate,
-    description
+  userName,
+  email,
+  password,
+  confirmPassword,
+  firstName,
+  lastName,
+  phone,
+  birthDate,
+  description
 ) {
-    return dispatch => {
-        return axios.post('/api/account/registerMovieCreator', {
-            UserName: userName,
-            Email: email,
-            Password: password,
-            ConfirmPassword: confirmPassword,
-            FirstName: firstName,
-            LastName: lastName,
-            Phone: phone,
-            BirthDate: birthDate,
-            Description: description
-        })
-            .then(response => {
-                if(response.data === true) {
-                    dispatch(push('/home'));
-                }else {
-
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
+  return dispatch => {
+    return axios.post('/api/account/registerCinemaStudio', {
+      UserName: userName,
+      Email: email,
+      Password: password,
+      ConfirmPassword: confirmPassword,
+      FirstName: firstName,
+      LastName: lastName,
+      Phone: phone,
+      BirthDate: birthDate,
+      Description: description
+    })
+      .then(response => {
+        if(response.data === true) {
+          dispatch(push('/home'));
+        }else {
+          dispatch(addErrorMessage('Blogai įvesti registracijos duomenys'));
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 }
 
 export function registerClient(
@@ -123,7 +122,7 @@ export function registerClient(
         if(response.data === true) {
           dispatch(push('/home'));
         }else {
-
+          dispatch(addErrorMessage('Blogai įvesti registracijos duomenys'));
         }
       })
       .catch(error => {

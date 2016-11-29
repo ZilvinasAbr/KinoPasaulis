@@ -33,10 +33,6 @@ class LoginForm extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        <div className="container col-md-4 col-md-offset-4">
-          <h1> Prisijungimas </h1>
-          <hr />
           <div className="row">
 
             <FormGroup controlId="userName">
@@ -56,8 +52,6 @@ class LoginForm extends React.Component {
             <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}>Prisijungti</Button>
 
           </div>
-        </div>
-      </div>
     );
   }
 }

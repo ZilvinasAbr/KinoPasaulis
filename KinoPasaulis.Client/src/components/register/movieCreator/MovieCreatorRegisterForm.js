@@ -54,10 +54,6 @@ class MovieCreatorRegisterForm extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        <div className="container col-md-4 col-md-offset-4">
-          <h1> Kino kūrėjo registracija </h1>
-          <hr />
           <div className="row">
 
             <FormGroup controlId="userName">
@@ -120,14 +116,12 @@ class MovieCreatorRegisterForm extends React.Component {
               <ControlLabel>
                 Aprašymas
               </ControlLabel>
-              <FormControl type="text" placeholder="Aprašymas" { ...description } />
+              <FormControl componentClass="textarea" placeholder="Aprašymas" { ...description } />
             </FormGroup>
 
             <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}>Registruotis</Button>
 
           </div>
-        </div>
-      </div>
     );
   }
 }

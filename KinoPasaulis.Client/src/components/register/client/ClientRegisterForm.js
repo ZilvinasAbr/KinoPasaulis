@@ -48,10 +48,6 @@ class ClientRegisterForm extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        <div className="container col-md-4 col-md-offset-4">
-          <h1> Vartotojo registracija </h1>
-          <hr />
           <div className="row">
 
             <FormGroup controlId="userName">
@@ -106,8 +102,6 @@ class ClientRegisterForm extends React.Component {
             <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}>Registruotis</Button>
 
           </div>
-        </div>
-      </div>
     );
   }
 }

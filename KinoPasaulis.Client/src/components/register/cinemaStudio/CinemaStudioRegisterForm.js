@@ -54,10 +54,6 @@ class CinemaStudioRegisterForm extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        <div className="container col-md-4 col-md-offset-4">
-          <h1> Kino studijos registracija </h1>
-          <hr />
           <div className="row">
 
             <FormGroup controlId="userName">
@@ -126,8 +122,6 @@ class CinemaStudioRegisterForm extends React.Component {
             <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}>Registruotis</Button>
 
           </div>
-        </div>
-      </div>
     );
   }
 }

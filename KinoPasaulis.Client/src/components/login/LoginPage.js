@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import LoggedOfNavigationBar from '../common/LoggedOfNavigationBar';
 import LoginForm from './LoginForm';
+import ErrorMessage from './ErrorMessage';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -16,7 +17,14 @@ class LoginPage extends React.Component {
           changePageToLanding={this.props.changePageToLanding}
           changePageToLogin={this.props.changePageToLogin}
           changePageToRegister={this.props.changePageToRegister} />
-        <LoginForm />
+        <div>
+          <div className="container col-md-4 col-md-offset-4">
+            <h1> Prisijungimas </h1>
+            <hr />
+            {this.props.message && <ErrorMessage message={this.props.message} />}
+            <LoginForm />
+          </div>
+        </div>
       </div>
     );
   }

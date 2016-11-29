@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { push } from 'react-router-redux';
+import { addErrorMessage } from '../../actionCreators/registerLoginError';
 
 export function login(
     userName,
@@ -16,7 +17,7 @@ export function login(
                 if(response.data === true) {
                     dispatch(push('/home'));
                 }else {
-
+                  dispatch(addErrorMessage('Blogai įvesti prisijungimo duomenys'));
                 }
             })
             .catch(error => {

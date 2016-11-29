@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { logout } from '../../../actions/account/logoutActions';
 import LogoutButton from '../../common/LogoutButton';
 
-const CinemaStudioNavigationBar = ({logout, changePageToHome, changePageToMovies, changePageToProfile}) => {
+const ClientNavigationBar = ({logout, changePageToHome, changePageToProfile}) => {
   return (
     <Navbar inverse>
       <Navbar.Header>
@@ -16,9 +16,6 @@ const CinemaStudioNavigationBar = ({logout, changePageToHome, changePageToMovies
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-        <Nav pullLeft>
-          <NavItem eventKey={1} onClick={changePageToMovies}>Filmai</NavItem>
-        </Nav>
         <Nav pullRight>
           <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
           <LogoutButton
@@ -31,9 +28,8 @@ const CinemaStudioNavigationBar = ({logout, changePageToHome, changePageToMovies
   );
 };
 
-CinemaStudioNavigationBar.propTypes = {
+ClientNavigationBar.propTypes = {
   changePageToHome: React.PropTypes.func.isRequired,
-  changePageToMovies: React.PropTypes.func.isRequired,
   changePageToProfile: React.PropTypes.func.isRequired,
   logout: React.PropTypes.func.isRequired
 };
@@ -42,10 +38,6 @@ function mapDispatchToProps(dispatch) {
   return {
     changePageToHome() {
       dispatch(push('/home'));
-    },
-
-    changePageToMovies: () => {
-      dispatch(push('/cinemaStudio/movies'));
     },
 
     changePageToProfile: () => {
@@ -58,4 +50,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(CinemaStudioNavigationBar);
+export default connect(null, mapDispatchToProps)(ClientNavigationBar);

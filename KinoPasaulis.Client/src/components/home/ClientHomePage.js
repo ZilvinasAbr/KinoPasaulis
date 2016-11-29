@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-//import CinemaStudioNavigationBar from './cinemaStudio/TheatherNavigationBar';
+import ClientNavigationBar from './client/ClientNavigationBar';
 
-class ClientPage extends React.Component {
+class ClientHomePage extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -11,6 +11,7 @@ class ClientPage extends React.Component {
   render() {
     return (
       <div>
+        <ClientNavigationBar />
         <h1> Client Home Page </h1>
       </div>
     );
@@ -27,4 +28,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClientPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ClientHomePage);

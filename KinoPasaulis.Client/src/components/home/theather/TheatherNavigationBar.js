@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Nav, NavItem} from 'react-bootstrap';
 import LogoutButton from '../../common/LogoutButton';
 
-const TheatherNavigationBar = ({logout, changePageToHome, goToAuditoriums, goToEvents, goToSubscriptions}) => {
+const TheatherNavigationBar = ({logout, changePageToHome, goToAuditoriums, goToEvents, goToSubscriptions, changePageToProfile}) => {
   return (
     <Navbar inverse>
       <Navbar.Header>
@@ -18,6 +18,7 @@ const TheatherNavigationBar = ({logout, changePageToHome, goToAuditoriums, goToE
           <NavItem eventKey={3} onClick={goToSubscriptions}> Prenumeratos </NavItem>
         </Nav>
         <Nav pullRight>
+          <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
           <LogoutButton
             onLogout={logout}
             eventKey={1}
@@ -33,7 +34,8 @@ TheatherNavigationBar.propTypes = {
   logout: React.PropTypes.func.isRequired,
   goToAuditoriums: React.PropTypes.func.isRequired,
   goToEvents: React.PropTypes.func.isRequired,
-  goToSubscriptions: React.PropTypes.func.isRequired
+  goToSubscriptions: React.PropTypes.func.isRequired,
+  changePageToProfile: React.PropTypes.func.isRequired
 };
 
 export default TheatherNavigationBar;

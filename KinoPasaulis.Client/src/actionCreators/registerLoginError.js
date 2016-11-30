@@ -7,10 +7,9 @@ export function addErrorMessage(message) {
 }
 
 export const DELETE_ERROR_MESSAGE = 'DELETE_ERROR_MESSAGE';
-export function deleteErrorMessage(message) {
+export function deleteErrorMessage() {
   return {
-    type: DELETE_ERROR_MESSAGE,
-    message
+    type: DELETE_ERROR_MESSAGE
   };
 }
 

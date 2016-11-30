@@ -4,29 +4,40 @@ import { push } from 'react-router-redux';
 import LoggedOfNavigationBar from '../../common/LoggedOfNavigationBar';
 import MovieCreatorRegisterForm from './MovieCreatorRegisterForm';
 import ErrorMessage from '../ErrorMessage';
+import { deleteErrorMessage } from '../../../actionCreators/registerLoginError';
 
-const MovieCreatorRegisterPage = (props) => {
-  return (
-    <div>
-      <LoggedOfNavigationBar
-        changePageToLanding={props.changePageToLanding}
-        changePageToLogin={props.changePageToLogin}
-        changePageToRegister={props.changePageToRegister} />
+class MovieCreatorRegisterPage extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillUnmount() {
+    this.props.deleteErrorMessage();
+  }
+
+  render() {
+    return (
       <div>
-        <div className="container col-md-4 col-md-offset-4">
-          <h1> Kino kūrėjo registracija </h1>
-          <hr />
-          {props.message && <ErrorMessage message={props.message} />}
-          <MovieCreatorRegisterForm />
+        <LoggedOfNavigationBar
+          changePageToLanding={this.props.changePageToLanding}
+          changePageToLogin={this.props.changePageToLogin}
+          changePageToRegister={this.props.changePageToRegister}/>
+        <div>
+          <div className="container col-md-4 col-md-offset-4">
+            <h1> Kino kūrėjo registracija </h1>
+            <hr />
+            {this.props.message && <ErrorMessage message={this.props.message}/>}
+            <MovieCreatorRegisterForm />
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 function mapStateToProps(state) {
   return {
-
+    message: state.registerLoginError.message
   };
 }
 
@@ -40,6 +51,9 @@ function mapDispatchToProps(dispatch) {
     },
     changePageToRegister: () => {
       dispatch(push('/register'));
+    },
+    deleteErrorMessage() {
+      dispatch(deleteErrorMessage());
     }
   }
 }

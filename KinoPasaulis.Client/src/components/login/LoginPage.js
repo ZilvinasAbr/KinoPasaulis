@@ -4,10 +4,15 @@ import { push } from 'react-router-redux';
 import LoggedOfNavigationBar from '../common/LoggedOfNavigationBar';
 import LoginForm from './LoginForm';
 import ErrorMessage from './ErrorMessage';
+import { deleteErrorMessage } from '../../actionCreators/registerLoginError';
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillUnmount() {
+    this.props.deleteErrorMessage();
   }
 
   render() {
@@ -32,6 +37,7 @@ class LoginPage extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    message: state.registerLoginError.message
   }
 }
 
@@ -45,6 +51,9 @@ function mapDispatchToProps(dispatch) {
     },
     changePageToRegister: () => {
       dispatch(push('/register'));
+    },
+    deleteErrorMessage() {
+      dispatch(deleteErrorMessage());
     }
   }
 }

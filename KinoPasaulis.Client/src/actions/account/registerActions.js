@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 import { addErrorMessage } from '../../actionCreators/registerLoginError';
+import { deleteErrorMessage } from '../../actionCreators/registerLoginError';
 
 export function registerTheather(userName, password, confirmPassword, city, address, email, phone, title) {
   return dispatch => {
@@ -16,6 +17,7 @@ export function registerTheather(userName, password, confirmPassword, city, addr
     })
       .then(response => {
         if(response.data === true) {
+          dispatch(deleteErrorMessage('Blogai įvesti registracijos duomenys'));
           dispatch(push('/home'));
         }else {
           dispatch(addErrorMessage('Blogai įvesti registracijos duomenys'));
@@ -52,6 +54,7 @@ export function registerCinemaStudio(
     })
       .then(response => {
         if(response.data === true) {
+          dispatch(deleteErrorMessage('Blogai įvesti registracijos duomenys'));
           dispatch(push('/home'));
         }else {
           dispatch(addErrorMessage('Blogai įvesti registracijos duomenys'));
@@ -88,6 +91,7 @@ export function registerMovieCreator(
     })
       .then(response => {
         if(response.data === true) {
+          dispatch(deleteErrorMessage('Blogai įvesti registracijos duomenys'));
           dispatch(push('/home'));
         }else {
           dispatch(addErrorMessage('Blogai įvesti registracijos duomenys'));
@@ -120,6 +124,7 @@ export function registerClient(
     })
       .then(response => {
         if(response.data === true) {
+          dispatch(deleteErrorMessage('Blogai įvesti registracijos duomenys'));
           dispatch(push('/home'));
         }else {
           dispatch(addErrorMessage('Blogai įvesti registracijos duomenys'));

@@ -3,6 +3,7 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 import { addErrorMessage } from '../../actionCreators/registerLoginError';
+import { deleteErrorMessage } from '../../actionCreators/registerLoginError';
 
 export function login(
     userName,
@@ -15,7 +16,8 @@ export function login(
         })
             .then(response => {
                 if(response.data === true) {
-                    dispatch(push('/home'));
+                  dispatch(deleteErrorMessage('Blogai įvesti prisijungimo duomenys'));
+                  dispatch(push('/home'));
                 }else {
                   dispatch(addErrorMessage('Blogai įvesti prisijungimo duomenys'));
                 }

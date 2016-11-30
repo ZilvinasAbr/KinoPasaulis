@@ -9,10 +9,13 @@ namespace KinoPasaulis.Server.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key, Column(Order = 0)]
         public int Id { get; set; }
-        public ApplicationUser User { get; set; }
+        public Client Client { get; set; }
         public Auditorium Auditorium { get; set; }
         public DateTime OrderDate { get; set; }
         public Show Show { get; set; }
+        public double Price { get; set; }
+        public int Amount { get; set; }
+        public bool Paid { get; set; }
 
     }
 }

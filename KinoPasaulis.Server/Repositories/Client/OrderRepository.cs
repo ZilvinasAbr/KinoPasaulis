@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Repositories.Client
 {
@@ -17,7 +18,11 @@ namespace KinoPasaulis.Server.Repositories.Client
 
         public IEnumerable<Order> GetOrders()
         {
-            return _dbContext.Orders.ToList();
+            return _dbContext.Orders
+                .Include(x => x.Client)
+                .Include(x => x.Show.Auditorium.Theather)
+                .Include(x => x.Show.Event.Movie)
+                .ToList();
         }
 
         public Order GetOrderById(int orderId)

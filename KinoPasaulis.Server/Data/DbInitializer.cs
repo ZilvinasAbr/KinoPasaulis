@@ -33,12 +33,17 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(theathers);
             context.SaveChanges();
 
+            var clients = AddClients();
+            context.AddRange(clients);
+            context.SaveChanges();
+
             var auditoriums = AddAuditoriums(theathers[0]);
             context.AddRange(auditoriums);
             context.SaveChanges();
 
             await AddCinemaStudioUsers(cinemaStudios, userManager);
             await AddTheatherUsers(theathers, userManager);
+            await AddClientUsers(clients, userManager);
 
             var movies = AddMovies(cinemaStudios);
             context.AddRange(movies);
@@ -88,6 +93,16 @@ namespace KinoPasaulis.Server.Data
             return cinemaStudios;
         }
 
+        private static List<Client> AddClients()
+        {
+            var clients = new List<Client>
+            {
+                new Client { FirstName = "Vardenis", LastName = "Pavardenis", Email = "klientas1@klientas.com", Phone = "+37055555555", RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false}
+            };
+
+            return clients;
+        }
+
         private static async Task< List<ApplicationUser> > AddCinemaStudioUsers(
             List<CinemaStudio> cinemaStudios, 
             UserManager<ApplicationUser> userManager)
@@ -117,6 +132,22 @@ namespace KinoPasaulis.Server.Data
             {
                 await userManager.CreateAsync(user, "testas");
                 await userManager.AddToRoleAsync(user, "Theather");
+            }
+
+            return users;
+        }
+
+        private static async Task<List<ApplicationUser>> AddClientUsers(List<Client> clients, UserManager<ApplicationUser> userManager)
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser {UserName = "Klientas1", Client = clients[0]}
+            };
+
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "testas");
+                await userManager.AddToRoleAsync(user, "Client");
             }
 
             return users;

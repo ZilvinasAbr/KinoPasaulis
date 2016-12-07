@@ -5,6 +5,7 @@ import TheatherNavigationBar from '../TheatherNavigationBar';
 import AddEventForm from './AddEventForm';
 import { logout } from '../../../../actions/account/logoutActions';
 import { getAuditoriums } from '../../../../actions/theather/auditoriumActions';
+import { fetchMovies } from '../../../../actions/cinemaStudio/movieActions';
 
 class NewEvent extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class NewEvent extends React.Component {
 
   componentDidMount() {
     this.props.getAuditoriums();
+    this.props.getMovies();
   }
 
   render() {
@@ -27,7 +29,10 @@ class NewEvent extends React.Component {
         />
         <div className="container">
           <h1> New event form </h1>
-          <AddEventForm auditoriums={this.props.auditoriums} />
+          <AddEventForm
+            auditoriums={this.props.auditoriums}
+            movies={this.props.movies}
+          />
         </div>
       </div>
     );
@@ -37,6 +42,7 @@ class NewEvent extends React.Component {
 function mapStateToProps(state) {
   return {
     auditoriums: state.theaterPage.auditoriums || [],
+    movies: state.cinemaStudioPage.movies || []
   }
 }
 
@@ -68,6 +74,10 @@ function mapDispatchToProps(dispatch) {
 
     goToEventCreateForm: () => {
       dispatch(push('/theather/newEvent'));
+    },
+
+    getMovies: () => {
+      dispatch(fetchMovies());
     }
   }
 }

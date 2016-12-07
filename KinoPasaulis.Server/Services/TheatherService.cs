@@ -28,9 +28,8 @@ namespace KinoPasaulis.Server.Services
 
         public void AddNewEvent(EventCreation eventCreation)
         {
-            var addedMovie = _movieRepository.GetMovieById(1);
-            var auditoriasList = new List<Auditorium>();
-            auditoriasList = _auditoriumRepository.GetAuditoriumsByIds(eventCreation.AuditoriumIds);
+            var addedMovie = _movieRepository.GetMovieById(eventCreation.MovieId);
+            var auditoriasList = _auditoriumRepository.GetAuditoriumsByIds(eventCreation.AuditoriumIds);
 
             var shows = new List<Show>();
             var days = (eventCreation.EndTime - eventCreation.StartTime).TotalDays;

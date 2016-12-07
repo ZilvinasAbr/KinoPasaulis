@@ -6,6 +6,7 @@ import { DateRangePicker } from 'react-dates';
 import TagsInput from 'react-tagsinput'
 import moment from 'moment';
 import Autosuggest from 'react-autosuggest';
+
 import 'react-dates/css/variables.scss';
 import 'react-tagsinput/react-tagsinput.css'
 import 'react-dates/css/styles.scss';
@@ -13,7 +14,7 @@ import './autosuggest.scss';
 
 const escapeRegexCharacters = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-const getSuggestions = value => {
+const getSuggestions = (value, movies) => {
   const escapedValue = escapeRegexCharacters(value.trim());
 
   if (escapedValue === '') {
@@ -22,20 +23,19 @@ const getSuggestions = value => {
 
   const regex = new RegExp('^' + escapedValue, 'i');
 
-  return languages.filter(language => regex.test(language.name));
+  return movies.filter(movie => regex.test(movie.title));
 };
 
-const getSuggestionValue = suggestion => suggestion.name;
+const getSuggestionValue = suggestion => suggestion.title;
 
 const renderSuggestion = suggestion => (
-  <span>{suggestion.name}</span>
+  <span>{suggestion.title}</span>
 );
 
 
 class AddEventForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       auditoriumIds: [],
@@ -45,7 +45,8 @@ class AddEventForm extends React.Component {
       endDate: null,
       showTimes: [],
       value: '',
-      suggestions: getSuggestions('')
+      suggestions: getSuggestions(''),
+      movieId: null
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -56,6 +57,16 @@ class AddEventForm extends React.Component {
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
   }
   onChange(event, { newValue }){
+    const escapedValue = escapeRegexCharacters(newValue.trim());
+    const regex = new RegExp('^' + escapedValue, 'i');
+
+    let movies = this.props.movies.filter(movie => regex.test(movie.title));
+    if(movies.length == 1)
+    {
+      this.setState({
+        movieId: movies[0].id
+      });
+    }
     this.setState({
       value: newValue
     });
@@ -63,7 +74,7 @@ class AddEventForm extends React.Component {
 
   onSuggestionsFetchRequested ({ value }) {
     this.setState({
-      suggestions: getSuggestions(value)
+      suggestions: getSuggestions(value, this.props.movies)
     });
   };
 
@@ -79,7 +90,8 @@ class AddEventForm extends React.Component {
     let showTimes = this.state.showTimes;
     let startDate = this.state.startDate.format("YYYY-MM-DD");
     let endDate = this.state.endDate.format("YYYY-MM-DD");
-    this.props.dispatch(addEvent(1, showTimes, startDate, endDate, auditoriums));
+    let movieId = this.state.movieId;
+    this.props.dispatch(addEvent(movieId, showTimes, startDate, endDate, auditoriums, movieId));
   }
 
   handleChange(tags) {
@@ -201,20 +213,5 @@ const config = { // <----- THIS IS THE IMPORTANT PART!
   form: 'addEvent',                   // a unique name for this form
   fields: [] // all the fields in your form
 };
-
-const languages = [
-  {
-    name: 'C',
-    year: 1972
-  },
-  {
-    name: 'Elm',
-    year: 2012
-  },
-  {
-    name: 'Ce',
-    year: 1972
-  }
-];
 
 export default reduxForm(config)(AddEventForm);

@@ -31,5 +31,10 @@ namespace KinoPasaulis.Server.Controllers.Api
 
             return null;
         }
+
+        [HttpPost("addMovie")]
+        public IActionResult AddMovie([FromBody] Movie movie) {
+            return Ok(true);
+        }
     }
 }

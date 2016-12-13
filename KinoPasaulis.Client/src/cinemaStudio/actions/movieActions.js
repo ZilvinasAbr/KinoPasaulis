@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { receiveMovies } from '../../actionCreators/cinemaStudioActionCreators';
+import { receiveMovies } from '../actionCreators';
 
 export function fetchMovies(query = '') {
   let url;

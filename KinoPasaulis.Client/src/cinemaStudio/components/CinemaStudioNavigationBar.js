@@ -3,8 +3,8 @@ import { Navbar, Nav, NavItem} from 'react-bootstrap';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
-import { logout } from '../../../actions/account/logoutActions';
-import LogoutButton from '../../common/LogoutButton';
+import { logout } from '../../actions/account/logoutActions';
+import LogoutButton from '../../components/common/LogoutButton';
 
 const CinemaStudioNavigationBar = ({logout, changePageToHome, changePageToMovies, changePageToProfile}) => {
   return (

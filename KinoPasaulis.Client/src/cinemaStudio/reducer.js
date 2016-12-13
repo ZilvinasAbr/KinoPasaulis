@@ -1,6 +1,6 @@
 import {
   RECEIVE_MOVIES
-} from '../actionCreators/cinemaStudioActionCreators';
+} from './actionCreators';
 
 export const initialState = {};
 

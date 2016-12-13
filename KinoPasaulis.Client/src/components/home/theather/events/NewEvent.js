@@ -5,7 +5,7 @@ import TheatherNavigationBar from '../TheatherNavigationBar';
 import AddEventForm from './AddEventForm';
 import { logout } from '../../../../actions/account/logoutActions';
 import { getAuditoriums } from '../../../../actions/theather/auditoriumActions';
-import { fetchMovies } from '../../../../actions/cinemaStudio/movieActions';
+import { fetchMovies } from '../../../../cinemaStudio/actions/movieActions';
 
 class NewEvent extends React.Component {
   constructor(props) {

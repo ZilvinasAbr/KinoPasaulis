@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchMovies } from '../../../../actions/cinemaStudio/movieActions';
+import { fetchMovies } from '../../actions/movieActions';
 import CinemaStudioNavigationBar from '../CinemaStudioNavigationBar';
 
 class MoviesPage extends React.Component {
@@ -13,9 +13,9 @@ class MoviesPage extends React.Component {
     this.props.dispatch(fetchMovies());
   }
 
-  renderMovie(movie) {
+  renderMovie(movie, index) {
     return (
-      <div>{movie.title}</div>
+      <div key={index}>{movie.title}</div>
     )
   }
 

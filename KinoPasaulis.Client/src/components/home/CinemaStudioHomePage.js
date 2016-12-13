@@ -1,5 +1,5 @@
 import React from 'react';
-import CinemaStudioNavigationBar from './cinemaStudio/CinemaStudioNavigationBar';
+import CinemaStudioNavigationBar from '../../cinemaStudio/components/CinemaStudioNavigationBar';
 
 class CinemaStudioHomePage extends React.Component {
   constructor(props) {

@@ -1,8 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import
+{
+  Button,
+  FormGroup,
+  FormControl,
+  ControlLabel
+} from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
-import Modal from 'react-modal';
+import DatePicker from 'react-bootstrap-date-picker';
 
 import VideosTable from './VideosTable';
 import { addMovie } from '../../../actions/movieActions';
@@ -55,9 +61,9 @@ class AddMovieForm extends React.Component {
       title: e.target.value
     })
   }
-  handleOnReleaseDateChange(e) {
+  handleOnReleaseDateChange(value, formattedValue) {
     this.setState({
-      releaseDate: e.target.value
+      releaseDate: value
     })
   }
   handleOnBudgetChange(e) {
@@ -125,7 +131,8 @@ class AddMovieForm extends React.Component {
         this.state.gross,
         this.state.language,
         this.state.ageRequirement,
-        this.state.droppedFiles
+        this.state.droppedFiles,
+        this.state.videos
       )
     );
   }
@@ -145,13 +152,10 @@ class AddMovieForm extends React.Component {
           />
         </FormGroup>
 
-        <FormGroup controlId="releaseDate">
-          <ControlLabel>
-            Išleidimo data
-          </ControlLabel>
-          <FormControl
-            type="text"
-            placeholder="Išleidimo data"
+        <FormGroup>
+          <ControlLabel>Išleidimo data</ControlLabel>
+          <DatePicker
+            id="releaseDatePicker"
             value={this.state.releaseDate}
             onChange={this.handleOnReleaseDateChange}
           />

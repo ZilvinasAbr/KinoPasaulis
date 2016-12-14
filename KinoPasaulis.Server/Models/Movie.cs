@@ -36,5 +36,6 @@ namespace KinoPasaulis.Server.Models
         public CinemaStudio CinemaStudio { get; set; }
 
         public List<Image> Images { get; set; }
+        public List<Video> Videos { get; set; }
     }
 }

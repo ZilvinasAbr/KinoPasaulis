@@ -30,9 +30,38 @@ export function addMovie
   gross,
   language,
   ageRequirement,
-  droppedFiles
+  droppedFiles,
+  videos
 ) {
   return dispatch => {
+
+    if(droppedFiles.length <= 0) {
+      request.post('/api/cinemaStudio/addMovie')
+        .send({
+          title,
+          releaseDate,
+          budget,
+          description,
+          gross,
+          language,
+          ageRequirement,
+          imageNames: [],
+          videos
+        })
+        .end((err, res) => {
+          if(err) {
+            console.log(err);
+            return;
+          }
+          if(res.body) {
+            console.log('successful addMovie');
+            dispatch(push('/cinemaStudio/movies'));
+          }else {
+            console.log('unsuccessful addMovie');
+          }
+        });
+      return;
+    }
 
     let req = request.post('/api/cinemaStudio/uploadImage');
     droppedFiles.forEach(file => {
@@ -52,7 +81,8 @@ export function addMovie
             gross,
             language,
             ageRequirement,
-            imageNames
+            imageNames,
+            videos
           })
           .end((err, res) => {
             if(err) {

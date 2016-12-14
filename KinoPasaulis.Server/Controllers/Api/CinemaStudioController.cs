@@ -71,7 +71,7 @@ namespace KinoPasaulis.Server.Controllers.Api
 
             var imageNames = model.ImageNames;
 
-            _cinemaStudioService.AddNewMovie(movie, imageNames, HttpContext.User.GetUserId());
+            _cinemaStudioService.AddNewMovie(movie, imageNames, model.Videos, HttpContext.User.GetUserId());
 
             return Ok(true);
         }

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace KinoPasaulis.Server.Models.ViewModel
 {
@@ -32,5 +28,6 @@ namespace KinoPasaulis.Server.Models.ViewModel
         public string AgeRequirement { get; set; }
 
         public List<string> ImageNames{ get; set; }
+        public List<Video> Videos { get; set; }
     }
 }

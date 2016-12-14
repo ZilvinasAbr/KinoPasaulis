@@ -32,7 +32,7 @@ namespace KinoPasaulis.Server.Services
             return movies;
         }
 
-        public bool AddNewMovie(Movie movie, List<string> imageNames, string userId)
+        public bool AddNewMovie(Movie movie, List<string> imageNames, List<Video> videos, string userId)
         {
             var movieWithSameId = _dbContext.Movies.SingleOrDefault(m => m.Id == movie.Id);
 
@@ -55,6 +55,11 @@ namespace KinoPasaulis.Server.Services
                 images.Add(image);
             }
 
+            foreach (var video in videos)
+            {
+                video.CreatedOn = DateTime.Now;
+            }
+
             var cinemaStudio = _dbContext.Users
                 .Include(u => u.CinemaStudio)
                 .SingleOrDefault(au => au.Id == userId)
@@ -62,6 +67,7 @@ namespace KinoPasaulis.Server.Services
 
             movie.CinemaStudio = cinemaStudio;
             movie.Images = images;
+            movie.Videos = videos;
 
             _dbContext.Movies.Add(movie);
             _dbContext.SaveChanges();
@@ -73,6 +79,7 @@ namespace KinoPasaulis.Server.Services
         {
             var movie = _dbContext.Movies
                 .Include(m => m.Images)
+                .Include(m => m.Videos)
                 .SingleOrDefault(m => m.Id == id);
             var cinemaStudio = _dbContext.Users
                 .Include(u => u.CinemaStudio)
@@ -91,6 +98,7 @@ namespace KinoPasaulis.Server.Services
 
 
             _dbContext.Images.RemoveRange(movie.Images);
+            _dbContext.Videos.RemoveRange(movie.Videos);
             _dbContext.Movies.Remove(movie);
             _dbContext.SaveChanges();
 

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace KinoPasaulis.Server.Models
+namespace KinoPasaulis.Server.Models.ViewModel
 {
-    public class Movie
+    public class AddMovieViewModel
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key, Column(Order = 0)]
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(50)]
         public string Title { get; set; }
@@ -31,10 +30,7 @@ namespace KinoPasaulis.Server.Models
 
         [MaxLength(20)]
         public string AgeRequirement { get; set; }
-        
-        public int CinemaStudioId { get; set; }
-        public CinemaStudio CinemaStudio { get; set; }
 
-        public List<Image> Images { get; set; }
+        public object DroppedFiles { get; set; }
     }
 }

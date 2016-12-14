@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { push } from 'react-router-redux';
 import { receiveMovies } from '../actionCreators';
+import request from 'superagent';
 
 export function fetchMovies(query = '') {
   let url;
@@ -27,18 +29,54 @@ export function addMovie
   description,
   gross,
   language,
-  ageRequirement
+  ageRequirement,
+  droppedFiles
 ) {
   return dispatch => {
-    axios.post('/api/cinemaStudio/addMovie', {
-      title, releaseDate, budget, description, gross, language, ageRequirement
-    })
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+
+    let req = request.post('/api/cinemaStudio/uploadImage');
+    droppedFiles.forEach(file => {
+      req.attach('file', file);
+    });
+    req.end((err, res) => {
+      if(!err) {
+        console.log('successful');
+      }
+    });
+
+
+    // axios({
+    //   method: 'post',
+    //   url: '/api/cinemaStudio/addMovie',
+    //   data: {
+    //     title,
+    //     releaseDate,
+    //     budget,
+    //     description,
+    //     gross,
+    //     language,
+    //     ageRequirement,
+    //     droppedFiles
+    //   }
+    // });
+
+
+    // axios.post('/api/cinemaStudio/addMovie', {
+    //   title,
+    //   releaseDate,
+    //   budget,
+    //   description,
+    //   gross,
+    //   language,
+    //   ageRequirement,
+    //   droppedFiles
+    // })
+    //   .then(response => {
+    //     dispatch(push('/cinemaStudio/movies'));
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 }
 

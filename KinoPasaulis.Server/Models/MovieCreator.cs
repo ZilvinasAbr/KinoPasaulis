@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KinoPasaulis.Server.Models
 {
@@ -21,5 +22,7 @@ namespace KinoPasaulis.Server.Models
         public DateTime RegisterDate { get; set; }
 
         public DateTime LastEditDate { get; set; }
+
+        public List<Image> Images { get; set; }
     }
 }

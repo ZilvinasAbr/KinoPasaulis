@@ -8,9 +8,10 @@ using KinoPasaulis.Server.Data;
 namespace KinoPasaulis.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161214104041_AddImageTable")]
+    partial class AddImageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -177,9 +178,9 @@ namespace KinoPasaulis.Server.Migrations
                     b.Property<string>("Description")
                         .HasAnnotation("MaxLength", 50);
 
-                    b.Property<int?>("MovieCreatorId");
+                    b.Property<int>("MovieCreatorId");
 
-                    b.Property<int?>("MovieId");
+                    b.Property<int>("MovieId");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -474,11 +475,13 @@ namespace KinoPasaulis.Server.Migrations
                 {
                     b.HasOne("KinoPasaulis.Server.Models.MovieCreator", "MovieCreator")
                         .WithMany("Images")
-                        .HasForeignKey("MovieCreatorId");
+                        .HasForeignKey("MovieCreatorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KinoPasaulis.Server.Models.Movie", "Movie")
                         .WithMany("Images")
-                        .HasForeignKey("MovieId");
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.Movie", b =>

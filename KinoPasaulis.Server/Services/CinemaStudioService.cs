@@ -3,6 +3,8 @@ using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Repositories.CinemaStudio;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Services
@@ -11,12 +13,15 @@ namespace KinoPasaulis.Server.Services
     {
         private readonly IMovieRepository _movieRepository;
         private readonly ApplicationDbContext _dbContext;
+        private readonly IHostingEnvironment _environment;
 
         public CinemaStudioService(IMovieRepository movieRepository,
-            ApplicationDbContext dbContext)
+            ApplicationDbContext dbContext,
+            IHostingEnvironment environment)
         {
             _movieRepository = movieRepository;
             _dbContext = dbContext;
+            _environment = environment;
         }
 
         public IEnumerable<Movie> SearchMovies(string movieTitle)
@@ -26,7 +31,7 @@ namespace KinoPasaulis.Server.Services
             return movies;
         }
 
-        public bool AddNewMovie(Movie movie, string userId)
+        public bool AddNewMovie(Movie movie, List<IFormFile> files, string userId)
         {
             var movieWithSameId = _dbContext.Movies.SingleOrDefault(m => m.Id == movie.Id);
 

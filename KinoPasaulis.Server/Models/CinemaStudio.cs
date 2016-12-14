@@ -1,4 +1,6 @@
-﻿namespace KinoPasaulis.Server.Models
+﻿using System.Collections.Generic;
+
+namespace KinoPasaulis.Server.Models
 {
     public class CinemaStudio
     {
@@ -15,5 +17,7 @@
         public string Email { get; set; }
 
         public string Phone { get; set; }
+
+        public List<Movie> Movies { get; set; }
     }
 }

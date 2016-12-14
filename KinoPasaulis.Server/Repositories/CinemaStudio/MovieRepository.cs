@@ -47,7 +47,8 @@ namespace KinoPasaulis.Server.Repositories.CinemaStudio
 
         public void InsertMovie(Movie movie)
         {
-            throw new NotImplementedException();
+            _dbContext.Movies.Add(movie);
+            _dbContext.SaveChanges();
         }
 
         public bool DeleteMovie(int movieId)

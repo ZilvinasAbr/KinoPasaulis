@@ -11,8 +11,8 @@ export function login(
 ) {
     return dispatch => {
         return axios.post('/api/account/login', {
-            UserName: userName,
-            Password: password,
+            userName,
+            password,
         })
             .then(response => {
                 if(response.data === true) {

@@ -14,6 +14,7 @@ namespace KinoPasaulis.Server.Data
         public DbSet<Show> Shows { get; set; }
         public DbSet<Theather> Theathers { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<CinemaStudio> CinemaStudios { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

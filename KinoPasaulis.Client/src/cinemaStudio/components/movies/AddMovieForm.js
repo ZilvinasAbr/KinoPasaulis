@@ -37,7 +37,7 @@ const AddMovieForm = ({ fields, dispatch }) => {
                 </ControlLabel>
                 <FormControl
                     type="text"
-                    placeholder="Filmo pavadinimas"
+                    placeholder="Pavadinimas"
                     { ...title }
                 />
             </FormGroup>
@@ -48,7 +48,7 @@ const AddMovieForm = ({ fields, dispatch }) => {
                 </ControlLabel>
                 <FormControl
                     type="text"
-                    placeholder="Filmo išleidimo data"
+                    placeholder="Išleidimo data"
                     { ...releaseDate }
                 />
             </FormGroup>

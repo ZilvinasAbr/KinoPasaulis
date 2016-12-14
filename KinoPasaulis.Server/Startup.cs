@@ -46,9 +46,6 @@ namespace KinoPasaulis.Server
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddMvc()
-                .AddJsonOptions(o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
-
             services.AddIdentity<ApplicationUser, IdentityRole>(o =>
                 {
                     o.Password.RequireDigit = false;
@@ -60,7 +57,9 @@ namespace KinoPasaulis.Server
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
             // Mappers
             services.AddTransient<ITheatherMapper, TheatherMapper>();
 

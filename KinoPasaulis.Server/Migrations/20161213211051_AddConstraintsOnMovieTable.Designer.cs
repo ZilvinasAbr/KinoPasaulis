@@ -8,9 +8,10 @@ using KinoPasaulis.Server.Data;
 namespace KinoPasaulis.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161213211051_AddConstraintsOnMovieTable")]
+    partial class AddConstraintsOnMovieTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -114,7 +115,7 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CinemaStudios");
+                    b.ToTable("CinemaStudio");
                 });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.Client", b =>
@@ -443,7 +444,7 @@ namespace KinoPasaulis.Server.Migrations
             modelBuilder.Entity("KinoPasaulis.Server.Models.Movie", b =>
                 {
                     b.HasOne("KinoPasaulis.Server.Models.CinemaStudio", "CinemaStudio")
-                        .WithMany("Movies")
+                        .WithMany()
                         .HasForeignKey("CinemaStudioId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

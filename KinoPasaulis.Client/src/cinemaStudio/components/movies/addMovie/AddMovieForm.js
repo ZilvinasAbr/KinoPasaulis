@@ -13,6 +13,8 @@ import DatePicker from 'react-bootstrap-date-picker';
 import VideosTable from './VideosTable';
 import { addMovie } from '../../../actions/movieActions';
 import SelectVideoModal from './SelectVideoModal';
+import MovieCreatorsTable from './MovieCreatorsTable';
+import SelectMovieCreatorModal from './SelectMovieCreatorModal';
 
 class AddMovieForm extends React.Component {
   constructor(props) {
@@ -28,7 +30,9 @@ class AddMovieForm extends React.Component {
       ageRequirement: '',
       droppedFiles: [],
       videos: [],
-      modalIsOpen: false
+      selectedMovieCreators: [],
+      modalIsOpen: false,
+      modalIsOpen2: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,10 +46,15 @@ class AddMovieForm extends React.Component {
     this.handleOnAgeRequirementChange = this.handleOnAgeRequirementChange.bind(this);
     this.onImageDrop = this.onImageDrop.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.openModal2 = this.openModal2.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.afterOpenModal2 = this.afterOpenModal2.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.closeModal2 = this.closeModal2.bind(this);
     this.selectVideo = this.selectVideo.bind(this);
     this.removeVideo = this.removeVideo.bind(this);
+    this.selectMovieCreator = this.selectMovieCreator.bind(this);
+    this.removeMovieCreator = this.removeMovieCreator.bind(this);
   }
 
   onImageDrop(files) {
@@ -98,12 +107,27 @@ class AddMovieForm extends React.Component {
     });
   }
 
+  openModal2() {
+    this.setState({
+      modalIsOpen2: true
+    });
+  }
+
   afterOpenModal() {
+  }
+
+  afterOpenModal2() {
   }
 
   closeModal() {
     this.setState({
       modalIsOpen: false
+    });
+  }
+
+  closeModal2() {
+    this.setState({
+      modalIsOpen2: false
     });
   }
 
@@ -115,9 +139,23 @@ class AddMovieForm extends React.Component {
     });
   }
 
+  selectMovieCreator(id, firstName, lastName) {
+    this.setState({
+      selectedMovieCreators: [...this.state.selectedMovieCreators, {
+        id, firstName, lastName
+      }]
+    });
+  }
+
   removeVideo(index) {
     this.setState({
       videos: this.state.videos.filter((video, index2) => index2 !== index)
+    });
+  }
+
+  removeMovieCreator(index) {
+    this.setState({
+      selectedMovieCreators: this.state.selectedMovieCreators.filter((creator, index2) => index2 !== index)
     });
   }
 
@@ -228,12 +266,28 @@ class AddMovieForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
+          <ControlLabel>
+            Pasirinkti video
+          </ControlLabel>
           <VideosTable
             videos={this.state.videos}
             removeVideo={this.removeVideo}
           />
           <Button bsStyle="success" onClick={this.openModal}>
             Pridėti video
+          </Button>
+        </FormGroup>
+
+        <FormGroup>
+          <ControlLabel>
+            Pasirinkti filmų kūrėjai
+          </ControlLabel>
+          <MovieCreatorsTable
+            movieCreators={this.state.selectedMovieCreators}
+            removeMovieCreator={this.removeMovieCreator}
+          />
+          <Button bsStyle="success" onClick={this.openModal2}>
+            Pridėti filmų kūrėjus
           </Button>
         </FormGroup>
 
@@ -246,6 +300,13 @@ class AddMovieForm extends React.Component {
           onAfterOpen={this.onAfterOpen}
           closeModal={this.closeModal}
           selectVideo={this.selectVideo}
+        />
+
+        <SelectMovieCreatorModal
+          modalIsOpen={this.state.modalIsOpen2}
+          onAfterOpen={this.onAfterOpen2}
+          closeModal={this.closeModal2}
+          selectMovieCreator={this.selectMovieCreator}
         />
 
       </div>

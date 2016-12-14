@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import FileReaderInput from 'react-file-reader-input';
 import Dropzone from 'react-dropzone';
+import Modal from 'react-modal';
 
-import { addMovie } from '../../actions/movieActions';
+import VideosTable from './VideosTable';
+import { addMovie } from '../../../actions/movieActions';
+import SelectVideoModal from './SelectVideoModal';
 
 class AddMovieForm extends React.Component {
   constructor(props) {
@@ -18,7 +20,9 @@ class AddMovieForm extends React.Component {
       gross: '',
       language: '',
       ageRequirement: '',
-      droppedFiles: []
+      droppedFiles: [],
+      videos: [],
+      modalIsOpen: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,6 +35,11 @@ class AddMovieForm extends React.Component {
     this.handleOnLanguageChange = this.handleOnLanguageChange.bind(this);
     this.handleOnAgeRequirementChange = this.handleOnAgeRequirementChange.bind(this);
     this.onImageDrop = this.onImageDrop.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.selectVideo = this.selectVideo.bind(this);
+    this.removeVideo = this.removeVideo.bind(this);
   }
 
   onImageDrop(files) {
@@ -41,7 +50,6 @@ class AddMovieForm extends React.Component {
       droppedFiles: [ ...this.state.droppedFiles, ...files]
     });
   }
-
   handleOnTitleChange(e) {
     this.setState({
       title: e.target.value
@@ -76,6 +84,35 @@ class AddMovieForm extends React.Component {
     this.setState({
       ageRequirement: e.target.value
     })
+  }
+
+  openModal() {
+    this.setState({
+      modalIsOpen: true
+    });
+  }
+
+  afterOpenModal() {
+  }
+
+  closeModal() {
+    this.setState({
+      modalIsOpen: false
+    });
+  }
+
+  selectVideo(title, url, description) {
+    this.setState({
+      videos: [...this.state.videos, {
+        title, url, description
+      }]
+    });
+  }
+
+  removeVideo(index) {
+    this.setState({
+      videos: this.state.videos.filter((video, index2) => index2 !== index)
+    });
   }
 
   handleSubmit() {
@@ -180,13 +217,33 @@ class AddMovieForm extends React.Component {
           />
         </FormGroup>
 
-        <Dropzone onDrop={this.onImageDrop}>
-          <div>Nuveskite nuotraukas čia</div>
-        </Dropzone>
+        <FormGroup>
+          <Dropzone onDrop={this.onImageDrop}>
+            <div>Nuveskite nuotraukas čia</div>
+          </Dropzone>
+        </FormGroup>
+
+        <FormGroup>
+          <VideosTable
+            videos={this.state.videos}
+            removeVideo={this.removeVideo}
+          />
+          <Button bsStyle="success" onClick={this.openModal}>
+            Pridėti video
+          </Button>
+        </FormGroup>
 
         <Button bsStyle="primary" onClick={this.handleSubmit}>
           Pridėti filmą
         </Button>
+
+        <SelectVideoModal
+          modalIsOpen={this.state.modalIsOpen}
+          onAfterOpen={this.onAfterOpen}
+          closeModal={this.closeModal}
+          selectVideo={this.selectVideo}
+        />
+
       </div>
     );
   }

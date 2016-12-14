@@ -19,7 +19,7 @@ import Subscriptions from './components/home/theather/Subscriptions';
 import NewEvent from './components/home/theather/events/NewEvent';
 import EventDetails from './components/home/theather/events/EventDetails';
 import MoviesPage from './cinemaStudio/components/movies/MoviesPage';
-import AddMoviePage from './cinemaStudio/components/movies/AddMoviePage';
+import AddMoviePage from './cinemaStudio/components/movies/addMovie/AddMoviePage';
 
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';

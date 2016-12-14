@@ -1,7 +1,7 @@
 import React from 'react';
 import AddMovieForm from './AddMovieForm';
 
-import CinemaStudioNavigationBar from '../CinemaStudioNavigationBar';
+import CinemaStudioNavigationBar from '../../CinemaStudioNavigationBar';
 
 const AddMoviePage = ({}) => {
     return (

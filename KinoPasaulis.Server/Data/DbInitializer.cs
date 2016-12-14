@@ -37,6 +37,10 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(clients);
             context.SaveChanges();
 
+            var movieCreators = AddMovieCreators();
+            context.AddRange(movieCreators);
+            context.SaveChanges();
+
             var auditoriums = AddAuditoriums(theathers[0]);
             context.AddRange(auditoriums);
             context.SaveChanges();
@@ -44,6 +48,7 @@ namespace KinoPasaulis.Server.Data
             await AddCinemaStudioUsers(cinemaStudios, userManager);
             await AddTheatherUsers(theathers, userManager);
             await AddClientUsers(clients, userManager);
+            await AddMovieCreatorUsers(movieCreators, userManager);
 
             var movies = AddMovies(cinemaStudios);
             context.AddRange(movies);
@@ -56,6 +61,32 @@ namespace KinoPasaulis.Server.Data
             var videos = AddVideos(movies);
             context.AddRange(videos);
             context.SaveChanges();
+
+            var movieCreatorMovies = AddMovieCreatorMovies(movieCreators, movies);
+            context.AddRange(movieCreatorMovies);
+            context.SaveChanges();
+        }
+
+        private static List<MovieCreatorMovie> AddMovieCreatorMovies(List<MovieCreator> movieCreators, List<Movie> movies)
+        {
+            var movieCreatorMovies = new List<MovieCreatorMovie>
+            {
+                new MovieCreatorMovie { Movie = movies[2], MovieCreator = movieCreators[0] },
+                new MovieCreatorMovie { Movie = movies[2], MovieCreator = movieCreators[1] }
+            };
+
+            return movieCreatorMovies;
+        }
+
+        private static List<MovieCreator> AddMovieCreators()
+        {
+            var movieCreators = new List<MovieCreator>
+            {
+                new MovieCreator { FirstName = "Christian", LastName = "Bale",   Email = "christian.bale@gmail.com", Phone = "860666666", BirthDate = new DateTime(1974, 1, 30), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "Christian Charles Philip Bale was born in Pembrokeshire, Wales, UK on January 30, 1974, to English parents Jennifer \"Jenny\" (James) and David Charles Howard Bale."},
+                new MovieCreator { FirstName = "Heath",     LastName = "Ledger", Email = "heath.ledger@gmail.com",   Phone = "860666666", BirthDate = new DateTime(1979, 4, 30), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "When hunky, twenty-year-old heart-throb Heath Ledger first came to the attention of the public in 1999, it was all too easy to tag him as a \"pretty boy\" and an actor of little depth. He spent several years trying desperately to sway this image, but this was a double-edged sword."}
+            };
+
+            return movieCreators;
         }
 
         private static List<Image> AddImages(List<Movie> movies)
@@ -179,6 +210,23 @@ namespace KinoPasaulis.Server.Data
             {
                 await userManager.CreateAsync(user, "testas");
                 await userManager.AddToRoleAsync(user, "Client");
+            }
+
+            return users;
+        }
+
+        private static async Task<List<ApplicationUser>> AddMovieCreatorUsers(List<MovieCreator> movieCreators, UserManager<ApplicationUser> userManager)
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { UserName = "ChristianBale", MovieCreator = movieCreators[0] },
+                new ApplicationUser { UserName = "HeathLedger", MovieCreator = movieCreators[1] }
+            };
+
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "testas");
+                await userManager.AddToRoleAsync(user, "MovieCreator");
             }
 
             return users;

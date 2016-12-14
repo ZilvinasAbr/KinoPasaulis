@@ -17,6 +17,7 @@ namespace KinoPasaulis.Server.Data
         public DbSet<CinemaStudio> CinemaStudios { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Video> Videos { get; set; }
+        public DbSet<MovieCreatorMovie> MovieCreatorMovies { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -26,10 +27,19 @@ namespace KinoPasaulis.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
 
+            builder.Entity<MovieCreatorMovie>()
+                .HasKey(mm => new {mm.MovieCreatorId, mm.MovieId});
+
+            builder.Entity<Movie>()
+                .HasMany(movie => movie.MovieCreatorMovies)
+                .WithOne(mm => mm.Movie)
+                .HasForeignKey(mm => mm.MovieId);
+
+            builder.Entity<MovieCreator>()
+                .HasMany(creator => creator.MovieCreatorMovies)
+                .WithOne(mm => mm.MovieCreator)
+                .HasForeignKey(mm => mm.MovieCreatorId);
         }
     }
 }

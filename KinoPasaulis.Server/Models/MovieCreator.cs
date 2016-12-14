@@ -24,5 +24,6 @@ namespace KinoPasaulis.Server.Models
         public DateTime LastEditDate { get; set; }
 
         public List<Image> Images { get; set; }
+        public List<MovieCreatorMovie> MovieCreatorMovies { get; set; }
     }
 }

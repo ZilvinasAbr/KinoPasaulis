@@ -36,47 +36,38 @@ export function addMovie
 
     let req = request.post('/api/cinemaStudio/uploadImage');
     droppedFiles.forEach(file => {
-      req.attach('file', file);
+      req.attach(file.name, file);
     });
     req.end((err, res) => {
       if(!err) {
-        console.log('successful');
+
+        let imageNames = res.body;
+
+        request.post('/api/cinemaStudio/addMovie')
+          .send({
+            title,
+            releaseDate,
+            budget,
+            description,
+            gross,
+            language,
+            ageRequirement,
+            imageNames
+          })
+          .end((err, res) => {
+            if(err) {
+              console.log(err);
+              return;
+            }
+            if(res.body) {
+              console.log('successful addMovie');
+              dispatch(push('/cinemaStudio/movies'));
+            }else {
+              console.log('unsuccessful addMovie');
+            }
+          });
       }
     });
-
-
-    // axios({
-    //   method: 'post',
-    //   url: '/api/cinemaStudio/addMovie',
-    //   data: {
-    //     title,
-    //     releaseDate,
-    //     budget,
-    //     description,
-    //     gross,
-    //     language,
-    //     ageRequirement,
-    //     droppedFiles
-    //   }
-    // });
-
-
-    // axios.post('/api/cinemaStudio/addMovie', {
-    //   title,
-    //   releaseDate,
-    //   budget,
-    //   description,
-    //   gross,
-    //   language,
-    //   ageRequirement,
-    //   droppedFiles
-    // })
-    //   .then(response => {
-    //     dispatch(push('/cinemaStudio/movies'));
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
   };
 }
 

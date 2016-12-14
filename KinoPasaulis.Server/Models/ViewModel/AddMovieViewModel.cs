@@ -31,6 +31,6 @@ namespace KinoPasaulis.Server.Models.ViewModel
         [MaxLength(20)]
         public string AgeRequirement { get; set; }
 
-        public object DroppedFiles { get; set; }
+        public List<string> ImageNames{ get; set; }
     }
 }

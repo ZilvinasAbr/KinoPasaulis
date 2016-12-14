@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -68,9 +69,9 @@ namespace KinoPasaulis.Server.Controllers.Api
                 AgeRequirement = model.AgeRequirement
             };
 
-            var files = model.DroppedFiles;
+            var imageNames = model.ImageNames;
 
-            _cinemaStudioService.AddNewMovie(movie, (List<IFormFile>)files, HttpContext.User.GetUserId());
+            _cinemaStudioService.AddNewMovie(movie, imageNames, HttpContext.User.GetUserId());
 
             return Ok(true);
         }
@@ -101,22 +102,30 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpPost("uploadImage")]
-        public async Task<IActionResult> UploadImage(ICollection<IFormFile> files)
+        public async Task<IActionResult> UploadImage()
         {
+            var files = Request.Form.Files;
+
             var uploads = Path.Combine(_environment.WebRootPath, "uploads");
+
+            var fileNames = new List<string>();
 
             foreach(var file in files)
             {
                 if (file.Length > 0)
                 {
-                    using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+                    var fileName = Guid.NewGuid() + file.FileName;
+
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
                     {
                         await file.CopyToAsync(fileStream);
                     }
+
+                    fileNames.Add(fileName);
                 }
             }
 
-            return Ok();
+            return Ok(fileNames);
         }
     }
 }

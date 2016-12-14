@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
@@ -31,7 +32,7 @@ namespace KinoPasaulis.Server.Services
             return movies;
         }
 
-        public bool AddNewMovie(Movie movie, List<IFormFile> files, string userId)
+        public bool AddNewMovie(Movie movie, List<string> imageNames, string userId)
         {
             var movieWithSameId = _dbContext.Movies.SingleOrDefault(m => m.Id == movie.Id);
 
@@ -40,12 +41,27 @@ namespace KinoPasaulis.Server.Services
                 return false;
             }
 
+            var images = new List<Image>();
+            foreach (var imageName in imageNames)
+            {
+                var image = new Image
+                {
+                    CreatedOn = DateTime.Now,
+                    Description = "Empty",
+                    Title = "Empty",
+                    Url = imageName
+                };
+
+                images.Add(image);
+            }
+
             var cinemaStudio = _dbContext.Users
                 .Include(u => u.CinemaStudio)
                 .SingleOrDefault(au => au.Id == userId)
                 .CinemaStudio;
 
             movie.CinemaStudio = cinemaStudio;
+            movie.Images = images;
 
             _dbContext.Movies.Add(movie);
             _dbContext.SaveChanges();
@@ -56,6 +72,7 @@ namespace KinoPasaulis.Server.Services
         public bool DeleteMovie(int id, string userId)
         {
             var movie = _dbContext.Movies
+                .Include(m => m.Images)
                 .SingleOrDefault(m => m.Id == id);
             var cinemaStudio = _dbContext.Users
                 .Include(u => u.CinemaStudio)
@@ -72,6 +89,8 @@ namespace KinoPasaulis.Server.Services
                 return false;
             }
 
+
+            _dbContext.Images.RemoveRange(movie.Images);
             _dbContext.Movies.Remove(movie);
             _dbContext.SaveChanges();
 

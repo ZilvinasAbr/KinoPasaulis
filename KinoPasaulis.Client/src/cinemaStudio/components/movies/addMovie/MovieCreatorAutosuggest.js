@@ -1,13 +1,6 @@
 import React from 'react';
-import Modal from 'react-modal';
 import Autosuggest from 'react-autosuggest';
-import
-{
-  Button,
-  FormControl,
-  FormGroup,
-  ControlLabel
-} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const customStyles = {
   content : {
@@ -38,21 +31,15 @@ const getSuggestions = value => {
   const inputLength = inputValue.length;
 
   return inputLength === 0 ? [] : movieCreators.filter(mc => {
-    const fullName = `${mc.firstName} ${mc.lastName}`.toLowerCase();
+      const fullName = `${mc.firstName} ${mc.lastName}`.toLowerCase();
 
-    return fullName.indexOf(inputValue) !== -1;
+      return fullName.indexOf(inputValue) !== -1;
     });
 };
 
 const getSuggestionValue = suggestion => `${suggestion.firstName} ${suggestion.lastName}`;
 
-const renderSuggestion = suggestion => (
-  <div>
-    {`${suggestion.firstName} ${suggestion.lastName}`}
-  </div>
-);
-
-class SelectMovieCreatorModal extends React.Component {
+class MovieCreatorAutosuggest extends React.Component {
   constructor(props) {
     super(props);
 
@@ -64,11 +51,24 @@ class SelectMovieCreatorModal extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
+    this.renderSuggestion = this.renderSuggestion.bind(this);
   }
 
   componentDidMount() {
 
   }
+
+  renderSuggestion(suggestion) {
+    const fullName = `${suggestion.firstName} ${suggestion.lastName}`;
+    return (
+      <div>
+        {fullName}
+        <Button bsStyle="success" onClick={() => this.props.selectMovieCreator(suggestion)}>
+          Pridėti
+        </Button>
+      </div>
+    );
+  };
 
   onChange(event, { newValue }) {
     this.setState({
@@ -84,7 +84,8 @@ class SelectMovieCreatorModal extends React.Component {
 
   onSuggestionsClearRequested() {
     this.setState({
-      suggestions: []
+      suggestions: [],
+      value: ''
     });
   };
 
@@ -92,37 +93,26 @@ class SelectMovieCreatorModal extends React.Component {
     const { value, suggestions } = this.state;
 
     const inputProps = {
-      placeholder: 'Įveskite ieškomo kino kūrėjo vardą, pavardę',
+      placeholder: 'Ieškoti kino kūrėjo',
       value,
       onChange: this.onChange
     };
 
     return (
-      <Modal
-        isOpen={this.props.modalIsOpen}
-        onAfterOpen={this.props.afterOpenModal}
-        onRequestClose={this.props.closeModal}
-        style={customStyles}
-        contentLabel="Select movie creator"
-      >
-        <Autosuggest
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
-        />
-      </Modal>
+      <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={this.renderSuggestion}
+        inputProps={inputProps}
+      />
     );
   }
 }
 
-SelectMovieCreatorModal.propTypes = {
-  modalIsOpen: React.PropTypes.bool.isRequired,
-  onAfterOpen: React.PropTypes.func,
-  closeModal: React.PropTypes.func.isRequired,
+MovieCreatorAutosuggest.propTypes = {
   selectMovieCreator: React.PropTypes.func.isRequired,
 };
 
-export default SelectMovieCreatorModal;
+export default MovieCreatorAutosuggest;

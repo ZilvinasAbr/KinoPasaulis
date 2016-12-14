@@ -77,7 +77,13 @@ class MoviesPage extends React.Component {
             </tr>
             </thead>
             <tbody>
-            {this.props.movies.map(this.renderMovie)}
+            {this.props.movies.length > 0 ? this.props.movies.map(this.renderMovie) : (
+              <tr>
+                <td colSpan={8}>
+                  Nėra filmų
+                </td>
+              </tr>
+              )}
             </tbody>
           </Table>
         </Col>

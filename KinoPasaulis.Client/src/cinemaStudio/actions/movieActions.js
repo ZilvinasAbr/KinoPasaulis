@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
-import { receiveMovies } from '../actionCreators';
+import { receiveMovies, removeMovie } from '../actionCreators';
 import request from 'superagent';
 
 export function fetchMovies(query = '') {
@@ -105,7 +105,7 @@ export function deleteMovie(id) {
   return dispatch => {
     axios.delete(`/api/cinemaStudio/deleteMovie/${id}`)
       .then(response => {
-        console.log('deleted');
+        dispatch(removeMovie(id));
       })
       .catch(error => {
         console.log(error);

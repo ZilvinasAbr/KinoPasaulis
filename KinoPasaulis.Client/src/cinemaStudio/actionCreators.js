@@ -5,3 +5,11 @@ export function receiveMovies(movies) {
     movies
   };
 }
+
+export const REMOVE_MOVIE = 'REMOVE_MOVIE';
+export function removeMovie(movieId) {
+  return {
+    type: REMOVE_MOVIE,
+    movieId
+  };
+}

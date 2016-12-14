@@ -48,6 +48,36 @@ namespace KinoPasaulis.Server.Data
             var movies = AddMovies(cinemaStudios);
             context.AddRange(movies);
             context.SaveChanges();
+
+            var images = AddImages(movies);
+            context.AddRange(images);
+            context.SaveChanges();
+
+            var videos = AddVideos(movies);
+            context.AddRange(videos);
+            context.SaveChanges();
+        }
+
+        private static List<Image> AddImages(List<Movie> movies)
+        {
+            var images = new List<Image>
+            {
+                new Image { Title="The Dark Knight Virselis 1", Url = "thedarkknight1.JPG", CreatedOn = DateTime.Now, Description = "The Dark Knight Virselis 1", Movie = movies[2] },
+                new Image { Title="The Dark Knight Virselis 2", Url = "thedarkknight2.JPG", CreatedOn = DateTime.Now, Description = "The Dark Knight Virselis 2", Movie = movies[2] }
+            };
+
+            return images;
+        }
+
+        public static List<Video> AddVideos(List<Movie> movies)
+        {
+            var videos = new List<Video>
+            {
+                new Video { Title = "The Dark Knight Trailer 1", Url="https://www.youtube.com/watch?v=EXeTwQWrcwY", CreatedOn = DateTime.Now, Description = "The Dark Knight pirmasis anonsas", Movie = movies[2] },
+                new Video { Title = "The Dark Knight Trailer 2", Url="https://www.youtube.com/watch?v=7gFwvozMHR4", CreatedOn = DateTime.Now, Description = "The Dark Knight antrasis anonsas", Movie = movies[2] }
+            };
+
+            return videos;
         }
 
         private static List<Theather> AddTheathers()
@@ -76,8 +106,9 @@ namespace KinoPasaulis.Server.Data
         {
             var movies = new List<Movie>
             {
-                new Movie { Title = "Filmas 1", ReleaseDate = new DateTime(1995, 11, 08), Budget = 1000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 2000000, Language = "anglų", AgeRequirement = "PG-13", CinemaStudio = cinemaStudios[0]},
-                new Movie { Title = "Filmas 2", ReleaseDate = new DateTime(1995, 11, 08), Budget = 2000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 500000, Language = "lietuvių", AgeRequirement = "R", CinemaStudio = cinemaStudios[0]}
+                new Movie { Title = "Filmas 1",        ReleaseDate = new DateTime(1995, 11, 08), Budget = 1000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 2000000, Language = "anglų",   AgeRequirement = "PG-13", CinemaStudio = cinemaStudios[0]},
+                new Movie { Title = "Filmas 2",        ReleaseDate = new DateTime(1995, 11, 08), Budget = 2000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 500000, Language = "lietuvių", AgeRequirement = "R",     CinemaStudio = cinemaStudios[0]},
+                new Movie { Title = "The Dark Knight", ReleaseDate = new DateTime(2008, 11, 11), Budget = 2000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 500000, Language = "anglų",    AgeRequirement = "R",     CinemaStudio = cinemaStudios[0]},
             };
 
             return movies;

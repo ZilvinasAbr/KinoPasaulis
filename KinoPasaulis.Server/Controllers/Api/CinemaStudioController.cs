@@ -55,5 +55,30 @@ namespace KinoPasaulis.Server.Controllers.Api
 
             return Ok(true);
         }
+
+        [HttpDelete("deleteMovie/{id}")]
+        public IActionResult DeleteMovie(int id)
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return Unauthorized();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+
+                return BadRequest(allErrors);
+            }
+
+            bool isSuccess = _cinemaStudioService.DeleteMovie(id, HttpContext.User.GetUserId());
+
+            if (!isSuccess)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
     }
 }

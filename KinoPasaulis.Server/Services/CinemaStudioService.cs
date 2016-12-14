@@ -47,5 +47,30 @@ namespace KinoPasaulis.Server.Services
 
             return true;
         }
+
+        public bool DeleteMovie(int id, string userId)
+        {
+            var movie = _dbContext.Movies
+                .SingleOrDefault(m => m.Id == id);
+            var cinemaStudio = _dbContext.Users
+                .Include(u => u.CinemaStudio)
+                .SingleOrDefault(au => au.Id == userId)
+                .CinemaStudio;
+
+            if (movie == null || cinemaStudio == null)
+            {
+                return false;
+            }
+
+            if (movie.CinemaStudioId != cinemaStudio.Id)
+            {
+                return false;
+            }
+
+            _dbContext.Movies.Remove(movie);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
     }
 }

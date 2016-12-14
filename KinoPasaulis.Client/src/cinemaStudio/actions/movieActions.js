@@ -41,3 +41,15 @@ export function addMovie
       });
   };
 }
+
+export function deleteMovie(id) {
+  return dispatch => {
+    axios.delete(`/api/cinemaStudio/deleteMovie/${id}`)
+      .then(response => {
+        console.log('deleted');
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  };
+}

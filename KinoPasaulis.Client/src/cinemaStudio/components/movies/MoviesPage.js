@@ -2,8 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { push } from 'react-router-redux';
+import { Col, Table } from 'react-bootstrap';
 
-import { fetchMovies } from '../../actions/movieActions';
+import {
+  fetchMovies,
+  deleteMovie
+} from '../../actions/movieActions';
 import CinemaStudioNavigationBar from '../CinemaStudioNavigationBar';
 
 class MoviesPage extends React.Component {
@@ -11,6 +15,8 @@ class MoviesPage extends React.Component {
     super(props);
 
     this.handleAddMovie = this.handleAddMovie.bind(this);
+    this.handleDeleteMovie = this.handleDeleteMovie.bind(this);
+    this.renderMovie = this.renderMovie.bind(this);
   }
 
   componentDidMount() {
@@ -21,9 +27,28 @@ class MoviesPage extends React.Component {
     this.props.dispatch(push('/cinemaStudio/addMovie'));
   }
 
+  handleDeleteMovie(index) {
+    let movie = this.props.movies[index];
+
+    this.props.dispatch(deleteMovie(movie.id));
+  }
+
   renderMovie(movie, index) {
     return (
-      <div key={index}>{movie.title}</div>
+      <tr key={index}>
+        <td>{index+1}</td>
+        <td>{movie.title}</td>
+        <td>{movie.releaseDate}</td>
+        <td>{movie.budget}</td>
+        <td>{movie.gross}</td>
+        <td>{movie.language}</td>
+        <td>{movie.ageRequirement}</td>
+        <td>
+          <Button bsStyle="danger" onClick={() => this.handleDeleteMovie(index)}>
+            Pašalinti
+          </Button>
+        </td>
+      </tr>
     )
   }
 
@@ -31,9 +56,31 @@ class MoviesPage extends React.Component {
     return (
       <div>
         <CinemaStudioNavigationBar/>
-        <Button bsStyle="primary" onClick={this.handleAddMovie}>Add movie</Button>
-        <h1>Movies page</h1>
-        {this.props.movies.map(this.renderMovie)}
+        <Col lg={2} lgOffset={5}>
+          <h1>Kino filmai</h1>
+        </Col>
+        <Col lg={8} lgOffset={2}>
+          <Button bsStyle="primary" onClick={this.handleAddMovie}>
+            Pridėti filmą
+          </Button>
+          <Table striped bordered condensed hover>
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Pavadinimas</th>
+              <th>Išleidimo data</th>
+              <th>Pastatymo kaina</th>
+              <th>Pajamos</th>
+              <th>Kalba</th>
+              <th>Amžiaus cenzas</th>
+              <th>Veiksmai</th>
+            </tr>
+            </thead>
+            <tbody>
+            {this.props.movies.map(this.renderMovie)}
+            </tbody>
+          </Table>
+        </Col>
       </div>
     );
   }

@@ -7,5 +7,6 @@ namespace KinoPasaulis.Server.Services
     {
         IEnumerable<Movie> SearchMovies(string movieTitle);
         bool AddNewMovie(Movie movie, string userId);
+        bool DeleteMovie(int id, string userId);
     }
 }

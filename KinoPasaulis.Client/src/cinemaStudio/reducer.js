@@ -1,6 +1,7 @@
 import {
   RECEIVE_MOVIES,
-  REMOVE_MOVIE
+  REMOVE_MOVIE,
+  RECEIVE_MOVIE_CREATORS
 } from './actionCreators';
 
 export const initialState = {};
@@ -21,6 +22,10 @@ export function cinemaStudioPage(state = initialState, action) {
       return receiveMovies(state, action.movies);
     case REMOVE_MOVIE:
       return removeMovie(state, action.movieId);
+    case RECEIVE_MOVIE_CREATORS:
+      return Object.assign({}, state, {
+        movieCreators: action.movieCreators
+      });
     default:
       return state;
   }

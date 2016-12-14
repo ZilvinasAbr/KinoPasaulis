@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
-import { receiveMovies, removeMovie } from '../actionCreators';
+import {
+  receiveMovies,
+  removeMovie,
+  receiveMovieCreators
+} from '../actionCreators';
 import request from 'superagent';
 
 export function fetchMovies(query = '') {
@@ -111,4 +115,16 @@ export function deleteMovie(id) {
         console.log(error);
       })
   };
+}
+
+export function fetchMovieCreators() {
+  return dispatch => {
+    axios.get('API_METHOD_TO_FETCH_MOVIE_CREATORS')
+      .then(response => {
+        dispatch(receiveMovieCreators(response.data));
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
 }

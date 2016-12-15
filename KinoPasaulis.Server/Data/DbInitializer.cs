@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KinoPasaulis.Server.Migrations;
 using KinoPasaulis.Server.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -41,14 +42,14 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(movieCreators);
             context.SaveChanges();
 
-            var auditoriums = AddAuditoriums(theathers[0]);
-            context.AddRange(auditoriums);
-            context.SaveChanges();
-
             await AddCinemaStudioUsers(cinemaStudios, userManager);
             await AddTheatherUsers(theathers, userManager);
             await AddClientUsers(clients, userManager);
             await AddMovieCreatorUsers(movieCreators, userManager);
+
+            var auditoriums = AddAuditoriums(theathers[0]);
+            context.AddRange(auditoriums);
+            context.SaveChanges();
 
             var movies = AddMovies(cinemaStudios);
             context.AddRange(movies);
@@ -62,9 +63,31 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(videos);
             context.SaveChanges();
 
+            var ratings = AddRatings(clients, movies);
+            context.AddRange(ratings);
+            context.SaveChanges();
+
             var movieCreatorMovies = AddMovieCreatorMovies(movieCreators, movies);
             context.AddRange(movieCreatorMovies);
             context.SaveChanges();
+        }
+
+        private static List<Rating> AddRatings(List<Client> clients, List<Movie> movies)
+        {
+            var ratings = new List<Rating>
+            {
+                new Rating { Movie = movies[0], Client = clients[0], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[0], Client = clients[1], Value = 9,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[0], Client = clients[2], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[1], Client = clients[0], Value = 1,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[1], Client = clients[1], Value = 5,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[1], Client = clients[2], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[2], Client = clients[0], Value = 9,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[2], Client = clients[1], Value = 7,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[2], Client = clients[2], Value = 5,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+            };
+
+            return ratings;
         }
 
         private static List<MovieCreatorMovie> AddMovieCreatorMovies(List<MovieCreator> movieCreators, List<Movie> movies)
@@ -159,7 +182,9 @@ namespace KinoPasaulis.Server.Data
         {
             var clients = new List<Client>
             {
-                new Client { FirstName = "Vardenis", LastName = "Pavardenis", Email = "klientas1@klientas.com", Phone = "+37055555555", RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false}
+                new Client { FirstName = "Vardenis",  LastName = "Pavardenis",  Email = "klientas1@klientas.com", Phone = "+37055555555", RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false},
+                new Client { FirstName = "Vardenis2", LastName = "Pavardenis2", Email = "klientas2@klientas.com", Phone = "+37055555555", RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false},
+                new Client { FirstName = "Vardenis3", LastName = "Pavardenis3", Email = "klientas3@klientas.com", Phone = "+37055555555", RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false}
             };
 
             return clients;
@@ -203,7 +228,9 @@ namespace KinoPasaulis.Server.Data
         {
             var users = new List<ApplicationUser>
             {
-                new ApplicationUser {UserName = "Klientas1", Client = clients[0]}
+                new ApplicationUser {UserName = "Klientas1", Client = clients[0]},
+                new ApplicationUser {UserName = "Klientas2", Client = clients[1]},
+                new ApplicationUser {UserName = "Klientas3", Client = clients[2]},
             };
 
             foreach (var user in users)

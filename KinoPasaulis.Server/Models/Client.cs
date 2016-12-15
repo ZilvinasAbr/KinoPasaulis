@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KinoPasaulis.Server.Models
 {
@@ -23,5 +24,7 @@ namespace KinoPasaulis.Server.Models
         public bool Active { get; set; }
 
         public bool Blocked { get; set; }
+
+        public List<Rating> Ratings { get; set; }
     }
 }

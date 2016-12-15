@@ -4,8 +4,8 @@ using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Repositories.CinemaStudio;
+using KinoPasaulis.Server.ViewModels;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Services
@@ -115,6 +115,19 @@ namespace KinoPasaulis.Server.Services
             _dbContext.SaveChanges();
 
             return true;
+        }
+
+        public IEnumerable<CinemaStudioStatisticsViewModel> GetCinemaStudiosStatistics()
+        {
+            var cinemaStudiosStatisticsViewModels = _dbContext.CinemaStudios
+                .Select(cs => new CinemaStudioStatisticsViewModel
+                {
+                    Name = cs.Name,
+                    MoviesCount = cs.Movies.Count
+                })
+                .ToList();
+
+            return cinemaStudiosStatisticsViewModels;
         }
     }
 }

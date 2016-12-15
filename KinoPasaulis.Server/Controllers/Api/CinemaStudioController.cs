@@ -129,5 +129,13 @@ namespace KinoPasaulis.Server.Controllers.Api
 
             return Ok(fileNames);
         }
+
+        [HttpGet("statistics")]
+        public IActionResult GetCinemaStudiosStatistics()
+        {
+            var cinemaStudiosStatistics = _cinemaStudioService.GetCinemaStudiosStatistics();
+
+            return Ok(cinemaStudiosStatistics);
+        }
     }
 }

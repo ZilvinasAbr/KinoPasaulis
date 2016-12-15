@@ -30,7 +30,7 @@ class CinemaStudiosStatisticsPage extends React.Component {
         <Col xs={8} xsOffset={2} sm={6} smOffset={3} lg={4} lgOffset={4}>
           <h1>Kino studijų statistika</h1>
         </Col>
-        <Col>
+        <Col xs={8} xsOffset={2} sm={6} smOffset={3} lg={4} lgOffset={4}>
           <Table striped bordered condensed hover>
             <thead>
             <tr>

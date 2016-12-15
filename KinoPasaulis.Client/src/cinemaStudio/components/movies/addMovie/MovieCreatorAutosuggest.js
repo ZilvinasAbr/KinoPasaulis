@@ -13,30 +13,6 @@ const customStyles = {
   }
 };
 
-const movieCreators = [
-  {
-    id: 1,
-    firstName: "Christian",
-    lastName: "Bale"
-  },
-  {
-    id: 2,
-    firstName: "Heath",
-    lastName: "Ledger"
-  }
-];
-
-const getSuggestions = value => {
-  const inputValue = value.trim().toLowerCase();
-  const inputLength = inputValue.length;
-
-  return inputLength === 0 ? [] : movieCreators.filter(mc => {
-      const fullName = `${mc.firstName} ${mc.lastName}`.toLowerCase();
-
-      return fullName.indexOf(inputValue) !== -1;
-    });
-};
-
 const getSuggestionValue = suggestion => `${suggestion.firstName} ${suggestion.lastName}`;
 
 class MovieCreatorAutosuggest extends React.Component {
@@ -48,6 +24,7 @@ class MovieCreatorAutosuggest extends React.Component {
       suggestions: []
     };
 
+    this.getSuggestions = this.getSuggestions.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
@@ -57,6 +34,23 @@ class MovieCreatorAutosuggest extends React.Component {
   componentDidMount() {
 
   }
+
+  getSuggestions(value) {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0 ? [] : this.props.movieCreators.filter(mc => {
+
+      const selectedMovieCreators = this.props.selectedMovieCreators;
+      const isSelected = selectedMovieCreators.filter(selected => selected.id == mc.id).length;
+      if(isSelected){
+        return false;
+      }
+
+      const fullName = `${mc.firstName} ${mc.lastName}`.toLowerCase();
+      return fullName.indexOf(inputValue) !== -1;
+    });
+  };
 
   renderSuggestion(suggestion) {
     const fullName = `${suggestion.firstName} ${suggestion.lastName}`;
@@ -78,7 +72,7 @@ class MovieCreatorAutosuggest extends React.Component {
 
   onSuggestionsFetchRequested({ value }) {
     this.setState({
-      suggestions: getSuggestions(value)
+      suggestions: this.getSuggestions(value)
     });
   };
 
@@ -113,6 +107,8 @@ class MovieCreatorAutosuggest extends React.Component {
 
 MovieCreatorAutosuggest.propTypes = {
   selectMovieCreator: React.PropTypes.func.isRequired,
+  movieCreators: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  selectedMovieCreators: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
 };
 
 export default MovieCreatorAutosuggest;

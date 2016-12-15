@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KinoPasaulis.Server.Controllers
 {
-    [Route("api/account/")]
+    [Route("api/[controller]")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

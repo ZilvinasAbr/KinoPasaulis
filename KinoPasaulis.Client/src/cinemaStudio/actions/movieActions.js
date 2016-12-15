@@ -119,7 +119,7 @@ export function deleteMovie(id) {
 
 export function fetchMovieCreators() {
   return dispatch => {
-    axios.get('API_METHOD_TO_FETCH_MOVIE_CREATORS')
+    axios.get('/api/movieCreator/')
       .then(response => {
         dispatch(receiveMovieCreators(response.data));
       })

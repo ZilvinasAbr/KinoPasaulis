@@ -11,7 +11,10 @@ import Dropzone from 'react-dropzone';
 import DatePicker from 'react-bootstrap-date-picker';
 
 import VideosTable from './VideosTable';
-import { addMovie } from '../../../actions/movieActions';
+import {
+  addMovie,
+  fetchMovieCreators
+} from '../../../actions/movieActions';
 import SelectVideoModal from './SelectVideoModal';
 import MovieCreatorsTable from './MovieCreatorsTable';
 import MovieCreatorAutosuggest from './MovieCreatorAutosuggest';
@@ -51,6 +54,10 @@ class AddMovieForm extends React.Component {
     this.removeVideo = this.removeVideo.bind(this);
     this.selectMovieCreator = this.selectMovieCreator.bind(this);
     this.removeMovieCreator = this.removeMovieCreator.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(fetchMovieCreators());
   }
 
   onImageDrop(files) {
@@ -116,7 +123,6 @@ class AddMovieForm extends React.Component {
     });
   }
   selectMovieCreator(suggestion) {
-    debugger;
     this.setState({
       selectedMovieCreators: [...this.state.selectedMovieCreators, {
         id: suggestion.id,
@@ -263,6 +269,8 @@ class AddMovieForm extends React.Component {
             onAfterOpen={this.onAfterOpen2}
             closeModal={this.closeModal2}
             selectMovieCreator={this.selectMovieCreator}
+            movieCreators={this.props.movieCreators}
+            selectedMovieCreators={this.state.selectedMovieCreators}
           />
           <MovieCreatorsTable
             movieCreators={this.state.selectedMovieCreators}
@@ -286,7 +294,14 @@ class AddMovieForm extends React.Component {
 }
 
 AddMovieForm.propTypes = {
-  dispatch: React.PropTypes.func.isRequired
+  dispatch: React.PropTypes.func.isRequired,
+  movieCreators: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
 };
 
-export default connect()(AddMovieForm);
+function mapStateToProps(state) {
+  return {
+    movieCreators: state.cinemaStudioPage.movieCreators
+  };
+}
+
+export default connect(mapStateToProps)(AddMovieForm);

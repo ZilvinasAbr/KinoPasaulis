@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KinoPasaulis.Server.Controllers.Api
 {
-    [Route("api/client/")]
+    [Route("api/[controller]")]
     public class ClientController : Controller
     {
         private readonly IClientService _clientService;

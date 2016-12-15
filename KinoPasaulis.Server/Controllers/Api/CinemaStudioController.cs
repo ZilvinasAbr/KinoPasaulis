@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KinoPasaulis.Server.Controllers.Api
 {
-    [Route("api/cinemaStudio/")]
+    [Route("api/[controller]")]
     public class CinemaStudioController : Controller
     {
         private readonly ICinemaStudioService _cinemaStudioService;

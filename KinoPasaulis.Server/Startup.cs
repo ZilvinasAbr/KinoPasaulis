@@ -69,6 +69,7 @@ namespace KinoPasaulis.Server
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICinemaStudioService, CinemaStudioService>();
             services.AddTransient<IClientService, ClientService>();
+            services.AddTransient<IMovieCreatorService, MovieCreatorService>();
 
             // Repositories
             services.AddTransient<IEventRepository, EventRepository>();
@@ -113,8 +114,6 @@ namespace KinoPasaulis.Server
                     template: "{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute("Error", "{*url}", new {controller = "Home", action = "Index"});
             });
-
-            
 
             DbInitializer.Initialize(context, userManager, serviceProvider);
         }

@@ -4,7 +4,10 @@ import {
   RECEIVE_MOVIE_CREATORS
 } from './actionCreators';
 
-export const initialState = {};
+export const initialState = {
+  movies: [],
+  movieCreators: []
+};
 
 function receiveMovies(state, movies) {
   return Object.assign({}, state, { movies });

@@ -35,10 +35,10 @@ export function addMovie
   language,
   ageRequirement,
   droppedFiles,
-  videos
+  videos,
+  movieCreators
 ) {
   return dispatch => {
-
     if(droppedFiles.length <= 0) {
       request.post('/api/cinemaStudio/addMovie')
         .send({
@@ -50,7 +50,8 @@ export function addMovie
           language,
           ageRequirement,
           imageNames: [],
-          videos
+          videos,
+          movieCreators
         })
         .end((err, res) => {
           if(err) {
@@ -86,7 +87,8 @@ export function addMovie
             language,
             ageRequirement,
             imageNames,
-            videos
+            videos,
+            movieCreators
           })
           .end((err, res) => {
             if(err) {

@@ -32,7 +32,7 @@ namespace KinoPasaulis.Server.Services
             return movies;
         }
 
-        public bool AddNewMovie(Movie movie, List<string> imageNames, List<Video> videos, string userId)
+        public bool AddNewMovie(Movie movie, List<string> imageNames, List<Video> videos, List<MovieCreator> movieCreators, string userId)
         {
             var movieWithSameId = _dbContext.Movies.SingleOrDefault(m => m.Id == movie.Id);
 
@@ -68,6 +68,18 @@ namespace KinoPasaulis.Server.Services
             movie.CinemaStudio = cinemaStudio;
             movie.Images = images;
             movie.Videos = videos;
+
+            var movieCreatorMovies = new List<MovieCreatorMovie>();
+            foreach(var movieCreator in movieCreators)
+            {
+                var movieCreatorMovie = new MovieCreatorMovie
+                {
+                    MovieCreatorId = movieCreator.Id,
+                    Movie = movie
+                };
+                movieCreatorMovies.Add(movieCreatorMovie);
+            }
+            movie.MovieCreatorMovies = movieCreatorMovies;
 
             _dbContext.Movies.Add(movie);
             _dbContext.SaveChanges();

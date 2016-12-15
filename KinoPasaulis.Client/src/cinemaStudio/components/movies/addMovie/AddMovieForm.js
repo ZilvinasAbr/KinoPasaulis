@@ -152,7 +152,8 @@ class AddMovieForm extends React.Component {
         this.state.language,
         this.state.ageRequirement,
         this.state.droppedFiles,
-        this.state.videos
+        this.state.videos,
+        this.state.selectedMovieCreators
       )
     );
   }

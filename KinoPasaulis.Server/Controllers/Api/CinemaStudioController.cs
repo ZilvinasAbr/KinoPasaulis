@@ -70,8 +70,10 @@ namespace KinoPasaulis.Server.Controllers.Api
             };
 
             var imageNames = model.ImageNames;
+            var videos = model.Videos;
+            var movieCreators = model.MovieCreators;
 
-            _cinemaStudioService.AddNewMovie(movie, imageNames, model.Videos, HttpContext.User.GetUserId());
+            _cinemaStudioService.AddNewMovie(movie, imageNames, videos, movieCreators, HttpContext.User.GetUserId());
 
             return Ok(true);
         }

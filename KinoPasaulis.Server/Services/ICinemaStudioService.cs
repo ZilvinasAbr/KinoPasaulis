@@ -10,5 +10,6 @@ namespace KinoPasaulis.Server.Services
         bool AddNewMovie(Movie movie, List<string> imageNames, List<Video> videos, List<MovieCreator> movieCreators , string userId);
         bool DeleteMovie(int id, string userId);
         IEnumerable<CinemaStudioStatisticsViewModel> GetCinemaStudiosStatistics();
+        IEnumerable<Movie> GetCinemaStudioMovies(string userId);
     }
 }

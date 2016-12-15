@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 import { Col, Table } from 'react-bootstrap';
 
 import {
-  fetchMovies,
+  fetchCinemaStudioMovies,
   deleteMovie
 } from '../../actions/movieActions';
 import CinemaStudioNavigationBar from '../CinemaStudioNavigationBar';
@@ -20,7 +20,7 @@ class MoviesPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchMovies());
+    this.props.dispatch(fetchCinemaStudioMovies());
   }
 
   handleAddMovie() {

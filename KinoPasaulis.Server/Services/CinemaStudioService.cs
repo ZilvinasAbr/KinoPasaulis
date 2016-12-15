@@ -129,5 +129,24 @@ namespace KinoPasaulis.Server.Services
 
             return cinemaStudiosStatisticsViewModels;
         }
+
+        public IEnumerable<Movie> GetCinemaStudioMovies(string userId)
+        {
+            var cinemaStudio = _dbContext.Users
+                .Include(u => u.CinemaStudio)
+                .SingleOrDefault(au => au.Id == userId)
+                .CinemaStudio;
+
+            if (cinemaStudio == null)
+            {
+                return null;
+            }
+
+            var movies = _dbContext.Movies
+                .Where(movie => movie.CinemaStudioId == cinemaStudio.Id)
+                .ToList();
+
+            return movies;
+        }
     }
 }

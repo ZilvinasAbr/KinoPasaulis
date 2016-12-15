@@ -8,7 +8,6 @@ using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Services;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +40,21 @@ namespace KinoPasaulis.Server.Controllers.Api
             }
 
             return null;
+        }
+
+        [HttpGet("movies")]
+        public IActionResult GetCinemaStudioMovies()
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return Unauthorized();
+            }
+
+            var userId = HttpContext.User.GetUserId();
+
+            var movies = _cinemaStudioService.GetCinemaStudioMovies(userId);
+
+            return Ok(movies);
         }
 
         [HttpPost("addMovie")]

@@ -25,6 +25,18 @@ export function fetchMovies(query = '') {
   }
 }
 
+export function fetchCinemaStudioMovies() {
+  return dispatch => {
+    axios.get('/api/cinemaStudio/movies')
+      .then(response => {
+        dispatch(receiveMovies(response.data));
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
 export function addMovie
 (
   title,

@@ -19,6 +19,8 @@ class CinemaStudiosStatisticsPage extends React.Component {
       <tr key={index}>
         <td>{cinemaStudio.name}</td>
         <td>{cinemaStudio.moviesCount}</td>
+        <td>{cinemaStudio.averageMovieRating.toFixed(2)}</td>
+        <td>{cinemaStudio.bestMovieRating.toFixed(2)}</td>
       </tr>
     );
   }
@@ -30,12 +32,14 @@ class CinemaStudiosStatisticsPage extends React.Component {
         <Col xs={8} xsOffset={2} sm={6} smOffset={3} lg={4} lgOffset={4}>
           <h1>Kino studijų statistika</h1>
         </Col>
-        <Col xs={8} xsOffset={2} sm={6} smOffset={3} lg={4} lgOffset={4}>
+        <Col xs={10} xsOffset={1} sm={10} smOffset={1} lg={6} lgOffset={3}>
           <Table striped bordered condensed hover>
             <thead>
             <tr>
               <th>Kino Studija</th>
               <th>Išleistų filmų kiekis</th>
+              <th>Vidutinis kino studijos filmo reitingas</th>
+              <th>Geriausio kino studijos filmo reitingas</th>
             </tr>
             </thead>
             <tbody>
@@ -60,7 +64,7 @@ CinemaStudiosStatisticsPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    cinemaStudios: state.cinemaStudioPage.cinemaStudios
+    cinemaStudios: state.cinemaStudioPage.cinemaStudiosStatistics
   }
 }
 

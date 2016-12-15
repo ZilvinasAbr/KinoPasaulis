@@ -32,7 +32,8 @@ namespace KinoPasaulis.Server.Services
             return movies;
         }
 
-        public bool AddNewMovie(Movie movie, List<string> imageNames, List<Video> videos, List<MovieCreator> movieCreators, string userId)
+        public bool AddNewMovie(Movie movie, List<string> imageNames, List<Video> videos,
+            List<MovieCreator> movieCreators, string userId)
         {
             var movieWithSameId = _dbContext.Movies.SingleOrDefault(m => m.Id == movie.Id);
 
@@ -70,7 +71,7 @@ namespace KinoPasaulis.Server.Services
             movie.Videos = videos;
 
             var movieCreatorMovies = new List<MovieCreatorMovie>();
-            foreach(var movieCreator in movieCreators)
+            foreach (var movieCreator in movieCreators)
             {
                 var movieCreatorMovie = new MovieCreatorMovie
                 {
@@ -119,15 +120,25 @@ namespace KinoPasaulis.Server.Services
 
         public IEnumerable<CinemaStudioStatisticsViewModel> GetCinemaStudiosStatistics()
         {
-            var cinemaStudiosStatisticsViewModels = _dbContext.CinemaStudios
-                .Select(cs => new CinemaStudioStatisticsViewModel
+            var query = _dbContext.Movies
+                .Include(movie => movie.CinemaStudio)
+                .Include(movie => movie.Ratings)
+                .Select(movie => new
                 {
-                    Name = cs.Name,
-                    MoviesCount = cs.Movies.Count
+                    Movie = movie,
+                    AverageRating = movie.Ratings.Average(rating => rating.Value)
+                })
+                .GroupBy(arg => arg.Movie.CinemaStudio)
+                .Select(grouping => new CinemaStudioStatisticsViewModel
+                {
+                    Name = grouping.Key.Name,
+                    AverageMovieRating = grouping.Average(arg => arg.AverageRating),
+                    BestMovieRating = grouping.Max(arg => arg.AverageRating),
+                    MoviesCount = grouping.Count()
                 })
                 .ToList();
 
-            return cinemaStudiosStatisticsViewModels;
+            return query;
         }
 
         public IEnumerable<Movie> GetCinemaStudioMovies(string userId)

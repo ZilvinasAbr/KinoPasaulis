@@ -23,9 +23,9 @@ export function receiveMovieCreators(movieCreators) {
 }
 
 export const RECEIVE_CINEMA_STUDIOS_STATISTICS = 'cinemaStudio/RECEIVE_CINEMA_STUDIOS_STATISTICS';
-export function receiveCinemaStudiosStatistics(cinemaStudios) {
+export function receiveCinemaStudiosStatistics(cinemaStudiosStatistics) {
   return {
     type: RECEIVE_CINEMA_STUDIOS_STATISTICS,
-    cinemaStudios
+    cinemaStudiosStatistics
   };
 }

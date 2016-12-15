@@ -8,7 +8,7 @@ import {
 export const initialState = {
   movies: [],
   movieCreators: [],
-  cinemaStudios: []
+  cinemaStudiosStatistics: []
 };
 
 function receiveMovies(state, movies) {
@@ -33,7 +33,7 @@ export function cinemaStudioPage(state = initialState, action) {
       });
     case RECEIVE_CINEMA_STUDIOS_STATISTICS:
       return Object.assign({}, state, {
-          cinemaStudios: action.cinemaStudios
+          cinemaStudiosStatistics: action.cinemaStudiosStatistics
       });
     default:
       return state;

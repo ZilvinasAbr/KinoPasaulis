@@ -1,12 +1,14 @@
 import {
   RECEIVE_MOVIES,
   REMOVE_MOVIE,
-  RECEIVE_MOVIE_CREATORS
+  RECEIVE_MOVIE_CREATORS,
+  RECEIVE_CINEMA_STUDIOS_STATISTICS
 } from './actionCreators';
 
 export const initialState = {
   movies: [],
-  movieCreators: []
+  movieCreators: [],
+  cinemaStudios: []
 };
 
 function receiveMovies(state, movies) {
@@ -28,6 +30,10 @@ export function cinemaStudioPage(state = initialState, action) {
     case RECEIVE_MOVIE_CREATORS:
       return Object.assign({}, state, {
         movieCreators: action.movieCreators
+      });
+    case RECEIVE_CINEMA_STUDIOS_STATISTICS:
+      return Object.assign({}, state, {
+          cinemaStudios: action.cinemaStudios
       });
     default:
       return state;

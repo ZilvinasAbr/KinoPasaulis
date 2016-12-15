@@ -6,7 +6,13 @@ import { connect } from 'react-redux';
 import { logout } from '../../actions/account/logoutActions';
 import LogoutButton from '../../components/common/LogoutButton';
 
-const CinemaStudioNavigationBar = ({logout, changePageToHome, changePageToMovies, changePageToProfile}) => {
+const CinemaStudioNavigationBar = ({
+  logout,
+  changePageToHome,
+  changePageToMovies,
+  changePageToCinemaStudiosStatistics,
+  changePageToProfile
+}) => {
   return (
     <Navbar inverse>
       <Navbar.Header>
@@ -17,7 +23,18 @@ const CinemaStudioNavigationBar = ({logout, changePageToHome, changePageToMovies
       </Navbar.Header>
       <Navbar.Collapse>
         <Nav pullLeft>
-          <NavItem eventKey={1} onClick={changePageToMovies}>Filmai</NavItem>
+          <NavItem
+            eventKey={1}
+            onClick={changePageToMovies}
+          >
+            Filmai
+          </NavItem>
+          <NavItem
+            eventKey={2}
+            onClick={changePageToCinemaStudiosStatistics}
+          >
+            Kino studijų statistika
+          </NavItem>
         </Nav>
         <Nav pullRight>
           <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
@@ -46,6 +63,10 @@ function mapDispatchToProps(dispatch) {
 
     changePageToMovies: () => {
       dispatch(push('/cinemaStudio/movies'));
+    },
+
+    changePageToCinemaStudiosStatistics() {
+      dispatch(push('/cinemaStudio/statistics'));
     },
 
     changePageToProfile: () => {

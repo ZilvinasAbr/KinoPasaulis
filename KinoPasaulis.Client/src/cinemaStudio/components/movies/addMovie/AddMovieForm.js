@@ -61,7 +61,6 @@ class AddMovieForm extends React.Component {
   }
 
   onImageDrop(files) {
-    debugger;
     console.log('Received files:', files);
 
     this.setState({

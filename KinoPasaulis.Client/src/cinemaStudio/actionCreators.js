@@ -21,3 +21,11 @@ export function receiveMovieCreators(movieCreators) {
     movieCreators
   };
 }
+
+export const RECEIVE_CINEMA_STUDIOS_STATISTICS = 'cinemaStudio/RECEIVE_CINEMA_STUDIOS_STATISTICS';
+export function receiveCinemaStudiosStatistics(cinemaStudios) {
+  return {
+    type: RECEIVE_CINEMA_STUDIOS_STATISTICS,
+    cinemaStudios
+  };
+}

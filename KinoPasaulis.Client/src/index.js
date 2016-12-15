@@ -20,21 +20,22 @@ import NewEvent from './components/home/theather/events/NewEvent';
 import EventDetails from './components/home/theather/events/EventDetails';
 import MoviesPage from './cinemaStudio/components/movies/MoviesPage';
 import AddMoviePage from './cinemaStudio/components/movies/addMovie/AddMoviePage';
+import CinemaStudiosStatisticsPage from './cinemaStudio/components/CinemaStudiosStatisticsPage';
 
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 
 const store = createStore(reducer, initialState, compose(
-    applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware),
-    typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
+  applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware),
+  typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
 ));
 
 const history = syncHistoryWithStore(browserHistory, store);
 
 render(
-    (
+  (
 		<Provider store={store}>
-            { /* Tell the Router to use our enhanced history */}
+      { /* Tell the Router to use our enhanced history */}
 			<Router history={history}>
 				<Route path="/" component={LandingPage} />
 				<Route path="home" component={HomePage} />
@@ -51,8 +52,9 @@ render(
 				<Route path="theather/eventDetails/:id" component={EventDetails}/>
 				<Route path="cinemaStudio/movies" component={MoviesPage} />
 				<Route path="cinemaStudio/addMovie" component={AddMoviePage} />
+				<Route path="cinemaStudio/statistics" component={CinemaStudiosStatisticsPage} />
 			</Router>
 		</Provider>
-    ),
-    document.getElementById('app')
+  ),
+  document.getElementById('app')
 );

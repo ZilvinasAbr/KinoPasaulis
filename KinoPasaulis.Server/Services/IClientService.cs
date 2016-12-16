@@ -5,9 +5,10 @@ namespace KinoPasaulis.Server.Services
 {
     public interface IClientService
     {
-        IEnumerable<Order> GetOrders();
         Order GetOrderById(int orderId);
-        bool DeleteOrder(int orderId);
-        bool UpdateOrder(Order order);
+        Subscription GetSubscriptionById(int subscriptionId);
+
+        void AddOrder(Order order);
+        void AddSubscription(Subscription subscription);
     }
 }

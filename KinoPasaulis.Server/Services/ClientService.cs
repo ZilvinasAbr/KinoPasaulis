@@ -7,15 +7,12 @@ namespace KinoPasaulis.Server.Services
     public class ClientService : IClientService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly ISubscriptionRepository _subscriptionRepository;
 
-        public ClientService(IOrderRepository orderRepository)
+        public ClientService(IOrderRepository orderRepository, ISubscriptionRepository subscriptionRepository)
         {
             _orderRepository = orderRepository;
-        }
-
-        public IEnumerable<Order> GetOrders()
-        {
-            return _orderRepository.GetOrders();
+            _subscriptionRepository = subscriptionRepository;
         }
 
         public Order GetOrderById(int orderId)
@@ -23,16 +20,20 @@ namespace KinoPasaulis.Server.Services
             return _orderRepository.GetOrderById(orderId);
         }
 
-        public bool DeleteOrder(int orderId)
+        public Subscription GetSubscriptionById(int subscriptionId)
         {
-            return _orderRepository.DeleteOrder(orderId);
+            return _subscriptionRepository.GetSubscriptionById(subscriptionId);
         }
 
-        public bool UpdateOrder(Order order)
-        {
-            _orderRepository.UpdateOrder(order);
 
-            return true;
+        public void AddOrder(Order order)
+        {
+            _orderRepository.InsertOrder(order);
+        }
+
+        public void AddSubscription(Subscription subscription)
+        {
+            _subscriptionRepository.InsertSubscription(subscription);
         }
     }
 }

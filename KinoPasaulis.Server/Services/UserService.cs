@@ -33,5 +33,14 @@ namespace KinoPasaulis.Server.Services
                 .SingleOrDefault(x => x.Id == id)
                 .Theather;
         }
+
+        public Client GetClientByUserId(string id)
+        {
+            return _dbContext
+                .Users
+                .Include(x => x.Client)
+                .SingleOrDefault(x => x.Id == id)
+                .Client;
+        }
     }
 }

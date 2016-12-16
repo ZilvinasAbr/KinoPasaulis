@@ -11,6 +11,7 @@ namespace KinoPasaulis.Server.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Show> Shows { get; set; }
         public DbSet<MovieCreator> MovieCreators { get; set; }
         public DbSet<Theather> Theathers { get; set; }

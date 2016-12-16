@@ -10,5 +10,6 @@ namespace KinoPasaulis.Server.Repositories.Client
     {
         Subscription GetSubscriptionById(int subscriptionId);
         void InsertSubscription(Subscription subscription);
+        void UpdateSubscription(Subscription subscription);
     }
 }

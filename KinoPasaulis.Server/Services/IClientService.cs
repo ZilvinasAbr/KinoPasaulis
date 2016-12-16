@@ -10,5 +10,6 @@ namespace KinoPasaulis.Server.Services
 
         void AddOrder(Order order);
         void AddSubscription(Subscription subscription);
+        void RemoveSubscription(Subscription subscription);
     }
 }

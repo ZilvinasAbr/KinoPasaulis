@@ -18,6 +18,7 @@ namespace KinoPasaulis.Server.Controllers.Api
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IShowRepository _showRepository;
         private readonly ITheatherRepository _theatherRepository;
+        private readonly ISubscriptionRepository _subscriptionRepository;
         private readonly IUserService _userService;
 
         public ClientController(
@@ -25,6 +26,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             SignInManager<ApplicationUser> signInManager,
             IShowRepository showRepository,
             ITheatherRepository theatherRepository,
+            ISubscriptionRepository subscriptionRepository,
             IUserService userService )
         {
             _clientService = clientService;
@@ -32,6 +34,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             _showRepository = showRepository;
             _theatherRepository = theatherRepository;
             _userService = userService;
+            _subscriptionRepository = subscriptionRepository;
         }
 
         [HttpGet("getOrder")]
@@ -73,7 +76,7 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpPost("addSubscription")]
-        public bool AddSubbscription([FromBody] int theaterId)
+        public IActionResult AddSubbscription([FromBody] int theaterId)
         {
             if (_signInManager.IsSignedIn(User))
             {
@@ -89,10 +92,26 @@ namespace KinoPasaulis.Server.Controllers.Api
 
                 _clientService.AddSubscription(subscription);
 
-                return true;
+                return Ok(true);
             }
 
-            return false;
+            return Unauthorized();
+        }
+
+        [HttpPost("removeSubscription")]
+        public IActionResult RemoveSubscription([FromBody] int subscriptionId)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var subscription = _subscriptionRepository.GetSubscriptionById(subscriptionId);
+                subscription.EndDate = DateTime.Now;
+
+                _clientService.RemoveSubscription(subscription);
+
+                return Ok(true);
+            }
+
+            return Unauthorized();
         }
     }
 }

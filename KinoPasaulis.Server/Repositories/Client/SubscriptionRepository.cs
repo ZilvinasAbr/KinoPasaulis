@@ -29,5 +29,11 @@ namespace KinoPasaulis.Server.Repositories.Client
             _dbContext.Subscriptions.Add(subscription);
             _dbContext.SaveChanges();
         }
+
+        public void UpdateSubscription(Subscription subscription)
+        {
+            _dbContext.Subscriptions.Update(subscription);
+            _dbContext.SaveChanges();
+        }
     }
 }

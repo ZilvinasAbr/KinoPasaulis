@@ -35,5 +35,10 @@ namespace KinoPasaulis.Server.Services
         {
             _subscriptionRepository.InsertSubscription(subscription);
         }
+
+        public void RemoveSubscription(Subscription subscription)
+        {
+            _subscriptionRepository.UpdateSubscription(subscription);
+        }
     }
 }

@@ -18,6 +18,7 @@ class CinemaStudiosStatisticsPage extends React.Component {
     return (
       <tr key={index}>
         <td>{cinemaStudio.name}</td>
+        <td>{cinemaStudio.sumOfAllMovieEvents}</td>
         <td>{cinemaStudio.moviesCount}</td>
         <td>{cinemaStudio.averageMovieRating ?
           cinemaStudio.averageMovieRating.toFixed(2) : 'nėra filmų su reitingu'}
@@ -41,6 +42,7 @@ class CinemaStudiosStatisticsPage extends React.Component {
             <thead>
             <tr>
               <th>Kino Studija</th>
+              <th>Visų filmų rodymo šiuo metu kiekis</th>
               <th>Išleistų filmų kiekis</th>
               <th>Vidutinis kino studijos filmo reitingas</th>
               <th>Geriausio kino studijos filmo reitingas</th>

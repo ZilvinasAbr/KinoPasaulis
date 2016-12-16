@@ -39,5 +39,7 @@ namespace KinoPasaulis.Server.Models
         public List<Video> Videos { get; set; }
         public List<MovieCreatorMovie> MovieCreatorMovies { get; set; }
         public List<Rating> Ratings { get; set; }
+
+        public List<Event> Events { get; set; }
     }
 }

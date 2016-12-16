@@ -122,7 +122,9 @@ namespace KinoPasaulis.Server.Services
         {
             var cinemaStudios = _dbContext.CinemaStudios
                 .Include(studio => studio.Movies)
-                .ThenInclude(movie => movie.Ratings)
+                    .ThenInclude(movie => movie.Ratings)
+                .Include(studio => studio.Movies)
+                    .ThenInclude(movie => movie.Events)
                 .ToList();
 
             var results = new List<CinemaStudioStatisticsViewModel>();
@@ -131,7 +133,11 @@ namespace KinoPasaulis.Server.Services
                 var result = new CinemaStudioStatisticsViewModel
                 {
                     Name = cinemaStudio.Name,
-                    MoviesCount = cinemaStudio.Movies.Count
+                    MoviesCount = cinemaStudio.Movies.Count,
+                    SumOfAllMovieEvents =
+                        cinemaStudio.Movies.SelectMany(
+                                movie => movie.Events.Where(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime))
+                            .Count()
                 };
 
                 if (!cinemaStudio.Movies.Any())
@@ -160,30 +166,6 @@ namespace KinoPasaulis.Server.Services
             }
 
             return results;
-
-//            var query = _dbContext.Movies
-//                .Include(movie => movie.CinemaStudio)
-//                .Include(movie => movie.Ratings)
-//                .Where(movie => movie.Ratings.Any())
-//                .Select(movie => new
-//                {
-//                    movie.CinemaStudio.Id,
-//                    movie.CinemaStudio.Name,
-//                    AverageRating = movie.Ratings.Average(rating => rating.Value)
-//                })
-//                .ToList();
-//
-//            var result = query.GroupBy(arg => new {arg.Id, arg.Name})
-//                .Select(grouping => new CinemaStudioStatisticsViewModel
-//                {
-//                    Name = grouping.Key.Name,
-//                    AverageMovieRating = grouping.Average(arg => arg.AverageRating),
-//                    BestMovieRating = grouping.Max(arg => arg.AverageRating),
-//                    MoviesCount = _dbContext.Movies.Count(movie => movie.CinemaStudio.Id == grouping.Key.Id)
-//                })
-//                .ToList();
-//
-//            return result;
         }
 
         public IEnumerable<Movie> GetCinemaStudioMovies(string userId)

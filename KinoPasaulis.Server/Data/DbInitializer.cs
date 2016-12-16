@@ -70,6 +70,37 @@ namespace KinoPasaulis.Server.Data
             var movieCreatorMovies = AddMovieCreatorMovies(movieCreators, movies);
             context.AddRange(movieCreatorMovies);
             context.SaveChanges();
+
+            var events = AddEvents(theathers, movies);
+            context.AddRange(events);
+            context.SaveChanges();
+        }
+
+        private static IEnumerable<Event> AddEvents(List<Theather> theathers, List<Movie> movies)
+        {
+            var events = new List<Event>
+            {
+                new Event { Movie = movies[0], Theather = theathers[0], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+
+                new Event { Movie = movies[1], Theather = theathers[0], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+
+                new Event { Movie = movies[2], Theather = theathers[0], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+                new Event { Movie = movies[2], Theather = theathers[1], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+                new Event { Movie = movies[2], Theather = theathers[2], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+                new Event { Movie = movies[2], Theather = theathers[3], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+                new Event { Movie = movies[2], Theather = theathers[4], StartTime = DateTime.Now.Add(TimeSpan.FromDays(30)), EndTime = DateTime.Now.Add(TimeSpan.FromDays(60))},
+
+                new Event { Movie = movies[3], Theather = theathers[2], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+                new Event { Movie = movies[3], Theather = theathers[3], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+                new Event { Movie = movies[3], Theather = theathers[4], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+
+                new Event { Movie = movies[4], Theather = theathers[4], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+                new Event { Movie = movies[4], Theather = theathers[2], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+
+                new Event { Movie = movies[5], Theather = theathers[1], StartTime = DateTime.Now,                            EndTime = DateTime.Now.Add(TimeSpan.FromDays(30))},
+            };
+
+            return events;
         }
 
         private static List<Rating> AddRatings(List<Client> clients, List<Movie> movies)
@@ -154,7 +185,11 @@ namespace KinoPasaulis.Server.Data
         {
             var theathers = new List<Theather>
             {
-                new Theather { Title = "Kino teatras 1", City = "Kaunas", Country = "Lietuva", Address = "Adreso g. 1", Email = "kinoTeatras@kinoTeatras.com", Phone = "+37066666666"}
+                new Theather { Title = "Kino teatras 1", City = "Kaunas", Country = "Lietuva", Address = "Adreso g. 1", Email = "kinoTeatras1@kinoTeatras.com", Phone = "+37066666666"},
+                new Theather { Title = "Kino teatras 2", City = "Kaunas", Country = "Lietuva", Address = "Adreso g. 1", Email = "kinoTeatras2@kinoTeatras.com", Phone = "+37066666666"},
+                new Theather { Title = "Kino teatras 3", City = "Kaunas", Country = "Lietuva", Address = "Adreso g. 1", Email = "kinoTeatras3@kinoTeatras.com", Phone = "+37066666666"},
+                new Theather { Title = "Kino teatras 4", City = "Kaunas", Country = "Lietuva", Address = "Adreso g. 1", Email = "kinoTeatras4@kinoTeatras.com", Phone = "+37066666666"},
+                new Theather { Title = "Kino teatras 5", City = "Kaunas", Country = "Lietuva", Address = "Adreso g. 1", Email = "kinoTeatras5@kinoTeatras.com", Phone = "+37066666666"},
             };
 
             return theathers;
@@ -235,7 +270,11 @@ namespace KinoPasaulis.Server.Data
         {
             var users = new List<ApplicationUser>
             {
-                new ApplicationUser {UserName = "KinoTeatras1", Theather= theathers[0]}
+                new ApplicationUser {UserName = "KinoTeatras1", Theather= theathers[0]},
+                new ApplicationUser {UserName = "KinoTeatras2", Theather= theathers[1]},
+                new ApplicationUser {UserName = "KinoTeatras3", Theather= theathers[2]},
+                new ApplicationUser {UserName = "KinoTeatras4", Theather= theathers[3]},
+                new ApplicationUser {UserName = "KinoTeatras5", Theather= theathers[4]},
             };
 
             foreach (var user in users)

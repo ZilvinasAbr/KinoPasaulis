@@ -7,7 +7,7 @@ namespace KinoPasaulis.Server.ViewModels.Theather
 {
     public class AnnouncementViewModel
     {
-        public int ClientId { get; set; }
+        public ISet<int> ClientIds { get; set; }
         public string Message { get; set; }
     }
 }

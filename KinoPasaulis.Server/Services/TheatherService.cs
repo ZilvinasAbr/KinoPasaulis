@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Mapper;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
@@ -107,21 +108,25 @@ namespace KinoPasaulis.Server.Services
             return deleted;
         }
 
-        public bool SendAnnouncement(int clientId, string theatherId, string message)
+        public bool SendAnnouncements(ISet<int> clientIds, string theatherId, string message)
         {
-            Client client = new Client();
             var theater = _userService.GetTheatherByUserId(theatherId);
 
-            var announcement = new Announcement
+            foreach (var id in clientIds)
             {
-                Client = client,
-                Theater = theater,
-                Message = message,
-                Created = DateTime.Now,
-                Sent = DateTime.Now
-            };
+                var client = _userService.GetClientById(id);
 
-            _announcementRepository.InsertAnnouncement(announcement);
+                var announcement = new Announcement
+                {
+                    Client = client,
+                    Theater = theater,
+                    Message = message,
+                    Created = DateTime.Now,
+                    Sent = DateTime.Now
+                };
+
+                _announcementRepository.InsertAnnouncement(announcement);
+            }
 
             return true;
         }

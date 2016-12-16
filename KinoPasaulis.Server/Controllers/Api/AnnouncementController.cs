@@ -31,7 +31,7 @@ namespace KinoPasaulis.Server.Controllers.Api
                 return Unauthorized();
             }
 
-            _theaterService.SendAnnouncement(announcement.ClientId, userId, announcement.Message);
+            _theaterService.SendAnnouncements(announcement.ClientIds, userId, announcement.Message);
 
             return Ok();
         }

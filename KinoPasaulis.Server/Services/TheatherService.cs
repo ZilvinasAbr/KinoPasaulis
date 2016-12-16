@@ -36,6 +36,7 @@ namespace KinoPasaulis.Server.Services
             _theatherMapper = theatherMapper;
             _movieRepository = movieRepository;
             _announcementRepository = announcementRepository;
+            _userService = userService;
         }
 
         public void AddNewEvent(EventCreation eventCreation)
@@ -120,7 +121,16 @@ namespace KinoPasaulis.Server.Services
                 Sent = DateTime.Now
             };
 
+            _announcementRepository.InsertAnnouncement(announcement);
+
             return true;
+        }
+
+        public IEnumerable<Announcement> GetTheaterAnnouncments(string theaterId)
+        {
+            var theater = _userService.GetTheatherByUserId(theaterId);
+
+            return _announcementRepository.GetAnnouncementsByTheatherId(theater.Id);
         }
 
         public bool UpdateAutorium(Auditorium auditorium)

@@ -15,6 +15,7 @@ namespace KinoPasaulis.Server.Services
         Show GetShowById(int id);
 
         bool SendAnnouncement(int clientId, string theatherId, string message);
+        IEnumerable<Announcement> GetTheaterAnnouncments(string userId);
         bool DeleteAuditorium(int id);
         bool UpdateAutorium(Auditorium auditorium);
         bool UpdateShow(Show show);

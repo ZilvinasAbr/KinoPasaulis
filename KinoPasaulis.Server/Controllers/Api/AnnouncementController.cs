@@ -1,7 +1,10 @@
 ﻿using KinoPasaulis.Server.Models;
+using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Services;
 using KinoPasaulis.Server.ViewModels.Theather;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
 namespace KinoPasaulis.Server.Controllers.Api
@@ -31,6 +34,30 @@ namespace KinoPasaulis.Server.Controllers.Api
             _theaterService.SendAnnouncement(announcement.ClientId, userId, announcement.Message);
 
             return Ok();
+        }
+
+        [HttpGet("messages")]
+        public IActionResult GetTheatherMessages()
+        {
+            var userId = HttpContext.User.GetUserId();
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var announcements = _theaterService.GetTheaterAnnouncments(userId);
+
+            var messages = announcements.Select(annoucement => new AnnouncementTheaterViewModel
+            {
+                Client = annoucement.Client,
+                Created = annoucement.Created,
+                Message = annoucement.Message,
+                Seen = annoucement.Seen,
+                Sent = annoucement.Sent
+            }).ToList();
+
+            return Ok(messages);
         }
     }
 }

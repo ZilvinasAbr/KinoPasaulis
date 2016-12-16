@@ -29,3 +29,12 @@ export function receiveCinemaStudiosStatistics(cinemaStudiosStatistics) {
     cinemaStudiosStatistics
   };
 }
+
+export const RECEIVE_CINEMA_STUDIOS_MOVIES_STATISTICS =
+  'cinemaStudio/RECEIVE_CINEMA_STUDIOS_MOVIES_STATISTICS';
+export function receiveCinemaStudiosMoviesStatistics(cinemaStudiosMoviesStatistics) {
+  return {
+    type: RECEIVE_CINEMA_STUDIOS_MOVIES_STATISTICS,
+    moviesStatistics: cinemaStudiosMoviesStatistics
+  };
+}

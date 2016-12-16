@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using KinoPasaulis.Server.Models;
+using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.ViewModels;
 
 namespace KinoPasaulis.Server.Services
@@ -11,5 +12,6 @@ namespace KinoPasaulis.Server.Services
         bool DeleteMovie(int id, string userId);
         IEnumerable<CinemaStudioStatisticsViewModel> GetCinemaStudiosStatistics();
         IEnumerable<Movie> GetCinemaStudioMovies(string userId);
+        IEnumerable<MovieStatisticsViewModel> GetCinemaStudiosMoviesStatistics(string userId);
     }
 }

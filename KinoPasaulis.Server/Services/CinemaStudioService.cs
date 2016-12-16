@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
+using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Repositories.CinemaStudio;
 using KinoPasaulis.Server.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -185,6 +186,36 @@ namespace KinoPasaulis.Server.Services
                 .ToList();
 
             return movies;
+        }
+
+        public IEnumerable<MovieStatisticsViewModel> GetCinemaStudiosMoviesStatistics(string userId)
+        {
+            var cinemaStudio = _dbContext.Users
+                .Include(u => u.CinemaStudio)
+                .SingleOrDefault(au => au.Id == userId)
+                .CinemaStudio;
+
+            if (cinemaStudio == null)
+            {
+                return null;
+            }
+
+            var moviesStatistics = _dbContext.CinemaStudios
+                .Include(cs => cs.Movies)
+                    .ThenInclude(movie => movie.Ratings)
+                .Include(cs => cs.Movies)
+                    .ThenInclude(movie => movie.Events)
+                .SingleOrDefault(cs => cs.Id == cinemaStudio.Id)
+                .Movies
+                .Select(movie => new MovieStatisticsViewModel
+                {
+                    Title = movie.Title,
+                    Rating = movie.Ratings.Average(rating => rating.Value),
+                    EventsCount = movie.Events.Count(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime)
+                })
+                .ToList();
+
+            return moviesStatistics;
         }
     }
 }

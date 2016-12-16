@@ -21,6 +21,7 @@ import EventDetails from './components/home/theather/events/EventDetails';
 import MoviesPage from './cinemaStudio/components/movies/MoviesPage';
 import AddMoviePage from './cinemaStudio/components/movies/addMovie/AddMoviePage';
 import CinemaStudiosStatisticsPage from './cinemaStudio/components/CinemaStudiosStatisticsPage';
+import CinemaStudiosMoviesStatisticsPage from './cinemaStudio/components/movies/MoviesStatisticsPage';
 
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
@@ -53,6 +54,7 @@ render(
 				<Route path="cinemaStudio/movies" component={MoviesPage} />
 				<Route path="cinemaStudio/addMovie" component={AddMoviePage} />
 				<Route path="cinemaStudio/statistics" component={CinemaStudiosStatisticsPage} />
+				<Route path="cinemaStudio/moviesStatistics" component={CinemaStudiosMoviesStatisticsPage} />
 			</Router>
 		</Provider>
   ),

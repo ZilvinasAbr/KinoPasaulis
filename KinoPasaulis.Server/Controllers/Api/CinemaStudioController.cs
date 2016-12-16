@@ -151,5 +151,18 @@ namespace KinoPasaulis.Server.Controllers.Api
 
             return Ok(cinemaStudiosStatistics);
         }
+
+        [HttpGet("moviesStatistics")]
+        public IActionResult GetCinemaStudiosMoviesStatistics()
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return Unauthorized();
+            }
+
+            var moviesStatistics = _cinemaStudioService.GetCinemaStudiosMoviesStatistics(HttpContext.User.GetUserId());
+
+            return Ok(moviesStatistics);
+        }
     }
 }

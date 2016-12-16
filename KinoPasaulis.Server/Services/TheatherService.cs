@@ -16,14 +16,26 @@ namespace KinoPasaulis.Server.Services
         private readonly IShowRepository _showRepository;
         private readonly ITheatherMapper _theatherMapper;
         private readonly IMovieRepository _movieRepository;
+        private readonly IAnnouncementRepository _announcementRepository;
+        private readonly IUserService _userService;
+        private readonly ITheatherService _theaterService;
 
-        public TheatherService(IEventRepository eventRepository, IAuditoriumRepository auditoriumRepository, IShowRepository showRepository, ITheatherMapper theatherMapper, IMovieRepository movieRepository)
+        public TheatherService(
+            IEventRepository eventRepository, 
+            IAuditoriumRepository auditoriumRepository, 
+            IShowRepository showRepository, 
+            ITheatherMapper theatherMapper, 
+            IMovieRepository movieRepository,
+            IAnnouncementRepository announcementRepository,
+            IUserService userService
+            )
         {
             _eventRepository = eventRepository;
             _auditoriumRepository = auditoriumRepository;
             _showRepository = showRepository;
             _theatherMapper = theatherMapper;
             _movieRepository = movieRepository;
+            _announcementRepository = announcementRepository;
         }
 
         public void AddNewEvent(EventCreation eventCreation)
@@ -94,6 +106,23 @@ namespace KinoPasaulis.Server.Services
             return deleted;
         }
 
+        public bool SendAnnouncement(int clientId, string theatherId, string message)
+        {
+            Client client = new Client();
+            var theater = _userService.GetTheatherByUserId(theatherId);
+
+            var announcement = new Announcement
+            {
+                Client = client,
+                Theater = theater,
+                Message = message,
+                Created = DateTime.Now,
+                Sent = DateTime.Now
+            };
+
+            return true;
+        }
+
         public bool UpdateAutorium(Auditorium auditorium)
         {
             // Check if auditorium exists first..... Couldnt do that becouse of entity framework error then updating auditorium
@@ -138,6 +167,11 @@ namespace KinoPasaulis.Server.Services
             }
 
             return viewModels;
+        }
+
+        public bool SendAnnouncement(int clientId, int theatherId, string message)
+        {
+            throw new NotImplementedException();
         }
     }
 }

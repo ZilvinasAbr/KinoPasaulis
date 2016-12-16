@@ -74,6 +74,30 @@ namespace KinoPasaulis.Server.Data
             var events = AddEvents(theathers, movies);
             context.AddRange(events);
             context.SaveChanges();
+
+            var messages = AddMessages(movieCreators,cinemaStudios);
+            context.AddRange(messages);
+            context.SaveChanges();
+
+            var specialties = AddSpecialties();
+            context.AddRange(specialties);
+            context.SaveChanges();
+
+            var movieCreatorSpecialties = AddMovieCreatorSpecialties(movieCreators, specialties);
+            context.AddRange(movieCreatorSpecialties);
+            context.SaveChanges();
+
+            var votesAdmins = AddVotesAdmins();
+            context.AddRange(votesAdmins);
+            context.SaveChanges();
+
+            var votings = AddVotings(votesAdmins);
+            context.AddRange(votings);
+            context.SaveChanges();
+
+            var movieCreatorVotings = AddMovieCreatorVotings(movieCreators, votings);
+            context.AddRange(movieCreatorVotings);
+            context.SaveChanges();
         }
 
         private static IEnumerable<Event> AddEvents(List<Theather> theathers, List<Movie> movies)
@@ -246,6 +270,78 @@ namespace KinoPasaulis.Server.Data
             return clients;
         }
 
+        private static List<Message> AddMessages(List<MovieCreator> movieCreators, List<CinemaStudio> cinemaStudios)
+        {
+            var messages = new List<Message>
+            {
+                new Message { MovieCreator = movieCreators[0], CinemaStudio = cinemaStudios[0], Text = "Čia yra lietuviškas tekstas.", SentAt = DateTime.Now, ReadAt = DateTime.Now },
+                new Message { MovieCreator = movieCreators[1], CinemaStudio = cinemaStudios[0], Text = "Čia yra lietuviškas tekstas2.", SentAt = DateTime.Now, ReadAt = DateTime.Now },
+                new Message { MovieCreator = movieCreators[2], CinemaStudio = cinemaStudios[1], Text = "Čia yra lietuviškas tekstas3.", SentAt = DateTime.Now, ReadAt = DateTime.Now }
+            };
+
+            return messages;
+        }
+
+        private static List<Specialty> AddSpecialties()
+        {
+            var specialties = new List<Specialty>
+            {
+                new Specialty { Title = "Režisierius", Quantity = 1, CreatedAt = DateTime.Now, EditDate = DateTime.Now },
+                new Specialty { Title = "Aktorius", Quantity = 1, CreatedAt = DateTime.Now, EditDate = DateTime.Now },
+                new Specialty { Title = "Kompozitorius", Quantity = 1, CreatedAt = DateTime.Now, EditDate = DateTime.Now }
+            };
+
+            return specialties;
+        }
+
+        private static List<MovieCreatorSpecialty> AddMovieCreatorSpecialties(List<MovieCreator> movieCreators, List<Specialty> specialties)
+        {
+            var movieCreatorSpecialties = new List<MovieCreatorSpecialty>
+            {
+                new MovieCreatorSpecialty { MovieCreator = movieCreators[0], Specialty = specialties[0] },
+                new MovieCreatorSpecialty { MovieCreator = movieCreators[1], Specialty = specialties[1] },
+                new MovieCreatorSpecialty { MovieCreator = movieCreators[2], Specialty = specialties[2] }
+            };
+
+            return movieCreatorSpecialties;
+        }
+
+        private static List<VotesAdmin> AddVotesAdmins()
+        {
+            var votesAdmins = new List<VotesAdmin>
+            {
+                new VotesAdmin { FirstName = "Balsas",  LastName = "Adminas",  Email = "balsavimu@adminas.com", Phone = "+37055555555", RegisterDate = DateTime.Now },
+                new VotesAdmin { FirstName = "Balsavimas",  LastName = "Administratorius",  Email = "bals@adm.com", Phone = "+37055555655", RegisterDate = DateTime.Now },
+                new VotesAdmin { FirstName = "Laimonas",  LastName = "Kazėnas",  Email = "balsu@admin.com", Phone = "+37055557555", RegisterDate = DateTime.Now }
+            };
+
+            return votesAdmins;
+        }
+
+        private static List<Voting> AddVotings(List<VotesAdmin> votesAdmins )
+        {
+            var votings = new List<Voting>
+            {
+                new Voting { VotesAdmin = votesAdmins[0], Title = "Geriausias aktorius", StartDate = DateTime.Now, EndDate = new DateTime(2020, 11, 11)},
+                new Voting { VotesAdmin = votesAdmins[1], Title = "Geriausias režisierius", StartDate = DateTime.Now, EndDate = new DateTime(2020, 08, 11) },
+                new Voting { VotesAdmin = votesAdmins[2], Title = "Geriausias kompozitorius", StartDate = DateTime.Now, EndDate = new DateTime(2018, 11, 12) }
+            };
+
+            return votings;
+        }
+
+        private static List<MovieCreatorVoting> AddMovieCreatorVotings(List<MovieCreator> movieCreators, List<Voting> votings)
+        {
+            var movieCreatorVotings = new List<MovieCreatorVoting>
+            {
+                new MovieCreatorVoting { MovieCreator = movieCreators[0], Voting = votings[0] },
+                new MovieCreatorVoting { MovieCreator = movieCreators[1], Voting = votings[1] },
+                new MovieCreatorVoting { MovieCreator = movieCreators[2], Voting = votings[2] }
+            };
+
+            return movieCreatorVotings;
+        }
+
         private static async Task< List<ApplicationUser> > AddCinemaStudioUsers(
             List<CinemaStudio> cinemaStudios, 
             UserManager<ApplicationUser> userManager)
@@ -325,7 +421,7 @@ namespace KinoPasaulis.Server.Data
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             //            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            string[] roleNames = { "Client", "Theather", "CinemaStudio", "MovieCreator", "VoteAdmin" };
+            string[] roleNames = { "Client", "Theather", "CinemaStudio", "MovieCreator", "VotesAdmin" };
             IdentityResult roleResult;
             foreach (var roleName in roleNames)
             {

@@ -304,9 +304,9 @@ namespace KinoPasaulis.Server.Data
         {
             var specialties = new List<Specialty>
             {
-                new Specialty { Title = "Režisierius", Quantity = 1, CreatedAt = DateTime.Now, EditDate = DateTime.Now },
-                new Specialty { Title = "Aktorius", Quantity = 1, CreatedAt = DateTime.Now, EditDate = DateTime.Now },
-                new Specialty { Title = "Kompozitorius", Quantity = 1, CreatedAt = DateTime.Now, EditDate = DateTime.Now }
+                new Specialty { Title = "Režisierius", Quantity = 0, CreatedAt = DateTime.Now, EditDate = DateTime.Now },
+                new Specialty { Title = "Aktorius", Quantity = 0, CreatedAt = DateTime.Now, EditDate = DateTime.Now },
+                new Specialty { Title = "Kompozitorius", Quantity = 0, CreatedAt = DateTime.Now, EditDate = DateTime.Now }
             };
 
             return specialties;

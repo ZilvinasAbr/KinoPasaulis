@@ -87,6 +87,10 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(movieCreatorSpecialties);
             context.SaveChanges();
 
+            var jobAdvertisements = AddJobAdvertisements(movies, specialties);
+            context.AddRange(jobAdvertisements);
+            context.SaveChanges();
+
             var votesAdmins = AddVotesAdmins();
             context.AddRange(votesAdmins);
             context.SaveChanges();
@@ -98,6 +102,20 @@ namespace KinoPasaulis.Server.Data
             var movieCreatorVotings = AddMovieCreatorVotings(movieCreators, votings);
             context.AddRange(movieCreatorVotings);
             context.SaveChanges();
+        }
+
+        private static IEnumerable<JobAdvertisement> AddJobAdvertisements(List<Movie> movies, List<Specialty> specialties)
+        {
+            var jobAdvertisements = new List<JobAdvertisement>
+            {
+                new JobAdvertisement { Movie  = movies[0], Specialty = specialties[0], Title = "Ieškomas režisierius", Description = "Su 100 metų patirtimi", Duration = new TimeSpan(365), PayRate = 1000000 },
+                new JobAdvertisement { Movie  = movies[0], Specialty = specialties[1], Title = "Ieškomas aktorius", Description = "Su 100 metų patirtimi", Duration = new TimeSpan(30), PayRate = 2000000 },
+
+                new JobAdvertisement { Movie  = movies[1], Specialty = specialties[1], Title = "Ieškomas aktorius", Description = "Su 100 metų patirtimi", Duration = new TimeSpan(30), PayRate = 3000000 },
+                new JobAdvertisement { Movie  = movies[1], Specialty = specialties[2], Title = "Ieškomas kompozitorius", Description = "Su 100 metų patirtimi", Duration = new TimeSpan(10), PayRate = 10000 }
+            };
+
+            return jobAdvertisements;
         }
 
         private static IEnumerable<Event> AddEvents(List<Theather> theathers, List<Movie> movies)

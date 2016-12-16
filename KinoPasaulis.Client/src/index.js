@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 
 import {reducer, initialState} from './reducers/index';
 import HomePage from './components/home/HomePage';
@@ -22,9 +24,10 @@ import MoviesPage from './cinemaStudio/components/movies/MoviesPage';
 import AddMoviePage from './cinemaStudio/components/movies/addMovie/AddMoviePage';
 import CinemaStudiosStatisticsPage from './cinemaStudio/components/CinemaStudiosStatisticsPage';
 import CinemaStudiosMoviesStatisticsPage from './cinemaStudio/components/movies/MoviesStatisticsPage';
+import JobAdvertisementsPage from './cinemaStudio/components/jobAdvertisements/JobAdvertisementsPage';
+import AddJobAdvertisementPage from './cinemaStudio/components/jobAdvertisements/addJobAdvertisement/AddJobAdvertisementPage';
 
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
-import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
+
 
 const store = createStore(reducer, initialState, compose(
   applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware),
@@ -55,6 +58,8 @@ render(
 				<Route path="cinemaStudio/addMovie" component={AddMoviePage} />
 				<Route path="cinemaStudio/statistics" component={CinemaStudiosStatisticsPage} />
 				<Route path="cinemaStudio/moviesStatistics" component={CinemaStudiosMoviesStatisticsPage} />
+				<Route path="cinemaStudio/jobAdvertisements" component={JobAdvertisementsPage} />
+				<Route path="cinemaStudio/addJobAdvertisement" component={AddJobAdvertisementPage} />
 			</Router>
 		</Provider>
   ),

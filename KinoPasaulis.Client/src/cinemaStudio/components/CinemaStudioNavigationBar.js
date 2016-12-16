@@ -11,8 +11,9 @@ const CinemaStudioNavigationBar = ({
   changePageToHome,
   changePageToMovies,
   changePageToCinemaStudiosStatistics,
-  changePageToProfile,
-  changePageToMoviesStatistics
+  changePageToMoviesStatistics,
+  changePageToJobAdvertisements,
+  changePageToProfile
 }) => {
   return (
     <Navbar inverse>
@@ -41,6 +42,12 @@ const CinemaStudioNavigationBar = ({
             onClick={changePageToMoviesStatistics}
           >
             Filmų ataskaita
+          </NavItem>
+          <NavItem
+            eventKey={4}
+            onClick={changePageToJobAdvertisements}
+          >
+            Darbo skelbimai
           </NavItem>
         </Nav>
         <Nav pullRight>
@@ -78,6 +85,10 @@ function mapDispatchToProps(dispatch) {
 
     changePageToMoviesStatistics() {
       dispatch(push('/cinemaStudio/moviesStatistics'));
+    },
+
+    changePageToJobAdvertisements() {
+      dispatch(push('/cinemaStudio/jobAdvertisements'));
     },
 
     changePageToProfile: () => {

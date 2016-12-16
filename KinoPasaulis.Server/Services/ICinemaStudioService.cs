@@ -13,5 +13,6 @@ namespace KinoPasaulis.Server.Services
         IEnumerable<CinemaStudioStatisticsViewModel> GetCinemaStudiosStatistics();
         IEnumerable<Movie> GetCinemaStudioMovies(string userId);
         IEnumerable<MovieStatisticsViewModel> GetCinemaStudiosMoviesStatistics(string userId);
+        bool AddJobAdvertisement(AddJobAdvertisementViewModel model, string userId);
     }
 }

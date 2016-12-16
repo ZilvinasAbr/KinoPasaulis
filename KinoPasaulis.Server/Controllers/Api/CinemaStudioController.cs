@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Services;
+using KinoPasaulis.Server.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -87,9 +88,9 @@ namespace KinoPasaulis.Server.Controllers.Api
             var videos = model.Videos;
             var movieCreators = model.MovieCreators;
 
-            _cinemaStudioService.AddNewMovie(movie, imageNames, videos, movieCreators, HttpContext.User.GetUserId());
+            var isSuccess = _cinemaStudioService.AddNewMovie(movie, imageNames, videos, movieCreators, HttpContext.User.GetUserId());
 
-            return Ok(true);
+            return Ok(isSuccess);
         }
 
         [HttpDelete("deleteMovie/{id}")]
@@ -163,6 +164,26 @@ namespace KinoPasaulis.Server.Controllers.Api
             var moviesStatistics = _cinemaStudioService.GetCinemaStudiosMoviesStatistics(HttpContext.User.GetUserId());
 
             return Ok(moviesStatistics);
+        }
+
+        [HttpPost("addJobAdvertisement")]
+        public IActionResult AddJobAdvertisement([FromBody] AddJobAdvertisementViewModel model)
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+               return Unauthorized(); 
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+
+                return BadRequest(allErrors);
+            }
+
+            var isSuccess = _cinemaStudioService.AddJobAdvertisement(model, HttpContext.User.GetUserId());
+
+            return Ok(isSuccess);
         }
     }
 }

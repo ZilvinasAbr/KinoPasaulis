@@ -217,5 +217,44 @@ namespace KinoPasaulis.Server.Services
 
             return moviesStatistics;
         }
+
+        public bool AddJobAdvertisement(AddJobAdvertisementViewModel model, string userId)
+        {
+            var user = _dbContext.Users
+                .Include(au => au.CinemaStudio)
+                    .ThenInclude(studio => studio.Movies)
+                .SingleOrDefault(au => au.Id == userId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            var cinemaStudio = user.CinemaStudio;
+
+            var movie = cinemaStudio.Movies.SingleOrDefault(m => m.Id == model.Movie.Id);
+            var specialty = _dbContext.Specialties.SingleOrDefault(sp => sp.Id == model.Specialty.Id);
+
+            if (movie == null || specialty == null)
+            {
+                return false;
+            }
+
+            var jobAdvertisement = new JobAdvertisement
+            {
+                Movie = movie,
+                Specialty = specialty,
+                Title = model.Title,
+                Description = model.Description,
+                Duration = new TimeSpan(model.Duration),
+                PayRate = model.PayRate
+            };
+
+            specialty.Quantity++;
+            _dbContext.JobAdvertisements.Add(jobAdvertisement);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
     }
 }

@@ -11,8 +11,13 @@ import
 
 import { fetchCinemaStudioMovies } from '../../../actions/movieActions';
 import SelectedMovieTable from './SelectedMovieTable';
+import SelectedSpecialtyTable from './SelectedSpecialtyTable';
 import SelectMovieModal from './SelectMovieModal';
-import { addJobAdvertisement } from '../../../actions/jobAdvertisements';
+import SelectSpecialtyModal from './SelectSpecialtyModal';
+import {
+  addJobAdvertisement,
+  fetchSpecialties
+} from '../../../actions/jobAdvertisements';
 
 class AddJobAdvertisementForm extends React.Component {
   constructor(props) {
@@ -25,17 +30,25 @@ class AddJobAdvertisementForm extends React.Component {
       payRate: '',
       movie: null,
       specialty: null,
-      isModalOpen: false
+      isSelectMovieModalOpen: false,
+      isSelectSpecialtyModalOpen: false
     };
   }
 
   componentDidMount() {
     this.props.dispatch(fetchCinemaStudioMovies());
+    this.props.dispatch(fetchSpecialties());
   }
 
   removeSelectedMovie() {
     this.setState({
       movie: null
+    });
+  }
+
+  removeSelectedSpecialty() {
+    this.setState({
+      specialty: null
     });
   }
 
@@ -75,20 +88,38 @@ class AddJobAdvertisementForm extends React.Component {
   selectMovie(movie) {
     this.setState({
       movie,
-      isModalOpen: false
+      isSelectMovieModalOpen: false
     });
   }
 
-  closeModal() {
+  selectSpecialty(specialty) {
     this.setState({
-      isModalOpen: false
+      specialty,
+      isSelectSpecialtyModalOpen: false
+    });
+  }
+
+  closeMovieModal() {
+    this.setState({
+      isSelectMovieModalOpen: false
+    });
+  }
+
+  closeSpecialtyModal() {
+    this.setState({
+      isSelectSpecialtyModalOpen: false
     });
   }
 
   openSelectMovieModal() {
-    // console.log('open modal');
     this.setState({
-      isModalOpen: true
+      isSelectMovieModalOpen: true
+    });
+  }
+
+  openSelectSpecialtyModal() {
+    this.setState({
+      isSelectSpecialtyModalOpen: true
     });
   }
 
@@ -111,9 +142,30 @@ class AddJobAdvertisementForm extends React.Component {
         </FormGroup>
         <SelectMovieModal
           movies={this.props.movies}
-          modalIsOpen={this.state.isModalOpen}
-          closeModal={() => this.closeModal()}
+          modalIsOpen={this.state.isSelectMovieModalOpen}
+          closeModal={() => this.closeMovieModal()}
           selectMovie={movie => this.selectMovie(movie)}
+        />
+
+        <FormGroup>
+          <ControlLabel>
+            Pasirinkti ieškomą pareigą
+          </ControlLabel>
+          <SelectedSpecialtyTable
+            specialty={this.state.specialty}
+            removeSelectedSpecialty={() => this.removeSelectedSpecialty()}
+          />
+          {this.state.specialty == null && (
+            <Button bsStyle="success" onClick={() => this.openSelectSpecialtyModal()}>
+              Pasirinkti pareigą
+            </Button>
+          )}
+        </FormGroup>
+        <SelectSpecialtyModal
+          specialties={this.props.specialties}
+          modalIsOpen={this.state.isSelectSpecialtyModalOpen}
+          closeModal={() => this.closeSpecialtyModal()}
+          selectSpecialty={specialty => this.selectSpecialty(specialty)}
         />
 
         <FormGroup controlId="title">
@@ -179,7 +231,8 @@ AddJobAdvertisementForm.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    movies: state.cinemaStudioPage.movies
+    movies: state.cinemaStudioPage.movies,
+    specialties: state.cinemaStudioPage.specialties
   };
 }
 

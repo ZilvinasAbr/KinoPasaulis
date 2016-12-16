@@ -38,3 +38,11 @@ export function receiveCinemaStudiosMoviesStatistics(cinemaStudiosMoviesStatisti
     moviesStatistics: cinemaStudiosMoviesStatistics
   };
 }
+
+export const RECEIVE_SPECIALTIES = 'cinemaStudio/RECEIVE_SPECIALTIES';
+export function receiveSpecialties(specialties) {
+  return {
+    type: RECEIVE_SPECIALTIES,
+    specialties
+  };
+}

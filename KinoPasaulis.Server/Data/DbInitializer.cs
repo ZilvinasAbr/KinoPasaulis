@@ -79,12 +79,21 @@ namespace KinoPasaulis.Server.Data
                 new Rating { Movie = movies[0], Client = clients[0], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
                 new Rating { Movie = movies[0], Client = clients[1], Value = 9,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
                 new Rating { Movie = movies[0], Client = clients[2], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+
                 new Rating { Movie = movies[1], Client = clients[0], Value = 1,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
                 new Rating { Movie = movies[1], Client = clients[1], Value = 5,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
                 new Rating { Movie = movies[1], Client = clients[2], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+
                 new Rating { Movie = movies[2], Client = clients[0], Value = 9,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[2], Client = clients[1], Value = 7,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[2], Client = clients[2], Value = 5,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[2], Client = clients[1], Value = 6,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[2], Client = clients[2], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+
+                new Rating { Movie = movies[3], Client = clients[0], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[3], Client = clients[1], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[3], Client = clients[2], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+
+                new Rating { Movie = movies[4], Client = clients[0], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[4], Client = clients[1], Value = 5,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now }
             };
 
             return ratings;
@@ -94,6 +103,11 @@ namespace KinoPasaulis.Server.Data
         {
             var movieCreatorMovies = new List<MovieCreatorMovie>
             {
+                new MovieCreatorMovie { Movie = movies[0], MovieCreator = movieCreators[2] },
+                new MovieCreatorMovie { Movie = movies[0], MovieCreator = movieCreators[3] },
+
+                new MovieCreatorMovie { Movie = movies[1], MovieCreator = movieCreators[0] },
+
                 new MovieCreatorMovie { Movie = movies[2], MovieCreator = movieCreators[0] },
                 new MovieCreatorMovie { Movie = movies[2], MovieCreator = movieCreators[1] }
             };
@@ -105,8 +119,10 @@ namespace KinoPasaulis.Server.Data
         {
             var movieCreators = new List<MovieCreator>
             {
-                new MovieCreator { FirstName = "Christian", LastName = "Bale",   Email = "christian.bale@gmail.com", Phone = "860666666", BirthDate = new DateTime(1974, 1, 30), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "Christian Charles Philip Bale was born in Pembrokeshire, Wales, UK on January 30, 1974, to English parents Jennifer \"Jenny\" (James) and David Charles Howard Bale."},
-                new MovieCreator { FirstName = "Heath",     LastName = "Ledger", Email = "heath.ledger@gmail.com",   Phone = "860666666", BirthDate = new DateTime(1979, 4, 30), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "When hunky, twenty-year-old heart-throb Heath Ledger first came to the attention of the public in 1999, it was all too easy to tag him as a \"pretty boy\" and an actor of little depth. He spent several years trying desperately to sway this image, but this was a double-edged sword."}
+                new MovieCreator { FirstName = "Christian", LastName = "Bale",       Email = "christian.bale@gmail.com", Phone = "860666666", BirthDate = new DateTime(1974, 1, 30), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "Christian Charles Philip Bale was born in Pembrokeshire, Wales, UK on January 30, 1974, to English parents Jennifer \"Jenny\" (James) and David Charles Howard Bale."},
+                new MovieCreator { FirstName = "Heath",     LastName = "Ledger",     Email = "heath.ledger@gmail.com",   Phone = "860666666", BirthDate = new DateTime(1979, 4, 30), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "When hunky, twenty-year-old heart-throb Heath Ledger first came to the attention of the public in 1999, it was all too easy to tag him as a \"pretty boy\" and an actor of little depth. He spent several years trying desperately to sway this image, but this was a double-edged sword."},
+                new MovieCreator { FirstName = "Vardenis",  LastName = "Pavardenis", Email = "email@gmail.com",          Phone = "860666666", BirthDate = new DateTime(1999, 2, 22), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "By in no ecstatic wondered disposal my speaking. Direct wholly valley or uneasy it at really. Sir wish like said dull and need make. Sportsman one bed departure rapturous situation disposing his. Off say yet ample ten ought hence. Depending in newspaper an september do existence." },
+                new MovieCreator { FirstName = "Vardenis2",  LastName = "Pavardenis2", Email = "email2@gmail.com",       Phone = "860666666", BirthDate = new DateTime(1999, 2, 22), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "By in no ecstatic wondered disposal my speaking. Direct wholly valley or uneasy it at really. Sir wish like said dull and need make. Sportsman one bed departure rapturous situation disposing his. Off say yet ample ten ought hence. Depending in newspaper an september do existence." }
             };
 
             return movieCreators;
@@ -160,9 +176,12 @@ namespace KinoPasaulis.Server.Data
         {
             var movies = new List<Movie>
             {
-                new Movie { Title = "Filmas 1",        ReleaseDate = new DateTime(1995, 11, 08), Budget = 1000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 2000000, Language = "anglų",   AgeRequirement = "PG-13", CinemaStudio = cinemaStudios[0]},
-                new Movie { Title = "Filmas 2",        ReleaseDate = new DateTime(1995, 11, 08), Budget = 2000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 500000, Language = "lietuvių", AgeRequirement = "R",     CinemaStudio = cinemaStudios[0]},
-                new Movie { Title = "The Dark Knight", ReleaseDate = new DateTime(2008, 11, 11), Budget = 2000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 500000, Language = "anglų",    AgeRequirement = "R",     CinemaStudio = cinemaStudios[0]},
+                new Movie { CinemaStudio = cinemaStudios[0], Title = "Filmas 1",        ReleaseDate = new DateTime(1995, 11, 08), Budget = 1000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 2000000, Language = "anglų",    AgeRequirement = "PG-13" },
+                new Movie { CinemaStudio = cinemaStudios[0], Title = "Filmas 2",        ReleaseDate = new DateTime(1995, 11, 08), Budget = 2000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 500000,  Language = "lietuvių", AgeRequirement = "R"     },
+                new Movie { CinemaStudio = cinemaStudios[0], Title = "The Dark Knight", ReleaseDate = new DateTime(2008, 11, 11), Budget = 2000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 500000,  Language = "anglų",    AgeRequirement = "R"     },
+                new Movie { CinemaStudio = cinemaStudios[1], Title = "Filmas 4",        ReleaseDate = new DateTime(1995, 11, 08), Budget = 1000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 2000000, Language = "anglų",    AgeRequirement = "PG-13" },
+                new Movie { CinemaStudio = cinemaStudios[1], Title = "Filmas 5",        ReleaseDate = new DateTime(1995, 11, 08), Budget = 2000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 500000,  Language = "lietuvių", AgeRequirement = "R"     },
+                new Movie { CinemaStudio = cinemaStudios[2], Title = "Filmas 6",        ReleaseDate = new DateTime(2008, 11, 11), Budget = 2000000, Description = "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its.", Gross = 500000,  Language = "anglų",    AgeRequirement = "R"     },
             };
 
             return movies;
@@ -172,7 +191,9 @@ namespace KinoPasaulis.Server.Data
         {
             var cinemaStudios = new List<CinemaStudio>
             {
-                new CinemaStudio { Name = "Kino Studija 1", Address = "Adreso g. 0", City = "Kaunas", Country = "Lietuva", Email = "kinoStudija@kinoStudija.com", Phone = "+37066666666"}
+                new CinemaStudio { Name = "Kino Studija 1", Address = "Adreso g. 0", City = "Kaunas", Country = "Lietuva", Email = "kinoStudija1@kinoStudija.com", Phone = "+37066666666"},
+                new CinemaStudio { Name = "Kino Studija 2", Address = "Adreso g. 0", City = "Kaunas", Country = "Lietuva", Email = "kinoStudija2@kinoStudija.com", Phone = "+37066666666"},
+                new CinemaStudio { Name = "Kino Studija 3", Address = "Adreso g. 0", City = "Kaunas", Country = "Lietuva", Email = "kinoStudija3@kinoStudija.com", Phone = "+37066666666"}
             };
 
             return cinemaStudios;
@@ -196,7 +217,9 @@ namespace KinoPasaulis.Server.Data
         {
             var users = new List<ApplicationUser>
             {
-                new ApplicationUser {UserName = "KinoStudija1", CinemaStudio = cinemaStudios[0]}
+                new ApplicationUser {UserName = "KinoStudija1", CinemaStudio = cinemaStudios[0]},
+                new ApplicationUser {UserName = "KinoStudija2", CinemaStudio = cinemaStudios[1]},
+                new ApplicationUser {UserName = "KinoStudija3", CinemaStudio = cinemaStudios[2]},
             };
 
             foreach (var user in users)

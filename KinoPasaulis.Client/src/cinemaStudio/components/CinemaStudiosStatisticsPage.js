@@ -19,8 +19,12 @@ class CinemaStudiosStatisticsPage extends React.Component {
       <tr key={index}>
         <td>{cinemaStudio.name}</td>
         <td>{cinemaStudio.moviesCount}</td>
-        <td>{cinemaStudio.averageMovieRating.toFixed(2)}</td>
-        <td>{cinemaStudio.bestMovieRating.toFixed(2)}</td>
+        <td>{cinemaStudio.averageMovieRating ?
+          cinemaStudio.averageMovieRating.toFixed(2) : 'nėra filmų su reitingu'}
+        </td>
+        <td>{cinemaStudio.bestMovieRating ?
+          cinemaStudio.bestMovieRating.toFixed(2) : 'nėra filmų su reitingu'}
+        </td>
       </tr>
     );
   }
@@ -45,7 +49,7 @@ class CinemaStudiosStatisticsPage extends React.Component {
             <tbody>
             {this.props.cinemaStudios.length ? this.props.cinemaStudios.map(this.renderCinemaStudio) : (
                 <tr>
-                  <td colSpan={2}>
+                  <td colSpan={4}>
                     Nėra kino studijų
                   </td>
                 </tr>

@@ -120,25 +120,70 @@ namespace KinoPasaulis.Server.Services
 
         public IEnumerable<CinemaStudioStatisticsViewModel> GetCinemaStudiosStatistics()
         {
-            var query = _dbContext.Movies
-                .Include(movie => movie.CinemaStudio)
-                .Include(movie => movie.Ratings)
-                .Select(movie => new
-                {
-                    Movie = movie,
-                    AverageRating = movie.Ratings.Average(rating => rating.Value)
-                })
-                .GroupBy(arg => arg.Movie.CinemaStudio)
-                .Select(grouping => new CinemaStudioStatisticsViewModel
-                {
-                    Name = grouping.Key.Name,
-                    AverageMovieRating = grouping.Average(arg => arg.AverageRating),
-                    BestMovieRating = grouping.Max(arg => arg.AverageRating),
-                    MoviesCount = grouping.Count()
-                })
+            var cinemaStudios = _dbContext.CinemaStudios
+                .Include(studio => studio.Movies)
+                .ThenInclude(movie => movie.Ratings)
                 .ToList();
 
-            return query;
+            var results = new List<CinemaStudioStatisticsViewModel>();
+            foreach (var cinemaStudio in cinemaStudios)
+            {
+                var result = new CinemaStudioStatisticsViewModel
+                {
+                    Name = cinemaStudio.Name,
+                    MoviesCount = cinemaStudio.Movies.Count
+                };
+
+                if (!cinemaStudio.Movies.Any())
+                {
+                    result.AverageMovieRating = 0;
+                    result.BestMovieRating = 0;
+                }
+                else
+                {
+                    var moviesWithRating = cinemaStudio.Movies.Where(movie => movie.Ratings.Any());
+                    if (!moviesWithRating.Any())
+                    {
+                        result.AverageMovieRating = 0.0;
+                        result.BestMovieRating = 0.0;
+                    }
+                    else
+                    {
+                        result.AverageMovieRating =
+                        cinemaStudio.Movies.Where(movie => movie.Ratings.Any()).Average(
+                            movie => movie.Ratings.Average(r => r.Value));
+                        result.BestMovieRating =
+                            cinemaStudio.Movies.Max(movie => movie.Ratings.Any() ? movie.Ratings.Average(r => r.Value) : 0.0);
+                    }
+                }
+                results.Add(result);
+            }
+
+            return results;
+
+//            var query = _dbContext.Movies
+//                .Include(movie => movie.CinemaStudio)
+//                .Include(movie => movie.Ratings)
+//                .Where(movie => movie.Ratings.Any())
+//                .Select(movie => new
+//                {
+//                    movie.CinemaStudio.Id,
+//                    movie.CinemaStudio.Name,
+//                    AverageRating = movie.Ratings.Average(rating => rating.Value)
+//                })
+//                .ToList();
+//
+//            var result = query.GroupBy(arg => new {arg.Id, arg.Name})
+//                .Select(grouping => new CinemaStudioStatisticsViewModel
+//                {
+//                    Name = grouping.Key.Name,
+//                    AverageMovieRating = grouping.Average(arg => arg.AverageRating),
+//                    BestMovieRating = grouping.Max(arg => arg.AverageRating),
+//                    MoviesCount = _dbContext.Movies.Count(movie => movie.CinemaStudio.Id == grouping.Key.Id)
+//                })
+//                .ToList();
+//
+//            return result;
         }
 
         public IEnumerable<Movie> GetCinemaStudioMovies(string userId)

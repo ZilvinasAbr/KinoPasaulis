@@ -6,9 +6,9 @@ using KinoPasaulis.Server.Models;
 
 namespace KinoPasaulis.Server.Repositories.Client
 {
-    public interface IOrderRepository
+    public interface ISubscriptionRepository
     {
-        Order GetOrderById(int orderId);
-        void InsertOrder(Order order);
+        Subscription GetSubscriptionById(int subscriptionId);
+        void InsertSubscription(Subscription subscription);
     }
 }

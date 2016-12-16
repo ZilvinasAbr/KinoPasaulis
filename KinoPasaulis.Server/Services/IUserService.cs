@@ -7,5 +7,6 @@ namespace KinoPasaulis.Server.Services
         Theather GetTheatherByUserId(string id);
         Theather GetTheatherByUserIdIncludeEvents(string id);
         Client GetClientById(int id);
+        Client GetClientByUserId(string id);
     }
 }

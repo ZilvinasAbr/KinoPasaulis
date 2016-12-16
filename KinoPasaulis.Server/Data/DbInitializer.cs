@@ -30,6 +30,10 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(cinemaStudios);
             context.SaveChanges();
 
+            var movieCreators = AddMovieCreators();
+            context.AddRange(movieCreators);
+            context.SaveChanges();
+
             var theathers = AddTheathers();
             context.AddRange(theathers);
             context.SaveChanges();
@@ -38,8 +42,8 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(clients);
             context.SaveChanges();
 
-            var movieCreators = AddMovieCreators();
-            context.AddRange(movieCreators);
+            var subscriptions = AddSubscriptions(clients, theathers[0]);
+            context.AddRange(subscriptions);
             context.SaveChanges();
 
             await AddCinemaStudioUsers(cinemaStudios, userManager);
@@ -415,6 +419,17 @@ namespace KinoPasaulis.Server.Data
             }
 
             return users;
+        }
+
+        private static List<Subscription> AddSubscriptions(List<Client> clients, Theather theater)
+        {
+            var subscriptions = new List<Subscription>
+            {
+                new Subscription {BeginDate = DateTime.Now, Client = clients[0], Period = 0.5, Theather = theater},
+                new Subscription {BeginDate = DateTime.Now, Client = clients[1], Period = 0.5, Theather = theater}
+            };
+
+            return subscriptions;
         }
 
         private static async Task CreateRoles(IServiceProvider serviceProvider)

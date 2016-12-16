@@ -36,6 +36,21 @@ namespace KinoPasaulis.Server.Controllers.Api
             return Ok();
         }
 
+        [HttpGet("subscribers")]
+        public IActionResult GetTheatherSubscribers()
+        {
+            var userId = HttpContext.User.GetUserId();
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var subscribers = _theaterService.GetTheaterSubscribers(userId);
+
+            return Ok(subscribers);
+        }
+
         [HttpGet("messages")]
         public IActionResult GetTheatherMessages()
         {

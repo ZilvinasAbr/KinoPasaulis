@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Mapper;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Repositories.CinemaStudio;
+using KinoPasaulis.Server.Repositories.Client;
 using KinoPasaulis.Server.Repositories.Theather;
 using KinoPasaulis.Server.ViewModels.Theather;
 
@@ -19,7 +21,8 @@ namespace KinoPasaulis.Server.Services
         private readonly IMovieRepository _movieRepository;
         private readonly IAnnouncementRepository _announcementRepository;
         private readonly IUserService _userService;
-        private readonly ITheatherService _theaterService;
+        private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly ApplicationDbContext _dbContext;
 
         public TheatherService(
             IEventRepository eventRepository, 
@@ -28,7 +31,9 @@ namespace KinoPasaulis.Server.Services
             ITheatherMapper theatherMapper, 
             IMovieRepository movieRepository,
             IAnnouncementRepository announcementRepository,
-            IUserService userService
+            IUserService userService,
+            ISubscriptionRepository subscriptionRepository,
+            ApplicationDbContext dbContext
             )
         {
             _eventRepository = eventRepository;
@@ -38,6 +43,8 @@ namespace KinoPasaulis.Server.Services
             _movieRepository = movieRepository;
             _announcementRepository = announcementRepository;
             _userService = userService;
+            _subscriptionRepository = subscriptionRepository;
+            _dbContext = dbContext;
         }
 
         public void AddNewEvent(EventCreation eventCreation)
@@ -89,6 +96,15 @@ namespace KinoPasaulis.Server.Services
         public IEnumerable<Event> GetAllEvents()
         {
             return _eventRepository.GetEvents();
+        }
+
+        public IEnumerable<Client> GetTheaterSubscribers(string userId)
+        {
+            var theater = _userService.GetTheatherByUserId(userId);
+
+            var subscriptions = _subscriptionRepository.GetTheaterSubscriptions(theater.Id);
+
+            return subscriptions.Select(subscription => subscription.Client).ToList();
         }
 
         public Event GetEventById(int id)
@@ -182,11 +198,6 @@ namespace KinoPasaulis.Server.Services
             }
 
             return viewModels;
-        }
-
-        public bool SendAnnouncement(int clientId, int theatherId, string message)
-        {
-            throw new NotImplementedException();
         }
     }
 }

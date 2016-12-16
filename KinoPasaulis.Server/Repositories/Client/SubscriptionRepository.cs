@@ -24,6 +24,15 @@ namespace KinoPasaulis.Server.Repositories.Client
             return subscription;
         }
 
+        public IEnumerable<Subscription> GetTheaterSubscriptions(int theaterId)
+        {
+            var subscriptions = _dbContext.Subscriptions
+                .Where(sb => sb.Theather.Id == theaterId)
+                .Include(sb => sb.Client);
+
+            return subscriptions;
+        }
+
         public void InsertSubscription(Subscription subscription)
         {
             _dbContext.Subscriptions.Add(subscription);

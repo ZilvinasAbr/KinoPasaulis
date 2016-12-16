@@ -8,15 +8,36 @@ import { fetchCinemaStudioStatistics } from '../actions/cinemaStudiosStatistics'
 class CinemaStudiosStatisticsPage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      sortByColumnName: 'name',
+      isAscending: true
+    };
+
+    this.renderCinemaStudios = this.renderCinemaStudios.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(fetchCinemaStudioStatistics());
   }
 
+  handleColumnClick(columnName) {
+    if(this.state.sortByColumnName === columnName) {
+      this.setState({
+        isAscending: !this.state.isAscending
+      })
+    }else {
+      this.setState({
+        sortByColumnName: columnName,
+        isAscending: true
+      });
+    }
+  }
+
   renderCinemaStudio(cinemaStudio, index) {
     return (
       <tr key={index}>
+        <td>{index + 1}</td>
         <td>{cinemaStudio.name}</td>
         <td>{cinemaStudio.sumOfAllMovieEvents}</td>
         <td>{cinemaStudio.moviesCount}</td>
@@ -30,6 +51,33 @@ class CinemaStudiosStatisticsPage extends React.Component {
     );
   }
 
+  renderCinemaStudios(cinemaStudios) {
+    if(cinemaStudios.length <= 0) {
+      return (
+        <tr>
+          <td colSpan={4}>
+            Nėra kino studijų
+          </td>
+        </tr>
+      );
+    }
+
+    let sorted = cinemaStudios.concat().sort((x, y) => {
+      if(x[this.state.sortByColumnName] < y[this.state.sortByColumnName]) {
+        return -1;
+      }else if(x[this.state.sortByColumnName] > y[this.state.sortByColumnName]) {
+        return 1;
+      }
+      return 0;
+    });
+
+    if(!this.state.isAscending) {
+      sorted.reverse();
+    }
+
+    return sorted.map(this.renderCinemaStudio);
+  }
+
   render() {
     return (
       <div>
@@ -41,21 +89,16 @@ class CinemaStudiosStatisticsPage extends React.Component {
           <Table striped bordered condensed hover>
             <thead>
             <tr>
-              <th>Kino Studija</th>
-              <th>Visų filmų rodymo šiuo metu kiekis</th>
-              <th>Išleistų filmų kiekis</th>
-              <th>Vidutinis kino studijos filmo reitingas</th>
-              <th>Geriausio kino studijos filmo reitingas</th>
+              <th>#</th>
+              <th onClick={() => this.handleColumnClick('name')}>Kino Studija</th>
+              <th onClick={() => this.handleColumnClick('sumOfAllMovieEvents')}>Visų filmų rodymo šiuo metu kiekis</th>
+              <th onClick={() => this.handleColumnClick('moviesCount')}>Išleistų filmų kiekis</th>
+              <th onClick={() => this.handleColumnClick('averageMovieRating')}>Vidutinis kino studijos filmo reitingas</th>
+              <th onClick={() => this.handleColumnClick('bestMovieRating')}>Geriausio kino studijos filmo reitingas</th>
             </tr>
             </thead>
             <tbody>
-            {this.props.cinemaStudios.length ? this.props.cinemaStudios.map(this.renderCinemaStudio) : (
-                <tr>
-                  <td colSpan={4}>
-                    Nėra kino studijų
-                  </td>
-                </tr>
-              )}
+            {this.renderCinemaStudios(this.props.cinemaStudios)}
             </tbody>
           </Table>
         </Col>

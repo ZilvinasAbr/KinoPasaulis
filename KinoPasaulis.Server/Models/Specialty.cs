@@ -18,5 +18,6 @@ namespace KinoPasaulis.Server.Models
         public DateTime EditDate { get; set; }
 
         public List<MovieCreatorSpecialty> MovieCreatorSpecialties { get; set; }
+        public List<JobAdvertisement> JobAdvertisements { get; set; }
     }
 }

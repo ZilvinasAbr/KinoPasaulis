@@ -57,9 +57,9 @@ namespace KinoPasaulis.Server.Controllers.Api
             if (_signInManager.IsSignedIn(User))
             {
                 var userId = HttpContext.User.GetUserId();
-                Client client = _userService.GetClientByUserId(userId);
+                var client = _userService.GetClientByUserId(userId);
                 var show = _showRepository.GetShowById(orderModel.ShowId);
-                var order = new Order()
+                var order = new Order
                 {
                     Amount = orderModel.Amount,
                     Client = client,

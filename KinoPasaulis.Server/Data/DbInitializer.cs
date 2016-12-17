@@ -180,13 +180,13 @@ namespace KinoPasaulis.Server.Data
         {
             var movieCreatorMovies = new List<MovieCreatorMovie>
             {
-                new MovieCreatorMovie { Movie = movies[0], MovieCreator = movieCreators[2] },
-                new MovieCreatorMovie { Movie = movies[0], MovieCreator = movieCreators[3] },
+                new MovieCreatorMovie { Movie = movies[0], MovieCreator = movieCreators[2], IsConfirmed = true },
+                new MovieCreatorMovie { Movie = movies[0], MovieCreator = movieCreators[3], IsConfirmed = false },
 
-                new MovieCreatorMovie { Movie = movies[1], MovieCreator = movieCreators[0] },
+                new MovieCreatorMovie { Movie = movies[1], MovieCreator = movieCreators[0], IsConfirmed = null },
 
-                new MovieCreatorMovie { Movie = movies[2], MovieCreator = movieCreators[0] },
-                new MovieCreatorMovie { Movie = movies[2], MovieCreator = movieCreators[1] }
+                new MovieCreatorMovie { Movie = movies[2], MovieCreator = movieCreators[0], IsConfirmed = true },
+                new MovieCreatorMovie { Movie = movies[2], MovieCreator = movieCreators[1], IsConfirmed = true }
             };
 
             return movieCreatorMovies;

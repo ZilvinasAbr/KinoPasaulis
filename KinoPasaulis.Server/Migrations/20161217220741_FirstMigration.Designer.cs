@@ -8,7 +8,7 @@ using KinoPasaulis.Server.Data;
 namespace KinoPasaulis.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161217142500_FirstMigration")]
+    [Migration("20161217220741_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -268,7 +268,7 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<int>("MovieCreatorId");
 
-                    b.Property<DateTime>("ReadAt");
+                    b.Property<DateTime?>("ReadAt");
 
                     b.Property<DateTime>("SentAt");
 
@@ -349,7 +349,7 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<int>("MovieId");
 
-                    b.Property<bool>("IsConfirmed");
+                    b.Property<bool?>("IsConfirmed");
 
                     b.HasKey("MovieCreatorId", "MovieId");
 
@@ -939,7 +939,7 @@ namespace KinoPasaulis.Server.Migrations
                         .HasForeignKey("MovieCreatorId");
 
                     b.HasOne("KinoPasaulis.Server.Models.Voting", "Voting")
-                        .WithMany()
+                        .WithMany("Votes")
                         .HasForeignKey("VotingId");
                 });
 

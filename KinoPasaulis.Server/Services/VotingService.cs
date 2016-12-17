@@ -46,7 +46,7 @@ namespace KinoPasaulis.Server.Services
         public bool DeleteVoting(int id, string userId)
         {
             var voting = _dbContext.Votings
-                //.Include(v => v.Votes) truksta Igno balsu lenteles
+                .Include(v => v.Votes)
                 .Include(v => v.MovieCreatorVotings)
                 .SingleOrDefault(v => v.Id == id);
             var votesAdmin = _dbContext.Users
@@ -64,8 +64,7 @@ namespace KinoPasaulis.Server.Services
                 return false;
             }
 
-
-            //_dbContext.Votes.RemoveRange(voting.Votes); truksta Igno balsu lenteles
+            _dbContext.Votes.RemoveRange(voting.Votes);
             _dbContext.MovieCreatorVotings.RemoveRange(voting.MovieCreatorVotings);
             _dbContext.Votings.Remove(voting);
             _dbContext.SaveChanges();
@@ -108,5 +107,71 @@ namespace KinoPasaulis.Server.Services
 
             return true;
         }
+
+        public List<MovieCreator> GetMovieCreators(List<int> movieCreatorsId)
+        {
+            List<MovieCreator> movieCreators = new List<MovieCreator>();
+
+            foreach(var movieCreatorId in movieCreatorsId)
+            {
+                MovieCreator movieCreator = _dbContext.MovieCreators.SingleOrDefault(mc => mc.Id == movieCreatorId);
+                movieCreators.Add(movieCreator);
+            }
+
+            return movieCreators;
+        }
+
+        public List<MovieCreatorVoting> CreateMovieCreatorsVoting(IEnumerable<MovieCreator> movieCreators, VotingViewModel voting)
+        {
+            var newVoting = new Voting
+            {
+                CreatedAt = DateTime.Now,
+                EndDate = voting.EndDate,
+                StartDate = voting.StartDate,
+                Title = voting.Title,
+                VotesAdminId = 1
+            };
+
+            _dbContext.Votings.Add(newVoting);
+            _dbContext.SaveChanges();
+            var movieCreatorVotings = new List<MovieCreatorVoting>();
+
+            foreach (var movieCreator in movieCreators)
+            {
+                var newMovieCreatorVoting = new MovieCreatorVoting
+                {
+                    MovieCreator = movieCreator,
+                    Voting = newVoting
+                };
+
+                movieCreatorVotings.Add(newMovieCreatorVoting);
+                _dbContext.MovieCreatorVotings.Add(newMovieCreatorVoting);
+            }
+
+            _dbContext.SaveChanges();
+
+            return movieCreatorVotings;
+        }
+
+        public bool DeleteVoting(int votingId) // truksta balsu pasalinimo, virsuje galbut teisingai parasyta funkcija
+        {
+            var movieCreatorVotings = _dbContext.MovieCreatorVotings.Where(mcv => mcv.VotingId == votingId);
+            var votes = _dbContext.Votes
+                .Include(v => v.Voting)
+                .Where(v => v.Voting.Id == votingId);
+
+            if (movieCreatorVotings == null)
+            {
+                return false;
+            }
+
+            _dbContext.MovieCreatorVotings.RemoveRange(movieCreatorVotings);
+            
+            var voting = _dbContext.Votings.Single(obj => obj.Id == votingId);
+            _dbContext.Votings.Remove(voting);
+            _dbContext.SaveChanges();
+            return true;
+        }
     }
 }
+

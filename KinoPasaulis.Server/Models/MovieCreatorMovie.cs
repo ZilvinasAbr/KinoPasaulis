@@ -3,7 +3,7 @@
     public class MovieCreatorMovie
     {
 
-        public bool IsConfirmed { get; set; }
+        public bool? IsConfirmed { get; set; }
 
         public int MovieCreatorId { get; set; }
         public MovieCreator MovieCreator { get; set; }

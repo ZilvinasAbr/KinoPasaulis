@@ -164,7 +164,7 @@ namespace KinoPasaulis.Server.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CinemaStudioId = table.Column<int>(nullable: false),
                     MovieCreatorId = table.Column<int>(nullable: false),
-                    ReadAt = table.Column<DateTime>(nullable: false),
+                    ReadAt = table.Column<DateTime>(nullable: true),
                     SentAt = table.Column<DateTime>(nullable: false),
                     Text = table.Column<string>(nullable: true)
                 },
@@ -372,7 +372,7 @@ namespace KinoPasaulis.Server.Migrations
                 {
                     MovieCreatorId = table.Column<int>(nullable: false),
                     MovieId = table.Column<int>(nullable: false),
-                    IsConfirmed = table.Column<bool>(nullable: false)
+                    IsConfirmed = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {

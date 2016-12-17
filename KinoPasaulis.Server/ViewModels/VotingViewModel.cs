@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KinoPasaulis.Server.Models
+namespace KinoPasaulis.Server.ViewModels
 {
-    public class Voting
+    public class VotingViewModel
     {
         public int Id { get; set; }
 
@@ -17,12 +17,6 @@ namespace KinoPasaulis.Server.Models
 
         public DateTime CreatedAt { get; set; }
 
-        public List<MovieCreatorVoting> MovieCreatorVotings { get; set; }
-
-        public int VotesAdminId { get; set; }
-
-        public VotesAdmin VotesAdmin { get; set; }
-
-        public List<Vote> Votes { get; set; }
+        public List<int> MovieCreatorsId { get; set; }
     }
 }

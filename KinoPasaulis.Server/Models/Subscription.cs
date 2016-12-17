@@ -11,7 +11,7 @@ namespace KinoPasaulis.Server.Models
         public Theather Theather { get; set; }
         public Client Client { get; set; }
         public DateTime BeginDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public double Period { get; set; }
     }
 }

@@ -460,8 +460,8 @@ namespace KinoPasaulis.Server.Data
         {
             var subscriptions = new List<Subscription>
             {
-                new Subscription {BeginDate = DateTime.Now, Client = clients[0], Period = 0.5, Theather = theater},
-                new Subscription {BeginDate = DateTime.Now, Client = clients[1], Period = 0.5, Theather = theater}
+                new Subscription {BeginDate = DateTime.Now, Client = clients[0], Period = 0, Theather = theater},
+                new Subscription {BeginDate = DateTime.Now, Client = clients[1], Period = 0, Theather = theater}
             };
 
             return subscriptions;

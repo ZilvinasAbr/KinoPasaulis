@@ -23,7 +23,9 @@ class ClientHomePage extends React.Component {
         <Col md={4}>
           <Well>
             <h2> {subscription.title} </h2>
-            <a className="btn btn-primary"> Plačiau </a>
+            <p> {subscription.city} </p>
+            <p> {subscription.country} </p>
+            <a className="btn btn-primary" onClick={this.props.goToTheathers.bind(this, subscription.id)}> Plačiau </a>
           </Well>
         </Col>
       </div>
@@ -37,7 +39,9 @@ class ClientHomePage extends React.Component {
         <Col md={4}>
           <Well>
             <h2> {theather.title} </h2>
-            <a className="btn btn-primary"> Plačiau </a>
+            <p> {theather.city} </p>
+            <p> {theather.country} </p>
+            <a className="btn btn-primary" onClick={this.props.goToTheathers.bind(this, theather.id)}> Plačiau </a>
           </Well>
         </Col>
       </div>
@@ -83,6 +87,9 @@ function mapDispatchToProps(dispatch) {
     },
     getTheathers: () => {
       dispatch(getTheathers());
+    },
+    goToTheathers: (id) => {
+      dispatch(push('/theathers/'+id))
     }
   }
 }

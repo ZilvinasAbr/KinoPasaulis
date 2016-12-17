@@ -42,6 +42,20 @@ export function getEvents() {
   }
 }
 
+export function getEventsById(id) {
+  return dispatch => {
+    dispatch(requestShowEvents());
+
+    return axios.get('/api/theathers/getTheatherEvents?id=' + id)
+      .then(response => {
+        dispatch(receiveShowEvents(response.data));
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
 export function getEventById(id) {
   return dispatch => {
 

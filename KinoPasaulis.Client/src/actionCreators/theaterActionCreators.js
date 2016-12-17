@@ -83,6 +83,14 @@ export function receiveTheathers(theathers) {
   };
 }
 
+export const RECEIVE_ONE_THEATHER = 'RECEIVE_ONE_THEATHER';
+export function receiveOneTheather(theather) {
+  return {
+    type: RECEIVE_ONE_THEATHER,
+    theather
+  };
+}
+
 export const RECEIVE_ONE_EVENT = 'RECEIVE_ONE_SHOW';
 export function receiveOneEvent(event) {
   return {

@@ -115,6 +115,11 @@ namespace KinoPasaulis.Server.Services
             return subscriptions.Select(subscription => subscription.Client).ToList();
         }
 
+        public Theather GetTheatherById(int id)
+        {
+            return _theatherRepository.GetTheatherById(id);
+        }
+
         public Event GetEventById(int id)
         {
             return _eventRepository.GetEventById(id);

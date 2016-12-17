@@ -128,7 +128,10 @@ namespace KinoPasaulis.Server.Controllers.Api
             if (_signInManager.IsSignedIn(User))
             {
                 var subscription = _clientService.GetSubscriptionById(subscriptionId);
+                var begin = subscription.BeginDate;
+                var period = DateTime.Now.Subtract(begin).TotalSeconds;
                 subscription.EndDate = DateTime.Now;
+                subscription.Period = period;
 
                 _clientService.RemoveSubscription(subscription);
 

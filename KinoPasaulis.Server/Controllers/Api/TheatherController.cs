@@ -99,6 +99,13 @@ namespace KinoPasaulis.Server.Controllers.Api
             return Ok(theathers);
         }
 
+        [HttpGet("getTheather")]
+        public Theather GetTheatherById(int id)
+        {
+            var theather = _theatherService.GetTheatherById(id);
+            return theather;
+        }
+
         [HttpGet("getEvent")]
         public Event GetEventById(int id)
         {

@@ -10,6 +10,7 @@ import {
   REQUEST_THEATHERS,
   RECEIVE_THEATHERS,
   RECEIVE_ONE_EVENT,
+  RECEIVE_ONE_THEATHER,
   REQUEST_THEATER_SUBSCRIBERS,
   RECEIVE_THEATER_SUBSCRIBERS
 } from '../actionCreators/theaterActionCreators';
@@ -112,6 +113,15 @@ function receiveOneEvent(state, event) {
   return nextState;
 }
 
+function receiveOneTheather(state, theather) {
+
+  let nextState = Object.assign({}, state, {
+    theather: theather,
+  });
+
+  return nextState;
+}
+
 /**
  * TheaterPage reducer.
  * @param state state before dispatching action
@@ -142,6 +152,8 @@ export function theaterPage(state = initialState, action) {
       return receiveTheathers(state, action.theathers);
     case RECEIVE_ONE_EVENT:
       return receiveOneEvent(state, action.event);
+    case RECEIVE_ONE_THEATHER:
+      return receiveOneTheather(state, action.theather);
     case REQUEST_THEATER_SUBSCRIBERS:
       return requestTheaterSubscribers(state);
     case RECEIVE_THEATER_SUBSCRIBERS:

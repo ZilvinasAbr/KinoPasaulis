@@ -14,7 +14,7 @@ namespace KinoPasaulis.Server.Models
 
         public DateTime SentAt { get; set; }
 
-        public DateTime ReadAt { get; set; }
+        public DateTime? ReadAt { get; set; }
 
         public int MovieCreatorId { get; set; }
 

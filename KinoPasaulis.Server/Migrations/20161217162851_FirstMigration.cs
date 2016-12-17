@@ -34,6 +34,7 @@ namespace KinoPasaulis.Server.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<bool>(nullable: false),
+                    BirthDate = table.Column<DateTime>(nullable: false),
                     Blocked = table.Column<bool>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
@@ -371,7 +372,7 @@ namespace KinoPasaulis.Server.Migrations
                 {
                     MovieCreatorId = table.Column<int>(nullable: false),
                     MovieId = table.Column<int>(nullable: false),
-                    IsConfirmed = table.Column<bool>(nullable: false)
+                    IsConfirmed = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -398,7 +399,6 @@ namespace KinoPasaulis.Server.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClientId = table.Column<int>(nullable: false),
                     Comment = table.Column<string>(nullable: true),
-                    LastLoggedOn = table.Column<DateTime>(nullable: false),
                     MovieId = table.Column<int>(nullable: false),
                     RatingCreatedOn = table.Column<DateTime>(nullable: false),
                     RatingModifiedOn = table.Column<DateTime>(nullable: false),
@@ -560,6 +560,41 @@ namespace KinoPasaulis.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Votes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClientId = table.Column<int>(nullable: true),
+                    MovieCreatorId = table.Column<int>(nullable: true),
+                    VoteChangedOn = table.Column<DateTime>(nullable: false),
+                    VotedOn = table.Column<DateTime>(nullable: false),
+                    VotingId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Votes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Votes_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Votes_MovieCreators_MovieCreatorId",
+                        column: x => x.MovieCreatorId,
+                        principalTable: "MovieCreators",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Votes_Votings_VotingId",
+                        column: x => x.VotingId,
+                        principalTable: "Votings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Announcements",
                 columns: table => new
                 {
@@ -646,7 +681,7 @@ namespace KinoPasaulis.Server.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BeginDate = table.Column<DateTime>(nullable: false),
                     ClientId = table.Column<int>(nullable: true),
-                    EndDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: true),
                     Period = table.Column<double>(nullable: false),
                     TheatherId = table.Column<int>(nullable: true)
                 },
@@ -897,6 +932,21 @@ namespace KinoPasaulis.Server.Migrations
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Votes_ClientId",
+                table: "Votes",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Votes_MovieCreatorId",
+                table: "Votes",
+                column: "MovieCreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Votes_VotingId",
+                table: "Votes",
+                column: "VotingId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Votings_VotesAdminId",
                 table: "Votings",
                 column: "VotesAdminId");
@@ -968,6 +1018,9 @@ namespace KinoPasaulis.Server.Migrations
                 name: "Videos");
 
             migrationBuilder.DropTable(
+                name: "Votes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -986,10 +1039,10 @@ namespace KinoPasaulis.Server.Migrations
                 name: "Specialties");
 
             migrationBuilder.DropTable(
-                name: "Votings");
+                name: "Shows");
 
             migrationBuilder.DropTable(
-                name: "Shows");
+                name: "Votings");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

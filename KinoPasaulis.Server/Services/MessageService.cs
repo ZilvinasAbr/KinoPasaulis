@@ -36,6 +36,18 @@ namespace KinoPasaulis.Server.Services
                 .SingleOrDefault(au => au.Id == userId)
                 .CinemaStudio;
             IEnumerable<Message> messages = _dbContext.Messages.Where(m => m.MovieCreatorId == cinemaStudio.Id).ToList();
+
+            foreach (var message in messages)
+            {
+                if (message.ReadAt == null)
+                {
+                    message.ReadAt = DateTime.Now;
+                }
+            }
+
+            _dbContext.Messages.UpdateRange(messages);
+            _dbContext.SaveChanges();
+
             return messages;
         }
 

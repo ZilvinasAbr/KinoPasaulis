@@ -267,7 +267,7 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<int>("MovieCreatorId");
 
-                    b.Property<DateTime>("ReadAt");
+                    b.Property<DateTime?>("ReadAt");
 
                     b.Property<DateTime>("SentAt");
 
@@ -348,7 +348,7 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<int>("MovieId");
 
-                    b.Property<bool>("IsConfirmed");
+                    b.Property<bool?>("IsConfirmed");
 
                     b.HasKey("MovieCreatorId", "MovieId");
 
@@ -938,7 +938,7 @@ namespace KinoPasaulis.Server.Migrations
                         .HasForeignKey("MovieCreatorId");
 
                     b.HasOne("KinoPasaulis.Server.Models.Voting", "Voting")
-                        .WithMany()
+                        .WithMany("Votes")
                         .HasForeignKey("VotingId");
                 });
 

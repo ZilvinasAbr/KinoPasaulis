@@ -8,8 +8,8 @@ using KinoPasaulis.Server.Data;
 namespace KinoPasaulis.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161217132704_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20161217212726_addedNullable")]
+    partial class addedNullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -155,6 +155,8 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<bool>("Active");
 
+                    b.Property<DateTime>("BirthDate");
+
                     b.Property<bool>("Blocked");
 
                     b.Property<string>("Email");
@@ -266,7 +268,7 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<int>("MovieCreatorId");
 
-                    b.Property<DateTime>("ReadAt");
+                    b.Property<DateTime?>("ReadAt");
 
                     b.Property<DateTime>("SentAt");
 
@@ -347,7 +349,7 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<int>("MovieId");
 
-                    b.Property<bool>("IsConfirmed");
+                    b.Property<bool?>("IsConfirmed");
 
                     b.HasKey("MovieCreatorId", "MovieId");
 
@@ -423,8 +425,6 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<string>("Comment");
 
-                    b.Property<DateTime>("LastLoggedOn");
-
                     b.Property<int>("MovieId");
 
                     b.Property<DateTime>("RatingCreatedOn");
@@ -491,7 +491,7 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<int?>("ClientId");
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<DateTime?>("EndDate");
 
                     b.Property<double>("Period");
 
@@ -558,6 +558,32 @@ namespace KinoPasaulis.Server.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("KinoPasaulis.Server.Models.Vote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ClientId");
+
+                    b.Property<int?>("MovieCreatorId");
+
+                    b.Property<DateTime>("VoteChangedOn");
+
+                    b.Property<DateTime>("VotedOn");
+
+                    b.Property<int?>("VotingId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("MovieCreatorId");
+
+                    b.HasIndex("VotingId");
+
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.VotesAdmin", b =>
@@ -900,6 +926,21 @@ namespace KinoPasaulis.Server.Migrations
                         .WithMany("Videos")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KinoPasaulis.Server.Models.Vote", b =>
+                {
+                    b.HasOne("KinoPasaulis.Server.Models.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
+                    b.HasOne("KinoPasaulis.Server.Models.MovieCreator", "MovieCreator")
+                        .WithMany()
+                        .HasForeignKey("MovieCreatorId");
+
+                    b.HasOne("KinoPasaulis.Server.Models.Voting", "Voting")
+                        .WithMany("Votes")
+                        .HasForeignKey("VotingId");
                 });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.Voting", b =>

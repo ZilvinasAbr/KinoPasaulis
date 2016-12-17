@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { logout } from '../../../actions/account/logoutActions';
 import TheatherNavigationBar from './TheatherNavigationBar';
+import { receiveSubscribers } from '../../../actions/theather/subscriberActions';
+import { Button, Popover, ButtonToolbar, OverlayTrigger, Col, Table, Modal } from 'react-bootstrap';
 
 class Subscriptions extends React.Component {
   constructor(props) {
@@ -19,14 +21,49 @@ class Subscriptions extends React.Component {
           goToSubscriptions={this.props.goToSubscriptions}
           logout={this.props.logout}
         />
-        <h1> Subscriptions </h1>
+        <h1> Subscribers </h1>
+        <Col md={9}>
+          <div className="container">
+            <Table responsive hover>
+              <thead>
+              <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
+              </thead>
+              <tbody>
+              {this.renderSubscribers()}
+              </tbody>
+            </Table>
+          </div>
+        </Col>
       </div>
     );
+  }
+
+  renderSubscribers() {
+    let subscribers = this.props.subscribers;
+    console.log(subscribers);
+    return subscribers.map((subscriber, index) => {
+      return <tr key={index}>
+        <td>{subscriber.firstName} </td>
+        <td> {subscriber.lastName} </td>
+        <td> {subscriber.email} </td>
+        <td> {subscriber.phone} </td>
+      </tr>
+    });
+  }
+
+  componentDidMount() {
+    this.props.getSubscribers();
   }
 }
 
 function mapStateToProps(state) {
   return {
+      subscribers: state.theaterPage.subscribers || [],
   }
 }
 
@@ -50,7 +87,11 @@ function mapDispatchToProps(dispatch) {
 
     logout: () => {
       dispatch(logout());
-    }
+    },
+
+    getSubscribers: () => {
+       dispatch(receiveSubscribers());
+    },
   }
 }
 

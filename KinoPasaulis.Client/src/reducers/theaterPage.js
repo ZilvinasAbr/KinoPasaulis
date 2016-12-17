@@ -8,13 +8,23 @@ import {
   REQUEST_SHOW_EVENTS,
   RECEIVE_SHOW_EVENTS,
   RECEIVE_ONE_EVENT,
-  DELETE_ONE_SHOW
+  REQUEST_THEATER_SUBSCRIBERS,
+  RECEIVE_THEATER_SUBSCRIBERS
 } from '../actionCreators/theaterActionCreators';
 
 export const initialState = {};
 
 function requestShowAuditoriums(state) {
   return state;
+}
+
+function requestTheaterSubscribers(state) {
+  return state;
+}
+
+function receiveTheaterSubscribers(state, subscribers) {
+  console.log(subscribers);
+  return Object.assign({}, state, {subscribers});
 }
 
 function receiveShowAuditoriums(state, auditoriums) {
@@ -118,8 +128,10 @@ export function theaterPage(state = initialState, action) {
       return receiveShowEvents(state, action.events);
     case RECEIVE_ONE_EVENT:
       return receiveOneEvent(state, action.event);
-    case DELETE_ONE_SHOW:
-      return deleteOneShow(state, action.show);
+    case REQUEST_THEATER_SUBSCRIBERS:
+      return requestTheaterSubscribers(state);
+    case RECEIVE_THEATER_SUBSCRIBERS:
+      return receiveTheaterSubscribers(state, action.subscribers);
     default:
       return state;
   }

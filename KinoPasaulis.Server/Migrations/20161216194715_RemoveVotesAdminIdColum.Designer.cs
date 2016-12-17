@@ -8,9 +8,10 @@ using KinoPasaulis.Server.Data;
 namespace KinoPasaulis.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161216194715_RemoveVotesAdminIdColum")]
+    partial class RemoveVotesAdminIdColum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -206,9 +207,9 @@ namespace KinoPasaulis.Server.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CinemaStudioId");
+                    b.Property<int?>("CinemaStudioId");
 
-                    b.Property<int>("MovieCreatorId");
+                    b.Property<int?>("MovieCreatorId");
 
                     b.Property<DateTime>("ReadAt");
 
@@ -290,8 +291,6 @@ namespace KinoPasaulis.Server.Migrations
                     b.Property<int>("MovieCreatorId");
 
                     b.Property<int>("MovieId");
-
-                    b.Property<bool>("IsConfirmed");
 
                     b.HasKey("MovieCreatorId", "MovieId");
 
@@ -507,13 +506,15 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<DateTime>("EditedAt");
+
                     b.Property<DateTime>("EndDate");
 
                     b.Property<DateTime>("StartDate");
 
                     b.Property<string>("Title");
 
-                    b.Property<int>("VotesAdminId");
+                    b.Property<int?>("VotesAdminId");
 
                     b.HasKey("Id");
 
@@ -681,13 +682,11 @@ namespace KinoPasaulis.Server.Migrations
                 {
                     b.HasOne("KinoPasaulis.Server.Models.CinemaStudio", "CinemaStudio")
                         .WithMany()
-                        .HasForeignKey("CinemaStudioId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CinemaStudioId");
 
                     b.HasOne("KinoPasaulis.Server.Models.MovieCreator", "MovieCreator")
                         .WithMany()
-                        .HasForeignKey("MovieCreatorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MovieCreatorId");
                 });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.Movie", b =>
@@ -791,8 +790,7 @@ namespace KinoPasaulis.Server.Migrations
                 {
                     b.HasOne("KinoPasaulis.Server.Models.VotesAdmin", "VotesAdmin")
                         .WithMany()
-                        .HasForeignKey("VotesAdminId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VotesAdminId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

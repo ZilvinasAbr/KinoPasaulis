@@ -9,11 +9,11 @@ namespace KinoPasaulis.Server.Models
     {
         public int Id { get; set; }
 
-        public int? MovieCreatorId { get; set; }
+        public int MovieCreatorId { get; set; }
 
         public MovieCreator MovieCreator { get; set; }
 
-        public int? CinemaStudioId { get; set; }
+        public int CinemaStudioId { get; set; }
 
         public CinemaStudio CinemaStudio { get; set; }
 

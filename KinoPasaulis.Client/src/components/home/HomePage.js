@@ -4,6 +4,7 @@ import TheatherHomePage from './TheatherHomePage';
 import CinemaStudioHomePage from './CinemaStudioHomePage';
 import MovieCreatorHomePage from './MovieCreatorHomePage';
 import ClientHomePage from './ClientHomePage';
+import VotesAdminHomePage from './VotesAdminHomePage';
 import { fetchUserData } from '../../actions/home/actions';
 
 class HomePage extends React.Component {
@@ -28,6 +29,8 @@ class HomePage extends React.Component {
         return <MovieCreatorHomePage />;
       case 'Client':
         return <ClientHomePage />;
+      case 'VotesAdmin':
+        return <VotesAdminHomePage />;
       default:
         return <div>Error</div>;
     }

@@ -42,10 +42,15 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(movieCreators);
             context.SaveChanges();
 
+            var votesAdmins = AddVotesAdmins();
+            context.AddRange(votesAdmins);
+            context.SaveChanges();
+
             await AddCinemaStudioUsers(cinemaStudios, userManager);
             await AddTheatherUsers(theathers, userManager);
             await AddClientUsers(clients, userManager);
             await AddMovieCreatorUsers(movieCreators, userManager);
+            await AddVotesAdminUsers(votesAdmins, userManager);
 
             var auditoriums = AddAuditoriums(theathers[0]);
             context.AddRange(auditoriums);
@@ -85,10 +90,6 @@ namespace KinoPasaulis.Server.Data
 
             var movieCreatorSpecialties = AddMovieCreatorSpecialties(movieCreators, specialties);
             context.AddRange(movieCreatorSpecialties);
-            context.SaveChanges();
-
-            var votesAdmins = AddVotesAdmins();
-            context.AddRange(votesAdmins);
             context.SaveChanges();
 
             var votings = AddVotings(votesAdmins);
@@ -412,6 +413,23 @@ namespace KinoPasaulis.Server.Data
             {
                 await userManager.CreateAsync(user, "testas");
                 await userManager.AddToRoleAsync(user, "MovieCreator");
+            }
+
+            return users;
+        }
+
+        private static async Task<List<ApplicationUser>> AddVotesAdminUsers(List<VotesAdmin> votesAdmins, UserManager<ApplicationUser> userManager)
+        {
+            var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { UserName = "BalsuAdminas", VotesAdmin = votesAdmins[0] },
+                new ApplicationUser { UserName = "BalsuAdminas2", VotesAdmin = votesAdmins[1] }
+            };
+
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "testas");
+                await userManager.AddToRoleAsync(user, "VotesAdmin");
             }
 
             return users;

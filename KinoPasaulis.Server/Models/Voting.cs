@@ -9,7 +9,7 @@ namespace KinoPasaulis.Server.Models
     {
         public int Id { get; set; }
 
-        public int? VotesAdminId { get; set; }
+        public int VotesAdminId { get; set; }
 
         public VotesAdmin VotesAdmin { get; set; }
 
@@ -20,8 +20,6 @@ namespace KinoPasaulis.Server.Models
         public DateTime EndDate { get; set; }
 
         public DateTime CreatedAt { get; set; }
-
-        public DateTime EditedAt { get; set; }
 
         public List<MovieCreatorVoting> MovieCreatorVotings { get; set; }
     }

@@ -9,10 +9,6 @@ namespace KinoPasaulis.Server.Models
     {
         public int Id { get; set; }
 
-        public int? VotesAdminId { get; set; }
-
-        public VotesAdmin VotesAdmin { get; set; }
-
         public string Title { get; set; }
 
         public DateTime StartDate { get; set; }
@@ -21,8 +17,12 @@ namespace KinoPasaulis.Server.Models
 
         public DateTime CreatedAt { get; set; }
 
-        public DateTime EditedAt { get; set; }
-
         public List<MovieCreatorVoting> MovieCreatorVotings { get; set; }
+
+        public int VotesAdminId { get; set; }
+
+        public VotesAdmin VotesAdmin { get; set; }
+
+        //public List<Vote> Votes { get; set; } Ignas's subsystem
     }
 }

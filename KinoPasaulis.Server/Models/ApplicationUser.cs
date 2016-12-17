@@ -12,5 +12,7 @@ namespace KinoPasaulis.Server.Models
         public CinemaStudio CinemaStudio { get; set; }
 
         public Client Client { get; set; }
+
+        public VotesAdmin VotesAdmin { get; set; }
     }
 }

@@ -85,9 +85,16 @@ export function requestSubscribers() {
 
 export const RECEIVE_THEATER_SUBSCRIBERS = 'RECEIVE_THEATER_SUBSCRIBERS';
 export function receiveSubscribers(subscribers) {
-  console.log(subscribers);
     return {
         type: RECEIVE_THEATER_SUBSCRIBERS,
         subscribers
     };
+}
+
+export const SEND_ANNOUNCEMENT = 'SEND_ANNOUNCEMENT';
+export function sendAnnouncement(announcement) {
+  return {
+    type: RECEIVE_THEATER_SUBSCRIBERS,
+    announcement
+  };
 }

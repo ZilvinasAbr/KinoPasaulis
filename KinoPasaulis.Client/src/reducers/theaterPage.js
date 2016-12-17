@@ -23,7 +23,6 @@ function requestTheaterSubscribers(state) {
 }
 
 function receiveTheaterSubscribers(state, subscribers) {
-  console.log(subscribers);
   return Object.assign({}, state, {subscribers});
 }
 

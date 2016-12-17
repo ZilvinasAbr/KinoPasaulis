@@ -2,7 +2,8 @@ import axios from 'axios';
 import { push } from 'react-router-redux';
 import {
     receiveSubscribers as receiveTheaterSubscribers,
-    requestSubscribers
+    requestSubscribers,
+    sendAnnouncement as sendAnnouncementToUser
 } from '../../actionCreators/theaterActionCreators';
 
 export function receiveSubscribers() {
@@ -18,4 +19,21 @@ export function receiveSubscribers() {
                 console.log(error);
             })
     }
+}
+
+export function sendAnnouncement(subscribers, message) {
+
+      return axios.post('/api/announcement', {
+        ClientIds: subscribers,
+        Message: message
+      })
+        .then(response => {
+            if(response.status = 200)
+            {
+              alert('Operation successful')
+            }
+        })
+        .catch(error => {
+          console.log(error);
+        })
 }

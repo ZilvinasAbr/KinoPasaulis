@@ -22,6 +22,7 @@ namespace KinoPasaulis.Server.Services
         private readonly IAnnouncementRepository _announcementRepository;
         private readonly IUserService _userService;
         private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly ITheatherRepository _theatherRepository;
         private readonly ApplicationDbContext _dbContext;
 
         public TheatherService(
@@ -33,6 +34,7 @@ namespace KinoPasaulis.Server.Services
             IAnnouncementRepository announcementRepository,
             IUserService userService,
             ISubscriptionRepository subscriptionRepository,
+            ITheatherRepository theatherRepository,
             ApplicationDbContext dbContext
             )
         {
@@ -44,6 +46,7 @@ namespace KinoPasaulis.Server.Services
             _announcementRepository = announcementRepository;
             _userService = userService;
             _subscriptionRepository = subscriptionRepository;
+            _theatherRepository = theatherRepository;
             _dbContext = dbContext;
         }
 
@@ -96,6 +99,11 @@ namespace KinoPasaulis.Server.Services
         public IEnumerable<Event> GetAllEvents()
         {
             return _eventRepository.GetEvents();
+        }
+
+        public IEnumerable<Theather> GetAllTheathers()
+        {
+            return _theatherRepository.GetTheathers();
         }
 
         public IEnumerable<Client> GetTheaterSubscribers(string userId)

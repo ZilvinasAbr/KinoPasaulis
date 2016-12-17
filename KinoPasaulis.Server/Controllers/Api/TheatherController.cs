@@ -64,7 +64,6 @@ namespace KinoPasaulis.Server.Controllers.Api
                 return _theatherService.GetMappedAuditoriums(theather.Auditoriums);
             }
             
-            // Kazkaip kitaip reiketu sita padaryt, kolkas nezinau kaip, kolkas px nes veikia
             return new List<AuditoriumViewModel>();
         }
 
@@ -91,6 +90,13 @@ namespace KinoPasaulis.Server.Controllers.Api
         public IEnumerable<Event> GetEventsById(int id)
         {
             return _theatherService.GetEventsByTheatherId(id);
+        }
+
+        [HttpGet("getTheathers")]
+        public IActionResult GetTheathers()
+        {
+            var theathers = _theatherService.GetAllTheathers();
+            return Ok(theathers);
         }
 
         [HttpGet("getEvent")]

@@ -57,7 +57,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             if (_signInManager.IsSignedIn(User))
             {
                 var userId = HttpContext.User.GetUserId();
-                Client client = _userService.GetClientByUserId(userId);
+                var client = _userService.GetClientByUserId(userId);
                 var show = _showRepository.GetShowById(orderModel.ShowId);
                 var order = new Order()
                 {
@@ -83,13 +83,29 @@ namespace KinoPasaulis.Server.Controllers.Api
             return _clientService.GetSubscriptionById(id);
         }
 
+        [HttpGet("getSubscriptions")]
+        public IActionResult GetSubscribedTheaters()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                var client = _userService.GetClientByUserId(userId);
+                var theaters = _clientService.GetSubscriptions(client.Id);
+
+                return Ok(theaters);
+            }
+
+            return Unauthorized();
+
+        }
+
         [HttpPost("addSubscription")]
         public IActionResult AddSubscription([FromBody] int theaterId)
         {
             if (_signInManager.IsSignedIn(User))
             {
                 var userId = HttpContext.User.GetUserId();
-                Client client = _userService.GetClientByUserId(userId);
+                var client = _userService.GetClientByUserId(userId);
                 var theather = _theatherRepository.GetTheatherById(theaterId);
                 var subscription = new Subscription()
                 {
@@ -134,7 +150,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             if (_signInManager.IsSignedIn(User))
             {
                 var userId = HttpContext.User.GetUserId();
-                Client client = _userService.GetClientByUserId(userId);
+                var client = _userService.GetClientByUserId(userId);
                 var voting = _votingRepository.GetVotingById(voteModel.VotingId);
                 var movieCreator = _movieCreatorRepository.GetMovieCreatorById(voteModel.MovieCreatorId);
                 var vote = new Vote()
@@ -185,7 +201,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             if (_signInManager.IsSignedIn(User))
             {
                 var userId = HttpContext.User.GetUserId();
-                Client client = _userService.GetClientByUserId(userId);
+                var client = _userService.GetClientByUserId(userId);
                 var movie = _movieRepository.GetMovieById(addRatingModel.MovieId);
                 byte ratingType = 2;
                 if (addRatingModel.Comment == null)

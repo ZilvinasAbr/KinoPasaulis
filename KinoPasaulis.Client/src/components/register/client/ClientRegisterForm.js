@@ -19,7 +19,8 @@ class ClientRegisterForm extends React.Component {
         confirmPassword,
         firstName,
         lastName,
-        phone
+        phone,
+        birthDate
       }
     } = this.props;
 
@@ -30,7 +31,8 @@ class ClientRegisterForm extends React.Component {
       confirmPassword.value,
       firstName.value,
       lastName.value,
-      phone.value
+      phone.value,
+      birthDate.value
     ));
   }
 
@@ -43,7 +45,8 @@ class ClientRegisterForm extends React.Component {
         confirmPassword,
         firstName,
         lastName,
-        phone
+        phone,
+        birthDate
       }
     } = this.props;
 
@@ -99,6 +102,13 @@ class ClientRegisterForm extends React.Component {
               <FormControl type="text" placeholder="Telefonas" { ...phone } />
             </FormGroup>
 
+            <FormGroup controlId="birthDate">
+              <ControlLabel>
+                Gimimo data
+              </ControlLabel>
+              <FormControl type="text" placeholder="Gimimo data" { ...birthDate } />
+            </FormGroup>
+
             <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}>Registruotis</Button>
 
           </div>
@@ -120,7 +130,8 @@ const config = { // <----- THIS IS THE IMPORTANT PART!
     'confirmPassword',
     'firstName',
     'lastName',
-    'phone'
+    'phone',
+    'birthDate'
   ] // all the fields in your form
 };
 

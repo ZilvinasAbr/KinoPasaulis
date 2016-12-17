@@ -7,5 +7,6 @@ namespace KinoPasaulis.Server.Repositories.Theather
     public interface ITheatherRepository : IDisposable
     {
         Models.Theather GetTheatherById(int theatherId);
+        IEnumerable<Models.Theather> GetTheathers();
     }
 }

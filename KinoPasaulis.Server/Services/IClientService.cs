@@ -7,6 +7,7 @@ namespace KinoPasaulis.Server.Services
     {
         Order GetOrderById(int orderId);
         Subscription GetSubscriptionById(int subscriptionId);
+        IEnumerable<Theather> GetSubscriptions(int clientId);
         Vote GetVoteById(int voteId);
         Rating GetRatingById(int ratingId);
 

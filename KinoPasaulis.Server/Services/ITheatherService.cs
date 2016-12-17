@@ -11,6 +11,7 @@ namespace KinoPasaulis.Server.Services
         void AddNewAuditorium(Auditorium auditorium);
         Event GetEventById(int id);
         IEnumerable<Event> GetAllEvents();
+        IEnumerable<Theather> GetAllTheathers();
         IEnumerable<Event> GetEventsByTheatherId(int id);
         Show GetShowById(int id);
 

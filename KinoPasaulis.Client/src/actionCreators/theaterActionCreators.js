@@ -68,6 +68,21 @@ export function receiveShowEvents(events) {
   };
 }
 
+export const REQUEST_THEATHERS = 'REQUEST_THEATHERS';
+export function requestTheathers() {
+  return {
+    type: REQUEST_THEATHERS
+  };
+}
+
+export const RECEIVE_THEATHERS = 'RECEIVE_THEATHERS';
+export function receiveTheathers(theathers) {
+  return {
+    type: RECEIVE_THEATHERS,
+    theathers
+  };
+}
+
 export const RECEIVE_ONE_EVENT = 'RECEIVE_ONE_SHOW';
 export function receiveOneEvent(event) {
   return {

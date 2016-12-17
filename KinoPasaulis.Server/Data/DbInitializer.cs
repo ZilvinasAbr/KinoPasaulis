@@ -131,24 +131,24 @@ namespace KinoPasaulis.Server.Data
         {
             var ratings = new List<Rating>
             {
-                new Rating { Movie = movies[0], Client = clients[0], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[0], Client = clients[1], Value = 9,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[0], Client = clients[2], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[0], Client = clients[0], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
+                new Rating { Movie = movies[0], Client = clients[1], Value = 9,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
+                new Rating { Movie = movies[0], Client = clients[2], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
 
-                new Rating { Movie = movies[1], Client = clients[0], Value = 1,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[1], Client = clients[1], Value = 5,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[1], Client = clients[2], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[1], Client = clients[0], Value = 1,  Comment = "Worst movie ever!", RatingType = 2, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
+                new Rating { Movie = movies[1], Client = clients[1], Value = 5,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
+                new Rating { Movie = movies[1], Client = clients[2], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
 
-                new Rating { Movie = movies[2], Client = clients[0], Value = 9,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[2], Client = clients[1], Value = 6,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[2], Client = clients[2], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[2], Client = clients[0], Value = 9,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
+                new Rating { Movie = movies[2], Client = clients[1], Value = 6,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
+                new Rating { Movie = movies[2], Client = clients[2], Value = 8,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
 
-                new Rating { Movie = movies[3], Client = clients[0], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[3], Client = clients[1], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[3], Client = clients[2], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
+                new Rating { Movie = movies[3], Client = clients[0], Value = 10, Comment = "Masterpiece", RatingType = 2, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
+                new Rating { Movie = movies[3], Client = clients[1], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
+                new Rating { Movie = movies[3], Client = clients[2], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
 
-                new Rating { Movie = movies[4], Client = clients[0], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now },
-                new Rating { Movie = movies[4], Client = clients[1], Value = 5,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now, LastLoggedOn = DateTime.Now }
+                new Rating { Movie = movies[4], Client = clients[0], Value = 10, RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now},
+                new Rating { Movie = movies[4], Client = clients[1], Value = 5,  RatingType = 1, RatingCreatedOn = DateTime.Now, RatingModifiedOn = DateTime.Now}
             };
 
             return ratings;
@@ -262,9 +262,9 @@ namespace KinoPasaulis.Server.Data
         {
             var clients = new List<Client>
             {
-                new Client { FirstName = "Vardenis",  LastName = "Pavardenis",  Email = "klientas1@klientas.com", Phone = "+37055555555", RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false},
-                new Client { FirstName = "Vardenis2", LastName = "Pavardenis2", Email = "klientas2@klientas.com", Phone = "+37055555555", RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false},
-                new Client { FirstName = "Vardenis3", LastName = "Pavardenis3", Email = "klientas3@klientas.com", Phone = "+37055555555", RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false}
+                new Client { FirstName = "Vardenis",  LastName = "Pavardenis",  Email = "klientas1@klientas.com", Phone = "+37055555555", BirthDate = new DateTime(1995, 2, 27), RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false},
+                new Client { FirstName = "Vardenis2", LastName = "Pavardenis2", Email = "klientas2@klientas.com", Phone = "+37055555555", BirthDate = new DateTime(1996, 3, 22), RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false},
+                new Client { FirstName = "Vardenis3", LastName = "Pavardenis3", Email = "klientas3@klientas.com", Phone = "+37055555555", BirthDate = new DateTime(1969, 2, 24), RegisterDate = DateTime.Now, LastLoginDate = DateTime.Now, Active = true, Blocked = false}
             };
 
             return clients;

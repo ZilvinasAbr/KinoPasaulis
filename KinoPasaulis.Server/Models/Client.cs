@@ -15,6 +15,8 @@ namespace KinoPasaulis.Server.Models
 
         public string Phone { get; set; }
 
+        public DateTime BirthDate { get; set; }
+
         public DateTime RegisterDate { get; set; }
 
         public DateTime LastEditDate { get; set; }

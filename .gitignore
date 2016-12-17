@@ -5,3 +5,4 @@ KinoPasaulis.Server/wwwroot/bundle.js.map
 KinoPasaulis.Client/.idea/
 KinoPasaulis.Server/.vs/
 .idea/
+connectionString.txt

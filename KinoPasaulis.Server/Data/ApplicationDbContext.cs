@@ -27,6 +27,7 @@ namespace KinoPasaulis.Server.Data
         public DbSet<MovieCreatorVoting> MovieCreatorVotings { get; set; }
         public DbSet<VotesAdmin> VotesAdmins { get; set; }
         public DbSet<Voting> Votings { get; set; }
+        public DbSet<Vote> Votes { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

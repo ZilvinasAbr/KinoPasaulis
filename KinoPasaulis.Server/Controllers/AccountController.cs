@@ -42,6 +42,7 @@ namespace KinoPasaulis.Server.Controllers
                 Phone = model.Phone,
                 RegisterDate = DateTime.Now,
                 LastLoginDate = DateTime.Now,
+                LastEditDate = DateTime.Now,
                 Active = true,
                 Blocked = false
             };

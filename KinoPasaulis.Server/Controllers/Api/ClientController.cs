@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Repositories.Client;
+using KinoPasaulis.Server.Repositories.MovieCreator;
 using KinoPasaulis.Server.Repositories.Theather;
 
 namespace KinoPasaulis.Server.Controllers.Api
@@ -18,7 +19,8 @@ namespace KinoPasaulis.Server.Controllers.Api
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IShowRepository _showRepository;
         private readonly ITheatherRepository _theatherRepository;
-        private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly IMovieCreatorRepository _movieCreatorRepository;
+        private readonly IVotingRepository _votingRepository;
         private readonly IUserService _userService;
 
         public ClientController(
@@ -26,15 +28,17 @@ namespace KinoPasaulis.Server.Controllers.Api
             SignInManager<ApplicationUser> signInManager,
             IShowRepository showRepository,
             ITheatherRepository theatherRepository,
-            ISubscriptionRepository subscriptionRepository,
+            IMovieCreatorRepository movieCreatorRepository,
+            IVotingRepository votingRepository,
             IUserService userService )
         {
             _clientService = clientService;
             _signInManager = signInManager;
             _showRepository = showRepository;
             _theatherRepository = theatherRepository;
+            _movieCreatorRepository = movieCreatorRepository;
+            _votingRepository = votingRepository;
             _userService = userService;
-            _subscriptionRepository = subscriptionRepository;
         }
 
         [HttpGet("getOrder")]
@@ -103,10 +107,61 @@ namespace KinoPasaulis.Server.Controllers.Api
         {
             if (_signInManager.IsSignedIn(User))
             {
-                var subscription = _subscriptionRepository.GetSubscriptionById(subscriptionId);
+                var subscription = _clientService.GetSubscriptionById(subscriptionId);
                 subscription.EndDate = DateTime.Now;
 
                 _clientService.RemoveSubscription(subscription);
+
+                return Ok(true);
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpGet("getVote")]
+        public Vote GetVoteById(int id)
+        {
+            return _clientService.GetVoteById(id);
+        }
+
+        [HttpPost("addVote")]
+        public IActionResult AddVote([FromBody] VoteViewModel voteModel)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                Client client = _userService.GetClientByUserId(userId);
+                var voting = _votingRepository.GetVotingById(voteModel.VotingId);
+                var movieCreator = _movieCreatorRepository.GetMovieCreatorById(voteModel.MovieCreatorId);
+                var vote = new Vote()
+                {
+                    MovieCreator = movieCreator,
+                    Client = client,
+                    VotedOn = DateTime.Now,
+                    VoteChangedOn = DateTime.Now,
+                    Voting = voting
+                };
+
+                _clientService.AddVote(vote);
+
+                return Ok(true);
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpPost("changeVote")]
+        public IActionResult ChangePost([FromBody] ChangeVoteViewModel changeVoteModel)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var vote = _clientService.GetVoteById(changeVoteModel.VoteId);
+                var movieCreator = _movieCreatorRepository.GetMovieCreatorById(changeVoteModel.MovieCreatorId);
+
+                vote.VoteChangedOn = DateTime.Now;
+                vote.MovieCreator = movieCreator;
+
+                _clientService.ChangeVote(vote);
 
                 return Ok(true);
             }

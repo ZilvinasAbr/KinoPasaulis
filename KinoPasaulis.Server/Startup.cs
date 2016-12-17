@@ -11,6 +11,7 @@ using KinoPasaulis.Server.Mapper;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Repositories.CinemaStudio;
 using KinoPasaulis.Server.Repositories.Client;
+using KinoPasaulis.Server.Repositories.MovieCreator;
 using KinoPasaulis.Server.Repositories.Theather;
 using KinoPasaulis.Server.Services;
 using Microsoft.AspNetCore.Identity;
@@ -79,6 +80,9 @@ namespace KinoPasaulis.Server
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<ISubscriptionRepository, SubscriptionRepository>();
             services.AddTransient<ITheatherRepository, TheatherRepository>();
+            services.AddTransient<IVoteRepository, VoteRepository>();
+            services.AddTransient<IVotingRepository, VotingRepository>();
+            services.AddTransient<IMovieCreatorRepository, MovieCreatorRepository>();
 
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();

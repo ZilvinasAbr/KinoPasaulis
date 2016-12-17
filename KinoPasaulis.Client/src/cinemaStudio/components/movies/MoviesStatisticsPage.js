@@ -80,6 +80,7 @@ class MoviesStatisticsPage extends React.Component {
         <CinemaStudioNavigationBar />
         <Col xs={8} xsOffset={2} sm={6} smOffset={3} lg={4} lgOffset={4}>
           <h1>Kino filmų ataskaita</h1>
+          <hr />
         </Col>
         <Col xs={10} xsOffset={1} sm={10} smOffset={1} lg={6} lgOffset={3}>
           <Table striped bordered condensed hover>

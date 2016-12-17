@@ -56,3 +56,15 @@ export function fetchSpecialties() {
       })
   };
 }
+
+export function fetchJobAdvertisements() {
+  return dispatch => {
+
+  };
+}
+
+export function deleteJobAdvertisement() {
+  return dispatch => {
+
+  };
+}

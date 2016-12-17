@@ -46,3 +46,11 @@ export function receiveSpecialties(specialties) {
     specialties
   };
 }
+
+export const RECEIVE_JOB_ADVERTISEMENTS = 'cinemaStudio/RECEIVE_JOB_ADVERTISEMENTS';
+export function receiveJobAdvertisements(jobAdvertisements) {
+  return {
+    type: RECEIVE_JOB_ADVERTISEMENTS,
+    jobAdvertisements
+  };
+}

@@ -210,7 +210,7 @@ namespace KinoPasaulis.Server.Services
                 .Select(movie => new MovieStatisticsViewModel
                 {
                     Title = movie.Title,
-                    Rating = movie.Ratings.Average(rating => rating.Value),
+                    Rating = movie.Ratings.Any() ? movie.Ratings.Average(rating => rating.Value) : 0.0,
                     EventsCount = movie.Events.Count(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime)
                 })
                 .ToList();

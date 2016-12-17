@@ -35,6 +35,7 @@ namespace KinoPasaulis.Server.Repositories.Theather
         {
             return _context.Events
                 .Include(x => x.Movie)
+                    .ThenInclude(x => x.Images)
                 .Include(x => x.Shows)
                     .ThenInclude(x => x.Auditorium)
                 .Include(x => x.Shows)

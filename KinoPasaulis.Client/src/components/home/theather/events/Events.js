@@ -8,6 +8,7 @@ import { Well, Col } from 'react-bootstrap';
 import moment from 'moment';
 import { logout } from '../../../../actions/account/logoutActions';
 
+
 class Events extends React.Component {
   constructor(props) {
     super(props);
@@ -17,12 +18,21 @@ class Events extends React.Component {
     this.props.getEvents();
   }
 
+  paintImage(event) {
+  if (event.movie.images.length != 0) {
+    return <img alt={event.movie.images[0].title} height="200" width="100%" src={`/uploads/${event.movie.images[0].url}`} />;
+  }
+  return <img height="200" width="100%" src={`http://www.jordans.com/~/media/jordans%20redesign/no-image-found.ashx?h=275&la=en&w=275&hash=F87BC23F17E37D57E2A0B1CC6E2E3EEE312AAD5B`} />;
+}
+
   renderEvents() {
     let events = this.props.events;
+
     return events.map((event, index) => {
       return <div key={index}>
         <Col md={4}>
           <Well>
+            {this.paintImage(event)}
             <h2> {event.movie.title} </h2>
             {moment(event.startTime).format('YYYY/MM/DD')} -
             {moment(event.endTime).format('YYYY/MM/DD')}

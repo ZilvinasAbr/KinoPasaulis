@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { push } from 'react-router-redux';
 import TheatherNavigationBar from '../TheatherNavigationBar';
-import { getEventById } from '../../../../actions/theather/eventActions';
+import { getEventById, getStatistics } from '../../../../actions/theather/eventActions';
 import { logout } from '../../../../actions/account/logoutActions';
-import { Well, Col, ButtonToolbar, OverlayTrigger, Button, Popover, Modal } from 'react-bootstrap';
+import { Well, Col, ButtonToolbar, OverlayTrigger, Button, Popover, Modal, FormControl } from 'react-bootstrap';
 import moment from 'moment';
 import { deleteShowById } from '../../../../actions/theather/eventActions'
 import './eventsStyles.scss';
@@ -14,13 +15,36 @@ class EventDetails extends React.Component {
     super(props);
     this.state = {
       modalOpen: false,
+      showModal: false,
       idToBeDeleted: 0,
-      idArrayDeleted: 0
+      idArrayDeleted: 0,
+      urls: []
     };
   }
 
   componentDidMount() {
+    axios.get('/api/theathers/getEvent?id=' + this.props.params.id)
+      .then(response => {
+        console.log(response.data.movie.images);
+        this.setState(
+          {
+            urls: response.data.movie.images
+          });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
     this.props.getEvent(this.props.params.id);
+  }
+
+  open() {
+    this.setState({showModal: true});
+    this.props.getStatistics(this.props.params.id);
+  }
+
+  close() {
+    this.setState({showModal: false});
   }
 
   _openModal(index, arrayIndex) {
@@ -36,6 +60,13 @@ class EventDetails extends React.Component {
   deleteShow() {
     this.setState({modalOpen: false});
     this.props.deleteShow(this.state.idToBeDeleted, this.state.idArrayDeleted);
+  }
+
+  paintImage() {
+    if (this.state.urls.length != 0) {
+      return <img alt={this.state.urls[0].title} height="450"  src={`/uploads/${this.state.urls[0].url}`} />;
+    }
+    return <p> No image found</p>;
   }
 
   renderEditDeleteButtons(showOver, showId, index) {
@@ -67,7 +98,6 @@ class EventDetails extends React.Component {
             <p> Auditorijos pavadinimas: {show.auditorium.name} </p>
             <p> Vietų skaičius: {show.auditorium.seats} </p>
             <p> Seanso pradžia: {moment(show.startTime).format('YYYY/MM/DD HH:mm')}</p>
-            {this.renderEditDeleteButtons(showOver, show.id, index)}
           </Well>
         </Col>
       </div>
@@ -85,13 +115,45 @@ class EventDetails extends React.Component {
           logout={this.props.logout}
         />
         <div className="container">
-          <h1>{this.props.movie.title}</h1>
-          Rodymo laikotarpis:
-          {moment(this.props.event.startTime).format('YYYY/MM/DD')} -
-          {moment(this.props.event.endTime).format('YYYY/MM/DD')}
+          <Col md={5}>
+            <h1>{this.props.movie.title}</h1>
+            <p> {this.props.movie.description} </p>
+            Rodymo laikotarpis:
+            {moment(this.props.event.startTime).format('YYYY/MM/DD')} -
+            {moment(this.props.event.endTime).format('YYYY/MM/DD')}
+            <hr/>
+            <Button bsStyle="primary" onClick={this.open.bind(this)}> Rodyti statistiką </Button>
+          </Col>
+          <Col md={7}>
+            {this.paintImage()}
+          </Col>
           <h1> Seansai </h1>
           {this.renderShows()}
         </div>
+
+        <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+          <Modal.Header closeButton>
+            <Modal.Title> Užimtumo statistika </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+
+            Iš viso galimų užsakymų: {this.props.statistics.totalSeats}
+            <br/>
+            Užsakymų kiekis: {this.props.statistics.orderedSeats}
+            <br/>
+            <br/>
+            Iš viso galimų užsakymų tarp pasibaigusių seansų: {this.props.statistics.totalSeatsEndedShows}
+            <br/>
+            Užsakymų kiekis tarp pasibaigusių seansų: {this.props.statistics.orderedSeatsEndedShows}
+
+
+
+          </Modal.Body>
+          <Modal.Footer>
+            <Button bsStyle="danger" onClick={this.close.bind(this)}>Uždaryti</Button>
+          </Modal.Footer>
+        </Modal>
+
         <Modal
           show={this.state.modalOpen}
           container={this}
@@ -125,7 +187,8 @@ function mapStateToProps(state) {
   return {
     event: state.theaterPage.event || {},
     movie: state.theaterPage.movie || {},
-    shows: state.theaterPage.shows || []
+    shows: state.theaterPage.shows || [],
+    statistics: state.theaterPage.statistics || {},
   }
 }
 
@@ -157,6 +220,10 @@ function mapDispatchToProps(dispatch) {
 
     getEvent: (id) => {
       dispatch(getEventById(id));
+    },
+
+    getStatistics: (id) => {
+      dispatch(getStatistics(id));
     },
 
     deleteShow: (id, index) => {

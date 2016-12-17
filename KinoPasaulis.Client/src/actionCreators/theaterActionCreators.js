@@ -98,3 +98,11 @@ export function sendAnnouncement(announcement) {
     announcement
   };
 }
+
+export const GET_STATISTICS = 'GET_STATISTICS';
+export function getStatistics(statistics) {
+  return {
+    type: GET_STATISTICS,
+    statistics
+  };
+}

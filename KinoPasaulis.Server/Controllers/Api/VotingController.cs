@@ -2,15 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KinoPasaulis.Server.Models;
+using KinoPasaulis.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KinoPasaulis.Server.Controllers.Api
 {
+    [Route("api/[controller]")]
     public class VotingController : Controller
     {
-        public IActionResult Index()
+        private readonly IVotingService _votingService;
+        public VotingController(IVotingService votingService)
         {
-            return View();
+            _votingService = votingService;
+        }
+
+        [HttpGet("votings")]
+        public IEnumerable<Voting> GetVotings()
+        {
+            return _votingService.GetVotings();
         }
     }
 }

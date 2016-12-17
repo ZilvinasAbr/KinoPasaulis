@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KinoPasaulis.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KinoPasaulis.Server.Controllers.Api
 {
     public class MessageController : Controller
     {
-        public IActionResult Index()
+        private readonly IMessageService _messageService;
+        public MessageController(IMessageService messageService)
         {
-            return View();
+            _messageService = messageService;
         }
     }
 }

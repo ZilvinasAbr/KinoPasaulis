@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace KinoPasaulis.Server.Migrations
 {
-    public partial class FirstMigrationAfterMigrationsMergeConflict : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -342,7 +342,7 @@ namespace KinoPasaulis.Server.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 255, nullable: true),
-                    Duration = table.Column<TimeSpan>(nullable: false),
+                    Duration = table.Column<int>(nullable: false),
                     MovieId = table.Column<int>(nullable: false),
                     PayRate = table.Column<decimal>(nullable: false),
                     SpecialtyId = table.Column<int>(nullable: false),

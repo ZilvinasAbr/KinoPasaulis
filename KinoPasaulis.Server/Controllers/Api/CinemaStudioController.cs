@@ -166,6 +166,19 @@ namespace KinoPasaulis.Server.Controllers.Api
             return Ok(moviesStatistics);
         }
 
+        [HttpGet("jobAdvertisements")]
+        public IActionResult GetCinemaStudiosJobAdvertisements()
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return Unauthorized();
+            }
+
+            var jobAdvertisements = _cinemaStudioService.GetCinemaStudiosJobAdvertisements(HttpContext.User.GetUserId());
+
+            return Ok(jobAdvertisements);
+        }
+
         [HttpPost("addJobAdvertisement")]
         public IActionResult AddJobAdvertisement([FromBody] AddJobAdvertisementViewModel model)
         {
@@ -184,6 +197,31 @@ namespace KinoPasaulis.Server.Controllers.Api
             var isSuccess = _cinemaStudioService.AddJobAdvertisement(model, HttpContext.User.GetUserId());
 
             return Ok(isSuccess);
+        }
+
+        [HttpDelete("jobAdvertisement/{id}")]
+        public IActionResult DeleteJobAdvertisement(int id)
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return Unauthorized();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+
+                return BadRequest(allErrors);
+            }
+
+            bool isSuccess = _cinemaStudioService.DeleteJobAdvertisement(id, HttpContext.User.GetUserId());
+
+            if (!isSuccess)
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }

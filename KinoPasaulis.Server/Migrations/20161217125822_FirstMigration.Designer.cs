@@ -8,8 +8,8 @@ using KinoPasaulis.Server.Data;
 namespace KinoPasaulis.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161217104522_FirstMigrationAfterMigrationsMergeConflict")]
-    partial class FirstMigrationAfterMigrationsMergeConflict
+    [Migration("20161217125822_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -210,7 +210,7 @@ namespace KinoPasaulis.Server.Migrations
                     b.Property<string>("Description")
                         .HasAnnotation("MaxLength", 255);
 
-                    b.Property<TimeSpan>("Duration");
+                    b.Property<int>("Duration");
 
                     b.Property<int>("MovieId");
 

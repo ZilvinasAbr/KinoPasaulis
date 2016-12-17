@@ -108,11 +108,11 @@ namespace KinoPasaulis.Server.Data
         {
             var jobAdvertisements = new List<JobAdvertisement>
             {
-                new JobAdvertisement { Movie  = movies[0], Specialty = specialties[0], Title = "Ieškomas režisierius", Description = "Su 100 metų patirtimi", Duration = new TimeSpan(365), PayRate = 1000000 },
-                new JobAdvertisement { Movie  = movies[0], Specialty = specialties[1], Title = "Ieškomas aktorius", Description = "Su 100 metų patirtimi", Duration = new TimeSpan(30), PayRate = 2000000 },
+                new JobAdvertisement { Movie  = movies[0], Specialty = specialties[0], Title = "Ieškomas režisierius", Description = "Su 100 metų patirtimi", Duration = 365,  PayRate = 1000000 },
+                new JobAdvertisement { Movie  = movies[0], Specialty = specialties[1], Title = "Ieškomas aktorius", Description = "Su 100 metų patirtimi", Duration = 30,      PayRate = 2000000 },
 
-                new JobAdvertisement { Movie  = movies[1], Specialty = specialties[1], Title = "Ieškomas aktorius", Description = "Su 100 metų patirtimi", Duration = new TimeSpan(30), PayRate = 3000000 },
-                new JobAdvertisement { Movie  = movies[1], Specialty = specialties[2], Title = "Ieškomas kompozitorius", Description = "Su 100 metų patirtimi", Duration = new TimeSpan(10), PayRate = 10000 }
+                new JobAdvertisement { Movie  = movies[1], Specialty = specialties[1], Title = "Ieškomas aktorius", Description = "Su 100 metų patirtimi", Duration = 30,      PayRate = 3000000 },
+                new JobAdvertisement { Movie  = movies[1], Specialty = specialties[2], Title = "Ieškomas kompozitorius", Description = "Su 100 metų patirtimi", Duration = 10, PayRate = 10000 }
             };
 
             return jobAdvertisements;

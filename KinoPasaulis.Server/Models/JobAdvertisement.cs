@@ -14,7 +14,7 @@ namespace KinoPasaulis.Server.Models
         [MaxLength(255)]
         public string Description { get; set; }
 
-        public TimeSpan Duration { get; set; }
+        public int Duration { get; set; }
 
         public decimal PayRate { get; set; }
 

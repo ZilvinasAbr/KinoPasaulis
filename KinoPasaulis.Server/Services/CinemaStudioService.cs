@@ -309,7 +309,7 @@ namespace KinoPasaulis.Server.Services
             return true;
         }
 
-        public Movie GetCinemaStudioMovie(int movieId, string userId)
+        public object GetCinemaStudioMovie(int movieId, string userId)
         {
             var movie = _dbContext.Movies
                 .Include(m => m.Images)
@@ -317,9 +317,29 @@ namespace KinoPasaulis.Server.Services
                 .Include(m => m.CinemaStudio)
                 .Include(m => m.Events)
                     .ThenInclude(e => e.Theather)
+                .Include(m => m.Ratings)
                 .SingleOrDefault(m => m.Id == movieId);
 
-            return movie;
+            var currentEvents = movie.Events.Where(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime);
+            var pastEvents = movie.Events.Where(e => e.EndTime < DateTime.Now);
+
+            return new
+            {
+                PastEvents = pastEvents,
+                CurrentEvents = currentEvents,
+                movie.Id,
+                movie.Title,
+                movie.Images,
+                movie.AgeRequirement,
+                movie.Videos,
+                movie.Budget,
+                movie.Gross,
+                movie.Description,
+                movie.ReleaseDate,
+                movie.Ratings,
+                movie.JobAdvertisements,
+                movie.Language
+            };
         }
     }
 }

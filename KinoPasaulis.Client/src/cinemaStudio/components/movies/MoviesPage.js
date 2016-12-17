@@ -37,7 +37,15 @@ class MoviesPage extends React.Component {
     return (
       <tr key={index}>
         <td>{index+1}</td>
-        <td>{movie.title}</td>
+        <td>
+          <a href="javascript:void(0)"
+             onClick={() =>
+               this.props.dispatch(
+                 push(`/cinemaStudio/movie/${movie.id}`)
+               )}>
+            {movie.title}
+          </a>
+        </td>
         <td>{movie.releaseDate}</td>
         <td>{movie.budget}</td>
         <td>{movie.gross}</td>
@@ -78,11 +86,11 @@ class MoviesPage extends React.Component {
             </thead>
             <tbody>
             {this.props.movies.length > 0 ? this.props.movies.map(this.renderMovie) : (
-              <tr>
-                <td colSpan={8}>
-                  Nėra filmų
-                </td>
-              </tr>
+                <tr>
+                  <td colSpan={8}>
+                    Nėra filmų
+                  </td>
+                </tr>
               )}
             </tbody>
           </Table>

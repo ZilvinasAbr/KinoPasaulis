@@ -14,5 +14,7 @@ namespace KinoPasaulis.Server.Services
         IEnumerable<Movie> GetCinemaStudioMovies(string userId);
         IEnumerable<MovieStatisticsViewModel> GetCinemaStudiosMoviesStatistics(string userId);
         bool AddJobAdvertisement(AddJobAdvertisementViewModel model, string userId);
+        object GetCinemaStudiosJobAdvertisements(string userId);
+        bool DeleteJobAdvertisement(int id, string userId);
     }
 }

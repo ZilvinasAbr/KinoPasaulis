@@ -8,14 +8,40 @@ using KinoPasaulis.Server.Data;
 namespace KinoPasaulis.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161217104522_FirstMigrationAfterMigrationsMergeConflict")]
-    partial class FirstMigrationAfterMigrationsMergeConflict
+    [Migration("20161217132704_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("KinoPasaulis.Server.Models.Announcement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ClientId");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("Message");
+
+                    b.Property<DateTime>("Seen");
+
+                    b.Property<DateTime>("Sent");
+
+                    b.Property<int?>("TheaterId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("TheaterId");
+
+                    b.ToTable("Announcements");
+                });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.ApplicationUser", b =>
                 {
@@ -210,7 +236,7 @@ namespace KinoPasaulis.Server.Migrations
                     b.Property<string>("Description")
                         .HasAnnotation("MaxLength", 255);
 
-                    b.Property<TimeSpan>("Duration");
+                    b.Property<int>("Duration");
 
                     b.Property<int>("MovieId");
 
@@ -456,6 +482,30 @@ namespace KinoPasaulis.Server.Migrations
                     b.ToTable("Specialties");
                 });
 
+            modelBuilder.Entity("KinoPasaulis.Server.Models.Subscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("BeginDate");
+
+                    b.Property<int?>("ClientId");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<double>("Period");
+
+                    b.Property<int?>("TheatherId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("TheatherId");
+
+                    b.ToTable("Subscriptions");
+                });
+
             modelBuilder.Entity("KinoPasaulis.Server.Models.Theather", b =>
                 {
                     b.Property<int>("Id")
@@ -659,6 +709,17 @@ namespace KinoPasaulis.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("KinoPasaulis.Server.Models.Announcement", b =>
+                {
+                    b.HasOne("KinoPasaulis.Server.Models.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
+                    b.HasOne("KinoPasaulis.Server.Models.Theather", "Theater")
+                        .WithMany()
+                        .HasForeignKey("TheaterId");
+                });
+
             modelBuilder.Entity("KinoPasaulis.Server.Models.ApplicationUser", b =>
                 {
                     b.HasOne("KinoPasaulis.Server.Models.CinemaStudio", "CinemaStudio")
@@ -813,6 +874,17 @@ namespace KinoPasaulis.Server.Migrations
                     b.HasOne("KinoPasaulis.Server.Models.Event", "Event")
                         .WithMany("Shows")
                         .HasForeignKey("EventId");
+                });
+
+            modelBuilder.Entity("KinoPasaulis.Server.Models.Subscription", b =>
+                {
+                    b.HasOne("KinoPasaulis.Server.Models.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
+                    b.HasOne("KinoPasaulis.Server.Models.Theather", "Theather")
+                        .WithMany()
+                        .HasForeignKey("TheatherId");
                 });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.Theather", b =>

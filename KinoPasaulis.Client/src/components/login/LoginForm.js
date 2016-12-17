@@ -8,6 +8,7 @@ class LoginForm extends React.Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEnterPress = this.handleEnterPress.bind(this);
   }
 
   handleSubmit() {
@@ -22,6 +23,12 @@ class LoginForm extends React.Component {
       userName.value,
       password.value
     ));
+  }
+
+  handleEnterPress(event) {
+    if (event.charCode === 13) {
+      this.handleSubmit();
+    }
   }
 
   render() {
@@ -46,7 +53,12 @@ class LoginForm extends React.Component {
               <ControlLabel>
                 Slaptažodis
               </ControlLabel>
-              <FormControl type="password" placeholder="Slaptažodis" { ...password } />
+              <FormControl
+                type="password"
+                placeholder="Slaptažodis"
+                { ...password }
+                onKeyPress={this.handleEnterPress}
+              />
             </FormGroup>
 
             <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}>Prisijungti</Button>

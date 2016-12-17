@@ -235,7 +235,7 @@ namespace KinoPasaulis.Server.Migrations
                     b.Property<string>("Description")
                         .HasAnnotation("MaxLength", 255);
 
-                    b.Property<TimeSpan>("Duration");
+                    b.Property<int>("Duration");
 
                     b.Property<int>("MovieId");
 

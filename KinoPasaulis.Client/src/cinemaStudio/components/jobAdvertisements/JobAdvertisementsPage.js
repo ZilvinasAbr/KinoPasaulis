@@ -41,7 +41,7 @@ class JobAdvertisementsPage extends React.Component {
         <td>{jobAd.movieTitle}</td>
         <td>{jobAd.specialtyTitle}</td>
         <td>{jobAd.title}</td>
-        <td>{jobAd.duration}</td>
+        <td>{jobAd.duration} dienų</td>
         <td>{jobAd.payRate}</td>
         <td>
           <Button bsStyle="danger" onClick={() => this.handleDeleteJobAd(index)}>

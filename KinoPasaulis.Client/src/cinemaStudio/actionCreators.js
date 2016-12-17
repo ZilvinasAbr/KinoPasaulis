@@ -54,3 +54,11 @@ export function receiveJobAdvertisements(jobAdvertisements) {
     jobAdvertisements
   };
 }
+
+export const REMOVE_JOB_ADVERTISEMENT = 'cinemaStudio/REMOVE_JOB_ADVERTISEMENT';
+export function removeJobAdvertisement(jobAdvertisementId) {
+  return {
+    type: REMOVE_JOB_ADVERTISEMENT,
+    jobAdvertisementId
+  };
+}

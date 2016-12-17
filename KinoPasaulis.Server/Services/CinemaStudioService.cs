@@ -246,12 +246,64 @@ namespace KinoPasaulis.Server.Services
                 Specialty = specialty,
                 Title = model.Title,
                 Description = model.Description,
-                Duration = new TimeSpan(model.Duration),
+                Duration = model.Duration,
                 PayRate = model.PayRate
             };
 
             specialty.Quantity++;
             _dbContext.JobAdvertisements.Add(jobAdvertisement);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
+
+        public object GetCinemaStudiosJobAdvertisements(string userId)
+        {
+            var user = _dbContext.Users
+                .Include(au => au.CinemaStudio)
+                    .ThenInclude(cinema => cinema.Movies)
+                        .ThenInclude(movie => movie.JobAdvertisements)
+                            .ThenInclude(jobAd => jobAd.Specialty)
+                .SingleOrDefault(au => au.Id == userId);
+
+            var cinemaStudio = user?.CinemaStudio;
+
+            var jobAdvertisements = cinemaStudio?.Movies
+                .SelectMany(movie => movie.JobAdvertisements)
+                .Select(jobAd => new
+                {
+                    jobAd.Id,
+                    jobAd.Title,
+                    jobAd.Duration,
+                    jobAd.PayRate,
+                    MovieTitle = jobAd.Movie.Title,
+                    SpecialtyTitle = jobAd.Specialty.Title
+                });
+
+            return jobAdvertisements;
+        }
+
+        public bool DeleteJobAdvertisement(int id, string userId)
+        {
+            var jobAdvertisement = _dbContext.JobAdvertisements
+                .Include(jobAd => jobAd.Movie)
+                .SingleOrDefault(jobAd => jobAd.Id == id);
+            var cinemaStudio = _dbContext.Users
+                .Include(u => u.CinemaStudio)
+                .SingleOrDefault(au => au.Id == userId)
+                .CinemaStudio;
+
+            if (jobAdvertisement == null || cinemaStudio == null)
+            {
+                return false;
+            }
+
+            if (jobAdvertisement.Movie.CinemaStudioId != cinemaStudio.Id)
+            {
+                return false;
+            }
+
+            _dbContext.JobAdvertisements.Remove(jobAdvertisement);
             _dbContext.SaveChanges();
 
             return true;

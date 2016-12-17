@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace KinoPasaulis.Server.Migrations
 {
-    public partial class FirstMigrationAfterMigrationsMergeConflict : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -342,7 +342,7 @@ namespace KinoPasaulis.Server.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 255, nullable: true),
-                    Duration = table.Column<TimeSpan>(nullable: false),
+                    Duration = table.Column<int>(nullable: false),
                     MovieId = table.Column<int>(nullable: false),
                     PayRate = table.Column<decimal>(nullable: false),
                     SpecialtyId = table.Column<int>(nullable: false),
@@ -560,6 +560,36 @@ namespace KinoPasaulis.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Announcements",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClientId = table.Column<int>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Message = table.Column<string>(nullable: true),
+                    Seen = table.Column<DateTime>(nullable: false),
+                    Sent = table.Column<DateTime>(nullable: false),
+                    TheaterId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Announcements", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Announcements_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Announcements_Theathers_TheaterId",
+                        column: x => x.TheaterId,
+                        principalTable: "Theathers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Auditoriums",
                 columns: table => new
                 {
@@ -602,6 +632,35 @@ namespace KinoPasaulis.Server.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Events_Theathers_TheatherId",
+                        column: x => x.TheatherId,
+                        principalTable: "Theathers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subscriptions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BeginDate = table.Column<DateTime>(nullable: false),
+                    ClientId = table.Column<int>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    Period = table.Column<double>(nullable: false),
+                    TheatherId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subscriptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subscriptions_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Subscriptions_Theathers_TheatherId",
                         column: x => x.TheatherId,
                         principalTable: "Theathers",
                         principalColumn: "Id",
@@ -664,6 +723,16 @@ namespace KinoPasaulis.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Announcements_ClientId",
+                table: "Announcements",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Announcements_TheaterId",
+                table: "Announcements",
+                column: "TheaterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_CinemaStudioId",
@@ -807,6 +876,16 @@ namespace KinoPasaulis.Server.Migrations
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Subscriptions_ClientId",
+                table: "Subscriptions",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subscriptions_TheatherId",
+                table: "Subscriptions",
+                column: "TheatherId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Theathers_UserId",
                 table: "Theathers",
                 column: "UserId",
@@ -856,6 +935,9 @@ namespace KinoPasaulis.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Announcements");
+
+            migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
@@ -878,6 +960,9 @@ namespace KinoPasaulis.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ratings");
+
+            migrationBuilder.DropTable(
+                name: "Subscriptions");
 
             migrationBuilder.DropTable(
                 name: "Videos");

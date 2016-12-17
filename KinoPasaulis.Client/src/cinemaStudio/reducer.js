@@ -5,7 +5,8 @@ import {
   RECEIVE_CINEMA_STUDIOS_STATISTICS,
   RECEIVE_CINEMA_STUDIOS_MOVIES_STATISTICS,
   RECEIVE_SPECIALTIES,
-  RECEIVE_JOB_ADVERTISEMENTS
+  RECEIVE_JOB_ADVERTISEMENTS,
+  REMOVE_JOB_ADVERTISEMENT
 } from './actionCreators';
 
 export const initialState = {
@@ -52,6 +53,13 @@ export function cinemaStudioPage(state = initialState, action) {
     case RECEIVE_JOB_ADVERTISEMENTS:
       return Object.assign({}, state, {
         jobAdvertisements: action.jobAdvertisements
+      });
+    case REMOVE_JOB_ADVERTISEMENT:
+      return Object.assign({}, state, {
+        jobAdvertisements:
+          state.jobAdvertisements.filter(
+            jobAd => jobAd.id !== action.jobAdvertisementId
+          )
       });
     default:
       return state;

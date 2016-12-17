@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 
-import { receiveSpecialties } from '../actionCreators';
+import {
+  receiveSpecialties,
+  receiveJobAdvertisements,
+  removeJobAdvertisement
+} from '../actionCreators';
 
 export function addJobAdvertisement(
   title,
@@ -59,12 +63,24 @@ export function fetchSpecialties() {
 
 export function fetchJobAdvertisements() {
   return dispatch => {
-
+    axios.get('/api/cinemaStudio/jobAdvertisements')
+      .then(response => {
+        dispatch(receiveJobAdvertisements(response.data))
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 }
 
-export function deleteJobAdvertisement() {
+export function deleteJobAdvertisement(id) {
   return dispatch => {
-
+    axios.delete(`/api/cinemaStudio/jobAdvertisement/${id}`)
+      .then(response => {
+        dispatch(removeJobAdvertisement(id));
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 }

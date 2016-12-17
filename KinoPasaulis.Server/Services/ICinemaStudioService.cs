@@ -16,5 +16,6 @@ namespace KinoPasaulis.Server.Services
         bool AddJobAdvertisement(AddJobAdvertisementViewModel model, string userId);
         object GetCinemaStudiosJobAdvertisements(string userId);
         bool DeleteJobAdvertisement(int id, string userId);
+        Movie GetCinemaStudioMovie(int movieId, string userId);
     }
 }

@@ -58,6 +58,24 @@ namespace KinoPasaulis.Server.Controllers.Api
             return Ok(movies);
         }
 
+        [HttpGet("movie/{id}")]
+        public IActionResult GetCinemaStudioMovie(int id)
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return Unauthorized();
+            }
+
+            var movie = _cinemaStudioService.GetCinemaStudioMovie(id, HttpContext.User.GetUserId());
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(movie);
+        }
+
         [HttpPost("addMovie")]
         public IActionResult AddMovie([FromBody] AddMovieViewModel model)
         {

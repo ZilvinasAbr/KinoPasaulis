@@ -308,5 +308,18 @@ namespace KinoPasaulis.Server.Services
 
             return true;
         }
+
+        public Movie GetCinemaStudioMovie(int movieId, string userId)
+        {
+            var movie = _dbContext.Movies
+                .Include(m => m.Images)
+                .Include(m => m.Videos)
+                .Include(m => m.CinemaStudio)
+                .Include(m => m.Events)
+                    .ThenInclude(e => e.Theather)
+                .SingleOrDefault(m => m.Id == movieId);
+
+            return movie;
+        }
     }
 }

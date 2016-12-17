@@ -26,8 +26,7 @@ import CinemaStudiosStatisticsPage from './cinemaStudio/components/CinemaStudios
 import CinemaStudiosMoviesStatisticsPage from './cinemaStudio/components/movies/MoviesStatisticsPage';
 import JobAdvertisementsPage from './cinemaStudio/components/jobAdvertisements/JobAdvertisementsPage';
 import AddJobAdvertisementPage from './cinemaStudio/components/jobAdvertisements/addJobAdvertisement/AddJobAdvertisementPage';
-
-
+import MoviePage from './cinemaStudio/components/movies/MoviePage';
 
 const store = createStore(reducer, initialState, compose(
   applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware),
@@ -55,6 +54,7 @@ render(
 				<Route path="theather/newEvent" component={NewEvent} />
 				<Route path="theather/eventDetails/:id" component={EventDetails}/>
 				<Route path="cinemaStudio/movies" component={MoviesPage} />
+				<Route path="cinemaStudio/movie/:id" component={MoviePage} />
 				<Route path="cinemaStudio/addMovie" component={AddMoviePage} />
 				<Route path="cinemaStudio/statistics" component={CinemaStudiosStatisticsPage} />
 				<Route path="cinemaStudio/moviesStatistics" component={CinemaStudiosMoviesStatisticsPage} />

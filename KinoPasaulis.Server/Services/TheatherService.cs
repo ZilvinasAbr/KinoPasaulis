@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Mapper;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Repositories.CinemaStudio;
+using KinoPasaulis.Server.Repositories.Client;
 using KinoPasaulis.Server.Repositories.Theather;
 using KinoPasaulis.Server.ViewModels.Theather;
 
@@ -16,14 +19,32 @@ namespace KinoPasaulis.Server.Services
         private readonly IShowRepository _showRepository;
         private readonly ITheatherMapper _theatherMapper;
         private readonly IMovieRepository _movieRepository;
+        private readonly IAnnouncementRepository _announcementRepository;
+        private readonly IUserService _userService;
+        private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly ApplicationDbContext _dbContext;
 
-        public TheatherService(IEventRepository eventRepository, IAuditoriumRepository auditoriumRepository, IShowRepository showRepository, ITheatherMapper theatherMapper, IMovieRepository movieRepository)
+        public TheatherService(
+            IEventRepository eventRepository, 
+            IAuditoriumRepository auditoriumRepository, 
+            IShowRepository showRepository, 
+            ITheatherMapper theatherMapper, 
+            IMovieRepository movieRepository,
+            IAnnouncementRepository announcementRepository,
+            IUserService userService,
+            ISubscriptionRepository subscriptionRepository,
+            ApplicationDbContext dbContext
+            )
         {
             _eventRepository = eventRepository;
             _auditoriumRepository = auditoriumRepository;
             _showRepository = showRepository;
             _theatherMapper = theatherMapper;
             _movieRepository = movieRepository;
+            _announcementRepository = announcementRepository;
+            _userService = userService;
+            _subscriptionRepository = subscriptionRepository;
+            _dbContext = dbContext;
         }
 
         public void AddNewEvent(EventCreation eventCreation)
@@ -77,6 +98,15 @@ namespace KinoPasaulis.Server.Services
             return _eventRepository.GetEvents();
         }
 
+        public IEnumerable<Client> GetTheaterSubscribers(string userId)
+        {
+            var theater = _userService.GetTheatherByUserId(userId);
+
+            var subscriptions = _subscriptionRepository.GetTheaterSubscriptions(theater.Id);
+
+            return subscriptions.Select(subscription => subscription.Client).ToList();
+        }
+
         public Event GetEventById(int id)
         {
             return _eventRepository.GetEventById(id);
@@ -92,6 +122,36 @@ namespace KinoPasaulis.Server.Services
             bool deleted = _auditoriumRepository.DeleteAudtorium(id);
 
             return deleted;
+        }
+
+        public bool SendAnnouncements(ISet<int> clientIds, string theatherId, string message)
+        {
+            var theater = _userService.GetTheatherByUserId(theatherId);
+
+            foreach (var id in clientIds)
+            {
+                var client = _userService.GetClientById(id);
+
+                var announcement = new Announcement
+                {
+                    Client = client,
+                    Theater = theater,
+                    Message = message,
+                    Created = DateTime.Now,
+                    Sent = DateTime.Now
+                };
+
+                _announcementRepository.InsertAnnouncement(announcement);
+            }
+
+            return true;
+        }
+
+        public IEnumerable<Announcement> GetTheaterAnnouncments(string theaterId)
+        {
+            var theater = _userService.GetTheatherByUserId(theaterId);
+
+            return _announcementRepository.GetAnnouncementsByTheatherId(theater.Id);
         }
 
         public bool UpdateAutorium(Auditorium auditorium)

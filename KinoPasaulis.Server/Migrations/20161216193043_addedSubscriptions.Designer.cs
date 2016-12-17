@@ -8,39 +8,14 @@ using KinoPasaulis.Server.Data;
 namespace KinoPasaulis.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161216193043_addedSubscriptions")]
+    partial class addedSubscriptions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("KinoPasaulis.Server.Models.Announcement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("ClientId");
-
-                    b.Property<DateTime>("Created");
-
-                    b.Property<string>("Message");
-
-                    b.Property<DateTime>("Seen");
-
-                    b.Property<DateTime>("Sent");
-
-                    b.Property<int?>("TheaterId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("TheaterId");
-
-                    b.ToTable("Announcements");
-                });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.ApplicationUser", b =>
                 {
@@ -85,8 +60,6 @@ namespace KinoPasaulis.Server.Migrations
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);
 
-                    b.Property<int?>("VotesAdminId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CinemaStudioId");
@@ -101,8 +74,6 @@ namespace KinoPasaulis.Server.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasName("UserNameIndex");
-
-                    b.HasIndex("VotesAdminId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -227,43 +198,14 @@ namespace KinoPasaulis.Server.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("KinoPasaulis.Server.Models.JobAdvertisement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description")
-                        .HasAnnotation("MaxLength", 255);
-
-                    b.Property<TimeSpan>("Duration");
-
-                    b.Property<int>("MovieId");
-
-                    b.Property<decimal>("PayRate");
-
-                    b.Property<int>("SpecialtyId");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 50);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("SpecialtyId");
-
-                    b.ToTable("JobAdvertisements");
-                });
-
             modelBuilder.Entity("KinoPasaulis.Server.Models.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CinemaStudioId");
+                    b.Property<int?>("CinemaStudioId");
 
-                    b.Property<int>("MovieCreatorId");
+                    b.Property<int?>("MovieCreatorId");
 
                     b.Property<DateTime>("ReadAt");
 
@@ -345,8 +287,6 @@ namespace KinoPasaulis.Server.Migrations
                     b.Property<int>("MovieCreatorId");
 
                     b.Property<int>("MovieId");
-
-                    b.Property<bool>("IsConfirmed");
 
                     b.HasKey("MovieCreatorId", "MovieId");
 
@@ -586,13 +526,15 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<DateTime>("EditedAt");
+
                     b.Property<DateTime>("EndDate");
 
                     b.Property<DateTime>("StartDate");
 
                     b.Property<string>("Title");
 
-                    b.Property<int>("VotesAdminId");
+                    b.Property<int?>("VotesAdminId");
 
                     b.HasKey("Id");
 
@@ -708,17 +650,6 @@ namespace KinoPasaulis.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("KinoPasaulis.Server.Models.Announcement", b =>
-                {
-                    b.HasOne("KinoPasaulis.Server.Models.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("KinoPasaulis.Server.Models.Theather", "Theater")
-                        .WithMany()
-                        .HasForeignKey("TheaterId");
-                });
-
             modelBuilder.Entity("KinoPasaulis.Server.Models.ApplicationUser", b =>
                 {
                     b.HasOne("KinoPasaulis.Server.Models.CinemaStudio", "CinemaStudio")
@@ -732,10 +663,6 @@ namespace KinoPasaulis.Server.Migrations
                     b.HasOne("KinoPasaulis.Server.Models.MovieCreator", "MovieCreator")
                         .WithMany()
                         .HasForeignKey("MovieCreatorId");
-
-                    b.HasOne("KinoPasaulis.Server.Models.VotesAdmin", "VotesAdmin")
-                        .WithMany()
-                        .HasForeignKey("VotesAdminId");
                 });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.Auditorium", b =>
@@ -767,30 +694,15 @@ namespace KinoPasaulis.Server.Migrations
                         .HasForeignKey("MovieId");
                 });
 
-            modelBuilder.Entity("KinoPasaulis.Server.Models.JobAdvertisement", b =>
-                {
-                    b.HasOne("KinoPasaulis.Server.Models.Movie", "Movie")
-                        .WithMany("JobAdvertisements")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KinoPasaulis.Server.Models.Specialty", "Specialty")
-                        .WithMany("JobAdvertisements")
-                        .HasForeignKey("SpecialtyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("KinoPasaulis.Server.Models.Message", b =>
                 {
                     b.HasOne("KinoPasaulis.Server.Models.CinemaStudio", "CinemaStudio")
                         .WithMany()
-                        .HasForeignKey("CinemaStudioId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CinemaStudioId");
 
                     b.HasOne("KinoPasaulis.Server.Models.MovieCreator", "MovieCreator")
-                        .WithMany("Messages")
-                        .HasForeignKey("MovieCreatorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("MovieCreatorId");
                 });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.Movie", b =>
@@ -904,9 +816,8 @@ namespace KinoPasaulis.Server.Migrations
             modelBuilder.Entity("KinoPasaulis.Server.Models.Voting", b =>
                 {
                     b.HasOne("KinoPasaulis.Server.Models.VotesAdmin", "VotesAdmin")
-                        .WithMany("Votings")
-                        .HasForeignKey("VotesAdminId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("VotesAdminId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

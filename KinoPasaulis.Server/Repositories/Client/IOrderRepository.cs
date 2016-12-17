@@ -8,10 +8,7 @@ namespace KinoPasaulis.Server.Repositories.Client
 {
     public interface IOrderRepository
     {
-        IEnumerable<Order> GetOrders();
-        Order GetOrderById(int movieId);
+        Order GetOrderById(int orderId);
         void InsertOrder(Order order);
-        bool DeleteOrder(int orderId);
-        void UpdateOrder(Order order);
     }
 }

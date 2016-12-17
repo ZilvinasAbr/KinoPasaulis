@@ -11,7 +11,6 @@ namespace KinoPasaulis.Server.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Show> Shows { get; set; }
         public DbSet<MovieCreator> MovieCreators { get; set; }
         public DbSet<Theather> Theathers { get; set; }
@@ -21,14 +20,16 @@ namespace KinoPasaulis.Server.Data
         public DbSet<Video> Videos { get; set; }
         public DbSet<MovieCreatorMovie> MovieCreatorMovies { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+<<<<<<< Updated upstream
         public DbSet<Message> Messages { get; set; }
-        public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Specialty> Specialties { get; set; }
         public DbSet<MovieCreatorSpecialty> MovieCreatorSpecialties { get; set; }
         public DbSet<MovieCreatorVoting> MovieCreatorVotings { get; set; }
         public DbSet<VotesAdmin> VotesAdmins { get; set; }
         public DbSet<Voting> Votings { get; set; }
-        public DbSet<JobAdvertisement> JobAdvertisements { get; set; }
+=======
+        public DbSet<Announcement> Announcements { get; set; }
+>>>>>>> Stashed changes
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

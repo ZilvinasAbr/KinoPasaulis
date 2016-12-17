@@ -76,11 +76,25 @@ export function receiveOneEvent(event) {
   };
 }
 
-export const DELETE_ONE_SHOW = 'DELETE_ONE_SHOW';
-export function deleteOneShow(show) {
-  console.log(show);
+export const REQUEST_THEATER_SUBSCRIBERS = 'REQUEST_THEATER_SUBSCRIBERS';
+export function requestSubscribers() {
+    return {
+        type: REQUEST_THEATER_SUBSCRIBERS,
+    };
+}
+
+export const RECEIVE_THEATER_SUBSCRIBERS = 'RECEIVE_THEATER_SUBSCRIBERS';
+export function receiveSubscribers(subscribers) {
+    return {
+        type: RECEIVE_THEATER_SUBSCRIBERS,
+        subscribers
+    };
+}
+
+export const SEND_ANNOUNCEMENT = 'SEND_ANNOUNCEMENT';
+export function sendAnnouncement(announcement) {
   return {
-    type: DELETE_ONE_SHOW,
-    show
-  }
+    type: RECEIVE_THEATER_SUBSCRIBERS,
+    announcement
+  };
 }

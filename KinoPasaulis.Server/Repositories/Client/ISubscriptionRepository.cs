@@ -11,5 +11,6 @@ namespace KinoPasaulis.Server.Repositories.Client
         Subscription GetSubscriptionById(int subscriptionId);
         void InsertSubscription(Subscription subscription);
         IEnumerable<Subscription> GetTheaterSubscriptions(int theaterId);
+        void UpdateSubscription(Subscription subscription);
     }
 }

@@ -18,7 +18,6 @@ namespace KinoPasaulis.Server.Models
 
         public DateTime RatingCreatedOn { get; set; }
         public DateTime RatingModifiedOn { get; set; }
-        public DateTime LastLoggedOn { get; set; }
 
         public int ClientId { get; set; }
         public Client Client { get; set; }

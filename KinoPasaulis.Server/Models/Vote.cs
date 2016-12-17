@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace KinoPasaulis.Server.Models
 {
-    public class Subscription
+    public class Vote
     {
         public int Id { get; set; }
-        public Theather Theather { get; set; }
+        public MovieCreator MovieCreator { get; set; }
+        public DateTime VotedOn { get; set; }
+        public DateTime VoteChangedOn { get; set; }
         public Client Client { get; set; }
-        public DateTime BeginDate { get; set; }
-        public DateTime? EndDate { get; set; }
-        public double Period { get; set; }
+        public Voting Voting { get; set; }
     }
 }

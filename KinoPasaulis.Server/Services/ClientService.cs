@@ -9,12 +9,14 @@ namespace KinoPasaulis.Server.Services
         private readonly IOrderRepository _orderRepository;
         private readonly ISubscriptionRepository _subscriptionRepository;
         private readonly IVoteRepository _voteRepository;
+        private readonly IRatingRepository _ratingRepository;
 
-        public ClientService(IOrderRepository orderRepository, ISubscriptionRepository subscriptionRepository, IVoteRepository voteRepository)
+        public ClientService(IOrderRepository orderRepository, ISubscriptionRepository subscriptionRepository, IVoteRepository voteRepository, IRatingRepository ratingRepository)
         {
             _orderRepository = orderRepository;
             _subscriptionRepository = subscriptionRepository;
             _voteRepository = voteRepository;
+            _ratingRepository = ratingRepository;
         }
 
         public Order GetOrderById(int orderId)
@@ -31,6 +33,12 @@ namespace KinoPasaulis.Server.Services
         {
             return _voteRepository.GetVoteById(voteId);
         }
+
+        public Rating GetRatingById(int ratingId)
+        {
+            return _ratingRepository.GetRatingById(ratingId);
+        }
+
 
         public void AddOrder(Order order)
         {
@@ -55,6 +63,16 @@ namespace KinoPasaulis.Server.Services
         public void ChangeVote(Vote vote)
         {
             _voteRepository.UpdateVote(vote);
+        }
+
+        public void AddRating(Rating rating)
+        {
+            _ratingRepository.InsertRating(rating);
+        }
+
+        public void ChangeRating(Rating rating)
+        {
+            _ratingRepository.UpdateRating(rating);
         }
     }
 }

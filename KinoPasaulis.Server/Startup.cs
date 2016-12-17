@@ -83,6 +83,7 @@ namespace KinoPasaulis.Server
             services.AddTransient<IVoteRepository, VoteRepository>();
             services.AddTransient<IVotingRepository, VotingRepository>();
             services.AddTransient<IMovieCreatorRepository, MovieCreatorRepository>();
+            services.AddTransient<IRatingRepository, RatingRepository>();
 
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();

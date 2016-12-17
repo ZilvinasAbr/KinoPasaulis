@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using KinoPasaulis.Server.Models.ViewModel;
+using KinoPasaulis.Server.Repositories.CinemaStudio;
 using KinoPasaulis.Server.Repositories.Client;
 using KinoPasaulis.Server.Repositories.MovieCreator;
 using KinoPasaulis.Server.Repositories.Theather;
@@ -21,6 +22,7 @@ namespace KinoPasaulis.Server.Controllers.Api
         private readonly ITheatherRepository _theatherRepository;
         private readonly IMovieCreatorRepository _movieCreatorRepository;
         private readonly IVotingRepository _votingRepository;
+        private readonly IMovieRepository _movieRepository;
         private readonly IUserService _userService;
 
         public ClientController(
@@ -30,6 +32,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             ITheatherRepository theatherRepository,
             IMovieCreatorRepository movieCreatorRepository,
             IVotingRepository votingRepository,
+            IMovieRepository movieRepository,
             IUserService userService )
         {
             _clientService = clientService;
@@ -38,6 +41,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             _theatherRepository = theatherRepository;
             _movieCreatorRepository = movieCreatorRepository;
             _votingRepository = votingRepository;
+            _movieRepository = movieRepository;
             _userService = userService;
         }
 
@@ -80,7 +84,7 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpPost("addSubscription")]
-        public IActionResult AddSubbscription([FromBody] int theaterId)
+        public IActionResult AddSubscription([FromBody] int theaterId)
         {
             if (_signInManager.IsSignedIn(User))
             {
@@ -151,7 +155,7 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpPost("changeVote")]
-        public IActionResult ChangePost([FromBody] ChangeVoteViewModel changeVoteModel)
+        public IActionResult ChangeVote([FromBody] ChangeVoteViewModel changeVoteModel)
         {
             if (_signInManager.IsSignedIn(User))
             {
@@ -162,6 +166,72 @@ namespace KinoPasaulis.Server.Controllers.Api
                 vote.MovieCreator = movieCreator;
 
                 _clientService.ChangeVote(vote);
+
+                return Ok(true);
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpGet("getRating")]
+        public Rating GetRatingById(int id)
+        {
+            return _clientService.GetRatingById(id);
+        }
+
+        [HttpPost("addRating")]
+        public IActionResult AddRating([FromBody] AddRatingViewModel addRatingModel)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                Client client = _userService.GetClientByUserId(userId);
+                var movie = _movieRepository.GetMovieById(addRatingModel.MovieId);
+                byte ratingType = 2;
+                if (addRatingModel.Comment == null)
+                {
+                    ratingType = 1;
+                }
+
+                var rating = new Rating()
+                {
+                    Client = client,
+                    ClientId = client.Id,
+                    Comment = addRatingModel.Comment,
+                    Movie = movie,
+                    MovieId = movie.Id,
+                    RatingCreatedOn = DateTime.Now,
+                    RatingModifiedOn = DateTime.Now,
+                    Value = addRatingModel.Value,
+                    RatingType = ratingType
+                };
+
+                _clientService.AddRating(rating);
+
+                return Ok(true);
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpPost("changeRating")]
+        public IActionResult ChangeRating([FromBody] ChangeRatingViewModel changeRatingModel)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var rating = _clientService.GetRatingById(changeRatingModel.RatingId);
+                byte ratingType = 2;
+                if (changeRatingModel.Comment == null)
+                {
+                    ratingType = 1;
+                }
+
+                rating.RatingModifiedOn = DateTime.Now;
+                rating.Comment = changeRatingModel.Comment;
+                rating.Value = changeRatingModel.Value;
+                rating.RatingType = ratingType;
+
+                _clientService.ChangeRating(rating);
 
                 return Ok(true);
             }

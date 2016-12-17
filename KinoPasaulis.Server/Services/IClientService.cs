@@ -8,11 +8,14 @@ namespace KinoPasaulis.Server.Services
         Order GetOrderById(int orderId);
         Subscription GetSubscriptionById(int subscriptionId);
         Vote GetVoteById(int voteId);
+        Rating GetRatingById(int ratingId);
 
         void AddOrder(Order order);
         void AddSubscription(Subscription subscription);
         void RemoveSubscription(Subscription subscription);
         void AddVote(Vote vote);
         void ChangeVote(Vote vote);
+        void AddRating(Rating rating);
+        void ChangeRating(Rating rating);
     }
 }

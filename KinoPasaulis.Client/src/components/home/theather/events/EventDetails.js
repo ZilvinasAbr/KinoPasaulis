@@ -25,7 +25,7 @@ class EventDetails extends React.Component {
   componentDidMount() {
     axios.get('/api/theathers/getEvent?id=' + this.props.params.id)
       .then(response => {
-        console.log(response.data.movie.images);
+
         this.setState(
           {
             urls: response.data.movie.images
@@ -69,6 +69,35 @@ class EventDetails extends React.Component {
     return <p> No image found</p>;
   }
 
+  getOrdersCount(order)
+  {
+    let seatsOrdered = 0;
+    for(let i = 0; i<order.length; i++) {
+      seatsOrdered += order[i].amount;
+    }
+    console.log(seatsOrdered);
+    return seatsOrdered;
+  }
+
+  renderDate(stats)
+  {
+    if(stats.over == true)
+    {
+      return `Įvykis jau pasibaigęs. Iki rodymo pradžios liko ${moment(stats.time).format('D')} diena`;
+    }
+    else if(stats.showingNow == true)
+    {
+      return `Įvykis prasidėjas ir nepasibaigęs. Nuo rodymo pradžios praėjo ${moment(stats.time).format('D')} diena`;
+    }
+
+    else if(stats.showingNow == false && stats.over == false)
+    {
+      return `Įvykis dar neprasidėjas.`;
+    }
+
+    console.log(stats);
+  }
+
   renderEditDeleteButtons(showOver, showId, index) {
     if(showOver == null)
     {
@@ -97,7 +126,9 @@ class EventDetails extends React.Component {
           <Well bsSize={"lg"} className={showOver}>
             <p> Auditorijos pavadinimas: {show.auditorium.name} </p>
             <p> Vietų skaičius: {show.auditorium.seats} </p>
+            <p> Užimta vietų: {this.getOrdersCount(show.orders)}</p>
             <p> Seanso pradžia: {moment(show.startTime).format('YYYY/MM/DD HH:mm')}</p>
+            <p> Užsakymų skaičius: {show.orders.length} </p>
           </Well>
         </Col>
       </div>
@@ -145,7 +176,9 @@ class EventDetails extends React.Component {
             Iš viso galimų užsakymų tarp pasibaigusių seansų: {this.props.statistics.totalSeatsEndedShows}
             <br/>
             Užsakymų kiekis tarp pasibaigusių seansų: {this.props.statistics.orderedSeatsEndedShows}
-
+            <br/>
+            <br/>
+            {this.renderDate(this.props.statistics)}
 
 
           </Modal.Body>

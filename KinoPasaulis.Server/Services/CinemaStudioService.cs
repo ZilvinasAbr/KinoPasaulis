@@ -348,6 +348,8 @@ namespace KinoPasaulis.Server.Services
                 movie.JobAdvertisements,
                 movie.Language,
                 movie.Duration,
+                movie.Duration.Hours,
+                movie.Duration.Minutes,
                 movieCreators
             };
         }

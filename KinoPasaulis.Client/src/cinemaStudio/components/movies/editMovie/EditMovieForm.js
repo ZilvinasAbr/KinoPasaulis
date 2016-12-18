@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import
 {
   Button,
@@ -10,14 +11,14 @@ import
 import Dropzone from 'react-dropzone';
 import DatePicker from 'react-bootstrap-date-picker';
 
-import VideosTable from './VideosTable';
 import {
   addMovie,
   fetchMovieCreators
 } from '../../../actions/movieActions';
-import SelectVideoModal from './SelectVideoModal';
-import MovieCreatorsTable from './MovieCreatorsTable';
-import MovieCreatorAutosuggest from './MovieCreatorAutosuggest';
+import VideosTable from '../addMovie/VideosTable';
+import SelectVideoModal from '../addMovie/SelectVideoModal';
+import MovieCreatorsTable from '../addMovie/MovieCreatorsTable';
+import MovieCreatorAutosuggest from '../addMovie/MovieCreatorAutosuggest';
 
 class AddMovieForm extends React.Component {
   constructor(props) {
@@ -61,6 +62,28 @@ class AddMovieForm extends React.Component {
   }
 
   componentDidMount() {
+    axios.get(`/api/cinemaStudio/movie/${this.props.movieId}`)
+      .then(response => {
+        console.log(response.data);
+        const responseMovie = response.data;
+        this.setState({
+          title: responseMovie.title,
+          releaseDate: responseMovie.releaseDate,
+          hours: responseMovie.hours,
+          minutes: responseMovie.minutes,
+          budget: responseMovie.budget,
+          description: responseMovie.description,
+          gross: responseMovie.gross,
+          language: responseMovie.language,
+          ageRequirement: responseMovie.ageRequirement,
+          droppedFiles: [],
+          videos: responseMovie.videos,
+          selectedMovieCreators: responseMovie.movieCreators
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
     this.props.dispatch(fetchMovieCreators());
   }
 
@@ -155,8 +178,6 @@ class AddMovieForm extends React.Component {
     });
   }
   handleSubmit() {
-
-
     this.props.dispatch(
       addMovie(
         this.state.title,
@@ -315,7 +336,7 @@ class AddMovieForm extends React.Component {
         </FormGroup>
 
         <Button bsStyle="primary" onClick={this.handleSubmit}>
-          Pridėti filmą
+          Redaguoti filmą
         </Button>
 
         <SelectVideoModal
@@ -331,10 +352,11 @@ class AddMovieForm extends React.Component {
 
 AddMovieForm.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
-  movieCreators: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+  movieCreators: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  movieId: React.PropTypes.number.isRequired
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     movieCreators: state.cinemaStudioPage.movieCreators
   };

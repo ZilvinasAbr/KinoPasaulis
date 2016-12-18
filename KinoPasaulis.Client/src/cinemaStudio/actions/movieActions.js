@@ -40,6 +40,8 @@ export function fetchCinemaStudioMovies() {
 export function addMovie
 (
   title,
+  hours,
+  minutes,
   releaseDate,
   budget,
   description,
@@ -55,6 +57,8 @@ export function addMovie
       request.post('/api/cinemaStudio/addMovie')
         .send({
           title,
+          hours,
+          minutes,
           releaseDate,
           budget,
           description,
@@ -67,6 +71,7 @@ export function addMovie
         })
         .end((err, res) => {
           if(err) {
+            alert(res.body);
             console.log(err);
             return;
           }
@@ -92,6 +97,8 @@ export function addMovie
         request.post('/api/cinemaStudio/addMovie')
           .send({
             title,
+            hours,
+            minutes,
             releaseDate,
             budget,
             description,

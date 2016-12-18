@@ -94,6 +94,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             var movie = new Movie
             {
                 Title = model.Title,
+                Duration = new TimeSpan(model.Hours, model.Minutes, 0),
                 ReleaseDate = model.ReleaseDate,
                 Budget = model.Budget,
                 Description = model.Description,

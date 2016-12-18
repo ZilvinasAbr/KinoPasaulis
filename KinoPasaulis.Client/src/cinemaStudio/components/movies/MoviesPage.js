@@ -52,6 +52,9 @@ class MoviesPage extends React.Component {
         <td>{movie.language}</td>
         <td>{movie.ageRequirement}</td>
         <td>
+          <Button bsStyle="success" onClick={() => this.props.dispatch(push(`/cinemaStudio/editMovie/${movie.id}`))}>
+            Redaguoti
+          </Button>
           <Button bsStyle="danger" onClick={() => this.handleDeleteMovie(index)}>
             Pašalinti
           </Button>

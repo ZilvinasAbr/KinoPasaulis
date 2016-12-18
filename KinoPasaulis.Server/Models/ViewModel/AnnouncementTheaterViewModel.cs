@@ -10,7 +10,7 @@ namespace KinoPasaulis.Server.Models.ViewModel
         public Client Client { get; set; }
         public DateTime Created { get; set; }
         public DateTime Sent { get; set; }
-        public DateTime Seen { get; set; }
+        public DateTime? Seen { get; set; }
         public string Message { get; set; }
     }
 }

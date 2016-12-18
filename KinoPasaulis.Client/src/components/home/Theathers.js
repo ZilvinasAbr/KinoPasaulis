@@ -62,6 +62,11 @@ class Theathers extends React.Component {
         <div className="container">
           <Col md={3}>
             <h2>{this.props.theather.title}</h2>
+            <p> Adresas: {this.props.theather.address}</p>
+            <p> Miestas: {this.props.theather.city}</p>
+            <p> Šalis: {this.props.theather.country}</p>
+            <p> Telefonas: {this.props.theather.phone}</p>
+            <p> El. paštas: {this.props.theather.email}</p>
             {this.renderSubscribeButton()}
           </Col>
 

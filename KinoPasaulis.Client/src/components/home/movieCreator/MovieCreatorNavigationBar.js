@@ -36,6 +36,7 @@ MovieCreatorNavigationBar.propTypes = {
   changePageToHome: React.PropTypes.func.isRequired,
   goToTaggedMovies: React.PropTypes.func.isRequired,
   changePageToProfile: React.PropTypes.func.isRequired,
+  goToJobOffers: React.PropTypes.func.isRequired,
   logout: React.PropTypes.func.isRequired
 };
 

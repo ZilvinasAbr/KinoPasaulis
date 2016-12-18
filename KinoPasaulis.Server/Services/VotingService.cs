@@ -21,7 +21,10 @@ namespace KinoPasaulis.Server.Services
 
         public IEnumerable<Voting> GetVotings()
         {
-            IEnumerable<Voting> votings = _dbContext.Votings.ToList();
+            IEnumerable<Voting> votings = _dbContext.Votings
+                .Include(mc => mc.MovieCreatorVotings)
+                    .ThenInclude(mc => mc.MovieCreator)
+                .ToList();
 
             return votings;
         }

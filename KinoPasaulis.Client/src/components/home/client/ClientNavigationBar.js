@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { logout } from '../../../actions/account/logoutActions';
 import LogoutButton from '../../common/LogoutButton';
 
-const ClientNavigationBar = ({logout, changePageToHome, changePageToProfile}) => {
+const ClientNavigationBar = ({logout, changePageToHome, changePageToProfile, goToAnnouncements}) => {
   return (
     <Navbar inverse>
       <Navbar.Header>
@@ -16,6 +16,9 @@ const ClientNavigationBar = ({logout, changePageToHome, changePageToProfile}) =>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
+        <Nav pullLeft>
+          <NavItem eventKey={1} onClick={goToAnnouncements}> Pranešimai </NavItem>
+        </Nav>
         <Nav pullRight>
           <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
           <LogoutButton
@@ -31,7 +34,8 @@ const ClientNavigationBar = ({logout, changePageToHome, changePageToProfile}) =>
 ClientNavigationBar.propTypes = {
   changePageToHome: React.PropTypes.func.isRequired,
   changePageToProfile: React.PropTypes.func.isRequired,
-  logout: React.PropTypes.func.isRequired
+  logout: React.PropTypes.func.isRequired,
+  goToAnnouncements: React.PropTypes.func.isRequired
 };
 
 function mapDispatchToProps(dispatch) {
@@ -42,6 +46,10 @@ function mapDispatchToProps(dispatch) {
 
     changePageToProfile: () => {
       dispatch(push('/profile'));
+    },
+
+    goToAnnouncements: () => {
+      dispatch(push('/announcements'));
     },
 
     logout: () => {

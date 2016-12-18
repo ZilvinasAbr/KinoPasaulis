@@ -33,6 +33,7 @@ import MoviePage from './cinemaStudio/components/movies/moviePage/MoviePage';
 import TaggedMoviesPage from './components/home/movieCreator/TaggedMoviesPage';
 import PendingMoviesPage from './components/home/movieCreator/PendingMoviesPage';
 import JobOffersPage from './components/home/movieCreator/JobOffersPage';
+import AnnouncementsPage from './components/home/AnnouncementsPage';
 
 const store = createStore(reducer, initialState, compose(
   applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware),
@@ -69,6 +70,7 @@ render(
 				<Route path="cinemaStudio/addJobAdvertisement" component={AddJobAdvertisementPage} />
 				<Route path="theathers/:id" component={Theathers}/>
 				<Route path="eventDetails/:id" component={EventDetails2}/>
+				<Route path="announcements" component={AnnouncementsPage}/>
 				<Route path="movieCreator/taggedMovies" component={TaggedMoviesPage} />
 				<Route path="movieCreator/pendingMovies" component={PendingMoviesPage} />
 				<Route path="movieCreator/jobOffers" component={JobOffersPage} />

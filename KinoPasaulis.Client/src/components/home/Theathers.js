@@ -19,6 +19,13 @@ class Theathers extends React.Component {
     this.props.isSubscribedToTheather(this.props.params.id);
   }
 
+  paintImage(event) {
+    if (event.movie.images.length != 0) {
+      return <img alt={event.movie.images[0].title} height="200" width="100%" src={`/uploads/${event.movie.images[0].url}`} />;
+    }
+    return <img height="200" width="100%" src={`http://www.jordans.com/~/media/jordans%20redesign/no-image-found.ashx?h=275&la=en&w=275&hash=F87BC23F17E37D57E2A0B1CC6E2E3EEE312AAD5B`} />;
+  }
+
   renderSubscribeButton() {
     let subscribed = this.props.subscribed;
     if (subscribed)
@@ -37,6 +44,7 @@ class Theathers extends React.Component {
       return <div key={index}>
         <Col md={4}>
           <Well>
+            {this.paintImage(event)}
             <h2> {event.movie.title} </h2>
             {moment(event.startTime).format('YYYY/MM/DD')} -
             {moment(event.endTime).format('YYYY/MM/DD')}

@@ -65,6 +65,11 @@ namespace KinoPasaulis.Server.Controllers.Api
                 var userId = HttpContext.User.GetUserId();
                 var client = _userService.GetClientByUserId(userId);
                 var show = _showRepository.GetShowById(orderModel.ShowId);
+                var seatsSum = 0;
+                foreach (var orders in show.Orders)
+                    seatsSum += orders.Amount;
+                if (seatsSum + orderModel.Amount > show.Auditorium.Seats || orderModel.Amount < 1)
+                    return false;
                 var order = new Order
                 {
                     Amount = orderModel.Amount,
@@ -298,8 +303,11 @@ namespace KinoPasaulis.Server.Controllers.Api
                 var userId = HttpContext.User.GetUserId();
                 var client = _userService.GetClientByUserId(userId);
 
-                var announcements = _dbContext.Announcements.Include(ann => ann.Client)
-                    .Where(ann => ann.Client.Id == client.Id);
+                var announcements = _dbContext.Announcements
+                    .Include(ann => ann.Theater)
+                    .Include(ann => ann.Client)
+                    .Where(ann => ann.Client.Id == client.Id)
+                    .OrderByDescending(ann => ann.Sent);
 
                 var updateAnnouncements = new List<Announcement>();
 

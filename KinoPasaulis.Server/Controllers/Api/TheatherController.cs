@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.ViewModels.Theather;
+using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Controllers.Api
 {
@@ -17,13 +20,15 @@ namespace KinoPasaulis.Server.Controllers.Api
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IUserService _userService;
+        private readonly ApplicationDbContext _dbContext;
 
-        public TheatherController(ITheatherService theatherService, IApplicationService applicationService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserService userService)
+        public TheatherController(ITheatherService theatherService, IApplicationService applicationService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserService userService, ApplicationDbContext dbContext)
         {
             _theatherService = theatherService;
             _userManager = userManager;
             _userService = userService;
             _signInManager = signInManager;
+            _dbContext = dbContext;
         }
 
         [HttpPost("addEvent")]
@@ -72,6 +77,20 @@ namespace KinoPasaulis.Server.Controllers.Api
         public IEnumerable<Event> GetAllEvents()
         {
             return _theatherService.GetAllEvents();
+        }
+
+        [HttpGet("ThisWeekShows")]
+        public IActionResult WeekShows(int eventId)
+        {
+            var time = DateTime.Now;
+
+            return Ok(_dbContext.Shows
+                .Include(show => show.Event)
+                .Include(show => show.Auditorium)
+                .Where(show => show.Event.Id == eventId)
+                .Where(show => show.StartTime >= time && show.StartTime < time.AddDays(7))
+                .OrderBy(show => show.StartTime)
+                .ToList());
         }
 
         [HttpGet("getActiveTheatherEvents")]

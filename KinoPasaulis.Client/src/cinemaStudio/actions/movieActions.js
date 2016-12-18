@@ -126,6 +126,7 @@ export function deleteMovie(id) {
         dispatch(removeMovie(id));
       })
       .catch(error => {
+        alert('Nepavyko pašalinti filmo: filmas jau naudojamas sistemoje');
         console.log(error);
       })
   };

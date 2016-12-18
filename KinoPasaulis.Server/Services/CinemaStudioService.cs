@@ -94,7 +94,9 @@ namespace KinoPasaulis.Server.Services
             var movie = _dbContext.Movies
                 .Include(m => m.Images)
                 .Include(m => m.Videos)
+                .Include(m => m.MovieCreatorMovies)
                 .SingleOrDefault(m => m.Id == id);
+
             var cinemaStudio = _dbContext.Users
                 .Include(u => u.CinemaStudio)
                 .SingleOrDefault(au => au.Id == userId)
@@ -113,6 +115,7 @@ namespace KinoPasaulis.Server.Services
 
             _dbContext.Images.RemoveRange(movie.Images);
             _dbContext.Videos.RemoveRange(movie.Videos);
+            _dbContext.RemoveRange(movie.MovieCreatorMovies);
             _dbContext.Movies.Remove(movie);
             _dbContext.SaveChanges();
 

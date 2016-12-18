@@ -2,6 +2,7 @@
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KinoPasaulis.Server.Services
 {
@@ -17,5 +18,6 @@ namespace KinoPasaulis.Server.Services
         object GetCinemaStudiosJobAdvertisements(string userId);
         bool DeleteJobAdvertisement(int id, string userId);
         object GetCinemaStudioMovie(int movieId, string userId);
+        IEnumerable<Specialty> GetSpecialties();
     }
 }

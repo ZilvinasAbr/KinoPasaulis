@@ -241,5 +241,18 @@ namespace KinoPasaulis.Server.Controllers.Api
 
             return Ok();
         }
+
+        [HttpGet("specialties")]
+        public IActionResult GetSpecialties()
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return Unauthorized();
+            }
+
+            var specialties = _cinemaStudioService.GetSpecialties();
+
+            return Ok(specialties);
+        }
     }
 }

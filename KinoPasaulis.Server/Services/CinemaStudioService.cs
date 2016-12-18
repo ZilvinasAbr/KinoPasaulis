@@ -348,5 +348,13 @@ namespace KinoPasaulis.Server.Services
                 movieCreators
             };
         }
+
+        public IEnumerable<Specialty> GetSpecialties()
+        {
+            var specialties = _dbContext.Specialties
+                .ToList();
+
+            return specialties;
+        }
     }
 }

@@ -37,27 +37,13 @@ export function addJobAdvertisement(
 
 export function fetchSpecialties() {
   return dispatch => {
-    const mockSpecialties = [
-      {
-        id: 1,
-        title: 'Režisierius'
-      },
-      {
-        id: 2,
-        title: 'Aktorius'
-      },
-      {
-        id: 3,
-        title: 'Kompozitorius'
-      }
-    ];
-
-    dispatch(receiveSpecialties(mockSpecialties));
-    return;
     axios.get('/api/cinemaStudio/specialties')
       .then(response => {
         dispatch(receiveSpecialties(response.data));
       })
+      .catch(error => {
+        console.log(error);
+      });
   };
 }
 

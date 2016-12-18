@@ -118,6 +118,8 @@ class EventDetails extends React.Component {
           <Col md={7}>
             {this.paintImage()}
           </Col>
+        </div>
+        <div className="container">
           <h1> Ateinančios savaitės seansai </h1>
           {this.renderThisWeeksShows()}
         </div>

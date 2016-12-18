@@ -50,6 +50,10 @@ const renderMovieDetails = (movie) => (
           <td>{movie.title}</td>
         </tr>
         <tr>
+          <td>Trukmė</td>
+          <td>{movie.duration}</td>
+        </tr>
+        <tr>
           <td>Išleidimo data:</td>
           <td>{moment(movie.releaseDate).format('YYYY-MM-DD HH:MM')}</td>
         </tr>

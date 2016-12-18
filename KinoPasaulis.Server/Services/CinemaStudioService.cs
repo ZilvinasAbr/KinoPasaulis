@@ -338,7 +338,8 @@ namespace KinoPasaulis.Server.Services
                 movie.ReleaseDate,
                 movie.Ratings,
                 movie.JobAdvertisements,
-                movie.Language
+                movie.Language,
+                movie.Duration
             };
         }
     }

@@ -72,6 +72,7 @@ namespace KinoPasaulis.Server.Controllers.Api
                 .Include(show => show.Event)
                     .ThenInclude(show => show.Movie)
                         .ThenInclude(show => show.Images)
+                .Include(show => show.Orders)
                 .Include(show => show.Auditorium)
                 .Where(show => show.Event.Id == eventId)
                 .Where(show => show.StartTime >= time && show.StartTime < time.AddDays(7))

@@ -11,7 +11,11 @@ class MovieCreatorHomePage extends React.Component {
   render() {
     return (
       <div>
-        <MovieCreatorNavigationBar />
+        <MovieCreatorNavigationBar
+            changePageToHome={this.props.changePageToHome}
+            goToTaggedMovies={this.props.goToTaggedMovies}
+            changePageToProfile={this.props.changePageToProfile}
+            logout={this.props.logout}/>
         <h1> Movie Creator Home Page </h1>
       </div>
     );
@@ -25,6 +29,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    changePageToHome: () => {
+      dispatch(push('/home'));
+    },
+    goToTaggedMovies: () => {
+      dispatch(push('/moviecreator/taggedMovies'));
+    },
+    logout: () => {
+      dispatch(logout());
+    }
   }
 }
 

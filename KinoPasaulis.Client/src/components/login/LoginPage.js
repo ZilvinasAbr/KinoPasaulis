@@ -9,6 +9,7 @@ import { deleteErrorMessage } from '../../actionCreators/registerLoginError';
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
+
   }
 
   componentWillUnmount() {

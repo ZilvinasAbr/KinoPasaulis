@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { logout } from '../../../actions/account/logoutActions';
 import LogoutButton from '../../common/LogoutButton';
 
-const MovieCreatorNavigationBar = ({logout, changePageToHome, changePageToProfile}) => {
+const MovieCreatorNavigationBar = ({logout, changePageToHome, goToTaggedMovies, goToJobOffers, changePageToProfile}) => {
   return (
     <Navbar inverse>
       <Navbar.Header>
@@ -16,6 +16,10 @@ const MovieCreatorNavigationBar = ({logout, changePageToHome, changePageToProfil
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
+        <Nav pullLeft>
+          <NavItem eventKey={1} onClick={goToTaggedMovies}> Veikla </NavItem>
+          <NavItem eventKey={2} onClick={goToJobOffers}> Darbo skelbimai </NavItem>
+        </Nav>
         <Nav pullRight>
           <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
           <LogoutButton
@@ -30,6 +34,7 @@ const MovieCreatorNavigationBar = ({logout, changePageToHome, changePageToProfil
 
 MovieCreatorNavigationBar.propTypes = {
   changePageToHome: React.PropTypes.func.isRequired,
+  goToTaggedMovies: React.PropTypes.func.isRequired,
   changePageToProfile: React.PropTypes.func.isRequired,
   logout: React.PropTypes.func.isRequired
 };
@@ -42,6 +47,14 @@ function mapDispatchToProps(dispatch) {
 
     changePageToProfile: () => {
       dispatch(push('/profile'));
+    },
+
+    goToTaggedMovies: () => {
+      dispatch(push('/moviecreator/taggedMovies'));
+    },
+
+    goToJobOffers: () => {
+      dispatch(push('/moviecreator/jobOffers'));
     },
 
     logout: () => {

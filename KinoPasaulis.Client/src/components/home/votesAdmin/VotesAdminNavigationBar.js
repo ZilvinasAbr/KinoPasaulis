@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { logout } from '../../../actions/account/logoutActions';
 import LogoutButton from '../../common/LogoutButton';
 
-const VotesAdminNavigationBar = ({logout, changePageToHome, changePageToProfile}) => {
+const VotesAdminNavigationBar = ({logout, changePageToHome, goToVotings, goToAddVoting, changePageToProfile}) => {
   return (
     <Navbar inverse>
       <Navbar.Header>
@@ -16,6 +16,10 @@ const VotesAdminNavigationBar = ({logout, changePageToHome, changePageToProfile}
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
+        <Nav pullLeft>
+          <NavItem eventKey={1} onClick={goToVotings}> Balsavimai </NavItem>
+          <NavItem eventKey={2} onClick={goToAddVoting}> Kurti balsavimą </NavItem>
+        </Nav>
         <Nav pullRight>
           <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
           <LogoutButton
@@ -31,6 +35,7 @@ const VotesAdminNavigationBar = ({logout, changePageToHome, changePageToProfile}
 VotesAdminNavigationBar.propTypes = {
   changePageToHome: React.PropTypes.func.isRequired,
   changePageToProfile: React.PropTypes.func.isRequired,
+  goToVotings: React.PropTypes.func.isRequired,
   logout: React.PropTypes.func.isRequired
 };
 
@@ -42,6 +47,14 @@ function mapDispatchToProps(dispatch) {
 
     changePageToProfile: () => {
       dispatch(push('/profile'));
+    },
+
+    goToVotings: () => {
+      dispatch(push('/votesadmin/votings'));
+    },
+
+    goToAddVoting: () => {
+      dispatch(push('/votesadmin/addVoting'));
     },
 
     logout: () => {

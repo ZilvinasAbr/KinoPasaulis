@@ -117,7 +117,7 @@ namespace KinoPasaulis.Server.Data
             context.SaveChanges();
         }
 
-        private static IEnumerable<JobAdvertisement> AddJobAdvertisements(List<Movie> movies, List<Specialty> specialties)
+        private static List<JobAdvertisement> AddJobAdvertisements(List<Movie> movies, List<Specialty> specialties)
         {
             var jobAdvertisements = new List<JobAdvertisement>
             {
@@ -131,7 +131,7 @@ namespace KinoPasaulis.Server.Data
             return jobAdvertisements;
         }
 
-        private static IEnumerable<Event> AddEvents(List<Theather> theathers, List<Movie> movies)
+        private static List<Event> AddEvents(List<Theather> theathers, List<Movie> movies)
         {
             var events = new List<Event>
             {
@@ -158,7 +158,7 @@ namespace KinoPasaulis.Server.Data
             return events;
         }
 
-        private static IEnumerable<Show> AddShows(List<Event> events, List<Auditorium> auditoriums)
+        private static List<Show> AddShows(List<Event> events, List<Auditorium> auditoriums)
         {
             var shows = new List<Show>
             {
@@ -172,7 +172,7 @@ namespace KinoPasaulis.Server.Data
             return shows;
         }
 
-        private static IEnumerable<Order> AddOrders(List<Client> clients, List<Show> shows)
+        private static List<Order> AddOrders(List<Client> clients, List<Show> shows)
         {
             var orders = new List<Order>
             {

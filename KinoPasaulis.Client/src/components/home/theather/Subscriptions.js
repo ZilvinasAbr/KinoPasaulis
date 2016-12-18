@@ -82,17 +82,17 @@ class Subscriptions extends React.Component {
           goToSubscriptions={this.props.goToSubscriptions}
           logout={this.props.logout}
         />
-        <h1> Subscribers </h1>
         <Col md={9}>
           <div className="container">
+            <h1> Prenumeratoriai </h1>
             <Table responsive hover>
               <thead>
               <tr>
-                <th> First name </th>
-                <th> Last name </th>
-                <th> Email </th>
-                <th> Phone </th>
-                <th> Send </th>
+                <th> Vardas </th>
+                <th> Pavardė </th>
+                <th> El. paštas </th>
+                <th> Telefonas </th>
+                <th> Siųsti </th>
               </tr>
               </thead>
               <tbody>
@@ -102,7 +102,7 @@ class Subscriptions extends React.Component {
                 <th> </th>
                 <th> </th>
                 <th> </th>
-                <th> Send to everyone </th>
+                <th> Siųsti visiem </th>
               </tr>
               <tr>
                 <td> </td>
@@ -121,20 +121,20 @@ class Subscriptions extends React.Component {
             disabled={this.state.disabledSend}
             onClick={this.open.bind(this)}
           >
-            Announce
+            Pranešti
           </Button>
           <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
             <Modal.Header closeButton>
-              <Modal.Title>Write your announcement!</Modal.Title>
+              <Modal.Title> Rašykite savo pranešimą! </Modal.Title>
             </Modal.Header>
             <Modal.Body>
 
-              <FormControl value={this.state.inputValue} onChange={this.updateInputValue.bind(this)} componentClass="textarea" placeholder="Announcement" bsSize="large" />
+              <FormControl value={this.state.inputValue} onChange={this.updateInputValue.bind(this)} componentClass="textarea" placeholder="Pranešimas" bsSize="large" />
 
             </Modal.Body>
             <Modal.Footer>
-              <Button bsStyle="success" onClick={this.sendAnnouncement.bind(this, this.state.markedSubscribers, this.state.inputValue)}>Send</Button>
-              <Button bsStyle="danger" onClick={this.close.bind(this)}>Close</Button>
+              <Button bsStyle="success" onClick={this.sendAnnouncement.bind(this, this.state.markedSubscribers, this.state.inputValue)}> Siųsti </Button>
+              <Button bsStyle="danger" onClick={this.close.bind(this)}>Uždaryti</Button>
             </Modal.Footer>
           </Modal>
         </Col>

@@ -30,6 +30,7 @@ namespace KinoPasaulis.Server.Services
                 .Include(x => x.Theather)
                     .ThenInclude(x => x.Events)
                         .ThenInclude(x => x.Movie)
+                            .ThenInclude(x => x.Images)
                 .SingleOrDefault(x => x.Id == id)
                 .Theather;
         }

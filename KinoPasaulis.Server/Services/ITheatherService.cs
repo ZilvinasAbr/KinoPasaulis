@@ -13,6 +13,7 @@ namespace KinoPasaulis.Server.Services
         IEnumerable<Event> GetAllEvents();
         IEnumerable<Event> GetEventsByTheatherId(int id);
         Show GetShowById(int id);
+        StatisticsViewModel GetOrderStatistics(int id);
 
         bool SendAnnouncements(ISet<int> clientIds, string theatherId, string message);
         IEnumerable<Announcement> GetTheaterAnnouncments(string userId);

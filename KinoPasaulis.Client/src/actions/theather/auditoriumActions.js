@@ -18,6 +18,7 @@ export function addAuditorium(name, seats) {
         if(response.data === true) {
           console.log('success');
           dispatch(addAuditoriumToAuditoriums({name, seats}));
+          dispatch(getAuditoriums());
         }else {
           console.log('response.data returned false')
         }
@@ -54,7 +55,10 @@ export function deleteAuditorium(id, arrayId) {
       }
     }).then(response => {
       dispatch(deleteAuditoriumFromAuditoriums(arrayId));
-    });
+    })
+      .catch(error => {
+        alert('Auditorija nebuvo ištrinta, nes yra priskirta seansams')
+      });
   }
 }
 

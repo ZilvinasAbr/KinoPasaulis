@@ -25,6 +25,8 @@ namespace KinoPasaulis.Server.Models
 
         public decimal Gross { get; set; }
 
+        public TimeSpan Duration { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string Language { get; set; }

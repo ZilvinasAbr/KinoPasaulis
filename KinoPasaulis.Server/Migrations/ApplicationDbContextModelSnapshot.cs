@@ -297,6 +297,8 @@ namespace KinoPasaulis.Server.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
+                    b.Property<TimeSpan>("Duration");
+
                     b.Property<decimal>("Gross");
 
                     b.Property<string>("Language")

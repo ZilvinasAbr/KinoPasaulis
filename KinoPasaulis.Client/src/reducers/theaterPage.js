@@ -9,7 +9,8 @@ import {
   RECEIVE_SHOW_EVENTS,
   RECEIVE_ONE_EVENT,
   REQUEST_THEATER_SUBSCRIBERS,
-  RECEIVE_THEATER_SUBSCRIBERS
+  RECEIVE_THEATER_SUBSCRIBERS,
+  GET_STATISTICS
 } from '../actionCreators/theaterActionCreators';
 
 export const initialState = {};
@@ -24,6 +25,10 @@ function requestTheaterSubscribers(state) {
 
 function receiveTheaterSubscribers(state, subscribers) {
   return Object.assign({}, state, {subscribers});
+}
+
+function receiveStatistics(state, statistics) {
+  return Object.assign({}, state, {statistics});
 }
 
 function receiveShowAuditoriums(state, auditoriums) {
@@ -131,6 +136,8 @@ export function theaterPage(state = initialState, action) {
       return requestTheaterSubscribers(state);
     case RECEIVE_THEATER_SUBSCRIBERS:
       return receiveTheaterSubscribers(state, action.subscribers);
+    case GET_STATISTICS:
+      return receiveStatistics(state, action.statistics);
     default:
       return state;
   }

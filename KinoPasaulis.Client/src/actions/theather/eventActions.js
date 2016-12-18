@@ -5,7 +5,8 @@ import {
   requestShowEvents,
   receiveShowEvents,
   receiveOneEvent,
-  deleteOneShow
+  deleteOneShow,
+  getStatistics as getSeatStatistics
 } from '../../actionCreators/theaterActionCreators';
 
 export function addEvent(movie, times, startTime, endTime, auditoriums) {
@@ -21,6 +22,22 @@ export function addEvent(movie, times, startTime, endTime, auditoriums) {
           console.log('success');
           dispatch(push('/theather/events'));
           //dispatch(addEventToReducer({name, seats}));
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+export function getStatistics(id) {
+  console.log(id);
+  return dispatch => {
+    console.log(id);
+    return axios.get('/api/Event/statistics?id=' + id)
+      .then(response => {
+        console.log(response);
+        console.log('success');
+        dispatch(getSeatStatistics(response.data))
       })
       .catch(error => {
         console.log(error);

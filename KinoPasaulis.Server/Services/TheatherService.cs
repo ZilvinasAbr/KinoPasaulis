@@ -9,6 +9,7 @@ using KinoPasaulis.Server.Repositories.CinemaStudio;
 using KinoPasaulis.Server.Repositories.Client;
 using KinoPasaulis.Server.Repositories.Theather;
 using KinoPasaulis.Server.ViewModels.Theather;
+using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Services
 {
@@ -22,6 +23,7 @@ namespace KinoPasaulis.Server.Services
         private readonly IAnnouncementRepository _announcementRepository;
         private readonly IUserService _userService;
         private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly ApplicationDbContext _dbContext;
 
         public TheatherService(
@@ -33,6 +35,7 @@ namespace KinoPasaulis.Server.Services
             IAnnouncementRepository announcementRepository,
             IUserService userService,
             ISubscriptionRepository subscriptionRepository,
+            IOrderRepository orderRepository,
             ApplicationDbContext dbContext
             )
         {
@@ -198,6 +201,58 @@ namespace KinoPasaulis.Server.Services
             }
 
             return viewModels;
+        }
+
+        public StatisticsViewModel GetOrderStatistics(int id)
+        {
+            var Event =_eventRepository.GetEventById(id);
+            var eventShows = Event.Shows;
+            var totalSeats = 0;
+            var orderedSeats = 0;
+            var totalSeatsEndedShows = 0;
+            var orderedSeatsEndedShows = 0;
+            var showingNow = false;
+            var over = false;
+            TimeSpan time;
+
+            foreach (var show in eventShows)
+            {
+                totalSeats += show.Auditorium.Seats;
+                orderedSeats += show.Orders.Sum(order => order.Amount);
+
+                if (show.StartTime < DateTime.Now)
+                {
+                    totalSeatsEndedShows += show.Auditorium.Seats;
+                    orderedSeatsEndedShows += show.Orders.Sum(order => order.Amount);
+                }
+            }
+
+            if (DateTime.Now > Event.StartTime && DateTime.Now < Event.EndTime)
+            {
+                showingNow = true;
+                time = DateTime.Now - Event.StartTime;
+            }
+            else if (DateTime.Now > Event.StartTime)
+            {
+                over = true;
+            }
+            else
+            {
+                time = Event.StartTime - DateTime.Now;
+            }
+
+            var result = new StatisticsViewModel
+            {
+                OrderedSeats = orderedSeats,
+                OrderedSeatsEndedShows = orderedSeatsEndedShows,
+                TotalSeats = totalSeats,
+                TotalSeatsEndedShows = totalSeatsEndedShows,
+                Over = over,
+                ShowingNow = showingNow,
+                Time = time
+            };
+
+            return result;
         }
     }
 }

@@ -4,6 +4,7 @@ import { Grid, Row, Col, Carousel, Table } from 'react-bootstrap';
 import moment from 'moment';
 
 import CinemaStudioNavigationBar from '../CinemaStudioNavigationBar';
+import NavigationBar from '../../../components/common/NavigationBar';
 
 const renderCarouselImage = (image, index) => (
   <Carousel.Item key={index}>
@@ -125,12 +126,11 @@ class MoviePage extends React.Component {
     const movie = this.state.movie;
     return (
       <div>
-        <CinemaStudioNavigationBar />
+        <NavigationBar />
         <Grid>
           <Row>
             <Col xs={10} xsOffset={1} sm={6} smOffset={3} md={4} mdOffset={4} lg={4} lgOffset={4}>
               <h1>{movie.title}</h1>
-
             </Col>
           </Row>
           <hr />

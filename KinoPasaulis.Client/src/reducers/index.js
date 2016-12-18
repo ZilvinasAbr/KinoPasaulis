@@ -3,6 +3,7 @@ import { homePage, initialState as homePageInitialState } from './homePage';
 import { landingPage, initialState as landingPageInitialState } from './landingPage';
 import { registerPage, initialState as registerPageInitialState } from './registerPage';
 import { theaterPage, initialState as theaterPageInitialState } from './theaterPage';
+import { clientPage, initialState as clientPageInitialState } from './clientPage';
 import { cinemaStudioPage, initialState as cinemaStudioPageInitialState } from '../cinemaStudio/reducer';
 import { registerLoginError, initialState as registerLoginErrorInitialState } from './registerLoginError';
 import { reducer as formReducer } from 'redux-form';
@@ -14,6 +15,7 @@ const reducers = {
   registerPage,
   theaterPage,
   cinemaStudioPage,
+  clientPage,
   registerLoginError,
   form: formReducer,
   routing: routerReducer
@@ -27,6 +29,7 @@ export const initialState = {
   registerPage: registerPageInitialState,
   theaterPage: theaterPageInitialState,
   cinemaStudioPage: cinemaStudioPageInitialState,
+  clientPage: clientPageInitialState,
   registerLoginError: registerLoginErrorInitialState,
   form: {}
 };

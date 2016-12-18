@@ -9,6 +9,8 @@ namespace KinoPasaulis.Server.Repositories.Client
     public interface ISubscriptionRepository
     {
         Subscription GetSubscriptionById(int subscriptionId);
+        IEnumerable<Models.Theather> GetSubscribedTheathersByClientId(int clientId);
+        IEnumerable<Subscription> GetSubscriptions(int clientId);
         void InsertSubscription(Subscription subscription);
         IEnumerable<Subscription> GetTheaterSubscriptions(int theaterId);
         void UpdateSubscription(Subscription subscription);

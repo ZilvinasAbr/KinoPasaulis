@@ -7,13 +7,19 @@ import {
   UPDATE_AUDITORIUM,
   REQUEST_SHOW_EVENTS,
   RECEIVE_SHOW_EVENTS,
+  REQUEST_THEATHERS,
+  RECEIVE_THEATHERS,
   RECEIVE_ONE_EVENT,
+  RECEIVE_ONE_THEATHER,
   REQUEST_THEATER_SUBSCRIBERS,
   RECEIVE_THEATER_SUBSCRIBERS,
   GET_STATISTICS
 } from '../actionCreators/theaterActionCreators';
 
-export const initialState = {};
+export const initialState = {
+  events: [],
+  theather: {},
+};
 
 function requestShowAuditoriums(state) {
   return state;
@@ -83,6 +89,15 @@ function receiveShowEvents(state, events) {
   return Object.assign({}, state, {events});
 }
 
+function requestTheathers(state)
+{
+  return state;
+}
+
+function receiveTheathers(state, theathers) {
+  return Object.assign({}, state, {theathers});
+}
+
 function updateAuditorium(state, auditorium) {
   let nextState = Object.assign({}, state, {
     auditoriums: state.auditoriums.slice()
@@ -101,6 +116,15 @@ function receiveOneEvent(state, event) {
     event: event,
     movie: event.movie,
     shows: event.shows,
+  });
+
+  return nextState;
+}
+
+function receiveOneTheather(state, theather) {
+
+  let nextState = Object.assign({}, state, {
+    theather: theather,
   });
 
   return nextState;
@@ -130,8 +154,14 @@ export function theaterPage(state = initialState, action) {
       return requestShowEvents(state);
     case RECEIVE_SHOW_EVENTS:
       return receiveShowEvents(state, action.events);
+    case REQUEST_THEATHERS:
+      return requestTheathers(state);
+    case RECEIVE_THEATHERS:
+      return receiveTheathers(state, action.theathers);
     case RECEIVE_ONE_EVENT:
       return receiveOneEvent(state, action.event);
+    case RECEIVE_ONE_THEATHER:
+      return receiveOneTheather(state, action.theather);
     case REQUEST_THEATER_SUBSCRIBERS:
       return requestTheaterSubscribers(state);
     case RECEIVE_THEATER_SUBSCRIBERS:

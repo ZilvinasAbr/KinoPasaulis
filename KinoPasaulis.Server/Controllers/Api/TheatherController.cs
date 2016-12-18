@@ -56,7 +56,6 @@ namespace KinoPasaulis.Server.Controllers.Api
             return new List<AuditoriumViewModel>();
         }
 
-        }
 
         [HttpGet("getTheathers")]
         public IActionResult GetTheathers()
@@ -70,6 +69,8 @@ namespace KinoPasaulis.Server.Controllers.Api
         {
             var theather = _theatherService.GetTheatherById(id);
             return theather;
+        }
+
         [HttpDelete("deleteAuditorium")]
         public bool DeleteAuditorium([FromBody] int id)
         {

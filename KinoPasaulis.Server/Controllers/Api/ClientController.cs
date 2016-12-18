@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Services;
 using Microsoft.AspNetCore.Identity;
@@ -90,7 +91,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             {
                 var userId = HttpContext.User.GetUserId();
                 var client = _userService.GetClientByUserId(userId);
-                var theaters = _clientService.GetSubscriptions(client.Id);
+                var theaters = _clientService.GetSubscribedTheathers(client.Id);
 
                 return Ok(theaters);
             }
@@ -123,10 +124,22 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpPost("removeSubscription")]
-        public IActionResult RemoveSubscription([FromBody] int subscriptionId)
+        public IActionResult RemoveSubscription([FromBody] int theaterId)
         {
             if (_signInManager.IsSignedIn(User))
             {
+                var userId = HttpContext.User.GetUserId();
+                var client = _userService.GetClientByUserId(userId);
+                var clientSubscriptions = _clientService.GetSubscriptions(client.Id);
+                int subscriptionId = 0;
+                foreach (var clientSubscription in clientSubscriptions)
+                {
+                    if (clientSubscription.Theather.Id == theaterId)
+                    {
+                        subscriptionId = clientSubscription.Id;
+                        break;
+                    }
+                }
                 var subscription = _clientService.GetSubscriptionById(subscriptionId);
                 var begin = subscription.BeginDate;
                 var period = DateTime.Now.Subtract(begin).TotalSeconds;
@@ -136,6 +149,20 @@ namespace KinoPasaulis.Server.Controllers.Api
                 _clientService.RemoveSubscription(subscription);
 
                 return Ok(true);
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpGet("isSubscribedToTheater")]
+        public IActionResult IsSubscribedByTheaterId(int id)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                var client = _userService.GetClientByUserId(userId);
+                var clientSubsciptions = _clientService.GetSubscribedTheathers(client.Id);
+                return Ok(clientSubsciptions.Any(sb => sb.Id == id));
             }
 
             return Unauthorized();

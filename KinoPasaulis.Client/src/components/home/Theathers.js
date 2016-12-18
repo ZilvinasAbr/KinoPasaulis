@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import ClientNavigationBar from './client/ClientNavigationBar';
 import { getTheatherById } from '../../actions/theather/theatherActions';
 import { getEventsById } from '../../actions/theather/eventActions';
-import { addSubscription } from '../../actions/client/subscriptionActions';
+import { addSubscription, removeSubscription, isSubscribedToTheather } from '../../actions/client/subscriptionActions';
 import { Well, Col } from 'react-bootstrap';
 import moment from 'moment';
 
@@ -16,6 +16,19 @@ class Theathers extends React.Component {
   componentDidMount() {
     this.props.getTheather(this.props.params.id);
     this.props.getEvents(this.props.params.id);
+    this.props.isSubscribedToTheather(this.props.params.id);
+  }
+
+  renderSubscribeButton() {
+    let subscribed = this.props.subscribed;
+    if (subscribed)
+    {
+      return <a className="btn btn-primary" onClick={this.props.removeSubscription.bind(this, this.props.theather.id)}> Atšaukti prenumeratą </a>
+    }
+    else
+    {
+      return <a className="btn btn-primary" onClick={this.props.addSubscription.bind(this, this.props.theather.id)}> Prenumeruoti </a>
+    }
   }
 
   renderEvents() {
@@ -41,7 +54,7 @@ class Theathers extends React.Component {
         <div className="container">
           <Col md={3}>
             <h2>{this.props.theather.title}</h2>
-            <a className="btn btn-primary" onClick={this.props.addSubscription.bind(this, this.props.theather.id)}> Prenumeruoti </a>
+            {this.renderSubscribeButton()}
           </Col>
 
           <Col md={9}>
@@ -56,8 +69,9 @@ class Theathers extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    events: state.theaterPage.events || [],
-    theather: state.theaterPage.theather || {},
+    events: state.theaterPage.events,
+    theather: state.theaterPage.theather,
+    subscribed: state.clientPage.subscribed,
   }
 }
 
@@ -65,6 +79,12 @@ function mapDispatchToProps(dispatch) {
   return {
     addSubscription: (id) => {
       dispatch(addSubscription(id));
+    },
+    removeSubscription: (id) => {
+      dispatch(removeSubscription(id));
+    },
+    isSubscribedToTheather: (id) => {
+      dispatch(isSubscribedToTheather(id));
     },
     getTheather: (id) => {
       dispatch(getTheatherById(id));

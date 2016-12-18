@@ -18,6 +18,10 @@ class ClientHomePage extends React.Component {
 
   renderSubscriptions() {
     let subscriptions = this.props.subscriptions;
+    if (subscriptions.length == 0)
+    {
+      return <h3>Jūs neprenumeruojate jokių kino teatrų</h3>
+    }
     return subscriptions.map((subscription, index) => {
       return <div key={index}>
         <Col md={4}>
@@ -34,6 +38,10 @@ class ClientHomePage extends React.Component {
 
   renderTheathers() {
     let theathers = this.props.theathers;
+    if (theathers.length == 0)
+    {
+      return <h3>Nėra kino teatrų</h3>
+    }
     return theathers.map((theather, index) => {
       return <div key={index}>
         <Col md={4}>

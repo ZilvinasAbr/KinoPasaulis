@@ -15,7 +15,10 @@ import {
   RECEIVE_THEATER_SUBSCRIBERS
 } from '../actionCreators/theaterActionCreators';
 
-export const initialState = {};
+export const initialState = {
+  events: [],
+  theather: {},
+};
 
 function requestShowAuditoriums(state) {
   return state;

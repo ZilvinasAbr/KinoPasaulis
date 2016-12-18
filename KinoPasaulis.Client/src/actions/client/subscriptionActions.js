@@ -2,7 +2,9 @@ import axios from 'axios';
 import { push } from 'react-router-redux';
 import {
   requestSubscriptions,
-  receiveSubscriptions
+  receiveSubscriptions,
+  receiveSubscribed,
+  requestSubscribed
 } from '../../actionCreators/clientActionCreators';
 
 export function getSubscriptions() {
@@ -33,6 +35,41 @@ export function addSubscription(id) {
         console.log('success');
         alert('Sėkmingai užprenumeravote teatrą!');
         dispatch(push('/home'));
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+export function removeSubscription(id) {
+  return dispatch => {
+    return axios({
+      method: 'post',
+      url: '/api/client/removeSubscription',
+      data: id,
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+      .then(response => {
+        console.log('success');
+        alert('Sėkmingai atšaukėte prenumeratą!');
+        dispatch(push('/home'));
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+export function isSubscribedToTheather(id) {
+  return dispatch => {
+    dispatch(requestSubscribed());
+
+    return axios.get('/api/client/isSubscribedToTheater?id=' + id)
+      .then(response => {
+        dispatch(receiveSubscribed(response.data));
       })
       .catch(error => {
         console.log(error);

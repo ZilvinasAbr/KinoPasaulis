@@ -4,6 +4,7 @@ using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 
 namespace KinoPasaulis.Server.Repositories.Client
 {
@@ -24,7 +25,7 @@ namespace KinoPasaulis.Server.Repositories.Client
             return subscription;
         }
 
-        public IEnumerable<Models.Theather> GetSubscriptionsByClientId(int clientId)
+        public IEnumerable<Models.Theather> GetSubscribedTheathersByClientId(int clientId)
         {
             var subscriptions = _dbContext
                 .Subscriptions
@@ -41,6 +42,18 @@ namespace KinoPasaulis.Server.Repositories.Client
             }
 
             return list;
+        }
+
+        public IEnumerable<Subscription> GetSubscriptions(int clientId)
+        {
+            var subscriptions = _dbContext
+                .Subscriptions
+                .Include(sb => sb.Client)
+                .Include(sb => sb.Theather)
+                .Where(sb => sb.Client.Id == clientId)
+                .Where(sb => sb.EndDate == null).ToList();
+
+            return subscriptions;
         }
 
         public IEnumerable<Subscription> GetTheaterSubscriptions(int theaterId)

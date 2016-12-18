@@ -12,3 +12,18 @@ export function receiveSubscriptions(subscriptions) {
     subscriptions
   };
 }
+
+export const REQUEST_SUBSCRIBED = 'REQUEST_SUBSCRIBED';
+export function requestSubscribed() {
+  return {
+    type: REQUEST_SUBSCRIBED
+  };
+}
+
+export const RECEIVE_SUBSCRIBED = 'RECEIVE_SUBSCRIBED';
+export function receiveSubscribed(subscribed) {
+  return {
+    type: RECEIVE_SUBSCRIBED,
+    subscribed
+  };
+}

@@ -133,7 +133,7 @@ namespace KinoPasaulis.Server.Services
 
             var subscriptions = _subscriptionRepository.GetTheaterSubscriptions(theater.Id);
 
-            return subscriptions.Select(subscription => subscription.Client).ToList();
+            return subscriptions.Where(sb => sb.EndDate == null).Select(subscription => subscription.Client).ToList();
         }
 
         public Theather GetTheatherById(int id)

@@ -30,10 +30,11 @@ export function sendAnnouncement(subscribers, message) {
         .then(response => {
             if(response.status = 200)
             {
-              alert('Operation successful')
+              alert('Operacija sėkminga')
             }
         })
         .catch(error => {
+          alert('Operacija nesėkminga')
           console.log(error);
         })
 }

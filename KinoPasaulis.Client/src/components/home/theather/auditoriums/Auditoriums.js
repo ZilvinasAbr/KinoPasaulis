@@ -79,10 +79,10 @@ class Auditoriums extends React.Component {
         />
         <Col md={3}>
           <div className="container">
-            <h1> Auditoriums </h1>
+            <h1> Auditorijos </h1>
             <ButtonToolbar>
               <OverlayTrigger trigger="click" rootClose placement="right" overlay={addNewForm}>
-                <Button>Nauja</Button>
+                <Button bsStyle="primary">Nauja</Button>
               </OverlayTrigger>
             </ButtonToolbar>
           </div>
@@ -92,8 +92,8 @@ class Auditoriums extends React.Component {
             <Table responsive hover>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Seats</th>
+                  <th> Pavadinimas </th>
+                  <th> Vietų skaičius </th>
                   <th></th>
                 </tr>
               </thead>
@@ -109,14 +109,14 @@ class Auditoriums extends React.Component {
           aria-labelledby="contained-modal-title"
         >
           <Modal.Header>
-            <Modal.Title id="contained-modal-title">Auditorium is about to be deleted</Modal.Title>
+            <Modal.Title id="contained-modal-title"> Auditorija bus ištrinta </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Proceed?
+            Tęsti?
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.deleteAuditorium.bind(this)} bsStyle="danger">Delete</Button>
-            <Button onClick={this._closeModal.bind(this)}>Close</Button>
+            <Button onClick={this.deleteAuditorium.bind(this)} bsStyle="danger"> Ištrinti </Button>
+            <Button onClick={this._closeModal.bind(this)}> Uždaryti </Button>
           </Modal.Footer>
         </Modal>
       </div>

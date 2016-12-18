@@ -55,7 +55,10 @@ export function deleteAuditorium(id, arrayId) {
       }
     }).then(response => {
       dispatch(deleteAuditoriumFromAuditoriums(arrayId));
-    });
+    })
+      .catch(error => {
+        alert('Auditorija nebuvo ištrinta, nes yra priskirta seansams')
+      });
   }
 }
 

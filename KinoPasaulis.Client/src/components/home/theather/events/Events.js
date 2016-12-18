@@ -55,11 +55,11 @@ class Events extends React.Component {
         />
         <div className="container">
           <Col md={3}>
-            <Button bsStyle="primary" onClick={this.props.goToEventCreateForm}> Create new event</Button>
+            <Button bsStyle="primary" onClick={this.props.goToEventCreateForm}> Sukurti naują </Button>
           </Col>
 
           <Col md={9}>
-            <h2> Event list </h2>
+            <h2> Įvykiai </h2>
             {this.renderEvents()}
           </Col>
         </div>

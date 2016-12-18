@@ -28,7 +28,7 @@ class NewEvent extends React.Component {
           logout={this.props.logout}
         />
         <div className="container">
-          <h1> New event form </h1>
+          <h1> Naujo įvykio sukūrimas </h1>
           <AddEventForm
             auditoriums={this.props.auditoriums}
             movies={this.props.movies}

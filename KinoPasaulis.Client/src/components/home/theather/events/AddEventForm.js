@@ -160,7 +160,7 @@ class AddEventForm extends React.Component {
     const { focusedInput, startDate, endDate } = this.state;
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: 'Type a programming language',
+      placeholder: 'Įveskite filmą',
       value,
       onChange: this.onChange
     };
@@ -196,7 +196,7 @@ class AddEventForm extends React.Component {
             <TagsInput value={this.state.showTimes} onChange={this.handleChange} />
           </Row>
           <FormGroup>
-            <Button onClick={this.handleSubmit}> Patvirtinti </Button>
+            <Button bsStyle="primary" onClick={this.handleSubmit}> Patvirtinti </Button>
           </FormGroup>
         </Form>
       </div>

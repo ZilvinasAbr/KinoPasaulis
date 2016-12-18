@@ -110,7 +110,8 @@ export function registerClient(
   confirmPassword,
   firstName,
   lastName,
-  phone
+  phone,
+  birthDate
 ) {
   return dispatch => {
     return axios.post('/api/account/register', {
@@ -120,7 +121,8 @@ export function registerClient(
       ConfirmPassword: confirmPassword,
       FirstName: firstName,
       LastName: lastName,
-      Phone: phone
+      Phone: phone,
+      BirthDate: birthDate
     })
       .then(response => {
         if(response.data === true) {

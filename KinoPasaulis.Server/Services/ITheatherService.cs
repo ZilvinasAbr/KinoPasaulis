@@ -11,6 +11,7 @@ namespace KinoPasaulis.Server.Services
         void AddNewAuditorium(Auditorium auditorium);
         Event GetEventById(int id);
         IEnumerable<Event> GetAllEvents();
+        IEnumerable<Theather> GetAllTheathers();
         IEnumerable<Event> GetEventsByTheatherId(int id);
         Show GetShowById(int id);
         StatisticsViewModel GetOrderStatistics(int id);
@@ -18,6 +19,7 @@ namespace KinoPasaulis.Server.Services
         bool SendAnnouncements(ISet<int> clientIds, string theatherId, string message);
         IEnumerable<Announcement> GetTheaterAnnouncments(string userId);
         IEnumerable<Client> GetTheaterSubscribers(string userId);
+        Theather GetTheatherById(int id);
         bool DeleteAuditorium(int id);
         bool UpdateAutorium(Auditorium auditorium);
         bool UpdateShow(Show show);

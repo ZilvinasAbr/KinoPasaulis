@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,11 @@ namespace KinoPasaulis.Server.Repositories.Theather
             return _context.Theathers
                 .SingleOrDefault(x => x.Id == theatherId);
 
+        }
+
+        public IEnumerable<Models.Theather> GetTheathers()
+        {
+            return _context.Theathers.ToList();
         }
 
         #region IDisposable Support

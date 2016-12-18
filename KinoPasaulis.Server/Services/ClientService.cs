@@ -29,6 +29,16 @@ namespace KinoPasaulis.Server.Services
             return _subscriptionRepository.GetSubscriptionById(subscriptionId);
         }
 
+        public IEnumerable<Theather> GetSubscribedTheathers(int clientId)
+        {
+            return _subscriptionRepository.GetSubscribedTheathersByClientId(clientId);
+        }
+
+        public IEnumerable<Subscription> GetSubscriptions(int clientId)
+        {
+            return _subscriptionRepository.GetSubscriptions(clientId);
+        }
+
         public Vote GetVoteById(int voteId)
         {
             return _voteRepository.GetVoteById(voteId);

@@ -53,11 +53,16 @@ namespace KinoPasaulis.Server.Services
             _dbContext = dbContext;
         }
 
-        public void AddNewEvent(EventCreation eventCreation, string userid)
+        public bool AddNewEvent(EventCreation eventCreation, string userid)
         {
             var addedMovie = _movieRepository.GetMovieById(eventCreation.MovieId);
             var auditoriasList = _auditoriumRepository.GetAuditoriumsByIds(eventCreation.AuditoriumIds);
-            
+
+            if (addedMovie == null || auditoriasList.Count == 0 || eventCreation.Times.Count == 0)
+            {
+                return false;
+            }
+
             var shows = new List<Show>();
             var days = (eventCreation.EndTime - eventCreation.StartTime).TotalDays;
 
@@ -103,6 +108,8 @@ namespace KinoPasaulis.Server.Services
             };
 
             _eventRepository.InsertEvent(Event);
+
+            return true;
         }
 
         public void AddNewAuditorium(Auditorium auditorium)

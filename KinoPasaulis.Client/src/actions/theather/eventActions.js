@@ -20,11 +20,13 @@ export function addEvent(movie, times, startTime, endTime, auditoriums) {
     })
       .then(response => {
           console.log('success');
+          alert('Įvykis sėkmingai sukurtas');
           dispatch(push('/theather/events'));
           //dispatch(addEventToReducer({name, seats}));
       })
       .catch(error => {
         console.log(error);
+        alert('Įvykio nesukurtas. Patikrinkite įvestus duomenis');
       })
   }
 }

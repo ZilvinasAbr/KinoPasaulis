@@ -37,15 +37,24 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpPost("addEvent")]
-        public void AddEvent([FromBody] EventCreation eventCreation)
+        public IActionResult AddEvent([FromBody] EventCreation eventCreation)
         {
             if (_signInManager.IsSignedIn(User))
             {
                 var userId = HttpContext.User.GetUserId();
-                Theather theather = _userService.GetTheatherByUserId(userId);
+                var theather = _userService.GetTheatherByUserId(userId);
                 eventCreation.Theather = theather;
-                _theaterService.AddNewEvent(eventCreation, userId);
+                var created = _theaterService.AddNewEvent(eventCreation, userId);
+
+                if (created)
+                {
+                    return Ok();
+                }
+
+                return BadRequest();
             }
+
+            return Unauthorized();
         }
 
         [HttpGet("events")]

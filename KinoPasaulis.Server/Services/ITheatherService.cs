@@ -7,7 +7,7 @@ namespace KinoPasaulis.Server.Services
 {
     public interface ITheatherService
     {
-        void AddNewEvent(EventCreation eventCreation, string userid);
+        bool AddNewEvent(EventCreation eventCreation, string userid);
         void AddNewAuditorium(Auditorium auditorium);
         Event GetEventById(int id);
         IEnumerable<Event> GetAllEvents();

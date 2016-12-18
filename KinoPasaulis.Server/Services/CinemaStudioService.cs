@@ -312,6 +312,8 @@ namespace KinoPasaulis.Server.Services
         public object GetCinemaStudioMovie(int movieId, string userId)
         {
             var movie = _dbContext.Movies
+                .Include(m => m.MovieCreatorMovies)
+                    .ThenInclude(mcm => mcm.MovieCreator)
                 .Include(m => m.Images)
                 .Include(m => m.Videos)
                 .Include(m => m.CinemaStudio)
@@ -322,6 +324,9 @@ namespace KinoPasaulis.Server.Services
 
             var currentEvents = movie.Events.Where(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime);
             var pastEvents = movie.Events.Where(e => e.EndTime < DateTime.Now);
+            var movieCreators = movie.MovieCreatorMovies
+                .Where(mcm => mcm.IsConfirmed != null && mcm.IsConfirmed.Value)
+                .Select(creatorMovie => creatorMovie.MovieCreator);
 
             return new
             {
@@ -339,7 +344,8 @@ namespace KinoPasaulis.Server.Services
                 movie.Ratings,
                 movie.JobAdvertisements,
                 movie.Language,
-                movie.Duration
+                movie.Duration,
+                movieCreators
             };
         }
     }

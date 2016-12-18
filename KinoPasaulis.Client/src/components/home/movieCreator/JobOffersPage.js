@@ -10,6 +10,7 @@ class JobOffersPage extends React.Component {
     this.state = {
       jobOffers: [],
       specialties: [],
+      payRateFilter: '',
       specialtyFilter: ''
     };
   }
@@ -44,6 +45,12 @@ class JobOffersPage extends React.Component {
     });
   }
 
+  handlePayRateFilter(e) {
+    this.setState({
+      payRateFilter: e.target.value
+    });
+  }
+
   renderJobAdvertisements() {
     let jobOffers = this.state.jobOffers;
     if(jobOffers.length <= 0) {
@@ -56,29 +63,45 @@ class JobOffersPage extends React.Component {
       );
     }
 
-    return jobOffers
-      .filter((jobOffer) => {
+    let filteredJobOffers = jobOffers
+      .filter(jobOffer => {
         if(this.state.specialtyFilter === '') {
           return true;
         }
-
         return jobOffer.specialty.title === this.state.specialtyFilter;
       })
-      .map((jobOffer, index) => (
-        <tr key={index}>
-          <td>{index+1}</td>
-          <td>{jobOffer.movie.title}</td>
-          <td>{jobOffer.specialty.title}</td>
-          <td>{jobOffer.title}</td>
-          <td>{jobOffer.duration} dienų</td>
-          <td>{jobOffer.payRate}</td>
-          <td>
-            <Button>
-              Parašyti kino studijai
-            </Button>
+      .filter(jobOffer => {
+        if(this.state.payRateFilter === '') {
+          return true;
+        }
+        return jobOffer.payRate >= this.state.payRateFilter;
+      });
+
+    if(filteredJobOffers.length <= 0) {
+      return (
+        <tr>
+          <td colSpan={7}>
+            Nėra darbo skelbimų
           </td>
         </tr>
-      ));
+      );
+    }
+
+    return filteredJobOffers.map((jobOffer, index) => (
+      <tr key={index}>
+        <td>{index+1}</td>
+        <td>{jobOffer.movie.title}</td>
+        <td>{jobOffer.specialty.title}</td>
+        <td>{jobOffer.title}</td>
+        <td>{jobOffer.duration} dienų</td>
+        <td>{jobOffer.payRate}</td>
+        <td>
+          <Button>
+            Parašyti kino studijai
+          </Button>
+        </td>
+      </tr>
+    ));
   }
 
   render() {
@@ -95,13 +118,11 @@ class JobOffersPage extends React.Component {
           <Row>
             <Col xs={10} xsOffset={1} sm={10} smOffset={1} lg={6} lgOffset={3}>
               <p>Minimalus atlygis</p>
-              <select>
-                <option value="1000">1000</option>
-                <option value="5000">5000</option>
-                <option value="10000">10000</option>
-                <option value="50000">50000</option>
-                <option value="100000">100000</option>
-              </select>
+              <input
+                type="number"
+                value={this.state.payRateFilter}
+                onChange={(e) => this.handlePayRateFilter(e)}
+              />
               <p>Pareiga</p>
               <select
                 value={this.state.specialtyFilter}

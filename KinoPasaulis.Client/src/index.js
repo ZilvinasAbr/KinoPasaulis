@@ -28,7 +28,7 @@ import CinemaStudiosStatisticsPage from './cinemaStudio/components/CinemaStudios
 import CinemaStudiosMoviesStatisticsPage from './cinemaStudio/components/movies/MoviesStatisticsPage';
 import JobAdvertisementsPage from './cinemaStudio/components/jobAdvertisements/JobAdvertisementsPage';
 import AddJobAdvertisementPage from './cinemaStudio/components/jobAdvertisements/addJobAdvertisement/AddJobAdvertisementPage';
-import MoviePage from './cinemaStudio/components/movies/MoviePage';
+import MoviePage from './cinemaStudio/components/movies/moviePage/MoviePage';
 import TaggedMoviesPage from './components/home/movieCreator/TaggedMoviesPage';
 import PendingMoviesPage from './components/home/movieCreator/PendingMoviesPage';
 import JobOffersPage from './components/home/movieCreator/JobOffersPage';

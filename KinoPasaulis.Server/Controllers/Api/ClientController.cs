@@ -65,6 +65,11 @@ namespace KinoPasaulis.Server.Controllers.Api
                 var userId = HttpContext.User.GetUserId();
                 var client = _userService.GetClientByUserId(userId);
                 var show = _showRepository.GetShowById(orderModel.ShowId);
+                var seatsSum = 0;
+                foreach (var orders in show.Orders)
+                    seatsSum += orders.Amount;
+                if (seatsSum + orderModel.Amount > show.Auditorium.Seats || orderModel.Amount < 1)
+                    return false;
                 var order = new Order
                 {
                     Amount = orderModel.Amount,

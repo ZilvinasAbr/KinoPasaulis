@@ -49,6 +49,7 @@ namespace KinoPasaulis.Server.Services
             _announcementRepository = announcementRepository;
             _userService = userService;
             _subscriptionRepository = subscriptionRepository;
+            _orderRepository = orderRepository;
             _theatherRepository = theatherRepository;
             _dbContext = dbContext;
         }

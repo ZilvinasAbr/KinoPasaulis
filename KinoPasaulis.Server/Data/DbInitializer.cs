@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using KinoPasaulis.Server.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -83,6 +84,14 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(events);
             context.SaveChanges();
 
+            var shows = AddShows(events.ToList(), auditoriums);
+            context.AddRange(shows);
+            context.SaveChanges();
+
+            var orders = AddOrders(clients, shows.ToList());
+            context.AddRange(orders);
+            context.SaveChanges();
+
             var messages = AddMessages(movieCreators,cinemaStudios);
             context.AddRange(messages);
             context.SaveChanges();
@@ -147,6 +156,35 @@ namespace KinoPasaulis.Server.Data
             };
 
             return events;
+        }
+
+        private static IEnumerable<Show> AddShows(List<Event> events, List<Auditorium> auditoriums)
+        {
+            var shows = new List<Show>
+            {
+                new Show {Auditorium = auditoriums[0], Event = events[0], StartTime = DateTime.Now.AddDays(2)},
+                new Show {Auditorium = auditoriums[0], Event = events[0], StartTime = DateTime.Now.AddDays(3)},
+                new Show {Auditorium = auditoriums[0], Event = events[0], StartTime = DateTime.Now.AddDays(4)},
+                new Show {Auditorium = auditoriums[0], Event = events[0], StartTime = DateTime.Now.AddDays(5)},
+                new Show {Auditorium = auditoriums[0], Event = events[0], StartTime = DateTime.Now.AddDays(6)}
+            };
+
+            return shows;
+        }
+
+        private static IEnumerable<Order> AddOrders(List<Client> clients, List<Show> shows)
+        {
+            var orders = new List<Order>
+            {
+                new Order {Amount = 2, Client = clients[0], OrderDate = DateTime.Now, Paid = true, Price = 20, Show = shows[0]},
+                new Order {Amount = 2, Client = clients[0], OrderDate = DateTime.Now, Paid = true, Price = 20, Show = shows[1]},
+                new Order {Amount = 2, Client = clients[1], OrderDate = DateTime.Now, Paid = true, Price = 20, Show = shows[0]},
+                new Order {Amount = 2, Client = clients[1], OrderDate = DateTime.Now, Paid = true, Price = 20, Show = shows[1]},
+                new Order {Amount = 1, Client = clients[2], OrderDate = DateTime.Now, Paid = true, Price = 10, Show = shows[1]}
+
+            };
+
+            return orders;
         }
 
         private static List<Rating> AddRatings(List<Client> clients, List<Movie> movies)

@@ -56,6 +56,9 @@ namespace KinoPasaulis.Server.Controllers.Api
             return new List<AuditoriumViewModel>();
         }
 
+                    .ThenInclude(show => show.Movie)
+                        .ThenInclude(show => show.Images)
+                .Include(show => show.Orders)
 
         [HttpGet("getTheathers")]
         public IActionResult GetTheathers()

@@ -27,7 +27,7 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<string>("Message");
 
-                    b.Property<DateTime>("Seen");
+                    b.Property<DateTime?>("Seen");
 
                     b.Property<DateTime>("Sent");
 

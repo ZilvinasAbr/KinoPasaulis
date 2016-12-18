@@ -53,13 +53,24 @@ namespace KinoPasaulis.Server.Services
             _dbContext = dbContext;
         }
 
-        public void AddNewEvent(EventCreation eventCreation)
+        public void AddNewEvent(EventCreation eventCreation, string userid)
         {
             var addedMovie = _movieRepository.GetMovieById(eventCreation.MovieId);
             var auditoriasList = _auditoriumRepository.GetAuditoriumsByIds(eventCreation.AuditoriumIds);
-
+            
             var shows = new List<Show>();
             var days = (eventCreation.EndTime - eventCreation.StartTime).TotalDays;
+
+            var subscribers = GetTheaterSubscribers(userid);
+            ISet<int> clientIds = new HashSet<int>();
+
+            foreach (var subscriber in subscribers)
+            {
+                clientIds.Add(subscriber.Id);
+            }
+
+            SendAnnouncements(clientIds, userid, string.Format("Sukurtas naujas įvykis! Filmas {0}", addedMovie.Title));
+
             for (int i = 0; i < days; i++)
             {
                 foreach (var timeSpan in eventCreation.Times)

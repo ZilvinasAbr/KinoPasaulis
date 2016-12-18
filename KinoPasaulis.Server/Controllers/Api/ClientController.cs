@@ -6,11 +6,13 @@ using KinoPasaulis.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Repositories.CinemaStudio;
 using KinoPasaulis.Server.Repositories.Client;
 using KinoPasaulis.Server.Repositories.MovieCreator;
 using KinoPasaulis.Server.Repositories.Theather;
+using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Controllers.Api
 {
@@ -25,6 +27,7 @@ namespace KinoPasaulis.Server.Controllers.Api
         private readonly IVotingRepository _votingRepository;
         private readonly IMovieRepository _movieRepository;
         private readonly IUserService _userService;
+        private readonly ApplicationDbContext _dbContext;
 
         public ClientController(
             IClientService clientService,
@@ -34,7 +37,8 @@ namespace KinoPasaulis.Server.Controllers.Api
             IMovieCreatorRepository movieCreatorRepository,
             IVotingRepository votingRepository,
             IMovieRepository movieRepository,
-            IUserService userService )
+            IUserService userService,
+            ApplicationDbContext dbContext)
         {
             _clientService = clientService;
             _signInManager = signInManager;
@@ -44,6 +48,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             _votingRepository = votingRepository;
             _movieRepository = movieRepository;
             _userService = userService;
+            _dbContext = dbContext;
         }
 
         [HttpGet("getOrder")]
@@ -280,6 +285,37 @@ namespace KinoPasaulis.Server.Controllers.Api
                 _clientService.ChangeRating(rating);
 
                 return Ok(true);
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpGet("readAnnouncements")]
+        public IActionResult ReadAnnouncements()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                var client = _userService.GetClientByUserId(userId);
+
+                var announcements = _dbContext.Announcements.Include(ann => ann.Client)
+                    .Where(ann => ann.Client.Id == client.Id);
+
+                var updateAnnouncements = new List<Announcement>();
+
+                foreach (var announcement in announcements)
+                {
+                    if (announcement.Seen == null)
+                    {
+                        updateAnnouncements.Add(announcement);
+                        announcement.Seen = DateTime.Now;
+                    }
+                }
+
+                _dbContext.UpdateRange(updateAnnouncements);
+                _dbContext.SaveChanges();
+
+                return Ok(announcements);
             }
 
             return Unauthorized();

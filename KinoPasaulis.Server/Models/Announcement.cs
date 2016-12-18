@@ -13,6 +13,6 @@ namespace KinoPasaulis.Server.Models
         public string Message { get; set; }
         public DateTime Created { get; set; }
         public DateTime Sent { get; set; }
-        public DateTime Seen { get; set; }
+        public DateTime? Seen { get; set; }
     }
 }

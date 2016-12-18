@@ -8,7 +8,7 @@ using KinoPasaulis.Server.Data;
 namespace KinoPasaulis.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161218133806_FirstMigration")]
+    [Migration("20161218161525_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,7 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<string>("Message");
 
-                    b.Property<DateTime>("Seen");
+                    b.Property<DateTime?>("Seen");
 
                     b.Property<DateTime>("Sent");
 

@@ -10,6 +10,7 @@ namespace KinoPasaulis.Server.Services
     public class MovieCreatorService : IMovieCreatorService
     {
         private readonly ApplicationDbContext _dbContext;
+
         public MovieCreatorService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -26,7 +27,11 @@ namespace KinoPasaulis.Server.Services
         public List<Movie> GetMovieCreatorPendingMovies(int id)
         {
             var movies = _dbContext.MovieCreatorMovies.Where(mc => mc.MovieCreatorId == id && mc.IsConfirmed == null)
-                .Include(mc => mc.Movie);
+                .Include(mc => mc.Movie)
+                    .ThenInclude(mc => mc.Images)
+                .Include(mc => mc.Movie)
+                    .ThenInclude(mc => mc.CinemaStudio)
+                    .ToList();
 
             var moviesList = movies.Select(movie => movie.Movie)
                 .ToList();
@@ -37,7 +42,11 @@ namespace KinoPasaulis.Server.Services
         {
             var movies = _dbContext.MovieCreatorMovies
                 .Where(mc => mc.MovieCreatorId == id && mc.IsConfirmed == true)
-                .Include(mc => mc.Movie);
+                .Include(mc => mc.Movie)
+                    .ThenInclude(mc => mc.Images)
+                .Include(mc => mc.Movie)
+                    .ThenInclude(mc => mc.CinemaStudio)
+                    .ToList();
 
             var moviesList = movies.Select(movie => movie.Movie)
                 .ToList();
@@ -47,24 +56,19 @@ namespace KinoPasaulis.Server.Services
 
         public bool SetIsConfirmed(string userId, bool value, int movieCreatorId, int movieId)
         {
-            var movieCreator1 = _dbContext.MovieCreators.SingleOrDefault(mc => mc.Id == movieCreatorId);
             var movieCreator2 = _dbContext.Users
                 .Include(user => user.MovieCreator)
                 .SingleOrDefault(user => user.Id == userId)
                 ?.MovieCreator;
 
-            if (movieCreator1 == null || movieCreator2 == null || movieCreator1.Id != movieCreator2.Id)
-            {
-                return false;
-            }
 
             var movieCreatorMovie = _dbContext.MovieCreatorMovies
                 .SingleOrDefault(
-                    mcm => mcm.MovieCreatorId == movieCreatorId && mcm.MovieId == movieId && mcm.IsConfirmed == null);
+                    mcm => mcm.MovieCreatorId == movieCreator2.Id && mcm.MovieId == movieId && mcm.IsConfirmed == null);
 
             if (movieCreatorMovie == null)
             {
-                 return false;
+                return false;
             }
 
             movieCreatorMovie.IsConfirmed = value;
@@ -72,6 +76,5 @@ namespace KinoPasaulis.Server.Services
             _dbContext.SaveChanges();
             return true;
         }
-
     }
 }

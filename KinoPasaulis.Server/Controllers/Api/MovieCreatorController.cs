@@ -37,17 +37,25 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpGet("movies")]
-        public IEnumerable<Movie> GetMovieCreatorMovies(int id)
+        public IEnumerable<Movie> GetMovieCreatorMovies()
         {
-            var movies = _movieCreatorService.GetMovieCreatorMovies(id);
+            var userId = HttpContext.User.GetUserId();
+            var user =_dbContext.Users.Include(us => us.MovieCreator)
+                .SingleOrDefault(us => us.Id == userId).MovieCreator;
+
+            var movies = _movieCreatorService.GetMovieCreatorMovies(user.Id);
 
             return movies;
         }
 
         [HttpGet("pendingMovies")]
-        public IEnumerable<Movie> GetMovieCreatorPendingMovies(int id)
+        public IEnumerable<Movie> GetMovieCreatorPendingMovies()
         {
-            var movies = _movieCreatorService.GetMovieCreatorPendingMovies(id);
+            var userId = HttpContext.User.GetUserId();
+            var user = _dbContext.Users.Include(us => us.MovieCreator)
+                .SingleOrDefault(us => us.Id == userId).MovieCreator;
+
+            var movies = _movieCreatorService.GetMovieCreatorPendingMovies(user.Id);
 
             return movies;
         }

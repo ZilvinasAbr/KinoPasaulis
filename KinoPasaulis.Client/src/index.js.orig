@@ -28,10 +28,14 @@ import CinemaStudiosStatisticsPage from './cinemaStudio/components/CinemaStudios
 import CinemaStudiosMoviesStatisticsPage from './cinemaStudio/components/movies/MoviesStatisticsPage';
 import JobAdvertisementsPage from './cinemaStudio/components/jobAdvertisements/JobAdvertisementsPage';
 import AddJobAdvertisementPage from './cinemaStudio/components/jobAdvertisements/addJobAdvertisement/AddJobAdvertisementPage';
+<<<<<<< HEAD
+import MoviePage from './cinemaStudio/components/movies/moviePage/MoviePage';
+=======
 import MoviePage from './cinemaStudio/components/movies/MoviePage';
 import TaggedMoviesPage from './components/home/movieCreator/TaggedMoviesPage';
 import PendingMoviesPage from './components/home/movieCreator/PendingMoviesPage';
 import JobOffersPage from './components/home/movieCreator/JobOffersPage';
+>>>>>>> MovieCreatorsFrontEnd
 
 const store = createStore(reducer, initialState, compose(
   applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware),
@@ -65,11 +69,14 @@ render(
 				<Route path="cinemaStudio/moviesStatistics" component={CinemaStudiosMoviesStatisticsPage} />
 				<Route path="cinemaStudio/jobAdvertisements" component={JobAdvertisementsPage} />
 				<Route path="cinemaStudio/addJobAdvertisement" component={AddJobAdvertisementPage} />
+<<<<<<< HEAD
 				<Route path="theathers/:id" component={Theathers}/>
 				<Route path="eventDetails/:id" component={EventDetails2}/>
+=======
 				<Route path="movieCreator/taggedMovies" component={TaggedMoviesPage} />
 				<Route path="movieCreator/pendingMovies" component={PendingMoviesPage} />
 				<Route path="movieCreator/jobOffers" component={JobOffersPage} />
+>>>>>>> MovieCreatorsFrontEnd
 			</Router>
 		</Provider>
   ),

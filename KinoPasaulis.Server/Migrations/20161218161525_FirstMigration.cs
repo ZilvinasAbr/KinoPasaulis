@@ -604,7 +604,7 @@ namespace KinoPasaulis.Server.Migrations
                     ClientId = table.Column<int>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     Message = table.Column<string>(nullable: true),
-                    Seen = table.Column<DateTime>(nullable: false),
+                    Seen = table.Column<DateTime>(nullable: true),
                     Sent = table.Column<DateTime>(nullable: false),
                     TheaterId = table.Column<int>(nullable: true)
                 },

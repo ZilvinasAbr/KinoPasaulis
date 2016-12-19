@@ -36,6 +36,12 @@ namespace KinoPasaulis.Server.Controllers.Api
             return _votingService.GetCurrentVotings();
         }
 
+        [HttpGet("endedVotings")]
+        public IEnumerable<Voting> GetEndedVotings()
+        {
+            return _votingService.GetEndedVotings();
+        }
+
         [HttpPost("addvoting")]
         public bool AddVoting([FromBody] VotingViewModel voting)
         {

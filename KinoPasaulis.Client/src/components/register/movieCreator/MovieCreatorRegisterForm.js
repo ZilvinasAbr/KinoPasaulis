@@ -109,7 +109,7 @@ class MovieCreatorRegisterForm extends React.Component {
               <ControlLabel>
                 Gimimo data
               </ControlLabel>
-              <FormControl type="text" placeholder="Gimimo data" { ...birthDate } />
+              <FormControl type="date" placeholder="Gimimo data" { ...birthDate } />
             </FormGroup>
 
             <FormGroup controlId="description">

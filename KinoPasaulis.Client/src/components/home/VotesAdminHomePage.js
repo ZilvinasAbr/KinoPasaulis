@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { Grid, Row, Col } from 'react-bootstrap';
 import VotesAdminNavigationBar from './votesAdmin/VotesAdminNavigationBar';
 
 class VotesAdminHomePage extends React.Component {
@@ -10,10 +10,16 @@ class VotesAdminHomePage extends React.Component {
 
   render() {
     return (
-      <div>
-        <VotesAdminNavigationBar />
-        <h1> Votes Admin Home Page </h1>
-      </div>
+        <div>
+          <VotesAdminNavigationBar />
+          <Grid>
+            <Row>
+              <Col>
+                <h1> Sveiki prisijungę! </h1>
+              </Col>
+            </Row>
+          </Grid>
+        </div>
     );
   }
 }

@@ -8,6 +8,7 @@ namespace KinoPasaulis.Server.Services
     {
         IEnumerable<Voting> GetVotings();
         IEnumerable<Voting> GetCurrentVotings();
+        IEnumerable<Voting> GetEndedVotings();
         Voting GetVotingById(int id);
         bool DeleteVoting(int id, string userId);
         bool AddVoting(Voting voting, List<MovieCreator> movieCreators, string userId);

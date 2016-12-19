@@ -43,6 +43,19 @@ namespace KinoPasaulis.Server.Services
             return votings;
         }
 
+        public IEnumerable<Voting> GetEndedVotings()
+        {
+            IEnumerable<Voting> votings = _dbContext.Votings.Where
+                (voting => voting.StartDate < DateTime.Now &&
+                voting.EndDate < DateTime.Now)
+                .Include(v => v.Votes)
+                .Include(v => v.MovieCreatorVotings)
+                    .ThenInclude(v => v.MovieCreator)
+                .ToList();
+
+            return votings;
+        }
+
         public Voting GetVotingById(int id)
         {
             var voting = _dbContext.Votings

@@ -24,6 +24,7 @@ import Theathers from './components/home/Theathers';
 import EventDetails2 from './components/home/EventDetails';
 import MoviesPage from './cinemaStudio/components/movies/MoviesPage';
 import AddMoviePage from './cinemaStudio/components/movies/addMovie/AddMoviePage';
+import EditMoviePage from './cinemaStudio/components/movies/editMovie/EditMoviePage';
 import CinemaStudiosStatisticsPage from './cinemaStudio/components/CinemaStudiosStatisticsPage';
 import CinemaStudiosMoviesStatisticsPage from './cinemaStudio/components/movies/MoviesStatisticsPage';
 import JobAdvertisementsPage from './cinemaStudio/components/jobAdvertisements/JobAdvertisementsPage';
@@ -62,6 +63,7 @@ render(
 				<Route path="theather/eventDetails/:id" component={EventDetails}/>
 				<Route path="cinemaStudio/movies" component={MoviesPage} />
 				<Route path="cinemaStudio/movie/:id" component={MoviePage} />
+				<Route path="cinemaStudio/editMovie/:id" component={EditMoviePage} />
 				<Route path="cinemaStudio/addMovie" component={AddMoviePage} />
 				<Route path="cinemaStudio/statistics" component={CinemaStudiosStatisticsPage} />
 				<Route path="cinemaStudio/moviesStatistics" component={CinemaStudiosMoviesStatisticsPage} />

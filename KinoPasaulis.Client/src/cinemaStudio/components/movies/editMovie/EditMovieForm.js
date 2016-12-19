@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import
 {
   Button,
@@ -10,15 +11,14 @@ import
 import Dropzone from 'react-dropzone';
 import DatePicker from 'react-bootstrap-date-picker';
 
-import VideosTable from './VideosTable';
 import {
   addMovie,
   fetchMovieCreators
 } from '../../../actions/movieActions';
-import SelectVideoModal from './SelectVideoModal';
-import MovieCreatorsTable from './MovieCreatorsTable';
-import MovieCreatorAutosuggest from './MovieCreatorAutosuggest';
-import SelectedImagesPreviewTable from './SelectedImagesPreviewTable';
+import VideosTable from '../addMovie/VideosTable';
+import SelectVideoModal from '../addMovie/SelectVideoModal';
+import MovieCreatorsTable from '../addMovie/MovieCreatorsTable';
+import MovieCreatorAutosuggest from '../addMovie/MovieCreatorAutosuggest';
 
 class AddMovieForm extends React.Component {
   constructor(props) {
@@ -35,8 +35,6 @@ class AddMovieForm extends React.Component {
       language: '',
       ageRequirement: '',
       droppedFiles: [],
-      imageTitles: [],
-      imageDescriptions: [],
       videos: [],
       selectedMovieCreators: [],
       modalIsOpen: false
@@ -53,20 +51,39 @@ class AddMovieForm extends React.Component {
     this.handleOnAgeRequirementChange = this.handleOnAgeRequirementChange.bind(this);
     this.handleOnMinutesChange = this.handleOnMinutesChange.bind(this);
     this.handleOnHoursChange = this.handleOnHoursChange.bind(this);
-    this.handleImageTitleChange = this.handleImageTitleChange.bind(this);
-    this.handleImageDescriptionChange = this.handleImageDescriptionChange.bind(this);
     this.onImageDrop = this.onImageDrop.bind(this);
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.selectVideo = this.selectVideo.bind(this);
     this.removeVideo = this.removeVideo.bind(this);
-    this.removeDroppedImage = this.removeDroppedImage.bind(this);
     this.selectMovieCreator = this.selectMovieCreator.bind(this);
     this.removeMovieCreator = this.removeMovieCreator.bind(this);
   }
 
   componentDidMount() {
+    axios.get(`/api/cinemaStudio/movie/${this.props.movieId}`)
+      .then(response => {
+        console.log(response.data);
+        const responseMovie = response.data;
+        this.setState({
+          title: responseMovie.title,
+          releaseDate: responseMovie.releaseDate,
+          hours: responseMovie.hours,
+          minutes: responseMovie.minutes,
+          budget: responseMovie.budget,
+          description: responseMovie.description,
+          gross: responseMovie.gross,
+          language: responseMovie.language,
+          ageRequirement: responseMovie.ageRequirement,
+          droppedFiles: [],
+          videos: responseMovie.videos,
+          selectedMovieCreators: responseMovie.movieCreators
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
     this.props.dispatch(fetchMovieCreators());
   }
 
@@ -74,9 +91,7 @@ class AddMovieForm extends React.Component {
     console.log('Received files:', files);
 
     this.setState({
-      droppedFiles: [ ...this.state.droppedFiles, ...files],
-      imageTitles: [...this.state.imageTitles, ...files.map(() => '')],
-      imageDescriptions: [...this.state.imageDescriptions, ...files.map(() => '')]
+      droppedFiles: [ ...this.state.droppedFiles, ...files]
     });
   }
   handleOnTitleChange(e) {
@@ -124,22 +139,6 @@ class AddMovieForm extends React.Component {
       hours: e.target.value
     });
   }
-  handleImageTitleChange(title, index) {
-    let imageTitles = this.state.imageTitles.concat();
-    imageTitles[index] = title;
-
-    this.setState({
-      imageTitles
-    });
-  }
-  handleImageDescriptionChange(description, index) {
-    let imageDescriptions = this.state.imageDescriptions.concat();
-    imageDescriptions[index] = description;
-
-    this.setState({
-      imageDescriptions
-    });
-  }
   openModal() {
     this.setState({
       modalIsOpen: true
@@ -173,19 +172,12 @@ class AddMovieForm extends React.Component {
       videos: this.state.videos.filter((video, index2) => index2 !== index)
     });
   }
-  removeDroppedImage(index) {
-    this.setState({
-      droppedFiles: this.state.droppedFiles.filter((file, i) => index !== i)
-    });
-  }
   removeMovieCreator(index) {
     this.setState({
       selectedMovieCreators: this.state.selectedMovieCreators.filter((creator, index2) => index2 !== index)
     });
   }
   handleSubmit() {
-
-    debugger;
     this.props.dispatch(
       addMovie(
         this.state.title,
@@ -199,9 +191,7 @@ class AddMovieForm extends React.Component {
         this.state.ageRequirement,
         this.state.droppedFiles,
         this.state.videos,
-        this.state.selectedMovieCreators,
-        this.state.imageTitles,
-        this.state.imageDescriptions
+        this.state.selectedMovieCreators
       )
     );
   }
@@ -309,22 +299,9 @@ class AddMovieForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <ControlLabel>
-            Pasirinkti nuotraukas
-          </ControlLabel>
           <Dropzone onDrop={this.onImageDrop}>
             <div>Nuveskite nuotraukas čia</div>
           </Dropzone>
-
-          <SelectedImagesPreviewTable
-            droppedFiles={this.state.droppedFiles}
-            removeDroppedImage={this.removeDroppedImage}
-            onImageTitleChange={this.handleImageTitleChange}
-            onImageDescriptionChange={this.handleImageDescriptionChange}
-            titles={this.state.imageTitles}
-            descriptions={this.state.imageDescriptions}
-          />
-
         </FormGroup>
 
         <FormGroup>
@@ -359,7 +336,7 @@ class AddMovieForm extends React.Component {
         </FormGroup>
 
         <Button bsStyle="primary" onClick={this.handleSubmit}>
-          Pridėti filmą
+          Redaguoti filmą
         </Button>
 
         <SelectVideoModal
@@ -375,10 +352,11 @@ class AddMovieForm extends React.Component {
 
 AddMovieForm.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
-  movieCreators: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+  movieCreators: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  movieId: React.PropTypes.number.isRequired
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     movieCreators: state.cinemaStudioPage.movieCreators
   };

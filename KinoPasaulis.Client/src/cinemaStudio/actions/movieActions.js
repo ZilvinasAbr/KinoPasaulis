@@ -40,6 +40,8 @@ export function fetchCinemaStudioMovies() {
 export function addMovie
 (
   title,
+  hours,
+  minutes,
   releaseDate,
   budget,
   description,
@@ -48,13 +50,17 @@ export function addMovie
   ageRequirement,
   droppedFiles,
   videos,
-  movieCreators
+  movieCreators,
+  imageTitles,
+  imageDescriptions
 ) {
   return dispatch => {
     if(droppedFiles.length <= 0) {
       request.post('/api/cinemaStudio/addMovie')
         .send({
           title,
+          hours,
+          minutes,
           releaseDate,
           budget,
           description,
@@ -63,10 +69,13 @@ export function addMovie
           ageRequirement,
           imageNames: [],
           videos,
-          movieCreators
+          movieCreators,
+          imageTitles,
+          imageDescriptions
         })
         .end((err, res) => {
           if(err) {
+            alert(res.body);
             console.log(err);
             return;
           }
@@ -92,6 +101,8 @@ export function addMovie
         request.post('/api/cinemaStudio/addMovie')
           .send({
             title,
+            hours,
+            minutes,
             releaseDate,
             budget,
             description,
@@ -100,7 +111,9 @@ export function addMovie
             ageRequirement,
             imageNames,
             videos,
-            movieCreators
+            movieCreators,
+            imageTitles,
+            imageDescriptions
           })
           .end((err, res) => {
             if(err) {

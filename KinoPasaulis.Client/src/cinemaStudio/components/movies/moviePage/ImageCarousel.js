@@ -12,7 +12,7 @@ const renderCarouselImage = (image, index) => (
 );
 
 const ImageCarousel = ({images}) => (
-  <Carousel>
+  <Carousel interval={999999}>
     {images.map(renderCarouselImage)}
   </Carousel>
 );

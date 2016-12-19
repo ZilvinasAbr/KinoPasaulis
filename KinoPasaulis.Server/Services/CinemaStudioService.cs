@@ -33,8 +33,9 @@ namespace KinoPasaulis.Server.Services
             return movies;
         }
 
-        public bool AddNewMovie(Movie movie, List<string> imageNames, List<Video> videos,
-            List<MovieCreator> movieCreators, string userId)
+        public bool AddNewMovie(Movie movie, List<string> imageNames, List<string> imageTitles,
+            List<string> imageDescriptions, List<Video> videos, List<MovieCreator> movieCreators,
+            string userId)
         {
             var movieWithSameId = _dbContext.Movies.SingleOrDefault(m => m.Id == movie.Id);
 
@@ -44,14 +45,15 @@ namespace KinoPasaulis.Server.Services
             }
 
             var images = new List<Image>();
-            foreach (var imageName in imageNames)
+
+            for (int i = 0; i < imageNames.Count; i++)
             {
                 var image = new Image
                 {
                     CreatedOn = DateTime.Now,
-                    Description = "Empty",
-                    Title = "Empty",
-                    Url = imageName
+                    Title = imageTitles[i],
+                    Description = imageDescriptions[i],
+                    Url = imageNames[i]
                 };
 
                 images.Add(image);
@@ -348,6 +350,8 @@ namespace KinoPasaulis.Server.Services
                 movie.JobAdvertisements,
                 movie.Language,
                 movie.Duration,
+                movie.Duration.Hours,
+                movie.Duration.Minutes,
                 movieCreators
             };
         }

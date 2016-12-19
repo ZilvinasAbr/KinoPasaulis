@@ -31,9 +31,26 @@ class PendingMoviesPage extends React.Component {
             .then(response => {
                 console.log('success');
                 console.log(response);
+                if(approve === true)
+                    alert("Veikla sėkmingai patvirtinta.");
+                else
+                    alert("Veikla sėkmingai atmesta.");
+                this.setState({
+                    pendingMovies: this.state.pendingMovies.filter(movie => movie.id !== movieId)
+                });
+                if(this.state.pendingMovies.length <= 0) {
+                    return (
+                        <tr>
+                            <td colSpan={7}>
+                                Nėra, ką patvirtinti/atmesti.
+                            </td>
+                        </tr>
+                    );
+                }
             })
             .catch(error => {
                 console.log(error);
+                alert("Įvyko klaida.");
             })
     }
 

@@ -82,5 +82,31 @@ namespace KinoPasaulis.Server.Controllers.Api
                     .ThenInclude(jb => jb.Images)
                 .ToList());
         }
+
+        [HttpGet("getAwards")]
+        public IActionResult GetAwards()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+
+                return Ok(_movieCreatorService.GetAwards(userId));
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpGet("getAwardsStatistics")]
+        public IActionResult GetAwardsStatistics()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+
+                return Ok(_movieCreatorService.GetAwardsStatistics());
+            }
+
+            return Unauthorized();
+        }
     }
 }

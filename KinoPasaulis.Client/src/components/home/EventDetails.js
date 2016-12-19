@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Well, Col, Button } from 'react-bootstrap';
 import moment from 'moment';
 
-import ClientNavigationBar from './client/ClientNavigationBar';
+import NavigationBar from '../../components/common/NavigationBar';
 import { getEventById } from '../../actions/theather/eventActions';
 import OrderComponent from './OrderComponent';
 
@@ -105,7 +105,7 @@ class EventDetails extends React.Component {
   render() {
     return (
       <div>
-        <ClientNavigationBar/>
+        <NavigationBar/>
         <div className="container">
           <Col md={5}>
             <h1>{this.props.movie.title}</h1>

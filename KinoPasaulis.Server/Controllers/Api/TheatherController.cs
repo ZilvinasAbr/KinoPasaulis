@@ -59,15 +59,25 @@ namespace KinoPasaulis.Server.Controllers.Api
         [HttpGet("getTheathers")]
         public IActionResult GetTheathers()
         {
-            var theathers = _theatherService.GetAllTheathers();
-            return Ok(theathers);
+            if (_signInManager.IsSignedIn(User))
+            {
+                var theathers = _theatherService.GetAllTheathers();
+                return Ok(theathers);
+            }
+
+            return Unauthorized();
         }
 
         [HttpGet("getTheather")]
         public Theather GetTheatherById(int id)
         {
-            var theather = _theatherService.GetTheatherById(id);
-            return theather;
+            if (_signInManager.IsSignedIn(User))
+            {
+                var theather = _theatherService.GetTheatherById(id);
+                return theather;
+            }
+
+            return new Theather();
         }
 
         [HttpDelete("deleteAuditorium")]

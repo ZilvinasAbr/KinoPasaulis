@@ -22,6 +22,8 @@ import NewEvent from './components/home/theather/events/NewEvent';
 import EventDetails from './components/home/theather/events/EventDetails';
 import Theathers from './components/home/Theathers';
 import EventDetails2 from './components/home/EventDetails';
+import Movies from './components/home/Movies';
+import MoviesDetail from './components/home/MoviesDetail';
 import MoviesPage from './cinemaStudio/components/movies/MoviesPage';
 import AddMoviePage from './cinemaStudio/components/movies/addMovie/AddMoviePage';
 import EditMoviePage from './cinemaStudio/components/movies/editMovie/EditMoviePage';
@@ -36,6 +38,7 @@ import JobOffersPage from './components/home/movieCreator/JobOffersPage';
 import AnnouncementsPage from './components/home/AnnouncementsPage';
 import Votings from './components/home/votesAdmin/votings/Votings';
 import AddVotingPage from './components/home/votesAdmin/votings/AddVotingPage';
+import Orders from './components/home/client/Orders';
 
 const store = createStore(reducer, initialState, compose(
   applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware),
@@ -72,12 +75,15 @@ render(
 				<Route path="cinemaStudio/addJobAdvertisement" component={AddJobAdvertisementPage} />
 				<Route path="theathers/:id" component={Theathers}/>
 				<Route path="eventDetails/:id" component={EventDetails2}/>
+				<Route path="movies" component={Movies}/>
+				<Route path="movie/:id" component={MoviesDetail}/>
 				<Route path="announcements" component={AnnouncementsPage}/>
 				<Route path="movieCreator/taggedMovies" component={TaggedMoviesPage} />
 				<Route path="movieCreator/pendingMovies" component={PendingMoviesPage} />
 				<Route path="movieCreator/jobOffers" component={JobOffersPage} />
 				<Route path="votesAdmin/votings" component={Votings} />
 				<Route path="votesAdmin/addvoting" component={AddVotingPage} />
+				<Route path="client/orders" component={Orders} />
 			</Router>
 		</Provider>
   ),

@@ -66,18 +66,23 @@ namespace KinoPasaulis.Server.Controllers.Api
         [HttpGet("ThisWeekShows")]
         public IActionResult WeekShows(int eventId)
         {
-            var time = DateTime.Now;
+            if (_signInManager.IsSignedIn(User))
+            {
+                var time = DateTime.Now;
 
-            return Ok(_dbContext.Shows
-                .Include(show => show.Event)
+                return Ok(_dbContext.Shows
+                    .Include(show => show.Event)
                     .ThenInclude(show => show.Movie)
-                        .ThenInclude(show => show.Images)
-                .Include(show => show.Orders)
-                .Include(show => show.Auditorium)
-                .Where(show => show.Event.Id == eventId)
-                .Where(show => show.StartTime >= time && show.StartTime < time.AddDays(7))
-                .OrderBy(show => show.StartTime)
-                .ToList());
+                    .ThenInclude(show => show.Images)
+                    .Include(show => show.Orders)
+                    .Include(show => show.Auditorium)
+                    .Where(show => show.Event.Id == eventId)
+                    .Where(show => show.StartTime >= time && show.StartTime < time.AddDays(7))
+                    .OrderBy(show => show.StartTime)
+                    .ToList());
+            }
+
+            return Unauthorized();
         }
 
         [HttpGet("getActiveTheatherEvents")]
@@ -96,15 +101,25 @@ namespace KinoPasaulis.Server.Controllers.Api
         [HttpGet("getTheatherEvents")]
         public IEnumerable<Event> GetEventsById(int id)
         {
-            return _theaterService.GetEventsByTheatherId(id);
+            if (_signInManager.IsSignedIn(User))
+            {
+                return _theaterService.GetEventsByTheatherId(id);
+            }
+
+            return new List<Event>();
         }
 
         [HttpGet("getEvent")]
         public Event GetEventById(int id)
         {
-            var Event = _theaterService.GetEventById(id);
-            Event.Shows.Sort((x, y) => DateTime.Compare(x.StartTime, y.StartTime));
-            return Event;
+            if (_signInManager.IsSignedIn(User))
+            {
+                var Event = _theaterService.GetEventById(id);
+                Event.Shows.Sort((x, y) => DateTime.Compare(x.StartTime, y.StartTime));
+                return Event;
+            }
+
+            return new Event();
         }
 
         [HttpGet("getShow")]

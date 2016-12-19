@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import ClientNavigationBar from './client/ClientNavigationBar';
+import { Well, Col } from 'react-bootstrap';
+import moment from 'moment';
+
+import NavigationBar from '../../components/common/NavigationBar';
 import { getTheatherById } from '../../actions/theather/theatherActions';
 import { getEventsById } from '../../actions/theather/eventActions';
 import { addSubscription, removeSubscription, isSubscribedToTheather } from '../../actions/client/subscriptionActions';
-import { Well, Col } from 'react-bootstrap';
-import moment from 'moment';
 
 class Theathers extends React.Component {
   constructor(props) {
@@ -45,7 +46,7 @@ class Theathers extends React.Component {
         <Col md={4}>
           <Well>
             {this.paintImage(event)}
-            <h2> {event.movie.title} </h2>
+            <a href="javascript:void(0)" onClick={() => this.props.goToMovieDetails(event.movie.id)}><h2> {event.movie.title} </h2></a>
             {moment(event.startTime).format('YYYY/MM/DD')} -
             {moment(event.endTime).format('YYYY/MM/DD')}
             <a className="btn btn-primary" onClick={this.props.goToEventDetails.bind(this, event.id)}> Detaliau </a>
@@ -58,7 +59,7 @@ class Theathers extends React.Component {
   render() {
     return (
       <div>
-        <ClientNavigationBar/>
+        <NavigationBar/>
         <div className="container">
           <Col md={3}>
             <h2>{this.props.theather.title}</h2>
@@ -71,7 +72,7 @@ class Theathers extends React.Component {
           </Col>
 
           <Col md={9}>
-            <h2> Event list </h2>
+            <h2> Rodomi filmai </h2>
             {this.renderEvents()}
           </Col>
         </div>
@@ -107,6 +108,9 @@ function mapDispatchToProps(dispatch) {
     },
     goToEventDetails: (id) => {
       dispatch(push('/eventDetails/'+id))
+    },
+    goToMovieDetails: (id) => {
+      dispatch(push('/movie/'+id))
     }
   }
 }

@@ -43,6 +43,7 @@ class MoviesStatisticsPage extends React.Component {
         <td>{movie.rating ?
           movie.rating.toFixed(2) : 'filmas nėra įvertintas'}
         </td>
+        <td>{movie.ordersBought}</td>
       </tr>
     );
   }
@@ -90,6 +91,7 @@ class MoviesStatisticsPage extends React.Component {
               <th onClick={() => this.handleColumnClick('title')}>Pavadinimas</th>
               <th onClick={() => this.handleColumnClick('eventsCount')}>Kiek kino teatrų rodo šį filmą</th>
               <th onClick={() => this.handleColumnClick('rating')}>Reitingas</th>
+              <th onClick={() => this.handleColumnClick('ordersBought')}>Kiek nupirkta bilietų į šį filmą</th>
             </tr>
             </thead>
             <tbody>

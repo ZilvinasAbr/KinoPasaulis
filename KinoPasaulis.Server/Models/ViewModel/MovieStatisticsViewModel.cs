@@ -11,5 +11,6 @@ namespace KinoPasaulis.Server.Models.ViewModel
         public string Title { get; set; }
         public int EventsCount { get; set; }
         public double Rating { get; set; }
+        public int OrdersBought { get; set; }
     }
 }

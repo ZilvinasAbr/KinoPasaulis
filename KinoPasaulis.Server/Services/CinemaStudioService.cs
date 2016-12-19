@@ -211,13 +211,20 @@ namespace KinoPasaulis.Server.Services
                     .ThenInclude(movie => movie.Ratings)
                 .Include(cs => cs.Movies)
                     .ThenInclude(movie => movie.Events)
+                        .ThenInclude(e => e.Shows)
+                            .ThenInclude(show => show.Orders)
                 .SingleOrDefault(cs => cs.Id == cinemaStudio.Id)
                 .Movies
                 .Select(movie => new MovieStatisticsViewModel
                 {
                     Title = movie.Title,
                     Rating = movie.Ratings.Any() ? movie.Ratings.Average(rating => rating.Value) : 0.0,
-                    EventsCount = movie.Events.Count(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime)
+                    EventsCount = movie.Events.Count(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime),
+                    OrdersBought = movie.Events
+                        .SelectMany(e => e.Shows)
+                        .SelectMany(show => show.Orders)
+                        .Sum(order => order.Amount)
+
                 })
                 .ToList();
 

@@ -13,6 +13,7 @@ const CinemaStudioNavigationBar = ({
   changePageToCinemaStudiosStatistics,
   changePageToMoviesStatistics,
   changePageToJobAdvertisements,
+  changePageToMessages,
   changePageToProfile
 }) => {
   return (
@@ -48,6 +49,12 @@ const CinemaStudioNavigationBar = ({
             onClick={changePageToJobAdvertisements}
           >
             Darbo skelbimai
+          </NavItem>
+          <NavItem
+            eventKey={5}
+            onClick={changePageToMessages}
+          >
+            Pranešimai
           </NavItem>
         </Nav>
         <Nav pullRight>
@@ -89,6 +96,10 @@ function mapDispatchToProps(dispatch) {
 
     changePageToJobAdvertisements() {
       dispatch(push('/cinemaStudio/jobAdvertisements'));
+    },
+
+    changePageToMessages() {
+      dispatch(push('/cinemaStudio/messages'));
     },
 
     changePageToProfile: () => {

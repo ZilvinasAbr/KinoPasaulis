@@ -30,6 +30,7 @@ import CinemaStudiosMoviesStatisticsPage from './cinemaStudio/components/movies/
 import JobAdvertisementsPage from './cinemaStudio/components/jobAdvertisements/JobAdvertisementsPage';
 import AddJobAdvertisementPage from './cinemaStudio/components/jobAdvertisements/addJobAdvertisement/AddJobAdvertisementPage';
 import MoviePage from './cinemaStudio/components/movies/moviePage/MoviePage';
+import MessagesPage from './cinemaStudio/components/messages/MessagesPage';
 import TaggedMoviesPage from './components/home/movieCreator/TaggedMoviesPage';
 import PendingMoviesPage from './components/home/movieCreator/PendingMoviesPage';
 import JobOffersPage from './components/home/movieCreator/JobOffersPage';
@@ -70,6 +71,7 @@ render(
 				<Route path="cinemaStudio/moviesStatistics" component={CinemaStudiosMoviesStatisticsPage} />
 				<Route path="cinemaStudio/jobAdvertisements" component={JobAdvertisementsPage} />
 				<Route path="cinemaStudio/addJobAdvertisement" component={AddJobAdvertisementPage} />
+				<Route path="cinemaStudio/messages" component={MessagesPage} />
 				<Route path="theathers/:id" component={Theathers}/>
 				<Route path="eventDetails/:id" component={EventDetails2}/>
 				<Route path="announcements" component={AnnouncementsPage}/>

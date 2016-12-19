@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { logout } from '../../../actions/account/logoutActions';
 import LogoutButton from '../../common/LogoutButton';
 
-const ClientNavigationBar = ({logout, changePageToHome, goToMovies, changePageToProfile, goToAnnouncements, goToOrders}) => {
+const ClientNavigationBar = ({logout, changePageToHome, goToMovies, changePageToProfile, goToAnnouncements, goToOrders, goToVoting}) => {
   return (
     <Navbar inverse>
       <Navbar.Header>
@@ -21,6 +21,9 @@ const ClientNavigationBar = ({logout, changePageToHome, goToMovies, changePageTo
         </Nav>
         <Nav pullLeft>
           <NavItem eventKey={1} onClick={goToAnnouncements}> Pranešimai </NavItem>
+        </Nav>
+        <Nav pullLeft>
+          <NavItem eventKey={1} onClick={goToVoting}> Balsavimai </NavItem>
         </Nav>
         <Nav pullLeft>
           <NavItem eventKey={1} onClick={goToMovies}> Filmai </NavItem>
@@ -42,7 +45,9 @@ ClientNavigationBar.propTypes = {
   changePageToProfile: React.PropTypes.func.isRequired,
   logout: React.PropTypes.func.isRequired,
   goToAnnouncements: React.PropTypes.func.isRequired,
-  goToMovies: React.PropTypes.func.isRequired
+  goToMovies: React.PropTypes.func.isRequired,
+  goToOrders: React.PropTypes.func.isRequired,
+  goToVoting: React.PropTypes.func.isRequired
 };
 
 function mapDispatchToProps(dispatch) {
@@ -65,6 +70,10 @@ function mapDispatchToProps(dispatch) {
 
     goToOrders: () => {
       dispatch(push('client/orders'));
+    },
+
+    goToVoting: () => {
+      dispatch(push('client/voting'));
     },
 
     logout: () => {

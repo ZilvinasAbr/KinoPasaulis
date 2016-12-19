@@ -80,6 +80,17 @@ namespace KinoPasaulis.Server.Services
             return ratings;
         }
 
+        public IEnumerable<Vote> GetVotes(int clientId)
+        {
+            var votes = _dbContext
+                .Votes
+                .Include(vt => vt.Voting)
+                .Where(vt => vt.Client.Id == clientId)
+                .ToList();
+
+            return votes;
+        }
+
         public IEnumerable<Movie> GetAllMovies()
         {
             return _dbContext.Movies

@@ -244,6 +244,27 @@ namespace KinoPasaulis.Server.Controllers.Api
             return Unauthorized();
         }
 
+        [HttpGet("isVoted")]
+        public IActionResult IsVotedByVotingId(int id)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                var client = _userService.GetClientByUserId(userId);
+                var clientVotes = _clientService.GetVotes(client.Id);
+                foreach (var vote in clientVotes)
+                {
+                    if (vote.Voting.Id == id)
+                    {
+                        return Ok(vote);
+                    }
+                }
+                return Ok(false);
+            }
+
+            return Unauthorized();
+        }
+
         [HttpGet("getRating")]
         public Rating GetRatingById(int id)
         {

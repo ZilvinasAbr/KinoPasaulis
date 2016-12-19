@@ -12,7 +12,7 @@ namespace KinoPasaulis.Server.Services
         bool DeleteVoting(int id, string userId);
         bool AddVoting(Voting voting, List<MovieCreator> movieCreators, string userId);
         List<MovieCreator> GetMovieCreators(List<int> movieCreatorsId);
-        List<MovieCreatorVoting> CreateMovieCreatorsVoting(IEnumerable<MovieCreator> movieCreator, VotingViewModel voting);
+        List<MovieCreatorVoting> CreateMovieCreatorsVoting(/*IEnumerable<MovieCreator> movieCreators,*/ VotingViewModel voting);
         bool DeleteVoting(int votingId);
     }
 }

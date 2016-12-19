@@ -31,7 +31,6 @@ class PendingMoviesPage extends React.Component {
             .then(response => {
                 console.log('success');
                 console.log(response);
-                //dispatch(addEventToReducer({name, seats}));
             })
             .catch(error => {
                 console.log(error);

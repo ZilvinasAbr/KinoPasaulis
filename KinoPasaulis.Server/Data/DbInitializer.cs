@@ -370,9 +370,7 @@ namespace KinoPasaulis.Server.Data
         {
             var votesAdmins = new List<VotesAdmin>
             {
-                new VotesAdmin { FirstName = "Balsas",  LastName = "Adminas",  Email = "balsavimu@adminas.com", Phone = "+37055555555", RegisterDate = DateTime.Now },
-                new VotesAdmin { FirstName = "Balsavimas",  LastName = "Administratorius",  Email = "bals@adm.com", Phone = "+37055555655", RegisterDate = DateTime.Now },
-                new VotesAdmin { FirstName = "Laimonas",  LastName = "Kazėnas",  Email = "balsu@admin.com", Phone = "+37055557555", RegisterDate = DateTime.Now }
+                new VotesAdmin { FirstName = "Balsavimų",  LastName = "Administratorius",  Email = "balsavimu@adminas.com", Phone = "+37055555555", RegisterDate = DateTime.Now }
             };
 
             return votesAdmins;
@@ -382,9 +380,9 @@ namespace KinoPasaulis.Server.Data
         {
             var votings = new List<Voting>
             {
-                new Voting { VotesAdmin = votesAdmins[0], Title = "Geriausias aktorius", StartDate = DateTime.Now, EndDate = new DateTime(2020, 11, 11)},
-                new Voting { VotesAdmin = votesAdmins[1], Title = "Geriausias režisierius", StartDate = DateTime.Now, EndDate = new DateTime(2020, 08, 11) },
-                new Voting { VotesAdmin = votesAdmins[2], Title = "Geriausias kompozitorius", StartDate = DateTime.Now, EndDate = new DateTime(2018, 11, 12) }
+                new Voting { VotesAdmin = votesAdmins[0], Title = "Geriausias aktorius", StartDate = DateTime.Now, EndDate = new DateTime(2020, 11, 11), CreatedAt = DateTime.Now },
+                new Voting { VotesAdmin = votesAdmins[0], Title = "Geriausias režisierius", StartDate = DateTime.Now, EndDate = new DateTime(2020, 08, 11), CreatedAt = DateTime.Now },
+                new Voting { VotesAdmin = votesAdmins[0], Title = "Geriausias kompozitorius", StartDate = DateTime.Now, EndDate = new DateTime(2018, 11, 12), CreatedAt = DateTime.Now }
             };
 
             return votings;
@@ -481,8 +479,7 @@ namespace KinoPasaulis.Server.Data
         {
             var users = new List<ApplicationUser>
             {
-                new ApplicationUser { UserName = "BalsuAdminas", VotesAdmin = votesAdmins[0] },
-                new ApplicationUser { UserName = "BalsuAdminas2", VotesAdmin = votesAdmins[1] }
+                new ApplicationUser { UserName = "BalsuAdminas", VotesAdmin = votesAdmins[0] }
             };
 
             foreach (var user in users)

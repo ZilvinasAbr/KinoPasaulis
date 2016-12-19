@@ -7,6 +7,7 @@ using KinoPasaulis.Server.Models.ViewModel;
 using KinoPasaulis.Server.Repositories.CinemaStudio;
 using KinoPasaulis.Server.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Internal.Networking;
 using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Services
@@ -362,6 +363,58 @@ namespace KinoPasaulis.Server.Services
                 .ToList();
 
             return specialties;
+        }
+
+        public bool EditMovie(Movie movie, List<Video> videos, List<MovieCreator> movieCreators, string userId)
+        {
+            var movieWithSameId = _dbContext.Movies
+                .Include(m => m.MovieCreatorMovies)
+                .Include(m => m.Videos)
+                .SingleOrDefault(m => m.Id == movie.Id);
+
+            if (movieWithSameId == null)
+            {
+                return false;
+            }
+
+            movieWithSameId.Title = movie.Title;
+            movieWithSameId.AgeRequirement = movie.AgeRequirement;
+            movieWithSameId.Budget = movie.Budget;
+            movieWithSameId.Description = movie.Description;
+            movieWithSameId.Duration = movie.Duration;
+            movieWithSameId.Gross = movie.Gross;
+            movieWithSameId.Language = movie.Language;
+            movieWithSameId.ReleaseDate = movie.ReleaseDate;
+
+            _dbContext.Videos.RemoveRange(movieWithSameId.Videos);
+
+            foreach (var video in videos)
+            {
+                video.Id = 0;
+                video.CreatedOn = DateTime.Now;
+                video.Movie = movieWithSameId;
+            }
+
+            _dbContext.Videos.AddRange(videos);
+
+            var movieCreatorMoviesToDelete = movieWithSameId.MovieCreatorMovies
+                .Where(mcm => !movieCreators.Select(mc => mc.Id).Contains(mcm.MovieCreatorId));
+
+            var movieCreatorMoviesToAdd = movieCreators
+                .Select(mc => new MovieCreatorMovie
+                {
+                    MovieId = movieWithSameId.Id,
+                    MovieCreatorId = mc.Id
+                })
+                .Where(
+                    mcm =>
+                        !movieWithSameId.MovieCreatorMovies.Select(mc => mc.MovieCreatorId).Contains(mcm.MovieCreatorId));
+
+            _dbContext.MovieCreatorMovies.RemoveRange(movieCreatorMoviesToDelete);
+            _dbContext.MovieCreatorMovies.AddRange(movieCreatorMoviesToAdd);
+            _dbContext.SaveChanges();
+
+            return true;
         }
     }
 }

@@ -19,5 +19,6 @@ namespace KinoPasaulis.Server.Services
         bool DeleteJobAdvertisement(int id, string userId);
         object GetCinemaStudioMovie(int movieId, string userId);
         IEnumerable<Specialty> GetSpecialties();
+        bool EditMovie(Movie movie, List<Video> videos, List<MovieCreator> movieCreators, string userId);
     }
 }

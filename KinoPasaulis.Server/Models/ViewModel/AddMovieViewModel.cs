@@ -38,5 +38,7 @@ namespace KinoPasaulis.Server.Models.ViewModel
         public List<string> ImageNames{ get; set; }
         public List<Video> Videos { get; set; }
         public List<MovieCreator> MovieCreators { get; set; }
+        public List<string> ImageTitles { get; set; }
+        public List<string> ImageDescriptions { get; set; }
     }
 }

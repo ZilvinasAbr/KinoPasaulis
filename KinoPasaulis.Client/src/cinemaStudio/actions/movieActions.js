@@ -50,7 +50,9 @@ export function addMovie
   ageRequirement,
   droppedFiles,
   videos,
-  movieCreators
+  movieCreators,
+  imageTitles,
+  imageDescriptions
 ) {
   return dispatch => {
     if(droppedFiles.length <= 0) {
@@ -67,7 +69,9 @@ export function addMovie
           ageRequirement,
           imageNames: [],
           videos,
-          movieCreators
+          movieCreators,
+          imageTitles,
+          imageDescriptions
         })
         .end((err, res) => {
           if(err) {
@@ -107,7 +111,9 @@ export function addMovie
             ageRequirement,
             imageNames,
             videos,
-            movieCreators
+            movieCreators,
+            imageTitles,
+            imageDescriptions
           })
           .end((err, res) => {
             if(err) {

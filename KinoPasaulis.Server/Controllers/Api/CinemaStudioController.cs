@@ -104,10 +104,12 @@ namespace KinoPasaulis.Server.Controllers.Api
             };
 
             var imageNames = model.ImageNames;
+            var imageTitles = model.ImageTitles;
+            var imageDescriptions = model.ImageDescriptions;
             var videos = model.Videos;
             var movieCreators = model.MovieCreators;
 
-            var isSuccess = _cinemaStudioService.AddNewMovie(movie, imageNames, videos, movieCreators, HttpContext.User.GetUserId());
+            var isSuccess = _cinemaStudioService.AddNewMovie(movie, imageNames, imageTitles, imageDescriptions, videos, movieCreators, HttpContext.User.GetUserId());
 
             return Ok(isSuccess);
         }

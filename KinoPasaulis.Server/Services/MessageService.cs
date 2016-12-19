@@ -35,7 +35,10 @@ namespace KinoPasaulis.Server.Services
                 .Include(u => u.CinemaStudio)
                 .SingleOrDefault(au => au.Id == userId)
                 .CinemaStudio;
-            IEnumerable<Message> messages = _dbContext.Messages.Where(m => m.MovieCreatorId == cinemaStudio.Id).ToList();
+            var messages = _dbContext.Messages
+                .Include(message => message.MovieCreator)
+                .Where(m => m.CinemaStudioId == cinemaStudio.Id)
+                .ToList();
 
             foreach (var message in messages)
             {
@@ -45,7 +48,7 @@ namespace KinoPasaulis.Server.Services
                 }
             }
 
-            _dbContext.Messages.UpdateRange(messages);
+//            _dbContext.Messages.UpdateRange(messages);
             _dbContext.SaveChanges();
 
             return messages;

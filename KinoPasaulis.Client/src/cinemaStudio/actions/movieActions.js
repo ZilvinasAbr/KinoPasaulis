@@ -137,6 +137,7 @@ export function deleteMovie(id) {
     axios.delete(`/api/cinemaStudio/deleteMovie/${id}`)
       .then(response => {
         dispatch(removeMovie(id));
+        alert('Sėkmingai pašalintas filmas');
       })
       .catch(error => {
         alert('Nepavyko pašalinti filmo: filmas jau naudojamas sistemoje');

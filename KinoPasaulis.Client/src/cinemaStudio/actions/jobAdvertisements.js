@@ -63,9 +63,11 @@ export function deleteJobAdvertisement(id) {
   return dispatch => {
     axios.delete(`/api/cinemaStudio/jobAdvertisement/${id}`)
       .then(response => {
+        alert('Sėkmingai pašalinote darbo skelbimą');
         dispatch(removeJobAdvertisement(id));
       })
       .catch(error => {
+        alert('Nepavyko pašalinti darbo skelbimo');
         console.log(error);
       });
   };

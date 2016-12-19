@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { Button, Col, Table } from 'react-bootstrap';
+import { Button, Col, Table, Modal } from 'react-bootstrap';
 
 import {
   fetchJobAdvertisements,
@@ -9,19 +9,70 @@ import {
 } from '../../actions/jobAdvertisements';
 import CinemaStudioNavigationBar from '../CinemaStudioNavigationBar';
 
+const ModalInstance = ({isOpen, selectedJobAdvertisement, onDelete, onClose}) => {
+  if(isOpen) {
+    return (
+      <div className="static-modal">
+        <Modal.Dialog>
+          <Modal.Header>
+            <Modal.Title>Pašalinti darbo skelbimą</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            Ar tikrai norite pašalinti "{selectedJobAdvertisement.title}" darbo skelbimą?
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button bsStyle="danger" onClick={() => onDelete(selectedJobAdvertisement.id)}>Pašalinti</Button>
+            <Button bsStyle="primary" onClick={onClose}>Atšaukti</Button>
+          </Modal.Footer>
+
+        </Modal.Dialog>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 class JobAdvertisementsPage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isModalOpen: false,
+      selectedJobAdvertisement: null
+    };
+
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.deleteJobAdvertisement = this.deleteJobAdvertisement.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(fetchJobAdvertisements());
   }
 
-  handleDeleteJobAd(index) {
-    let jobAdvertisement = this.props.jobAdvertisements[index];
+  handleOpenDeleteModal(index) {
+    this.setState({
+      isModalOpen: true,
+      selectedJobAdvertisement: this.props.jobAdvertisements[index]
+    });
+  }
 
-    this.props.dispatch(deleteJobAdvertisement(jobAdvertisement.id));
+  handleCloseModal() {
+    this.setState({
+      isModalOpen: false,
+      selectedJobAdvertisement: null
+    });
+  }
+
+  deleteJobAdvertisement(id) {
+    this.setState({
+      isModalOpen: false,
+      selectedJobAdvertisement: null
+    });
+
+    this.props.dispatch(deleteJobAdvertisement(id));
   }
 
   renderJobAdvertisements(jobAdvertisements) {
@@ -44,7 +95,7 @@ class JobAdvertisementsPage extends React.Component {
         <td>{jobAd.duration} dienų</td>
         <td>{jobAd.payRate}</td>
         <td>
-          <Button bsStyle="danger" onClick={() => this.handleDeleteJobAd(index)}>
+          <Button bsStyle="danger" onClick={() => this.handleOpenDeleteModal(index)}>
             Pašalinti
           </Button>
         </td>
@@ -55,6 +106,12 @@ class JobAdvertisementsPage extends React.Component {
   render() {
     return (
       <div>
+        <ModalInstance
+          isOpen={this.state.isModalOpen}
+          selectedJobAdvertisement={this.state.selectedJobAdvertisement}
+          onDelete={this.deleteJobAdvertisement}
+          onClose={this.handleCloseModal}
+        />
         <CinemaStudioNavigationBar />
         <Col xs={8} xsOffset={2} sm={6} smOffset={3} lg={4} lgOffset={4}>
           <h1>Darbo skelbimai</h1>

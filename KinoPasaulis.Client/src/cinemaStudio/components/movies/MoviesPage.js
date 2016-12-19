@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { push } from 'react-router-redux';
 import { Col, Table } from 'react-bootstrap';
 
@@ -10,29 +10,75 @@ import {
 } from '../../actions/movieActions';
 import CinemaStudioNavigationBar from '../CinemaStudioNavigationBar';
 
+const ModalInstance = ({isOpen, selectedMovie, onDelete, onClose}) => {
+  if(isOpen) {
+    return (
+      <div className="static-modal">
+        <Modal.Dialog>
+          <Modal.Header>
+            <Modal.Title>Pašalinti filmą</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            Ar tikrai norite pašalinti {selectedMovie.title} filmą?
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button bsStyle="danger" onClick={() => onDelete(selectedMovie.id)}>Pašalinti</Button>
+            <Button bsStyle="primary" onClick={onClose}>Atšaukti</Button>
+          </Modal.Footer>
+
+        </Modal.Dialog>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+
 class MoviesPage extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isModalOpen: false,
+      selectedMovie: null
+    };
+
     this.handleAddMovie = this.handleAddMovie.bind(this);
-    this.handleDeleteMovie = this.handleDeleteMovie.bind(this);
+    this.handleOpenDeleteModal = this.handleOpenDeleteModal.bind(this);
     this.renderMovie = this.renderMovie.bind(this);
+    this.deleteMovie = this.deleteMovie.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(fetchCinemaStudioMovies());
   }
-
   handleAddMovie() {
     this.props.dispatch(push('/cinemaStudio/addMovie'));
   }
-
-  handleDeleteMovie(index) {
-    let movie = this.props.movies[index];
-
-    this.props.dispatch(deleteMovie(movie.id));
+  handleOpenDeleteModal(index) {
+    this.setState({
+      isModalOpen: true,
+      selectedMovie: this.props.movies[index]
+    });
   }
+  deleteMovie(movieId) {
+    this.setState({
+      isModalOpen: false,
+      selectedMovie: null
+    });
 
+    this.props.dispatch(deleteMovie(movieId));
+  }
+  closeModal() {
+    this.setState({
+      isModalOpen: false,
+      selectedMovie: null
+    });
+  }
   renderMovie(movie, index) {
     return (
       <tr key={index}>
@@ -55,7 +101,7 @@ class MoviesPage extends React.Component {
           <Button bsStyle="success" onClick={() => this.props.dispatch(push(`/cinemaStudio/editMovie/${movie.id}`))}>
             Redaguoti
           </Button>
-          <Button bsStyle="danger" onClick={() => this.handleDeleteMovie(index)}>
+          <Button bsStyle="danger" onClick={() => this.handleOpenDeleteModal(index)}>
             Pašalinti
           </Button>
         </td>
@@ -66,7 +112,13 @@ class MoviesPage extends React.Component {
   render() {
     return (
       <div>
-        <CinemaStudioNavigationBar/>
+        <ModalInstance
+          isOpen={this.state.isModalOpen}
+          selectedMovie={this.state.selectedMovie}
+          onDelete={this.deleteMovie}
+          onClose={this.closeModal}
+        />
+        <CinemaStudioNavigationBar />
         <Col lg={2} lgOffset={5}>
           <h1>Kino filmai</h1>
         </Col>

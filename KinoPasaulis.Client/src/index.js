@@ -34,6 +34,7 @@ import PendingMoviesPage from './components/home/movieCreator/PendingMoviesPage'
 import JobOffersPage from './components/home/movieCreator/JobOffersPage';
 import AnnouncementsPage from './components/home/AnnouncementsPage';
 import Votings from './components/home/votesAdmin/votings/Votings';
+import AddVotingPage from './components/home/votesAdmin/votings/AddVotingPage';
 
 const store = createStore(reducer, initialState, compose(
   applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware),
@@ -74,6 +75,7 @@ render(
 				<Route path="movieCreator/pendingMovies" component={PendingMoviesPage} />
 				<Route path="movieCreator/jobOffers" component={JobOffersPage} />
 				<Route path="votesAdmin/votings" component={Votings} />
+				<Route path="votesAdmin/addvoting" component={AddVotingPage} />
 			</Router>
 		</Provider>
   ),

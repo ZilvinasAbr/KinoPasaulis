@@ -51,6 +51,7 @@ namespace KinoPasaulis.Server.Services
             var voting = _dbContext.Votings
                 .Include(v => v.Votes)
                 .Include(v => v.MovieCreatorVotings)
+                .Include(v => v.Votes)
                 .SingleOrDefault(v => v.Id == id);
             var votesAdmin = _dbContext.Users
                 .Include(u => u.VotesAdmin)
@@ -124,7 +125,7 @@ namespace KinoPasaulis.Server.Services
             return movieCreators;
         }
 
-        public List<MovieCreatorVoting> CreateMovieCreatorsVoting(IEnumerable<MovieCreator> movieCreators, VotingViewModel voting)
+        public List<MovieCreatorVoting> CreateMovieCreatorsVoting(/*IEnumerable<MovieCreator> movieCreators,*/ VotingViewModel voting)
         {
             var newVoting = new Voting
             {
@@ -136,21 +137,23 @@ namespace KinoPasaulis.Server.Services
             };
 
             _dbContext.Votings.Add(newVoting);
-            _dbContext.SaveChanges();
+//            _dbContext.SaveChanges();
             var movieCreatorVotings = new List<MovieCreatorVoting>();
 
-            foreach (var movieCreator in movieCreators)
+            foreach (var movieCreator in voting.MovieCreators)
             {
                 var newMovieCreatorVoting = new MovieCreatorVoting
                 {
-                    MovieCreator = movieCreator,
-                    Voting = newVoting
+                    MovieCreatorId = movieCreator.Id,
+                    VotingId = newVoting.Id
                 };
 
                 movieCreatorVotings.Add(newMovieCreatorVoting);
-                _dbContext.MovieCreatorVotings.Add(newMovieCreatorVoting);
+                
+                
             }
 
+            _dbContext.MovieCreatorVotings.AddRange(movieCreatorVotings);
             _dbContext.SaveChanges();
 
             return movieCreatorVotings;

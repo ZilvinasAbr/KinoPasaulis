@@ -37,8 +37,8 @@ namespace KinoPasaulis.Server.Controllers.Api
             {
                 var userId = HttpContext.User.GetUserId();
                 
-                var movieCreators = _votingService.GetMovieCreators(voting.MovieCreatorsId);
-                var movieCreatorVoting = _votingService.CreateMovieCreatorsVoting(movieCreators, voting);
+                //var movieCreators = _votingService.GetMovieCreators(voting.MovieCreatorsId);
+                var movieCreatorVoting = _votingService.CreateMovieCreatorsVoting(/*movieCreators, */voting);
 
                 return true;
             }
@@ -46,10 +46,16 @@ namespace KinoPasaulis.Server.Controllers.Api
             return false;
         }
 
-        [HttpPost("deletevoting")]
-        public bool DeleteVoting([FromBody] int votingId)
+        [HttpPost("deletevoting/{id}")]
+        public bool DeleteVoting(int id)
         {
-            return _votingService.DeleteVoting(votingId);
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+
+                return _votingService.DeleteVoting(id, userId);
+            }
+            return false;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KinoPasaulis.Server.Models;
 
 namespace KinoPasaulis.Server.ViewModels
 {
@@ -17,6 +18,7 @@ namespace KinoPasaulis.Server.ViewModels
 
         public DateTime CreatedAt { get; set; }
 
-        public List<int> MovieCreatorsId { get; set; }
+        //public List<int> MovieCreatorsId { get; set; }
+        public List<MovieCreator> MovieCreators { get; set; }
     }
 }

@@ -118,12 +118,12 @@ namespace KinoPasaulis.Server.Services
 
                 var wins = 0;
 
-                foreach (var voting in _votingService.GetVotings())
+                foreach (var voting in _votingService.GetEndedVotings())
                 {
                     var group = voting.Votes.GroupBy(vot => vot.MovieCreator.Id)
                         .ToDictionary(g => g.Key, g => g.ToList());
 
-                    if (voting.Votes.Count != 0 && voting.EndDate < DateTime.Now)
+                    if (voting.Votes.Count != 0)
                     {
                         var winner =
                             group.Values.OrderByDescending(g => g.Count).FirstOrDefault().FirstOrDefault().MovieCreator;

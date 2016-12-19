@@ -15,6 +15,7 @@ class LandingPage extends React.Component {
           changePageToLanding={this.props.changePageToLanding}
           changePageToLogin={this.props.changePageToLogin}
           changePageToRegister={this.props.changePageToRegister} />
+        <img width="100%" height="100%" src="http://i.imgur.com/HJpcAuU.png"></img>
       </div>
     );
   }

@@ -11,6 +11,7 @@ namespace KinoPasaulis.Server.Services
         IEnumerable<Subscription> GetSubscriptions(int clientId);
         Vote GetVoteById(int voteId);
         Rating GetRatingById(int ratingId);
+        IEnumerable<Rating> GetRatings(int clientId);
         IEnumerable<Movie> GetAllMovies();
         object GetMovie(int movieId);
 

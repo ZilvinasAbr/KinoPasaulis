@@ -240,20 +240,26 @@ namespace KinoPasaulis.Server.Controllers.Api
         {
             if (_signInManager.IsSignedIn(User))
             {
+                if (addRatingModel.Value < 1 || addRatingModel.Value > 10)
+                {
+                    return Ok(false);
+                }
                 var userId = HttpContext.User.GetUserId();
                 var client = _userService.GetClientByUserId(userId);
                 var movie = _movieRepository.GetMovieById(addRatingModel.MovieId);
                 byte ratingType = 2;
-                if (addRatingModel.Comment == null)
+                var comment = addRatingModel.Comment;
+                if (string.IsNullOrEmpty(comment))
                 {
                     ratingType = 1;
+                    comment = null;
                 }
 
                 var rating = new Rating()
                 {
                     Client = client,
                     ClientId = client.Id,
-                    Comment = addRatingModel.Comment,
+                    Comment = comment,
                     Movie = movie,
                     MovieId = movie.Id,
                     RatingCreatedOn = DateTime.Now,
@@ -277,19 +283,42 @@ namespace KinoPasaulis.Server.Controllers.Api
             {
                 var rating = _clientService.GetRatingById(changeRatingModel.RatingId);
                 byte ratingType = 2;
-                if (changeRatingModel.Comment == null)
+                var comment = changeRatingModel.Comment;
+                if (string.IsNullOrEmpty(comment))
                 {
                     ratingType = 1;
+                    comment = null;
                 }
 
                 rating.RatingModifiedOn = DateTime.Now;
-                rating.Comment = changeRatingModel.Comment;
+                rating.Comment = comment;
                 rating.Value = changeRatingModel.Value;
                 rating.RatingType = ratingType;
 
                 _clientService.ChangeRating(rating);
 
                 return Ok(true);
+            }
+
+            return Unauthorized();
+        }
+
+        [HttpGet("isRatedMovie")]
+        public IActionResult IsRatedByMovieId(int id)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                var client = _userService.GetClientByUserId(userId);
+                var clientRates = _clientService.GetRatings(client.Id);
+                foreach (var rate in clientRates)
+                {
+                    if (rate.MovieId == id)
+                    {
+                        return Ok(rate);
+                    }
+                }
+                return Ok(false);
             }
 
             return Unauthorized();

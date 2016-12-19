@@ -34,7 +34,7 @@ const MovieDetails = ({ movie }) => (
       <td>{movie.ageRequirement}</td>
     </tr>
     <tr>
-      <td>Description:</td>
+      <td>Aprašymas:</td>
       <td>{movie.description}</td>
     </tr>
     </tbody>

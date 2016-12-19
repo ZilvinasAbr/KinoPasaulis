@@ -55,6 +55,16 @@ namespace KinoPasaulis.Server.Services
             return _ratingRepository.GetRatingById(ratingId);
         }
 
+        public IEnumerable<Rating> GetRatings(int clientId)
+        {
+            var ratings = _dbContext
+                .Ratings
+                .Where(rt => rt.ClientId == clientId)
+                .ToList();
+
+            return ratings;
+        }
+
         public IEnumerable<Movie> GetAllMovies()
         {
             return _dbContext.Movies
@@ -73,6 +83,7 @@ namespace KinoPasaulis.Server.Services
                 .Include(m => m.Events)
                     .ThenInclude(e => e.Theather)
                 .Include(m => m.Ratings)
+                    .ThenInclude(m => m.Client)
                 .SingleOrDefault(m => m.Id == movieId);
 
             var currentEvents = movie.Events.Where(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime);
@@ -101,7 +112,6 @@ namespace KinoPasaulis.Server.Services
                 movieCreators
             };
         }
-
 
         public void AddOrder(Order order)
         {

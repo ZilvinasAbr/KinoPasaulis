@@ -8,11 +8,10 @@ import
   FormControl,
   ControlLabel
 } from 'react-bootstrap';
-import Dropzone from 'react-dropzone';
 import DatePicker from 'react-bootstrap-date-picker';
 
 import {
-  addMovie,
+  editMovie,
   fetchMovieCreators
 } from '../../../actions/movieActions';
 import VideosTable from '../addMovie/VideosTable';
@@ -20,7 +19,7 @@ import SelectVideoModal from '../addMovie/SelectVideoModal';
 import MovieCreatorsTable from '../addMovie/MovieCreatorsTable';
 import MovieCreatorAutosuggest from '../addMovie/MovieCreatorAutosuggest';
 
-class AddMovieForm extends React.Component {
+class EditMovieForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -34,7 +33,6 @@ class AddMovieForm extends React.Component {
       gross: '',
       language: '',
       ageRequirement: '',
-      droppedFiles: [],
       videos: [],
       selectedMovieCreators: [],
       modalIsOpen: false
@@ -51,7 +49,6 @@ class AddMovieForm extends React.Component {
     this.handleOnAgeRequirementChange = this.handleOnAgeRequirementChange.bind(this);
     this.handleOnMinutesChange = this.handleOnMinutesChange.bind(this);
     this.handleOnHoursChange = this.handleOnHoursChange.bind(this);
-    this.onImageDrop = this.onImageDrop.bind(this);
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -87,13 +84,6 @@ class AddMovieForm extends React.Component {
     this.props.dispatch(fetchMovieCreators());
   }
 
-  onImageDrop(files) {
-    console.log('Received files:', files);
-
-    this.setState({
-      droppedFiles: [ ...this.state.droppedFiles, ...files]
-    });
-  }
   handleOnTitleChange(e) {
     this.setState({
       title: e.target.value
@@ -179,7 +169,8 @@ class AddMovieForm extends React.Component {
   }
   handleSubmit() {
     this.props.dispatch(
-      addMovie(
+      editMovie(
+        this.props.movieId,
         this.state.title,
         this.state.hours,
         this.state.minutes,
@@ -189,7 +180,6 @@ class AddMovieForm extends React.Component {
         this.state.gross,
         this.state.language,
         this.state.ageRequirement,
-        this.state.droppedFiles,
         this.state.videos,
         this.state.selectedMovieCreators
       )
@@ -299,12 +289,6 @@ class AddMovieForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <Dropzone onDrop={this.onImageDrop}>
-            <div>Nuveskite nuotraukas čia</div>
-          </Dropzone>
-        </FormGroup>
-
-        <FormGroup>
           <ControlLabel>
             Pasirinkti video
           </ControlLabel>
@@ -350,7 +334,7 @@ class AddMovieForm extends React.Component {
   }
 }
 
-AddMovieForm.propTypes = {
+EditMovieForm.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
   movieCreators: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   movieId: React.PropTypes.number.isRequired
@@ -362,4 +346,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(AddMovieForm);
+export default connect(mapStateToProps)(EditMovieForm);

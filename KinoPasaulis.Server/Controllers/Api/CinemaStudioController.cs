@@ -139,6 +139,43 @@ namespace KinoPasaulis.Server.Controllers.Api
             return Ok();
         }
 
+        [HttpPut("editMovie/{id}")]
+        public IActionResult EditMovie([FromBody] AddMovieViewModel model, int id)
+        {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return Unauthorized();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+
+                return BadRequest(allErrors);
+            }
+
+            var movie = new Movie
+            {
+                Id = id,
+                Title = model.Title,
+                Duration = new TimeSpan(model.Hours, model.Minutes, 0),
+                ReleaseDate = model.ReleaseDate,
+                Budget = model.Budget,
+                Description = model.Description,
+                Gross = model.Gross,
+                Language = model.Language,
+                AgeRequirement = model.AgeRequirement
+            };
+
+            var videos = model.Videos;
+            var movieCreators = model.MovieCreators;
+
+            var isSuccess = _cinemaStudioService.EditMovie(movie, videos, movieCreators, HttpContext.User.GetUserId());
+
+
+            return Ok(isSuccess);
+        }
+
         [HttpPost("uploadImage")]
         public async Task<IActionResult> UploadImage()
         {

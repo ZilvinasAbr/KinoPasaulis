@@ -145,6 +145,51 @@ export function deleteMovie(id) {
   };
 }
 
+export function editMovie(
+  id,
+  title,
+  hours,
+  minutes,
+  releaseDate,
+  budget,
+  description,
+  gross,
+  language,
+  ageRequirement,
+  videos,
+  movieCreators
+) {
+  return dispatch => {
+    request.put(`/api/cinemaStudio/editMovie/${id}`)
+      .send({
+        title,
+        hours,
+        minutes,
+        releaseDate,
+        budget,
+        description,
+        gross,
+        language,
+        ageRequirement,
+        videos,
+        movieCreators
+      })
+      .end((err, res) => {
+        if(err) {
+          alert(res.body);
+          console.log(err);
+          return;
+        }
+        if(res.body) {
+          alert('Sėkmingai paredaguotas filmas');
+          dispatch(push('/cinemaStudio/movies'));
+        }else {
+          alert('Nepavyko redaguoti filmo');
+        }
+      });
+  };
+}
+
 export function fetchMovieCreators() {
   return dispatch => {
     axios.get('/api/movieCreator/')

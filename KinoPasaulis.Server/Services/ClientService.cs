@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
@@ -28,6 +29,20 @@ namespace KinoPasaulis.Server.Services
         public Order GetOrderById(int orderId)
         {
             return _orderRepository.GetOrderById(orderId);
+        }
+
+        public IEnumerable<Order> GetOrdersByClientId(int clientId)
+        {
+            return _dbContext.Orders
+                .Include(or => or.Client)
+                .Include(or => or.Show)
+                    .ThenInclude(or => or.Auditorium)
+                        .ThenInclude(or => or.Theather)
+                .Include(or => or.Show)
+                    .ThenInclude(or => or.Event)
+                        .ThenInclude(or => or.Movie)
+                .Where(or => or.Client.Id == clientId)
+                .ToList();
         }
 
         public Subscription GetSubscriptionById(int subscriptionId)

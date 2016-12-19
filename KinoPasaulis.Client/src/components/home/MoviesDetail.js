@@ -135,7 +135,9 @@ class MoviesDetail extends React.Component {
             value={this.state.rating}
             onStarClick={this.onStarClick.bind(this)}
           />
+          <br></br>
           <textarea rows="4" cols="50" value={this.state.inputValue} onChange={(e) => this.handleInputValueChange(e)}/>
+          <br></br>
           <Button bsStyle="primary" onClick={() => this.addRating(this.state.inputValue, this.state.rating)}> Įvertinti </Button>
         </div>
       );
@@ -153,7 +155,9 @@ class MoviesDetail extends React.Component {
             value={this.state.rating}
             onStarClick={this.onStarClick.bind(this)}
           />
+          <br></br>
           <textarea rows="4" cols="50" value={this.state.inputValue} onChange={(e) => this.handleInputValueChange(e)}/>
+          <br></br>
           <Button bsStyle="primary" onClick={() => this.changeRating(this.state.inputValue, this.state.rating)}> Įvertinti </Button>
         </div>
       );

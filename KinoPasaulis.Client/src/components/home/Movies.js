@@ -63,12 +63,6 @@ class Movies extends React.Component {
   }
 
   render() {
-    const { value, suggestions } = this.state;
-    const inputProps = {
-      placeholder: 'Ieškokite filmo...',
-      value,
-      onChange: this.onChange
-    };
     return (
       <div>
         <NavigationBar/>

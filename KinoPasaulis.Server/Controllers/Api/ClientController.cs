@@ -57,6 +57,21 @@ namespace KinoPasaulis.Server.Controllers.Api
             return _clientService.GetOrderById(id);
         }
 
+        [HttpGet("getOrders")]
+        public IActionResult GetOrdersByClientId()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                var client = _userService.GetClientByUserId(userId);
+                var orders = _clientService.GetOrdersByClientId(client.Id);
+
+                return Ok(orders);
+            }
+
+            return Unauthorized();
+        }
+
         [HttpPost("addOrder")]
         public bool AddOrder([FromBody] OrderViewModel orderModel)
         {

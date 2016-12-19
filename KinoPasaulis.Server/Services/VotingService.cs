@@ -22,6 +22,7 @@ namespace KinoPasaulis.Server.Services
         public IEnumerable<Voting> GetVotings()
         {
             IEnumerable<Voting> votings = _dbContext.Votings
+                .Include(mc => mc.Votes)
                 .Include(mc => mc.MovieCreatorVotings)
                     .ThenInclude(mc => mc.MovieCreator)
                 .ToList();
@@ -33,7 +34,11 @@ namespace KinoPasaulis.Server.Services
         {
             IEnumerable<Voting> votings = _dbContext.Votings.Where
                 (voting => voting.StartDate < DateTime.Now &&
-                voting.EndDate > DateTime.Now).ToList();
+                voting.EndDate > DateTime.Now)
+                .Include(v => v.Votes)
+                .Include(v => v.MovieCreatorVotings)
+                    .ThenInclude(v => v.MovieCreator)
+                .ToList();
 
             return votings;
         }

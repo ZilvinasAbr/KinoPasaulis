@@ -332,21 +332,31 @@ namespace KinoPasaulis.Server.Controllers.Api
         [HttpGet("getMovies")]
         public IActionResult GetMovies()
         {
-            var movies = _clientService.GetAllMovies();
-            return Ok(movies);
+            if (_signInManager.IsSignedIn(User))
+            {
+                var movies = _clientService.GetAllMovies();
+                return Ok(movies);
+            }
+
+            return Unauthorized();
         }
 
         [HttpGet("getMovie")]
-        public IActionResult GetCinemaStudioMovie(int id)
+        public IActionResult GetMovie(int id)
         {
-            var movie = _clientService.GetMovie(id);
-
-            if (movie == null)
+            if (_signInManager.IsSignedIn(User))
             {
-                return NotFound();
+                var movie = _clientService.GetMovie(id);
+
+                if (movie == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(movie);
             }
 
-            return Ok(movie);
+            return Unauthorized();
         }
     }
 }

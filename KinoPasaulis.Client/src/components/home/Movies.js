@@ -4,13 +4,14 @@ import { push } from 'react-router-redux';
 import axios from 'axios';
 import { Well, Col } from 'react-bootstrap';
 
-import ClientNavigationBar from './client/ClientNavigationBar';
+import NavigationBar from '../../components/common/NavigationBar';
 
 class Movies extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: []
+      movies: [],
+      query: ''
     };
   }
 
@@ -28,6 +29,12 @@ class Movies extends React.Component {
       });
   }
 
+  handleTitleChange(e) {
+    this.setState({
+      query: e.target.value
+    });
+  }
+
   paintImage(movie) {
     if (movie.images.length != 0) {
       return <img alt={movie.images[0].title} height="200" width="100%"
@@ -40,29 +47,43 @@ class Movies extends React.Component {
   renderMovies() {
     let movies = this.state.movies;
     console.log(movies);
-    return movies.map((movie, index) => {
-      return <div key={index}>
-        <Col md={4}>
-          <Well>
-            {this.paintImage(movie)}
-            <h2> {movie.title} </h2>
-            <a className="btn btn-primary"> Detaliau </a>
-          </Well>
-        </Col>
-      </div>
-    });
+    return movies
+      .filter(movie => movie.title.toLowerCase().indexOf(this.state.query.toLowerCase()) >= 0)
+      .map((movie, index) => {
+        return <div key={index}>
+          <Col md={4}>
+            <Well>
+              {this.paintImage(movie)}
+              <h2> {movie.title} </h2>
+              <a className="btn btn-primary" onClick={() => this.props.goToMovieDetails(movie.id)}> Detaliau </a>
+            </Well>
+          </Col>
+        </div>
+      });
   }
 
   render() {
+    const { value, suggestions } = this.state;
+    const inputProps = {
+      placeholder: 'Ieškokite filmo...',
+      value,
+      onChange: this.onChange
+    };
     return (
       <div>
-        <ClientNavigationBar/>
+        <NavigationBar/>
         <div className="container">
           <Col md={3}>
             <h2>Filmai</h2>
+            <p>Čia rodomi visi filmai</p>
           </Col>
 
           <Col md={9}>
+            <input
+              placeholder="Filtruokite filmus..."
+              value={this.state.query}
+              onChange={(e) => this.handleTitleChange(e)}
+            />
             <h2> Filmų sąrašas </h2>
             {this.renderMovies()}
           </Col>
@@ -73,11 +94,16 @@ class Movies extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {}
+  return {
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-  return {}
+  return {
+    goToMovieDetails: (id) => {
+      dispatch(push('/movie/'+id))
+    }
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Movies);

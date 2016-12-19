@@ -71,7 +71,7 @@ render(
 				<Route path="cinemaStudio/addJobAdvertisement" component={AddJobAdvertisementPage} />
 				<Route path="theathers/:id" component={Theathers}/>
 				<Route path="eventDetails/:id" component={EventDetails2}/>
-				<Route path="movies/:id" component={Movies}/>
+				<Route path="movies" component={Movies}/>
 				<Route path="movie/:id" component={MoviesDetail}/>
 				<Route path="announcements" component={AnnouncementsPage}/>
 				<Route path="movieCreator/taggedMovies" component={TaggedMoviesPage} />

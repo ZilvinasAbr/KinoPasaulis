@@ -45,7 +45,7 @@ class Theathers extends React.Component {
         <Col md={4}>
           <Well>
             {this.paintImage(event)}
-            <h2> {event.movie.title} </h2>
+            <a><h2> {event.movie.title} </h2></a>
             {moment(event.startTime).format('YYYY/MM/DD')} -
             {moment(event.endTime).format('YYYY/MM/DD')}
             <a className="btn btn-primary" onClick={this.props.goToEventDetails.bind(this, event.id)}> Detaliau </a>
@@ -71,7 +71,7 @@ class Theathers extends React.Component {
           </Col>
 
           <Col md={9}>
-            <h2> Event list </h2>
+            <h2> Rodomi filmai </h2>
             {this.renderEvents()}
           </Col>
         </div>

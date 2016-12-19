@@ -328,5 +328,25 @@ namespace KinoPasaulis.Server.Controllers.Api
 
             return Unauthorized();
         }
+
+        [HttpGet("getMovies")]
+        public IActionResult GetMovies()
+        {
+            var movies = _clientService.GetAllMovies();
+            return Ok(movies);
+        }
+
+        [HttpGet("getMovie")]
+        public IActionResult GetCinemaStudioMovie(int id)
+        {
+            var movie = _clientService.GetMovie(id);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(movie);
+        }
     }
 }

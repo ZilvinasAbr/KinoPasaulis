@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import axios from 'axios';
-import { Table, Button, Col } from 'react-bootstrap';
-import moment from 'moment';
+import { Table, Col } from 'react-bootstrap';
 import VotingTable from './VotingTable';
 
 import NavigationBar from '../../../components/common/NavigationBar';
@@ -13,6 +11,7 @@ class Voting extends React.Component {
     super(props);
     this.state = {
       votings: [],
+      voted: [],
       movieCreatorId: 0,
       selectedValues: []
     };
@@ -21,7 +20,6 @@ class Voting extends React.Component {
   componentDidMount() {
     axios.get('/api/voting/currentVotings')
       .then(response => {
-        console.log(response.data)
         this.setState(
           {
             votings: response.data,
@@ -31,25 +29,46 @@ class Voting extends React.Component {
       .catch(error => {
         console.log(error);
       });
+
+    axios.get(`/api/client/isVoted`)
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+          voted: response.data,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   addVote(votingId, movieCreatorId) {
     axios.post('/api/client/addVote', {
-      VotingId: votingId,
-      MovieCreatorId: movieCreatorId
-    })
-      .then(response => {
-        if (response.data == true) {
-          alert('Ačiū už balsą!');
-          console.log('success');
-        } else {
-          alert('Pasirinkite įvertinimą')
-          console.log('response.data returned false');
-        }
+        VotingId: votingId,
+        MovieCreatorId: movieCreatorId
       })
-      .catch(error => {
-        console.log(error);
-      })
+        .then(response => {
+          if (response.data == true) {
+            alert('Ačiū už balsą!');
+            console.log('success');
+            axios.get(`/api/client/isVoted`)
+              .then(response => {
+                console.log(response.data);
+                this.setState({
+                  voted: response.data,
+                });
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          } else {
+            alert('Pasirinkite įvertinimą');
+            console.log('response.data returned false');
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        })
   }
 
   handleChange(value, index) {
@@ -62,10 +81,33 @@ class Voting extends React.Component {
     });
   }
 
+  renderMyVotes() {
+    let votes = this.state.voted;
+    return votes.map((vote, index) => {
+      return <tr key={index}>
+        <td>{vote.voting.title}</td>
+        <td>{vote.movieCreator.firstName} {vote.movieCreator.lastName}</td>
+      </tr>
+    });
+  }
+
   render() {
     return (
       <div>
         <NavigationBar/>
+        <Col md={5}><h3>Mano balsai</h3>
+          <Table striped bordered condensed hover>
+            <thead>
+            <tr>
+              <td>Balsavimas</td>
+              <td>Pasirinkimas</td>
+            </tr>
+            </thead>
+            <tbody>
+            {this.renderMyVotes()}
+            </tbody>
+          </Table>
+        </Col>
         <Col md={5}>
         {this.state.votings.map((voting, index) =>
           <VotingTable
@@ -87,8 +129,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Voting);

@@ -85,6 +85,7 @@ namespace KinoPasaulis.Server.Services
             var votes = _dbContext
                 .Votes
                 .Include(vt => vt.Voting)
+                .Include(vt => vt.MovieCreator)
                 .Where(vt => vt.Client.Id == clientId)
                 .ToList();
 

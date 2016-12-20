@@ -206,8 +206,21 @@ namespace KinoPasaulis.Server.Controllers.Api
             {
                 var userId = HttpContext.User.GetUserId();
                 var client = _userService.GetClientByUserId(userId);
-                var voting = _votingRepository.GetVotingById(voteModel.VotingId);
+                var clientVotes = _clientService.GetVotes(client.Id);
                 var movieCreator = _movieCreatorRepository.GetMovieCreatorById(voteModel.MovieCreatorId);
+                foreach (var clientVote in clientVotes)
+                {
+                    if (clientVote.Voting.Id == voteModel.VotingId)
+                    {
+                        clientVote.VoteChangedOn = DateTime.Now;
+                        clientVote.MovieCreator = movieCreator;
+
+                        _clientService.ChangeVote(clientVote);
+
+                        return Ok(true);
+                    }
+                }
+                var voting = _votingRepository.GetVotingById(voteModel.VotingId);
                 var vote = new Vote()
                 {
                     MovieCreator = movieCreator,
@@ -252,14 +265,7 @@ namespace KinoPasaulis.Server.Controllers.Api
                 var userId = HttpContext.User.GetUserId();
                 var client = _userService.GetClientByUserId(userId);
                 var clientVotes = _clientService.GetVotes(client.Id);
-                foreach (var vote in clientVotes)
-                {
-                    if (vote.Voting.Id == id)
-                    {
-                        return Ok(vote);
-                    }
-                }
-                return Ok(false);
+                return Ok(clientVotes);
             }
 
             return Unauthorized();

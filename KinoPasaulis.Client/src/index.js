@@ -5,6 +5,7 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import {reducer, initialState} from './reducers/index';
 import HomePage from './components/home/HomePage';
@@ -44,9 +45,8 @@ import AwardsPage from './components/home/movieCreator/AwardsPage';
 import Voting from './components/home/client/Voting';
 import AwardsStatisticsPage from './components/home/movieCreator/AwardsStatisticsPage';
 
-const store = createStore(reducer, initialState, compose(
-  applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware),
-  typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
+const store = createStore(reducer, composeWithDevTools(
+	applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware)
 ));
 
 const history = syncHistoryWithStore(browserHistory, store);

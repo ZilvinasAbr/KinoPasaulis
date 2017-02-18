@@ -7,19 +7,25 @@ module.exports = {
     './src/index.js'
   ],
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel'
-    },
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel'
+      },
       {
         test: /\.scss$/,
         loaders: ["style", "css", "sass"]
       },
-      { test: /\.css$/, loader: "style-loader!css-loader" }]
+      {test: /\.css$/, loader: "style-loader!css-loader"},
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader'
+      }
+    ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx', '.ts', 'tsx']
   },
   output: {
     path: path.resolve(__dirname, '../KinoPasaulis.Server/wwwroot'),

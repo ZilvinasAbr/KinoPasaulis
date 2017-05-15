@@ -103,6 +103,39 @@ export function registerMovieCreator(
   }
 }
 
+export function registerVotesAdmin(
+    userName,
+    email,
+    password,
+    confirmPassword,
+    firstName,
+    lastName,
+    phone
+) {
+  return dispatch => {
+    return axios.post('/api/account/registerVotesAdmin', {
+      UserName: userName,
+      Email: email,
+      Password: password,
+      ConfirmPassword: confirmPassword,
+      FirstName: firstName,
+      LastName: lastName,
+      Phone: phone
+    })
+        .then(response => {
+          if(response.data === true) {
+            dispatch(deleteErrorMessage('Blogai įvesti registracijos duomenys'));
+            dispatch(push('/home'));
+          }else {
+            dispatch(addErrorMessage('Blogai įvesti registracijos duomenys'));
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+  }
+}
+
 export function registerClient(
   userName,
   email,

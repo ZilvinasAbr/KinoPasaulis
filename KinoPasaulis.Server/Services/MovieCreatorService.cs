@@ -89,7 +89,7 @@ namespace KinoPasaulis.Server.Services
 
             var votings = new List<Voting>();
 
-            foreach (var voting in _votingService.GetVotings())
+            foreach (var voting in _votingService.GetAllVotings())
             {
                 var group = voting.Votes.GroupBy(vot => vot.MovieCreator.Id).ToDictionary(g => g.Key, g => g.ToList());
 

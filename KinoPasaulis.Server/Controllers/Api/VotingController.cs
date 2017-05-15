@@ -27,7 +27,17 @@ namespace KinoPasaulis.Server.Controllers.Api
         [HttpGet("votings")]
         public IEnumerable<Voting> GetVotings()
         {
-            return _votingService.GetVotings();
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+                return _votingService.GetVotings(userId);
+            }
+            return null;
+        }
+
+        public IEnumerable<Voting> GetAllVotings()
+        {
+                return _votingService.GetAllVotings();
         }
 
         [HttpGet("currentVotings")]
@@ -50,7 +60,7 @@ namespace KinoPasaulis.Server.Controllers.Api
                 var userId = HttpContext.User.GetUserId();
                 
                 //var movieCreators = _votingService.GetMovieCreators(voting.MovieCreatorsId);
-                var movieCreatorVoting = _votingService.CreateMovieCreatorsVoting(/*movieCreators, */voting);
+                var movieCreatorVoting = _votingService.CreateMovieCreatorsVoting(/*movieCreators, */voting, userId);
 
                 return true;
             }

@@ -19,6 +19,7 @@ class RegisterPage extends React.Component {
             <Button bsStyle="primary" onClick={this.props.changePageToTheather} block>Kino teatro registracija</Button>
             <Button bsStyle="primary" onClick={this.props.changePageToCinemaStudio} block>Kino studijos registracija</Button>
             <Button bsStyle="primary" onClick={this.props.changePageToMovieCreator} block>Kino kūrėjo registracija</Button>
+            <Button bsStyle="primary" onClick={this.props.changePageToVotesAdmin} block>Balsavimų administratoriaus registracija</Button>
           </div>
         </div>
       </div>
@@ -50,6 +51,9 @@ function mapDispatchToProps(dispatch) {
     },
     changePageToMovieCreator: () => {
       dispatch(push('/register/moviecreator'));
+    },
+    changePageToVotesAdmin: () => {
+      dispatch(push('/register/votesadmin'));
     },
     changePageToClient: () => {
       dispatch(push('/register/client'));

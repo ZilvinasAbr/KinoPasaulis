@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KinoPasaulis.Server.ViewModels
 {
-    public class MovieCreatorRegisterViewModel
+    public class VotesAdminRegisterViewModel
     {
         [Required(ErrorMessage = "Username is required")]
         [Display(Name = "Username")]
@@ -32,14 +32,6 @@ namespace KinoPasaulis.Server.ViewModels
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone number")]
         public string Phone { get; set; }
-
-        [Required(ErrorMessage = "Birth date is required")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Birth Date")]
-        public DateTime BirthDate { get; set; }
-
-        [Display(Name = "Description")]
-        public string Description { get; set; }
 
     }
 }

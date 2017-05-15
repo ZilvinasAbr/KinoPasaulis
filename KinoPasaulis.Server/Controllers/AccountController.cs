@@ -138,6 +138,41 @@ namespace KinoPasaulis.Server.Controllers
             return false;
         }
 
+        [HttpPost("registerVotesAdmin")]
+        public async Task<bool> RegisterVotesAdmin([FromBody] VotesAdminRegisterViewModel model)
+        {
+            if (model.Password != model.ConfirmPassword)
+            {
+                return false;
+            }
+
+            var votesAdmin = new VotesAdmin
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Phone = model.Phone,
+                RegisterDate = DateTime.Now
+            };
+
+            var user = new ApplicationUser
+            {
+                UserName = model.UserName,
+                VotesAdmin = votesAdmin
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "VotesAdmin");
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return true;
+            }
+
+            return false;
+        }
+
         [HttpPost("registerCinemaStudio")]
         public async Task<bool> RegisterCinemaStudio([FromBody] CinemaStudioRegisterViewModel model)
         {

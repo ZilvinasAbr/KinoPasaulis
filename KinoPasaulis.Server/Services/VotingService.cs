@@ -19,7 +19,24 @@ namespace KinoPasaulis.Server.Services
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Voting> GetVotings()
+        public IEnumerable<Voting> GetVotings(string userId)
+        {
+            var votesAdmin = _dbContext.Users
+                .Include(u => u.VotesAdmin)
+                .SingleOrDefault(au => au.Id == userId)
+                .VotesAdmin;
+
+            IEnumerable<Voting> votings = _dbContext.Votings
+                .Where(id => id.VotesAdminId == votesAdmin.Id)
+                .Include(mc => mc.Votes)
+                .Include(mc => mc.MovieCreatorVotings)
+                    .ThenInclude(mc => mc.MovieCreator)
+                .ToList();
+
+            return votings;
+        }
+
+        public IEnumerable<Voting> GetAllVotings()
         {
             IEnumerable<Voting> votings = _dbContext.Votings
                 .Include(mc => mc.Votes)
@@ -32,8 +49,8 @@ namespace KinoPasaulis.Server.Services
 
         public IEnumerable<Voting> GetCurrentVotings()
         {
-            IEnumerable<Voting> votings = _dbContext.Votings.Where
-                (voting => voting.StartDate < DateTime.Now &&
+            IEnumerable<Voting> votings = _dbContext.Votings
+                .Where(voting => voting.StartDate < DateTime.Now &&
                 voting.EndDate > DateTime.Now)
                 .Include(v => v.Votes)
                 .Include(v => v.MovieCreatorVotings)
@@ -45,8 +62,8 @@ namespace KinoPasaulis.Server.Services
 
         public IEnumerable<Voting> GetEndedVotings()
         {
-            IEnumerable<Voting> votings = _dbContext.Votings.Where
-                (voting => voting.StartDate < DateTime.Now &&
+            IEnumerable<Voting> votings = _dbContext.Votings
+                .Where(voting => voting.StartDate < DateTime.Now &&
                 voting.EndDate < DateTime.Now)
                 .Include(v => v.Votes)
                 .Include(v => v.MovieCreatorVotings)
@@ -143,15 +160,20 @@ namespace KinoPasaulis.Server.Services
             return movieCreators;
         }
 
-        public List<MovieCreatorVoting> CreateMovieCreatorsVoting(/*IEnumerable<MovieCreator> movieCreators,*/ VotingViewModel voting)
+        public List<MovieCreatorVoting> CreateMovieCreatorsVoting(/*IEnumerable<MovieCreator> movieCreators,*/ VotingViewModel voting, string userId)
         {
+            var votesAdmin = _dbContext.Users
+                .Include(u => u.VotesAdmin)
+                .SingleOrDefault(au => au.Id == userId)
+                .VotesAdmin;
+
             var newVoting = new Voting
             {
                 CreatedAt = DateTime.Now,
                 EndDate = voting.EndDate,
                 StartDate = voting.StartDate,
                 Title = voting.Title,
-                VotesAdminId = 1
+                VotesAdminId = votesAdmin.Id
             };
 
             _dbContext.Votings.Add(newVoting);
@@ -177,7 +199,7 @@ namespace KinoPasaulis.Server.Services
             return movieCreatorVotings;
         }
 
-        public bool DeleteVoting(int votingId) // truksta balsu pasalinimo, virsuje galbut teisingai parasyta funkcija
+        /*public bool DeleteVoting(int votingId)
         {
             var movieCreatorVotings = _dbContext.MovieCreatorVotings.Where(mcv => mcv.VotingId == votingId);
             var votes = _dbContext.Votes
@@ -195,7 +217,7 @@ namespace KinoPasaulis.Server.Services
             _dbContext.Votings.Remove(voting);
             _dbContext.SaveChanges();
             return true;
-        }
+        }*/
     }
 }
 

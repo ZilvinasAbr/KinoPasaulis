@@ -24,7 +24,7 @@ namespace KinoPasaulis.Server.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Specialty> Specialties { get; set; }
-        public DbSet<MovieCreatorSpecialty> MovieCreatorSpecialties { get; set; }
+        //public DbSet<MovieCreatorSpecialty> MovieCreatorSpecialties { get; set; }
         public DbSet<MovieCreatorVoting> MovieCreatorVotings { get; set; }
         public DbSet<VotesAdmin> VotesAdmins { get; set; }
         public DbSet<Voting> Votings { get; set; }
@@ -53,18 +53,18 @@ namespace KinoPasaulis.Server.Data
                 .WithOne(mm => mm.MovieCreator)
                 .HasForeignKey(mm => mm.MovieCreatorId);
 
-            builder.Entity<MovieCreatorSpecialty>()
-                .HasKey(ms => new { ms.MovieCreatorId, ms.SpecialtyId });
+            /*builder.Entity<MovieCreatorSpecialty>()
+                .HasKey(ms => new { ms.MovieCreatorId, ms.SpecialtyId });*/
 
-            builder.Entity<Specialty>()
+            /*builder.Entity<Specialty>()
                 .HasMany(specialty => specialty.MovieCreatorSpecialties)
                 .WithOne(ms => ms.Specialty)
-                .HasForeignKey(ms => ms.SpecialtyId);
+                .HasForeignKey(ms => ms.SpecialtyId);*/
 
-            builder.Entity<MovieCreator>()
+            /*builder.Entity<MovieCreator>()
                 .HasMany(creator => creator.MovieCreatorSpecialties)
                 .WithOne(ms => ms.MovieCreator)
-                .HasForeignKey(ms => ms.MovieCreatorId);
+                .HasForeignKey(ms => ms.MovieCreatorId);*/
 
             builder.Entity<MovieCreatorVoting>()
                 .HasKey(mv => new { mv.MovieCreatorId, mv.VotingId });

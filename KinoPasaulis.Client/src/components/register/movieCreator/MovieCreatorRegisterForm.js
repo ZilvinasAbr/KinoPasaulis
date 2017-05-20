@@ -21,7 +21,8 @@ class MovieCreatorRegisterForm extends React.Component {
         lastName,
         phone,
         birthDate,
-        description
+        description,
+        specialty
       }
     } = this.props;
 
@@ -34,7 +35,8 @@ class MovieCreatorRegisterForm extends React.Component {
       lastName.value,
       phone.value,
       birthDate.value,
-      description.value
+      description.value,
+      specialty.value
     ));
   }
 
@@ -49,7 +51,8 @@ class MovieCreatorRegisterForm extends React.Component {
         lastName,
         phone,
         birthDate,
-        description
+        description,
+        specialty
       }
     } = this.props;
 
@@ -119,6 +122,13 @@ class MovieCreatorRegisterForm extends React.Component {
               <FormControl componentClass="textarea" placeholder="Aprašymas" { ...description } />
             </FormGroup>
 
+              <FormGroup controlId="specialty">
+                  <ControlLabel>
+                      Specialybė
+                  </ControlLabel>
+                  <FormControl type="text" placeholder="Specialybė" { ...specialty } />
+              </FormGroup>
+
             <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}>Registruotis</Button>
 
           </div>
@@ -142,7 +152,8 @@ const config = { // <----- THIS IS THE IMPORTANT PART!
     'lastName',
     'phone',
     'birthDate',
-    'description'
+    'description',
+    'specialty'
   ] // all the fields in your form
 };
 

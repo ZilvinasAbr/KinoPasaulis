@@ -6,6 +6,7 @@ namespace KinoPasaulis.Server.Services
     public interface ISpecialtyService
     {
         IEnumerable<Specialty> GetSpecialties();
-        bool AddSpecialty(Specialty specialty, List<MovieCreator> movieCreators, int userId);
+        bool AddSpecialty(string specialtyTitle, MovieCreator movieCreator);
+        void AssignSpecialty(Specialty specialty, MovieCreator movieCreator);
     }
 }

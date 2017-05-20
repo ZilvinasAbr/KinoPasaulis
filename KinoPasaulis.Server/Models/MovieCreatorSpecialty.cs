@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KinoPasaulis.Server.Models
+/*namespace KinoPasaulis.Server.Models
 {
     public class MovieCreatorSpecialty
     {
@@ -13,4 +13,4 @@ namespace KinoPasaulis.Server.Models
         public int SpecialtyId { get; set; }
         public Specialty Specialty { get; set; }
     }
-}
+}*/

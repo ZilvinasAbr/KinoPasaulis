@@ -75,7 +75,8 @@ export function registerMovieCreator(
   lastName,
   phone,
   birthDate,
-  description
+  description,
+  specialty
 ) {
   return dispatch => {
     return axios.post('/api/account/registerMovieCreator', {
@@ -87,7 +88,8 @@ export function registerMovieCreator(
       LastName: lastName,
       Phone: phone,
       BirthDate: birthDate,
-      Description: description
+      Description: description,
+      Specialty: specialty
     })
       .then(response => {
         if(response.data === true) {

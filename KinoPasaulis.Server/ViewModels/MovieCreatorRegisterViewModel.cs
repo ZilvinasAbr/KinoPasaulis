@@ -41,5 +41,9 @@ namespace KinoPasaulis.Server.ViewModels
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "Specialty is required")]
+        [Display(Name = "Specialty")]
+        public string Specialty { get; set; }
+
     }
 }

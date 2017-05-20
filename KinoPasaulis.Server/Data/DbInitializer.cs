@@ -100,9 +100,9 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(specialties);
             context.SaveChanges();
 
-            var movieCreatorSpecialties = AddMovieCreatorSpecialties(movieCreators, specialties);
+            /*var movieCreatorSpecialties = AddMovieCreatorSpecialties(movieCreators, specialties);
             context.AddRange(movieCreatorSpecialties);
-            context.SaveChanges();
+            context.SaveChanges();*/
 
             var jobAdvertisements = AddJobAdvertisements(movies, specialties);
             context.AddRange(jobAdvertisements);
@@ -346,15 +346,15 @@ namespace KinoPasaulis.Server.Data
         {
             var specialties = new List<Specialty>
             {
-                new Specialty { Title = "Režisierius", Quantity = 0, CreatedAt = DateTime.Now, EditDate = DateTime.Now },
-                new Specialty { Title = "Aktorius", Quantity = 0, CreatedAt = DateTime.Now, EditDate = DateTime.Now },
-                new Specialty { Title = "Kompozitorius", Quantity = 0, CreatedAt = DateTime.Now, EditDate = DateTime.Now }
+                new Specialty { Title = "Režisierius", Quantity = 0, CreatedAt = DateTime.Now },
+                new Specialty { Title = "Aktorius", Quantity = 0, CreatedAt = DateTime.Now },
+                new Specialty { Title = "Kompozitorius", Quantity = 0, CreatedAt = DateTime.Now }
             };
 
             return specialties;
         }
 
-        private static List<MovieCreatorSpecialty> AddMovieCreatorSpecialties(List<MovieCreator> movieCreators, List<Specialty> specialties)
+        /*private static List<MovieCreatorSpecialty> AddMovieCreatorSpecialties(List<MovieCreator> movieCreators, List<Specialty> specialties)
         {
             var movieCreatorSpecialties = new List<MovieCreatorSpecialty>
             {
@@ -364,7 +364,7 @@ namespace KinoPasaulis.Server.Data
             };
 
             return movieCreatorSpecialties;
-        }
+        }*/
 
         private static List<VotesAdmin> AddVotesAdmins()
         {

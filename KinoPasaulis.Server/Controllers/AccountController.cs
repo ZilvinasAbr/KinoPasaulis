@@ -20,11 +20,13 @@ namespace KinoPasaulis.Server.Controllers
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IApplicationService applicationService)
+            IApplicationService applicationService,
+            ISpecialtyService specialtyService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _applicationService = applicationService;
+            _specialtyService = specialtyService;
         }
 
         [HttpPost("register")]
@@ -134,7 +136,7 @@ namespace KinoPasaulis.Server.Controllers
                 await _userManager.AddToRoleAsync(user, "MovieCreator");
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
-                //_specialtyService.AddSpecialty(model.Specialty, movieCreator);
+                _specialtyService.AddSpecialty(model.Specialty, movieCreator);
 
                 return true;
             }

@@ -11,7 +11,6 @@ namespace KinoPasaulis.Server.Services
     public class SpecialtyService : ISpecialtyService
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly IVotingService _votingService;
 
         public SpecialtyService(ApplicationDbContext dbContext)
         {
@@ -43,9 +42,11 @@ namespace KinoPasaulis.Server.Services
             var specialty = new Specialty()
             {
                 Title = specialtyTitle,
-                Quantity = 0,
+                Quantity = 1,
                 CreatedAt = DateTime.Now
             };
+
+            movieCreator.Specialty = specialty;
 
             _dbContext.Specialties.Add(specialty);
             _dbContext.SaveChanges();
@@ -56,6 +57,8 @@ namespace KinoPasaulis.Server.Services
         public void AssignSpecialty(Specialty specialty, MovieCreator movieCreator)
         {
             movieCreator.Specialty = specialty;
+            specialty.Quantity++;
+            _dbContext.Specialties.Update(specialty);
             _dbContext.MovieCreators.Update(movieCreator);
             _dbContext.SaveChanges();
         }

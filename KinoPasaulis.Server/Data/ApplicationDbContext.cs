@@ -24,7 +24,6 @@ namespace KinoPasaulis.Server.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Specialty> Specialties { get; set; }
-        //public DbSet<MovieCreatorSpecialty> MovieCreatorSpecialties { get; set; }
         public DbSet<MovieCreatorVoting> MovieCreatorVotings { get; set; }
         public DbSet<VotesAdmin> VotesAdmins { get; set; }
         public DbSet<Voting> Votings { get; set; }

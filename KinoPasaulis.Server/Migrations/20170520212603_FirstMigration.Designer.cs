@@ -8,7 +8,7 @@ using KinoPasaulis.Server.Data;
 namespace KinoPasaulis.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170520173910_FirstMigration")]
+    [Migration("20170520212603_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -340,7 +340,11 @@ namespace KinoPasaulis.Server.Migrations
 
                     b.Property<DateTime>("RegisterDate");
 
+                    b.Property<int?>("SpecialtyId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SpecialtyId");
 
                     b.ToTable("MovieCreators");
                 });
@@ -360,21 +364,6 @@ namespace KinoPasaulis.Server.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("MovieCreatorMovies");
-                });
-
-            modelBuilder.Entity("KinoPasaulis.Server.Models.MovieCreatorSpecialty", b =>
-                {
-                    b.Property<int>("MovieCreatorId");
-
-                    b.Property<int>("SpecialtyId");
-
-                    b.HasKey("MovieCreatorId", "SpecialtyId");
-
-                    b.HasIndex("MovieCreatorId");
-
-                    b.HasIndex("SpecialtyId");
-
-                    b.ToTable("MovieCreatorSpecialties");
                 });
 
             modelBuilder.Entity("KinoPasaulis.Server.Models.MovieCreatorVoting", b =>
@@ -472,8 +461,6 @@ namespace KinoPasaulis.Server.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt");
-
-                    b.Property<DateTime>("EditDate");
 
                     b.Property<int>("Quantity");
 
@@ -830,6 +817,13 @@ namespace KinoPasaulis.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KinoPasaulis.Server.Models.MovieCreator", b =>
+                {
+                    b.HasOne("KinoPasaulis.Server.Models.Specialty", "Specialty")
+                        .WithMany("MovieCreators")
+                        .HasForeignKey("SpecialtyId");
+                });
+
             modelBuilder.Entity("KinoPasaulis.Server.Models.MovieCreatorMovie", b =>
                 {
                     b.HasOne("KinoPasaulis.Server.Models.MovieCreator", "MovieCreator")
@@ -840,19 +834,6 @@ namespace KinoPasaulis.Server.Migrations
                     b.HasOne("KinoPasaulis.Server.Models.Movie", "Movie")
                         .WithMany("MovieCreatorMovies")
                         .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("KinoPasaulis.Server.Models.MovieCreatorSpecialty", b =>
-                {
-                    b.HasOne("KinoPasaulis.Server.Models.MovieCreator", "MovieCreator")
-                        .WithMany("MovieCreatorSpecialties")
-                        .HasForeignKey("MovieCreatorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KinoPasaulis.Server.Models.Specialty", "Specialty")
-                        .WithMany("MovieCreatorSpecialties")
-                        .HasForeignKey("SpecialtyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

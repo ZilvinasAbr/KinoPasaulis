@@ -28,7 +28,6 @@ namespace KinoPasaulis.Server.Models
         public List<Message> Messages { get; set; }
         public List<MovieCreatorMovie> MovieCreatorMovies { get; set; }
 
-        //public List<MovieCreatorSpecialty> MovieCreatorSpecialties { get; set; }
         public Specialty Specialty { get; set; }
 
         public List<MovieCreatorVoting> MovieCreatorVotings { get; set; }

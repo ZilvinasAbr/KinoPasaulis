@@ -50,33 +50,12 @@ namespace KinoPasaulis.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MovieCreators",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BirthDate = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastEditDate = table.Column<DateTime>(nullable: false),
-                    LastName = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    RegisterDate = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MovieCreators", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Specialties",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    EditDate = table.Column<DateTime>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true)
                 },
@@ -158,54 +137,156 @@ namespace KinoPasaulis.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Messages",
+                name: "MovieCreators",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CinemaStudioId = table.Column<int>(nullable: false),
-                    MovieCreatorId = table.Column<int>(nullable: false),
-                    ReadAt = table.Column<DateTime>(nullable: true),
-                    SentAt = table.Column<DateTime>(nullable: false),
-                    Text = table.Column<string>(nullable: true)
+                    BirthDate = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastEditDate = table.Column<DateTime>(nullable: false),
+                    LastName = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    RegisterDate = table.Column<DateTime>(nullable: false),
+                    SpecialtyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.PrimaryKey("PK_MovieCreators", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_CinemaStudios_CinemaStudioId",
-                        column: x => x.CinemaStudioId,
-                        principalTable: "CinemaStudios",
+                        name: "FK_MovieCreators_Specialties_SpecialtyId",
+                        column: x => x.SpecialtyId,
+                        principalTable: "Specialties",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Votings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    VotesAdminId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Votings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_MovieCreators_MovieCreatorId",
-                        column: x => x.MovieCreatorId,
-                        principalTable: "MovieCreators",
+                        name: "FK_Votings_VotesAdmins_VotesAdminId",
+                        column: x => x.VotesAdminId,
+                        principalTable: "VotesAdmins",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MovieCreatorSpecialties",
+                name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    MovieCreatorId = table.Column<int>(nullable: false),
-                    SpecialtyId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true),
+                    RoleId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieCreatorSpecialties", x => new { x.MovieCreatorId, x.SpecialtyId });
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MovieCreatorSpecialties_MovieCreators_MovieCreatorId",
-                        column: x => x.MovieCreatorId,
-                        principalTable: "MovieCreators",
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobAdvertisements",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(maxLength: 255, nullable: true),
+                    Duration = table.Column<int>(nullable: false),
+                    MovieId = table.Column<int>(nullable: false),
+                    PayRate = table.Column<decimal>(nullable: false),
+                    SpecialtyId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobAdvertisements", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobAdvertisements_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieCreatorSpecialties_Specialties_SpecialtyId",
+                        name: "FK_JobAdvertisements_Specialties_SpecialtyId",
                         column: x => x.SpecialtyId,
                         principalTable: "Specialties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ratings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClientId = table.Column<int>(nullable: false),
+                    Comment = table.Column<string>(nullable: true),
+                    MovieId = table.Column<int>(nullable: false),
+                    RatingCreatedOn = table.Column<DateTime>(nullable: false),
+                    RatingModifiedOn = table.Column<DateTime>(nullable: false),
+                    RatingType = table.Column<byte>(nullable: false),
+                    Value = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ratings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Videos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(maxLength: 50, nullable: false),
+                    MovieId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(maxLength: 40, nullable: false),
+                    Url = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Videos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Videos_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -264,50 +345,6 @@ namespace KinoPasaulis.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Votings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    VotesAdminId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Votings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Votings_VotesAdmins_VotesAdminId",
-                        column: x => x.VotesAdminId,
-                        principalTable: "VotesAdmins",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
-                    RoleId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
@@ -338,31 +375,30 @@ namespace KinoPasaulis.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JobAdvertisements",
+                name: "Messages",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(maxLength: 255, nullable: true),
-                    Duration = table.Column<int>(nullable: false),
-                    MovieId = table.Column<int>(nullable: false),
-                    PayRate = table.Column<decimal>(nullable: false),
-                    SpecialtyId = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(maxLength: 50, nullable: false)
+                    CinemaStudioId = table.Column<int>(nullable: false),
+                    MovieCreatorId = table.Column<int>(nullable: false),
+                    ReadAt = table.Column<DateTime>(nullable: true),
+                    SentAt = table.Column<DateTime>(nullable: false),
+                    Text = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobAdvertisements", x => x.Id);
+                    table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JobAdvertisements_Movies_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "Movies",
+                        name: "FK_Messages_CinemaStudios_CinemaStudioId",
+                        column: x => x.CinemaStudioId,
+                        principalTable: "CinemaStudios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_JobAdvertisements_Specialties_SpecialtyId",
-                        column: x => x.SpecialtyId,
-                        principalTable: "Specialties",
+                        name: "FK_Messages_MovieCreators_MovieCreatorId",
+                        column: x => x.MovieCreatorId,
+                        principalTable: "MovieCreators",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -393,57 +429,62 @@ namespace KinoPasaulis.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ratings",
+                name: "MovieCreatorVotings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClientId = table.Column<int>(nullable: false),
-                    Comment = table.Column<string>(nullable: true),
-                    MovieId = table.Column<int>(nullable: false),
-                    RatingCreatedOn = table.Column<DateTime>(nullable: false),
-                    RatingModifiedOn = table.Column<DateTime>(nullable: false),
-                    RatingType = table.Column<byte>(nullable: false),
-                    Value = table.Column<int>(nullable: false)
+                    MovieCreatorId = table.Column<int>(nullable: false),
+                    VotingId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ratings", x => x.Id);
+                    table.PrimaryKey("PK_MovieCreatorVotings", x => new { x.MovieCreatorId, x.VotingId });
                     table.ForeignKey(
-                        name: "FK_Ratings_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
+                        name: "FK_MovieCreatorVotings_MovieCreators_MovieCreatorId",
+                        column: x => x.MovieCreatorId,
+                        principalTable: "MovieCreators",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Ratings_Movies_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "Movies",
+                        name: "FK_MovieCreatorVotings_Votings_VotingId",
+                        column: x => x.VotingId,
+                        principalTable: "Votings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Videos",
+                name: "Votes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(maxLength: 50, nullable: false),
-                    MovieId = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(maxLength: 40, nullable: false),
-                    Url = table.Column<string>(nullable: false)
+                    ClientId = table.Column<int>(nullable: true),
+                    MovieCreatorId = table.Column<int>(nullable: true),
+                    VoteChangedOn = table.Column<DateTime>(nullable: false),
+                    VotedOn = table.Column<DateTime>(nullable: false),
+                    VotingId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Videos", x => x.Id);
+                    table.PrimaryKey("PK_Votes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Videos_Movies_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "Movies",
+                        name: "FK_Votes_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Votes_MovieCreators_MovieCreatorId",
+                        column: x => x.MovieCreatorId,
+                        principalTable: "MovieCreators",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Votes_Votings_VotingId",
+                        column: x => x.VotingId,
+                        principalTable: "Votings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -534,65 +575,6 @@ namespace KinoPasaulis.Server.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MovieCreatorVotings",
-                columns: table => new
-                {
-                    MovieCreatorId = table.Column<int>(nullable: false),
-                    VotingId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MovieCreatorVotings", x => new { x.MovieCreatorId, x.VotingId });
-                    table.ForeignKey(
-                        name: "FK_MovieCreatorVotings_MovieCreators_MovieCreatorId",
-                        column: x => x.MovieCreatorId,
-                        principalTable: "MovieCreators",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MovieCreatorVotings_Votings_VotingId",
-                        column: x => x.VotingId,
-                        principalTable: "Votings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Votes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClientId = table.Column<int>(nullable: true),
-                    MovieCreatorId = table.Column<int>(nullable: true),
-                    VoteChangedOn = table.Column<DateTime>(nullable: false),
-                    VotedOn = table.Column<DateTime>(nullable: false),
-                    VotingId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Votes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Votes_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Votes_MovieCreators_MovieCreatorId",
-                        column: x => x.MovieCreatorId,
-                        principalTable: "MovieCreators",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Votes_Votings_VotingId",
-                        column: x => x.VotingId,
-                        principalTable: "Votings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -852,6 +834,11 @@ namespace KinoPasaulis.Server.Migrations
                 column: "CinemaStudioId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MovieCreators_SpecialtyId",
+                table: "MovieCreators",
+                column: "SpecialtyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MovieCreatorMovies_MovieCreatorId",
                 table: "MovieCreatorMovies",
                 column: "MovieCreatorId");
@@ -860,16 +847,6 @@ namespace KinoPasaulis.Server.Migrations
                 name: "IX_MovieCreatorMovies_MovieId",
                 table: "MovieCreatorMovies",
                 column: "MovieId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MovieCreatorSpecialties_MovieCreatorId",
-                table: "MovieCreatorSpecialties",
-                column: "MovieCreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MovieCreatorSpecialties_SpecialtyId",
-                table: "MovieCreatorSpecialties",
-                column: "SpecialtyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovieCreatorVotings_MovieCreatorId",
@@ -1001,9 +978,6 @@ namespace KinoPasaulis.Server.Migrations
                 name: "MovieCreatorMovies");
 
             migrationBuilder.DropTable(
-                name: "MovieCreatorSpecialties");
-
-            migrationBuilder.DropTable(
                 name: "MovieCreatorVotings");
 
             migrationBuilder.DropTable(
@@ -1035,9 +1009,6 @@ namespace KinoPasaulis.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Specialties");
 
             migrationBuilder.DropTable(
                 name: "Shows");
@@ -1074,6 +1045,9 @@ namespace KinoPasaulis.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "VotesAdmins");
+
+            migrationBuilder.DropTable(
+                name: "Specialties");
         }
     }
 }

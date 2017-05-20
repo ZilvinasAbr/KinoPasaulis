@@ -30,7 +30,11 @@ namespace KinoPasaulis.Server.Data
             context.AddRange(cinemaStudios);
             context.SaveChanges();
 
-            var movieCreators = AddMovieCreators();
+            var specialties = AddSpecialties();
+            context.AddRange(specialties);
+            context.SaveChanges();
+
+            var movieCreators = AddMovieCreators(specialties);
             context.AddRange(movieCreators);
             context.SaveChanges();
 
@@ -95,14 +99,6 @@ namespace KinoPasaulis.Server.Data
             var messages = AddMessages(movieCreators,cinemaStudios);
             context.AddRange(messages);
             context.SaveChanges();
-
-            var specialties = AddSpecialties();
-            context.AddRange(specialties);
-            context.SaveChanges();
-
-            /*var movieCreatorSpecialties = AddMovieCreatorSpecialties(movieCreators, specialties);
-            context.AddRange(movieCreatorSpecialties);
-            context.SaveChanges();*/
 
             var jobAdvertisements = AddJobAdvertisements(movies, specialties);
             context.AddRange(jobAdvertisements);
@@ -230,14 +226,14 @@ namespace KinoPasaulis.Server.Data
             return movieCreatorMovies;
         }
 
-        private static List<MovieCreator> AddMovieCreators()
+        private static List<MovieCreator> AddMovieCreators(List<Specialty> specialties)
         {
             var movieCreators = new List<MovieCreator>
             {
-                new MovieCreator { FirstName = "Christian", LastName = "Bale",       Email = "christian.bale@gmail.com", Phone = "860666666", BirthDate = new DateTime(1974, 1, 30), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "Christian Charles Philip Bale was born in Pembrokeshire, Wales, UK on January 30, 1974, to English parents Jennifer \"Jenny\" (James) and David Charles Howard Bale."},
-                new MovieCreator { FirstName = "Heath",     LastName = "Ledger",     Email = "heath.ledger@gmail.com",   Phone = "860666666", BirthDate = new DateTime(1979, 4, 30), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "When hunky, twenty-year-old heart-throb Heath Ledger first came to the attention of the public in 1999, it was all too easy to tag him as a \"pretty boy\" and an actor of little depth. He spent several years trying desperately to sway this image, but this was a double-edged sword."},
-                new MovieCreator { FirstName = "Vardenis",  LastName = "Pavardenis", Email = "email@gmail.com",          Phone = "860666666", BirthDate = new DateTime(1999, 2, 22), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "By in no ecstatic wondered disposal my speaking. Direct wholly valley or uneasy it at really. Sir wish like said dull and need make. Sportsman one bed departure rapturous situation disposing his. Off say yet ample ten ought hence. Depending in newspaper an september do existence." },
-                new MovieCreator { FirstName = "Vardenis2",  LastName = "Pavardenis2", Email = "email2@gmail.com",       Phone = "860666666", BirthDate = new DateTime(1999, 2, 22), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "By in no ecstatic wondered disposal my speaking. Direct wholly valley or uneasy it at really. Sir wish like said dull and need make. Sportsman one bed departure rapturous situation disposing his. Off say yet ample ten ought hence. Depending in newspaper an september do existence." }
+                new MovieCreator { Specialty = specialties[1], FirstName = "Christian", LastName = "Bale",       Email = "christian.bale@gmail.com", Phone = "860666666", BirthDate = new DateTime(1974, 1, 30), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "Christian Charles Philip Bale was born in Pembrokeshire, Wales, UK on January 30, 1974, to English parents Jennifer \"Jenny\" (James) and David Charles Howard Bale."},
+                new MovieCreator { Specialty = specialties[1], FirstName = "Heath",     LastName = "Ledger",     Email = "heath.ledger@gmail.com",   Phone = "860666666", BirthDate = new DateTime(1979, 4, 30), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "When hunky, twenty-year-old heart-throb Heath Ledger first came to the attention of the public in 1999, it was all too easy to tag him as a \"pretty boy\" and an actor of little depth. He spent several years trying desperately to sway this image, but this was a double-edged sword."},
+                new MovieCreator { Specialty = specialties[0], FirstName = "Vardenis",  LastName = "Pavardenis", Email = "email@gmail.com",          Phone = "860666666", BirthDate = new DateTime(1999, 2, 22), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "By in no ecstatic wondered disposal my speaking. Direct wholly valley or uneasy it at really. Sir wish like said dull and need make. Sportsman one bed departure rapturous situation disposing his. Off say yet ample ten ought hence. Depending in newspaper an september do existence." },
+                new MovieCreator { Specialty = specialties[2], FirstName = "Vardenis2",  LastName = "Pavardenis2", Email = "email2@gmail.com",       Phone = "860666666", BirthDate = new DateTime(1999, 2, 22), RegisterDate = DateTime.Now, LastEditDate = DateTime.Now, Description = "By in no ecstatic wondered disposal my speaking. Direct wholly valley or uneasy it at really. Sir wish like said dull and need make. Sportsman one bed departure rapturous situation disposing his. Off say yet ample ten ought hence. Depending in newspaper an september do existence." }
             };
 
             return movieCreators;
@@ -353,18 +349,6 @@ namespace KinoPasaulis.Server.Data
 
             return specialties;
         }
-
-        /*private static List<MovieCreatorSpecialty> AddMovieCreatorSpecialties(List<MovieCreator> movieCreators, List<Specialty> specialties)
-        {
-            var movieCreatorSpecialties = new List<MovieCreatorSpecialty>
-            {
-                new MovieCreatorSpecialty { MovieCreator = movieCreators[0], Specialty = specialties[0] },
-                new MovieCreatorSpecialty { MovieCreator = movieCreators[1], Specialty = specialties[1] },
-                new MovieCreatorSpecialty { MovieCreator = movieCreators[2], Specialty = specialties[2] }
-            };
-
-            return movieCreatorSpecialties;
-        }*/
 
         private static List<VotesAdmin> AddVotesAdmins()
         {

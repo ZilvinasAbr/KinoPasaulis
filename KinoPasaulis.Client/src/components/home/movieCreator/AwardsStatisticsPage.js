@@ -17,7 +17,7 @@ class AwardsStatisticsPage extends React.Component {
 
         axios.get('/api/moviecreator/getAwardsStatistics')
             .then(response => {
-                console.log(response.data);
+                //console.log(response.data);
                 this.setState({
                     winners: response.data
                 })
@@ -32,11 +32,15 @@ class AwardsStatisticsPage extends React.Component {
 
         if(winners.length <= 0) {
             return (
-                <tr>
-                    <td colSpan={7}>
-                        Nėra balsavimų nugalėtojų.
-                    </td>
-                </tr>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td colSpan={7}>
+                                Nėra balsavimų nugalėtojų.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             );
         }
 

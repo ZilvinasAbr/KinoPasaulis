@@ -40,11 +40,15 @@ class PendingMoviesPage extends React.Component {
                 });
                 if(this.state.pendingMovies.length <= 0) {
                     return (
-                        <tr>
-                            <td colSpan={7}>
-                                Nėra, ką patvirtinti/atmesti.
-                            </td>
-                        </tr>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td colSpan={7}>
+                                        Nėra, ką patvirtinti/atmesti.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     );
                 }
             })
@@ -72,18 +76,22 @@ class PendingMoviesPage extends React.Component {
 
         if(movies.length <= 0) {
             return (
-                <tr>
-                    <td colSpan={7}>
-                        Nėra, ką patvirtinti/atmesti.
-                    </td>
-                </tr>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td colSpan={7}>
+                                Nėra, ką patvirtinti/atmesti.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             );
         }
 
         return movies.map((movie, index) => {
-            return <div key={index}>
-                <Col md={4}>
-                    <Thumbnail src={this.paintImage(movie)} alt="242x200">
+            //return <div key={index}>
+            return <Col md={4} key={index}>
+                    <Thumbnail src={this.paintImage(movie)} alt="Filmo plakatas">
                         <h2> {movie.title} </h2>
                         <h3> {movie.cinemaStudio.name} </h3>
                         <p> {movie.description} </p>
@@ -91,7 +99,7 @@ class PendingMoviesPage extends React.Component {
                         <Button onClick={() => this.approve(movie.id, false)} bsStyle="danger"> Atmesti </Button>
                     </Thumbnail>
                 </Col>
-            </div>
+            //</div>
         });
     }
 

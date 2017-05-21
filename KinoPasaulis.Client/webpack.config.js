@@ -17,15 +17,11 @@ module.exports = {
         test: /\.scss$/,
         loaders: ["style", "css", "sass"]
       },
-      {test: /\.css$/, loader: "style-loader!css-loader"},
-      {
-        test: /\.tsx?$/,
-        loader: 'ts-loader'
-      }
+      {test: /\.css$/, loader: "style-loader!css-loader"}
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.ts', 'tsx']
+    extensions: ['', '.js', '.jsx']
   },
   output: {
     path: path.resolve(__dirname, '../KinoPasaulis.Server/wwwroot'),

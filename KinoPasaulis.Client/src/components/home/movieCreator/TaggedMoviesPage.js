@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import axios from 'axios';
 import MovieCreatorNavigationBar from './MovieCreatorNavigationBar';
 import { Button, Popover, ButtonToolbar, OverlayTrigger, Col, Table, Modal, Checkbox, FormControl, Thumbnail } from 'react-bootstrap';
@@ -38,18 +39,22 @@ class TaggedMoviesPage extends React.Component {
 
         if(movies.length <= 0) {
             return (
-                <tr>
-                    <td colSpan={7}>
-                        Neprisidėta prie nei vieno filmo.
-                    </td>
-                </tr>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td colSpan={7}>
+                                Neprisidėta prie nei vieno filmo.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             );
         }
 
         return movies.map((movie, index) => {
             return <div key={index}>
                 <Col md={4}>
-                    <Thumbnail src={this.paintImage(movie)} alt="242x200">
+                    <Thumbnail src={this.paintImage(movie)} alt="Filmo plakatas">
                         <h2> {movie.title} </h2>
                         <h3> {movie.cinemaStudio.name} </h3>
                         <p> {movie.description} </p>
@@ -67,16 +72,24 @@ class TaggedMoviesPage extends React.Component {
         ))
     }
 
+    goToPendingMovies() {
+        push('./pendingMovies');
+    }
+
     render() {
         return (
         <div>
             <MovieCreatorNavigationBar />
             <h1> Filmai, prie kurių prisidėta </h1>
-            <a href="./pendingMovies">Nepatvirtinta veikla...</a>
+            <Button onClick={this.props.goToPendingMovies}>Nepatvirtinta veikla...</Button>
             {this.renderMovies()}
         </div>);
     }
 }
+
+TaggedMoviesPage.propTypes = {
+    goToPendingMovies: React.PropTypes.func.isRequired
+};
 
 function mapStateToProps(state) {
     return {
@@ -84,6 +97,12 @@ function mapStateToProps(state) {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        goToPendingMovies: () => {
+            dispatch(push('movieCreator/pendingMovies'));
+        }
+    };
+}
 
-
-export default connect(mapStateToProps)(TaggedMoviesPage);
+export default connect(mapStateToProps,mapDispatchToProps)(TaggedMoviesPage);

@@ -22,7 +22,7 @@ class JobOffersPage extends React.Component {
 
     axios.get('/api/moviecreator/getJobs')
         .then(response => {
-          console.log(response.data);
+          //console.log(response.data);
           this.setState({
             jobOffers: response.data
           })

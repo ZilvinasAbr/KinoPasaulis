@@ -72,6 +72,7 @@ namespace KinoPasaulis.Server
             services.AddTransient<IClientService, ClientService>();
             services.AddTransient<IMovieCreatorService, MovieCreatorService>();
             services.AddTransient<ISpecialtyService, SpecialtyService>();
+            services.AddTransient<IJobAdvertisementService, JobAdvertisementService>();
 
             // Repositories
             services.AddTransient<IEventRepository, EventRepository>();

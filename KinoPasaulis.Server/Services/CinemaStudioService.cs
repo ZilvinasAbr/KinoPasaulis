@@ -12,416 +12,327 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Services
 {
-    public class CinemaStudioService : ICinemaStudioService
+  public class CinemaStudioService : ICinemaStudioService
+  {
+    private readonly IMovieRepository _movieRepository;
+    private readonly ApplicationDbContext _dbContext;
+    private readonly IHostingEnvironment _environment;
+
+    public CinemaStudioService(IMovieRepository movieRepository,
+        ApplicationDbContext dbContext,
+        IHostingEnvironment environment)
     {
-        private readonly IMovieRepository _movieRepository;
-        private readonly ApplicationDbContext _dbContext;
-        private readonly IHostingEnvironment _environment;
-
-        public CinemaStudioService(IMovieRepository movieRepository,
-            ApplicationDbContext dbContext,
-            IHostingEnvironment environment)
-        {
-            _movieRepository = movieRepository;
-            _dbContext = dbContext;
-            _environment = environment;
-        }
-
-        public IEnumerable<Movie> SearchMovies(string movieTitle)
-        {
-            IEnumerable<Movie> movies = _movieRepository.GetMoviesByTitle(movieTitle);
-
-            return movies;
-        }
-
-        public bool AddNewMovie(Movie movie, List<string> imageNames, List<string> imageTitles,
-            List<string> imageDescriptions, List<Video> videos, List<MovieCreator> movieCreators,
-            string userId)
-        {
-            var movieWithSameId = _dbContext.Movies.SingleOrDefault(m => m.Id == movie.Id);
-
-            if (movieWithSameId != null)
-            {
-                return false;
-            }
-
-            var images = new List<Image>();
-
-            for (int i = 0; i < imageNames.Count; i++)
-            {
-                var image = new Image
-                {
-                    CreatedOn = DateTime.Now,
-                    Title = imageTitles[i],
-                    Description = imageDescriptions[i],
-                    Url = imageNames[i]
-                };
-
-                images.Add(image);
-            }
-
-            foreach (var video in videos)
-            {
-                video.CreatedOn = DateTime.Now;
-            }
-
-            var cinemaStudio = _dbContext.Users
-                .Include(u => u.CinemaStudio)
-                .SingleOrDefault(au => au.Id == userId)
-                .CinemaStudio;
-
-            movie.CinemaStudio = cinemaStudio;
-            movie.Images = images;
-            movie.Videos = videos;
-
-            var movieCreatorMovies = new List<MovieCreatorMovie>();
-            foreach (var movieCreator in movieCreators)
-            {
-                var movieCreatorMovie = new MovieCreatorMovie
-                {
-                    MovieCreatorId = movieCreator.Id,
-                    Movie = movie
-                };
-                movieCreatorMovies.Add(movieCreatorMovie);
-            }
-            movie.MovieCreatorMovies = movieCreatorMovies;
-
-            _dbContext.Movies.Add(movie);
-            _dbContext.SaveChanges();
-
-            return true;
-        }
-
-        public bool DeleteMovie(int id, string userId)
-        {
-            var movie = _dbContext.Movies
-                .Include(m => m.Images)
-                .Include(m => m.Videos)
-                .Include(m => m.MovieCreatorMovies)
-                .SingleOrDefault(m => m.Id == id);
-
-            var cinemaStudio = _dbContext.Users
-                .Include(u => u.CinemaStudio)
-                .SingleOrDefault(au => au.Id == userId)
-                .CinemaStudio;
-
-            if (movie == null || cinemaStudio == null)
-            {
-                return false;
-            }
-
-            if (movie.CinemaStudioId != cinemaStudio.Id)
-            {
-                return false;
-            }
-
-
-            _dbContext.Images.RemoveRange(movie.Images);
-            _dbContext.Videos.RemoveRange(movie.Videos);
-            _dbContext.RemoveRange(movie.MovieCreatorMovies);
-            _dbContext.Movies.Remove(movie);
-            _dbContext.SaveChanges();
-
-            return true;
-        }
-
-        public IEnumerable<CinemaStudioStatisticsViewModel> GetCinemaStudiosStatistics()
-        {
-            var cinemaStudios = _dbContext.CinemaStudios
-                .Include(studio => studio.Movies)
-                    .ThenInclude(movie => movie.Ratings)
-                .Include(studio => studio.Movies)
-                    .ThenInclude(movie => movie.Events)
-                .ToList();
-
-            var results = new List<CinemaStudioStatisticsViewModel>();
-            foreach (var cinemaStudio in cinemaStudios)
-            {
-                var result = new CinemaStudioStatisticsViewModel
-                {
-                    Name = cinemaStudio.Name,
-                    MoviesCount = cinemaStudio.Movies.Count,
-                    SumOfAllMovieEvents =
-                        cinemaStudio.Movies.SelectMany(
-                                movie => movie.Events.Where(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime))
-                            .Count()
-                };
-
-                if (!cinemaStudio.Movies.Any())
-                {
-                    result.AverageMovieRating = 0;
-                    result.BestMovieRating = 0;
-                }
-                else
-                {
-                    var moviesWithRating = cinemaStudio.Movies.Where(movie => movie.Ratings.Any());
-                    if (!moviesWithRating.Any())
-                    {
-                        result.AverageMovieRating = 0.0;
-                        result.BestMovieRating = 0.0;
-                    }
-                    else
-                    {
-                        result.AverageMovieRating =
-                        cinemaStudio.Movies.Where(movie => movie.Ratings.Any()).Average(
-                            movie => movie.Ratings.Average(r => r.Value));
-                        result.BestMovieRating =
-                            cinemaStudio.Movies.Max(movie => movie.Ratings.Any() ? movie.Ratings.Average(r => r.Value) : 0.0);
-                    }
-                }
-                results.Add(result);
-            }
-
-            return results;
-        }
-
-        public IEnumerable<Movie> GetCinemaStudioMovies(string userId)
-        {
-            var cinemaStudio = _dbContext.Users
-                .Include(u => u.CinemaStudio)
-                .SingleOrDefault(au => au.Id == userId)
-                .CinemaStudio;
-
-            if (cinemaStudio == null)
-            {
-                return null;
-            }
-
-            var movies = _dbContext.Movies
-                .Where(movie => movie.CinemaStudioId == cinemaStudio.Id)
-                .ToList();
-
-            return movies;
-        }
-
-        public IEnumerable<MovieStatisticsViewModel> GetCinemaStudiosMoviesStatistics(string userId)
-        {
-            var cinemaStudio = _dbContext.Users
-                .Include(u => u.CinemaStudio)
-                .SingleOrDefault(au => au.Id == userId)
-                .CinemaStudio;
-
-            if (cinemaStudio == null)
-            {
-                return null;
-            }
-
-            var moviesStatistics = _dbContext.CinemaStudios
-                .Include(cs => cs.Movies)
-                    .ThenInclude(movie => movie.Ratings)
-                .Include(cs => cs.Movies)
-                    .ThenInclude(movie => movie.Events)
-                        .ThenInclude(e => e.Shows)
-                            .ThenInclude(show => show.Orders)
-                .SingleOrDefault(cs => cs.Id == cinemaStudio.Id)
-                .Movies
-                .Select(movie => new MovieStatisticsViewModel
-                {
-                    Title = movie.Title,
-                    Rating = movie.Ratings.Any() ? movie.Ratings.Average(rating => rating.Value) : 0.0,
-                    EventsCount = movie.Events.Count(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime),
-                    OrdersBought = movie.Events
-                        .SelectMany(e => e.Shows)
-                        .SelectMany(show => show.Orders)
-                        .Sum(order => order.Amount)
-
-                })
-                .ToList();
-
-            return moviesStatistics;
-        }
-
-        public bool AddJobAdvertisement(AddJobAdvertisementViewModel model, string userId)
-        {
-            var user = _dbContext.Users
-                .Include(au => au.CinemaStudio)
-                    .ThenInclude(studio => studio.Movies)
-                .SingleOrDefault(au => au.Id == userId);
-
-            if (user == null)
-            {
-                return false;
-            }
-
-            var cinemaStudio = user.CinemaStudio;
-
-            var movie = cinemaStudio.Movies.SingleOrDefault(m => m.Id == model.Movie.Id);
-            var specialty = _dbContext.Specialties.SingleOrDefault(sp => sp.Id == model.Specialty.Id);
-
-            if (movie == null || specialty == null)
-            {
-                return false;
-            }
-
-            var jobAdvertisement = new JobAdvertisement
-            {
-                Movie = movie,
-                Specialty = specialty,
-                Title = model.Title,
-                Description = model.Description,
-                Duration = model.Duration,
-                PayRate = model.PayRate
-            };
-
-            specialty.Quantity++;
-            _dbContext.JobAdvertisements.Add(jobAdvertisement);
-            _dbContext.SaveChanges();
-
-            return true;
-        }
-
-        public object GetCinemaStudiosJobAdvertisements(string userId)
-        {
-            var user = _dbContext.Users
-                .Include(au => au.CinemaStudio)
-                    .ThenInclude(cinema => cinema.Movies)
-                        .ThenInclude(movie => movie.JobAdvertisements)
-                            .ThenInclude(jobAd => jobAd.Specialty)
-                .SingleOrDefault(au => au.Id == userId);
-
-            var cinemaStudio = user?.CinemaStudio;
-
-            var jobAdvertisements = cinemaStudio?.Movies
-                .SelectMany(movie => movie.JobAdvertisements)
-                .Select(jobAd => new
-                {
-                    jobAd.Id,
-                    jobAd.Title,
-                    jobAd.Duration,
-                    jobAd.PayRate,
-                    MovieTitle = jobAd.Movie.Title,
-                    SpecialtyTitle = jobAd.Specialty.Title
-                });
-
-            return jobAdvertisements;
-        }
-
-        public bool DeleteJobAdvertisement(int id, string userId)
-        {
-            var jobAdvertisement = _dbContext.JobAdvertisements
-                .Include(jobAd => jobAd.Movie)
-                .SingleOrDefault(jobAd => jobAd.Id == id);
-            var cinemaStudio = _dbContext.Users
-                .Include(u => u.CinemaStudio)
-                .SingleOrDefault(au => au.Id == userId)
-                .CinemaStudio;
-
-            if (jobAdvertisement == null || cinemaStudio == null)
-            {
-                return false;
-            }
-
-            if (jobAdvertisement.Movie.CinemaStudioId != cinemaStudio.Id)
-            {
-                return false;
-            }
-
-            _dbContext.JobAdvertisements.Remove(jobAdvertisement);
-            _dbContext.SaveChanges();
-
-            return true;
-        }
-
-        public object GetCinemaStudioMovie(int movieId, string userId)
-        {
-            var movie = _dbContext.Movies
-                .Include(m => m.MovieCreatorMovies)
-                    .ThenInclude(mcm => mcm.MovieCreator)
-                .Include(m => m.Images)
-                .Include(m => m.Videos)
-                .Include(m => m.CinemaStudio)
-                .Include(m => m.Events)
-                    .ThenInclude(e => e.Theather)
-                .Include(m => m.Ratings)
-                .SingleOrDefault(m => m.Id == movieId);
-
-            var currentEvents = movie.Events.Where(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime);
-            var pastEvents = movie.Events.Where(e => e.EndTime < DateTime.Now);
-            var movieCreators = movie.MovieCreatorMovies
-                .Where(mcm => mcm.IsConfirmed != null && mcm.IsConfirmed.Value)
-                .Select(creatorMovie => creatorMovie.MovieCreator);
-
-            return new
-            {
-                PastEvents = pastEvents,
-                CurrentEvents = currentEvents,
-                movie.Id,
-                movie.Title,
-                movie.Images,
-                movie.AgeRequirement,
-                movie.Videos,
-                movie.Budget,
-                movie.Gross,
-                movie.Description,
-                movie.ReleaseDate,
-                movie.Ratings,
-                movie.JobAdvertisements,
-                movie.Language,
-                movie.Duration,
-                movie.Duration.Hours,
-                movie.Duration.Minutes,
-                movieCreators
-            };
-        }
-
-        public IEnumerable<Specialty> GetSpecialties()
-        {
-            var specialties = _dbContext.Specialties
-                .ToList();
-
-            return specialties;
-        }
-
-        public bool EditMovie(Movie movie, List<Video> videos, List<MovieCreator> movieCreators, string userId)
-        {
-            var movieWithSameId = _dbContext.Movies
-                .Include(m => m.MovieCreatorMovies)
-                .Include(m => m.Videos)
-                .SingleOrDefault(m => m.Id == movie.Id);
-
-            if (movieWithSameId == null)
-            {
-                return false;
-            }
-
-            movieWithSameId.Title = movie.Title;
-            movieWithSameId.AgeRequirement = movie.AgeRequirement;
-            movieWithSameId.Budget = movie.Budget;
-            movieWithSameId.Description = movie.Description;
-            movieWithSameId.Duration = movie.Duration;
-            movieWithSameId.Gross = movie.Gross;
-            movieWithSameId.Language = movie.Language;
-            movieWithSameId.ReleaseDate = movie.ReleaseDate;
-
-            _dbContext.Videos.RemoveRange(movieWithSameId.Videos);
-
-            foreach (var video in videos)
-            {
-                video.Id = 0;
-                video.CreatedOn = DateTime.Now;
-                video.Movie = movieWithSameId;
-            }
-
-            _dbContext.Videos.AddRange(videos);
-
-            var movieCreatorMoviesToDelete = movieWithSameId.MovieCreatorMovies
-                .Where(mcm => !movieCreators.Select(mc => mc.Id).Contains(mcm.MovieCreatorId));
-
-            var movieCreatorMoviesToAdd = movieCreators
-                .Select(mc => new MovieCreatorMovie
-                {
-                    MovieId = movieWithSameId.Id,
-                    MovieCreatorId = mc.Id
-                })
-                .Where(
-                    mcm =>
-                        !movieWithSameId.MovieCreatorMovies.Select(mc => mc.MovieCreatorId).Contains(mcm.MovieCreatorId));
-
-            _dbContext.MovieCreatorMovies.RemoveRange(movieCreatorMoviesToDelete);
-            _dbContext.MovieCreatorMovies.AddRange(movieCreatorMoviesToAdd);
-            _dbContext.SaveChanges();
-
-            return true;
-        }
+      _movieRepository = movieRepository;
+      _dbContext = dbContext;
+      _environment = environment;
     }
+
+    public IEnumerable<Movie> SearchMovies(string movieTitle)
+    {
+      IEnumerable<Movie> movies = _movieRepository.GetMoviesByTitle(movieTitle);
+
+      return movies;
+    }
+
+    public bool AddNewMovie(Movie movie, List<string> imageNames, List<string> imageTitles,
+        List<string> imageDescriptions, List<Video> videos, List<MovieCreator> movieCreators,
+        string userId)
+    {
+      var movieWithSameId = _dbContext.Movies.SingleOrDefault(m => m.Id == movie.Id);
+
+      if (movieWithSameId != null)
+      {
+        return false;
+      }
+
+      var images = new List<Image>();
+
+      for (int i = 0; i < imageNames.Count; i++)
+      {
+        var image = new Image
+        {
+          CreatedOn = DateTime.Now,
+          Title = imageTitles[i],
+          Description = imageDescriptions[i],
+          Url = imageNames[i]
+        };
+
+        images.Add(image);
+      }
+
+      foreach (var video in videos)
+      {
+        video.CreatedOn = DateTime.Now;
+      }
+
+      var cinemaStudio = _dbContext.Users
+          .Include(u => u.CinemaStudio)
+          .SingleOrDefault(au => au.Id == userId)
+          .CinemaStudio;
+
+      movie.CinemaStudio = cinemaStudio;
+      movie.Images = images;
+      movie.Videos = videos;
+
+      var movieCreatorMovies = new List<MovieCreatorMovie>();
+      foreach (var movieCreator in movieCreators)
+      {
+        var movieCreatorMovie = new MovieCreatorMovie
+        {
+          MovieCreatorId = movieCreator.Id,
+          Movie = movie
+        };
+        movieCreatorMovies.Add(movieCreatorMovie);
+      }
+      movie.MovieCreatorMovies = movieCreatorMovies;
+
+      _dbContext.Movies.Add(movie);
+      _dbContext.SaveChanges();
+
+      return true;
+    }
+
+    public bool DeleteMovie(int id, string userId)
+    {
+      var movie = _dbContext.Movies
+          .Include(m => m.Images)
+          .Include(m => m.Videos)
+          .Include(m => m.MovieCreatorMovies)
+          .SingleOrDefault(m => m.Id == id);
+
+      var cinemaStudio = _dbContext.Users
+          .Include(u => u.CinemaStudio)
+          .SingleOrDefault(au => au.Id == userId)
+          .CinemaStudio;
+
+      if (movie == null || cinemaStudio == null)
+      {
+        return false;
+      }
+
+      if (movie.CinemaStudioId != cinemaStudio.Id)
+      {
+        return false;
+      }
+
+
+      _dbContext.Images.RemoveRange(movie.Images);
+      _dbContext.Videos.RemoveRange(movie.Videos);
+      _dbContext.RemoveRange(movie.MovieCreatorMovies);
+      _dbContext.Movies.Remove(movie);
+      _dbContext.SaveChanges();
+
+      return true;
+    }
+
+    public IEnumerable<CinemaStudioStatisticsViewModel> GetCinemaStudiosStatistics()
+    {
+      var cinemaStudios = _dbContext.CinemaStudios
+          .Include(studio => studio.Movies)
+              .ThenInclude(movie => movie.Ratings)
+          .Include(studio => studio.Movies)
+              .ThenInclude(movie => movie.Events)
+          .ToList();
+
+      var results = new List<CinemaStudioStatisticsViewModel>();
+      foreach (var cinemaStudio in cinemaStudios)
+      {
+        var result = new CinemaStudioStatisticsViewModel
+        {
+          Name = cinemaStudio.Name,
+          MoviesCount = cinemaStudio.Movies.Count,
+          SumOfAllMovieEvents =
+                cinemaStudio.Movies.SelectMany(
+                        movie => movie.Events.Where(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime))
+                    .Count()
+        };
+
+        if (!cinemaStudio.Movies.Any())
+        {
+          result.AverageMovieRating = 0;
+          result.BestMovieRating = 0;
+        }
+        else
+        {
+          var moviesWithRating = cinemaStudio.Movies.Where(movie => movie.Ratings.Any());
+          if (!moviesWithRating.Any())
+          {
+            result.AverageMovieRating = 0.0;
+            result.BestMovieRating = 0.0;
+          }
+          else
+          {
+            result.AverageMovieRating =
+            cinemaStudio.Movies.Where(movie => movie.Ratings.Any()).Average(
+                movie => movie.Ratings.Average(r => r.Value));
+            result.BestMovieRating =
+                cinemaStudio.Movies.Max(movie => movie.Ratings.Any() ? movie.Ratings.Average(r => r.Value) : 0.0);
+          }
+        }
+        results.Add(result);
+      }
+
+      return results;
+    }
+
+    public IEnumerable<Movie> GetCinemaStudioMovies(string userId)
+    {
+      var cinemaStudio = _dbContext.Users
+          .Include(u => u.CinemaStudio)
+          .SingleOrDefault(au => au.Id == userId)
+          .CinemaStudio;
+
+      if (cinemaStudio == null)
+      {
+        return null;
+      }
+
+      var movies = _dbContext.Movies
+          .Where(movie => movie.CinemaStudioId == cinemaStudio.Id)
+          .ToList();
+
+      return movies;
+    }
+
+    public object GetCinemaStudioMovie(int movieId, string userId)
+    {
+      var movie = _dbContext.Movies
+          .Include(m => m.MovieCreatorMovies)
+              .ThenInclude(mcm => mcm.MovieCreator)
+          .Include(m => m.Images)
+          .Include(m => m.Videos)
+          .Include(m => m.CinemaStudio)
+          .Include(m => m.Events)
+              .ThenInclude(e => e.Theather)
+          .Include(m => m.Ratings)
+          .SingleOrDefault(m => m.Id == movieId);
+
+      var currentEvents = movie.Events.Where(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime);
+      var pastEvents = movie.Events.Where(e => e.EndTime < DateTime.Now);
+      var movieCreators = movie.MovieCreatorMovies
+          .Where(mcm => mcm.IsConfirmed != null && mcm.IsConfirmed.Value)
+          .Select(creatorMovie => creatorMovie.MovieCreator);
+
+      return new
+      {
+        PastEvents = pastEvents,
+        CurrentEvents = currentEvents,
+        movie.Id,
+        movie.Title,
+        movie.Images,
+        movie.AgeRequirement,
+        movie.Videos,
+        movie.Budget,
+        movie.Gross,
+        movie.Description,
+        movie.ReleaseDate,
+        movie.Ratings,
+        movie.JobAdvertisements,
+        movie.Language,
+        movie.Duration,
+        movie.Duration.Hours,
+        movie.Duration.Minutes,
+        movieCreators
+      };
+    }
+
+    public IEnumerable<Specialty> GetSpecialties()
+    {
+      var specialties = _dbContext.Specialties
+          .ToList();
+
+      return specialties;
+    }
+
+    public bool EditMovie(Movie movie, List<Video> videos, List<MovieCreator> movieCreators, string userId)
+    {
+      var movieWithSameId = _dbContext.Movies
+          .Include(m => m.MovieCreatorMovies)
+          .Include(m => m.Videos)
+          .SingleOrDefault(m => m.Id == movie.Id);
+
+      if (movieWithSameId == null)
+      {
+        return false;
+      }
+
+      movieWithSameId.Title = movie.Title;
+      movieWithSameId.AgeRequirement = movie.AgeRequirement;
+      movieWithSameId.Budget = movie.Budget;
+      movieWithSameId.Description = movie.Description;
+      movieWithSameId.Duration = movie.Duration;
+      movieWithSameId.Gross = movie.Gross;
+      movieWithSameId.Language = movie.Language;
+      movieWithSameId.ReleaseDate = movie.ReleaseDate;
+
+      _dbContext.Videos.RemoveRange(movieWithSameId.Videos);
+
+      foreach (var video in videos)
+      {
+        video.Id = 0;
+        video.CreatedOn = DateTime.Now;
+        video.Movie = movieWithSameId;
+      }
+
+      _dbContext.Videos.AddRange(videos);
+
+      var movieCreatorMoviesToDelete = movieWithSameId.MovieCreatorMovies
+          .Where(mcm => !movieCreators.Select(mc => mc.Id).Contains(mcm.MovieCreatorId));
+
+      var movieCreatorMoviesToAdd = movieCreators
+          .Select(mc => new MovieCreatorMovie
+          {
+            MovieId = movieWithSameId.Id,
+            MovieCreatorId = mc.Id
+          })
+          .Where(
+              mcm =>
+                  !movieWithSameId.MovieCreatorMovies.Select(mc => mc.MovieCreatorId).Contains(mcm.MovieCreatorId));
+
+      _dbContext.MovieCreatorMovies.RemoveRange(movieCreatorMoviesToDelete);
+      _dbContext.MovieCreatorMovies.AddRange(movieCreatorMoviesToAdd);
+      _dbContext.SaveChanges();
+
+      return true;
+    }
+
+    public IEnumerable<MovieStatisticsViewModel> GetCinemaStudiosMoviesStatistics(string userId)
+    {
+      var cinemaStudio = _dbContext.Users
+          .Include(u => u.CinemaStudio)
+          .SingleOrDefault(au => au.Id == userId)
+          .CinemaStudio;
+
+      if (cinemaStudio == null)
+      {
+        return null;
+      }
+
+      var moviesStatistics = _dbContext.CinemaStudios
+          .Include(cs => cs.Movies)
+              .ThenInclude(movie => movie.Ratings)
+          .Include(cs => cs.Movies)
+              .ThenInclude(movie => movie.Events)
+                  .ThenInclude(e => e.Shows)
+                      .ThenInclude(show => show.Orders)
+          .SingleOrDefault(cs => cs.Id == cinemaStudio.Id)
+          .Movies
+          .Select(movie => new MovieStatisticsViewModel
+          {
+            Title = movie.Title,
+            Rating = movie.Ratings.Any() ? movie.Ratings.Average(rating => rating.Value) : 0.0,
+            EventsCount = movie.Events.Count(e => e.StartTime <= DateTime.Now && DateTime.Now <= e.EndTime),
+            OrdersBought = movie.Events
+                  .SelectMany(e => e.Shows)
+                  .SelectMany(show => show.Orders)
+                  .Sum(order => order.Amount)
+
+          })
+          .ToList();
+
+      return moviesStatistics;
+    }
+
+
+  }
 }

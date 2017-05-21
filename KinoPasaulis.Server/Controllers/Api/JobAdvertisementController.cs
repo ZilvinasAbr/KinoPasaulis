@@ -28,7 +28,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             _signInManager = signInManager;
         }
 
-        [HttpGet("jobAdvertisements")]
+        [HttpGet]
         public IActionResult GetCinemaStudiosJobAdvertisements()
         {
             if (!_signInManager.IsSignedIn(User))
@@ -41,7 +41,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             return Ok(jobAdvertisements);
         }
 
-        [HttpPost("addJobAdvertisement")]
+        [HttpPost]
         public IActionResult AddJobAdvertisement([FromBody] AddJobAdvertisementViewModel model)
         {
             if (!_signInManager.IsSignedIn(User))
@@ -61,7 +61,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             return Ok(isSuccess);
         }
 
-        [HttpDelete("jobAdvertisement/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteJobAdvertisement(int id)
         {
             if (!_signInManager.IsSignedIn(User))

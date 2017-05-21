@@ -16,7 +16,7 @@ export function addJobAdvertisement(
   specialty
 ) {
   return dispatch => {
-    axios.post('/api/cinemaStudio/addJobAdvertisement', {
+    axios.post('/api/jobAdvertisement', {
       title,
       description,
       duration,
@@ -49,7 +49,7 @@ export function fetchSpecialties() {
 
 export function fetchJobAdvertisements() {
   return dispatch => {
-    axios.get('/api/cinemaStudio/jobAdvertisements')
+    axios.get('/api/jobAdvertisement')
       .then(response => {
         dispatch(receiveJobAdvertisements(response.data))
       })
@@ -61,7 +61,7 @@ export function fetchJobAdvertisements() {
 
 export function deleteJobAdvertisement(id) {
   return dispatch => {
-    axios.delete(`/api/cinemaStudio/jobAdvertisement/${id}`)
+    axios.delete(`/api/jobAdvertisement/${id}`)
       .then(response => {
         alert('Sėkmingai pašalinote darbo skelbimą');
         dispatch(removeJobAdvertisement(id));

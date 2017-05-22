@@ -31,18 +31,6 @@ namespace KinoPasaulis.Server.Controllers.Api
             _environment = environment;
         }
 
-        [HttpGet("searchMovies/{query?}")]
-        public IEnumerable<Movie> SearchMovies(string query)
-        {
-            if (_signInManager.IsSignedIn(User))
-            {
-                var movies = _cinemaStudioService.SearchMovies(query);
-                return movies;
-            }
-
-            return null;
-        }
-
         [HttpGet("movies")]
         public IActionResult GetCinemaStudioMovies()
         {
@@ -74,106 +62,6 @@ namespace KinoPasaulis.Server.Controllers.Api
             }
 
             return Ok(movie);
-        }
-
-        [HttpPost("addMovie")]
-        public IActionResult AddMovie([FromBody] AddMovieViewModel model)
-        {
-            if (!_signInManager.IsSignedIn(User))
-            {
-                return Unauthorized();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                var allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
-
-                return BadRequest(allErrors);
-            }
-
-            var movie = new Movie
-            {
-                Title = model.Title,
-                Duration = new TimeSpan(model.Hours, model.Minutes, 0),
-                ReleaseDate = model.ReleaseDate,
-                Budget = model.Budget,
-                Description = model.Description,
-                Gross = model.Gross,
-                Language = model.Language,
-                AgeRequirement = model.AgeRequirement
-            };
-
-            var imageNames = model.ImageNames;
-            var imageTitles = model.ImageTitles;
-            var imageDescriptions = model.ImageDescriptions;
-            var videos = model.Videos;
-            var movieCreators = model.MovieCreators;
-
-            var isSuccess = _cinemaStudioService.AddNewMovie(movie, imageNames, imageTitles, imageDescriptions, videos, movieCreators, HttpContext.User.GetUserId());
-
-            return Ok(isSuccess);
-        }
-
-        [HttpDelete("deleteMovie/{id}")]
-        public IActionResult DeleteMovie(int id)
-        {
-            if (!_signInManager.IsSignedIn(User))
-            {
-                return Unauthorized();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                var allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
-
-                return BadRequest(allErrors);
-            }
-
-            bool isSuccess = _cinemaStudioService.DeleteMovie(id, HttpContext.User.GetUserId());
-
-            if (!isSuccess)
-            {
-                return NotFound();
-            }
-
-            return Ok();
-        }
-
-        [HttpPut("editMovie/{id}")]
-        public IActionResult EditMovie([FromBody] AddMovieViewModel model, int id)
-        {
-            if (!_signInManager.IsSignedIn(User))
-            {
-                return Unauthorized();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                var allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
-
-                return BadRequest(allErrors);
-            }
-
-            var movie = new Movie
-            {
-                Id = id,
-                Title = model.Title,
-                Duration = new TimeSpan(model.Hours, model.Minutes, 0),
-                ReleaseDate = model.ReleaseDate,
-                Budget = model.Budget,
-                Description = model.Description,
-                Gross = model.Gross,
-                Language = model.Language,
-                AgeRequirement = model.AgeRequirement
-            };
-
-            var videos = model.Videos;
-            var movieCreators = model.MovieCreators;
-
-            var isSuccess = _cinemaStudioService.EditMovie(movie, videos, movieCreators, HttpContext.User.GetUserId());
-
-
-            return Ok(isSuccess);
         }
 
         [HttpPost("uploadImage")]

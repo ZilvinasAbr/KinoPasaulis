@@ -10,9 +10,9 @@ import request from 'superagent';
 export function fetchMovies(query = '') {
   let url;
   if(query === '') {
-    url = '/api/cinemaStudio/searchMovies/';
+    url = '/api/movie/searchMovies/';
   }else {
-    url = `/api/cinemaStudio/searchMovies/${query}`;
+    url = `/api/movie/searchMovies/${query}`;
   }
   return dispatch => {
     axios.get(url)
@@ -56,7 +56,7 @@ export function addMovie
 ) {
   return dispatch => {
     if(droppedFiles.length <= 0) {
-      request.post('/api/cinemaStudio/addMovie')
+      request.post('/api/movie')
         .send({
           title,
           hours,
@@ -98,7 +98,7 @@ export function addMovie
 
         let imageNames = res.body;
 
-        request.post('/api/cinemaStudio/addMovie')
+        request.post('/api/movie')
           .send({
             title,
             hours,
@@ -134,7 +134,7 @@ export function addMovie
 
 export function deleteMovie(id) {
   return dispatch => {
-    axios.delete(`/api/cinemaStudio/deleteMovie/${id}`)
+    axios.delete(`/api/movie/${id}`)
       .then(response => {
         dispatch(removeMovie(id));
         alert('Sėkmingai pašalintas filmas');
@@ -161,7 +161,7 @@ export function editMovie(
   movieCreators
 ) {
   return dispatch => {
-    request.put(`/api/cinemaStudio/editMovie/${id}`)
+    request.put(`/api/movie/${id}`)
       .send({
         title,
         hours,

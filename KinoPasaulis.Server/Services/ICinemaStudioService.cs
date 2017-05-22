@@ -8,14 +8,10 @@ namespace KinoPasaulis.Server.Services
 {
     public interface ICinemaStudioService
     {
-        IEnumerable<Movie> SearchMovies(string movieTitle);
-        bool AddNewMovie(Movie movie, List<string> imageNames, List<string> imageTitles, List<string> imageDescriptions, List<Video> videos, List<MovieCreator> movieCreators , string userId);
-        bool DeleteMovie(int id, string userId);
         IEnumerable<CinemaStudioStatisticsViewModel> GetCinemaStudiosStatistics();
         IEnumerable<Movie> GetCinemaStudioMovies(string userId);
         IEnumerable<MovieStatisticsViewModel> GetCinemaStudiosMoviesStatistics(string userId);
         object GetCinemaStudioMovie(int movieId, string userId);
         IEnumerable<Specialty> GetSpecialties();
-        bool EditMovie(Movie movie, List<Video> videos, List<MovieCreator> movieCreators, string userId);
     }
 }

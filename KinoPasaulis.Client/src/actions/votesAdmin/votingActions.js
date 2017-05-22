@@ -39,7 +39,7 @@ export function addVoting
 
 export function deleteMovie(id) {
   return dispatch => {
-    axios.delete(`/api/cinemaStudio/deleteMovie/${id}`)
+    axios.delete(`/api/movie/${id}`)
       .then(response => {
         dispatch(removeMovie(id));
       })

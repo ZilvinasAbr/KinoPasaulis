@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using KinoPasaulis.Server.Models;
 using KinoPasaulis.Server.Services;
 using KinoPasaulis.Server.ViewModels;
@@ -37,7 +34,7 @@ namespace KinoPasaulis.Server.Controllers.Api
 
         public IEnumerable<Voting> GetAllVotings()
         {
-                return _votingService.GetAllVotings();
+            return _votingService.GetAllVotings();
         }
 
         [HttpGet("currentVotings")]
@@ -59,10 +56,9 @@ namespace KinoPasaulis.Server.Controllers.Api
             {
                 var userId = HttpContext.User.GetUserId();
                 
-                //var movieCreators = _votingService.GetMovieCreators(voting.MovieCreatorsId);
-                if (voting.MovieCreators.Count >= 2)
+                if (voting.MovieCreators.Count >= 2 && voting.StartDate < voting.EndDate)
                 {
-                    var movieCreatorVoting = _votingService.CreateMovieCreatorsVoting(/*movieCreators, */voting, userId);
+                    _votingService.AddVoting(voting, userId);
 
                     return true;
                 }
@@ -72,13 +68,13 @@ namespace KinoPasaulis.Server.Controllers.Api
         }
 
         [HttpPost("deletevoting/{id}")]
-        public bool DeleteVoting(int id)
+        public bool DeleteVoting(int votingId)
         {
             if (_signInManager.IsSignedIn(User))
             {
                 var userId = HttpContext.User.GetUserId();
 
-                return _votingService.DeleteVoting(id, userId);
+                return _votingService.DeleteVoting(votingId, userId);
             }
             return false;
         }

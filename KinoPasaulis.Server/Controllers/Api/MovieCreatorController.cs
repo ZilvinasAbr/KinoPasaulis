@@ -76,37 +76,12 @@ namespace KinoPasaulis.Server.Controllers.Api
         [HttpGet("getJobs")]
         public IActionResult GetAllJobs()
         {
-            return Ok(_dbContext.JobAdvertisements
-                .Include(jb => jb.Specialty)
-                .Include(jb => jb.Movie)
-                    .ThenInclude(jb => jb.Images)
-                .ToList());
-        }
-
-        [HttpGet("getAwards")]
-        public IActionResult GetAwards()
-        {
             if (_signInManager.IsSignedIn(User))
             {
-                var userId = HttpContext.User.GetUserId();
-
-                return Ok(_movieCreatorService.GetAwards(userId));
+                return Ok(_movieCreatorService.GetAllJobs());
             }
-
             return Unauthorized();
         }
 
-        [HttpGet("getAwardsStatistics")]
-        public IActionResult GetAwardsStatistics()
-        {
-            if (_signInManager.IsSignedIn(User))
-            {
-                var userId = HttpContext.User.GetUserId();
-
-                return Ok(_movieCreatorService.GetAwardsStatistics());
-            }
-
-            return Unauthorized();
-        }
     }
 }

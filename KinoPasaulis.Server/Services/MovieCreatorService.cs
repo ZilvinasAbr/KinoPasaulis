@@ -27,6 +27,15 @@ namespace KinoPasaulis.Server.Services
             return movieCreators;
         }
 
+        public List<JobAdvertisement> GetAllJobs()
+        {
+            return _dbContext.JobAdvertisements
+                .Include(jb => jb.Specialty)
+                .Include(jb => jb.Movie)
+                .ThenInclude(jb => jb.Images)
+                .ToList();
+        }
+
         public List<Movie> GetMovieCreatorPendingMovies(int id)
         {
             var movies = _dbContext.MovieCreatorMovies.Where(mc => mc.MovieCreatorId == id && mc.IsConfirmed == null)
@@ -80,68 +89,5 @@ namespace KinoPasaulis.Server.Services
             return true;
         }
 
-        public IEnumerable<Voting> GetAwards(string userid)
-        {
-            var movieCreator = _dbContext.Users
-                .Include(user => user.MovieCreator)
-                .SingleOrDefault(user => user.Id == userid)
-                ?.MovieCreator;
-
-            var votings = new List<Voting>();
-
-            foreach (var voting in _votingService.GetAllVotings())
-            {
-                var group = voting.Votes.GroupBy(vot => vot.MovieCreator.Id).ToDictionary(g => g.Key, g => g.ToList());
-
-                if (voting.Votes.Count != 0 && voting.EndDate < DateTime.Now)
-                {
-                    var winner = group.Values.OrderByDescending(g => g.Count).FirstOrDefault().FirstOrDefault().MovieCreator;
-
-                    if (movieCreator.Id == winner.Id)
-                    {
-                        votings.Add(voting);
-                    }
-                }
-
-            }
-
-            return votings;
-        }
-
-        public IEnumerable<object> GetAwardsStatistics()
-        {
-            var result = new List<AwardsStatisticsViewModel>();
-            var movieCreators = _dbContext.MovieCreators.ToList();
-
-            foreach (var movieCreator in movieCreators)
-            {
-
-                var wins = 0;
-
-                foreach (var voting in _votingService.GetEndedVotings())
-                {
-                    var group = voting.Votes.GroupBy(vot => vot.MovieCreator.Id)
-                        .ToDictionary(g => g.Key, g => g.ToList());
-
-                    if (voting.Votes.Count != 0)
-                    {
-                        var winner =
-                            group.Values.OrderByDescending(g => g.Count).FirstOrDefault().FirstOrDefault().MovieCreator;
-
-                        if (movieCreator.Id == winner.Id)
-                        {
-                            wins++;
-                        }
-                    }
-                }
-                if (wins > 0)
-                {
-                    AwardsStatisticsViewModel temp = new AwardsStatisticsViewModel(movieCreator,wins);
-
-                    result.Add(temp);
-                }
-            }
-            return result.OrderByDescending(res => res.Wins);
-        }
     }
 }

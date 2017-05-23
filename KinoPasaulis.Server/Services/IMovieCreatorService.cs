@@ -7,9 +7,8 @@ namespace KinoPasaulis.Server.Services
     {
         IEnumerable<MovieCreator> GetMovieCreators();
         IEnumerable<Movie> GetMovieCreatorMovies(int id);
+        List<JobAdvertisement> GetAllJobs();
         List<Movie> GetMovieCreatorPendingMovies(int id);
         bool SetIsConfirmed(string userId, bool value, int movieCreatorId, int movieId);
-       IEnumerable<Voting> GetAwards(string userid);
-       IEnumerable<object> GetAwardsStatistics();
     }
 }

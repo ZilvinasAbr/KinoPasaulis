@@ -111,7 +111,7 @@ namespace KinoPasaulis.Server.Services
             return true;
         }
 
-        public bool AddVoting(Voting voting, List<MovieCreator> movieCreators, string userId)
+        /*public bool AddVoting(Voting voting, List<MovieCreator> movieCreators, string userId)
         {
             var votingWithSameId = _dbContext.Votings.SingleOrDefault(v => v.Id == voting.Id);
 
@@ -145,7 +145,7 @@ namespace KinoPasaulis.Server.Services
             _dbContext.SaveChanges();
 
             return true;
-        }
+        }*/
 
         public List<MovieCreator> GetMovieCreators(List<int> movieCreatorsId)
         {
@@ -160,7 +160,7 @@ namespace KinoPasaulis.Server.Services
             return movieCreators;
         }
 
-        public List<MovieCreatorVoting> CreateMovieCreatorsVoting(/*IEnumerable<MovieCreator> movieCreators,*/ VotingViewModel voting, string userId)
+        public void AddVoting(VotingViewModel voting, string userId)
         {
             var votesAdmin = _dbContext.Users
                 .Include(u => u.VotesAdmin)
@@ -182,7 +182,7 @@ namespace KinoPasaulis.Server.Services
             };
 
             _dbContext.Votings.Add(newVoting);
-//            _dbContext.SaveChanges();
+
             var movieCreatorVotings = new List<MovieCreatorVoting>();
 
             foreach (var movieCreator in voting.MovieCreators)
@@ -195,34 +195,13 @@ namespace KinoPasaulis.Server.Services
 
                 movieCreatorVotings.Add(newMovieCreatorVoting);
                 
-                
             }
 
             _dbContext.MovieCreatorVotings.AddRange(movieCreatorVotings);
             _dbContext.SaveChanges();
 
-            return movieCreatorVotings;
         }
 
-        /*public bool DeleteVoting(int votingId)
-        {
-            var movieCreatorVotings = _dbContext.MovieCreatorVotings.Where(mcv => mcv.VotingId == votingId);
-            var votes = _dbContext.Votes
-                .Include(v => v.Voting)
-                .Where(v => v.Voting.Id == votingId);
-
-            if (movieCreatorVotings == null)
-            {
-                return false;
-            }
-
-            _dbContext.MovieCreatorVotings.RemoveRange(movieCreatorVotings);
-            
-            var voting = _dbContext.Votings.Single(obj => obj.Id == votingId);
-            _dbContext.Votings.Remove(voting);
-            _dbContext.SaveChanges();
-            return true;
-        }*/
     }
 }
 

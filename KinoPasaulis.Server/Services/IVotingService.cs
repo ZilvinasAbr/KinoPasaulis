@@ -12,9 +12,8 @@ namespace KinoPasaulis.Server.Services
         IEnumerable<Voting> GetEndedVotings();
         Voting GetVotingById(int id);
         bool DeleteVoting(int id, string userId);
-        bool AddVoting(Voting voting, List<MovieCreator> movieCreators, string userId);
+        //bool AddVoting(Voting voting, List<MovieCreator> movieCreators, string userId);
         List<MovieCreator> GetMovieCreators(List<int> movieCreatorsId);
-        List<MovieCreatorVoting> CreateMovieCreatorsVoting(/*IEnumerable<MovieCreator> movieCreators,*/ VotingViewModel voting, string userId);
-        //bool DeleteVoting(int votingId);
+        void AddVoting(VotingViewModel voting, string userId);
     }
 }

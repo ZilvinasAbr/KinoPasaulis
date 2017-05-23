@@ -167,6 +167,11 @@ namespace KinoPasaulis.Server.Services
                 .SingleOrDefault(au => au.Id == userId)
                 .VotesAdmin;
 
+            if (voting.StartDate < DateTime.Now)
+            {
+                voting.StartDate = DateTime.Now;
+            }
+
             var newVoting = new Voting
             {
                 CreatedAt = DateTime.Now,

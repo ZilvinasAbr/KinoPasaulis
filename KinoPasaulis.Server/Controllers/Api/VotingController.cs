@@ -60,9 +60,12 @@ namespace KinoPasaulis.Server.Controllers.Api
                 var userId = HttpContext.User.GetUserId();
                 
                 //var movieCreators = _votingService.GetMovieCreators(voting.MovieCreatorsId);
-                var movieCreatorVoting = _votingService.CreateMovieCreatorsVoting(/*movieCreators, */voting, userId);
+                if (voting.MovieCreators.Count >= 2)
+                {
+                    var movieCreatorVoting = _votingService.CreateMovieCreatorsVoting(/*movieCreators, */voting, userId);
 
-                return true;
+                    return true;
+                }
             }
 
             return false;

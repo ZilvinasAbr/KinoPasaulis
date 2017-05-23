@@ -83,5 +83,18 @@ namespace KinoPasaulis.Server.Controllers.Api
             return Unauthorized();
         }
 
+        [HttpGet("getAwards")]
+        public IActionResult GetAwards()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userId = HttpContext.User.GetUserId();
+
+                return Ok(_movieCreatorService.GetAwards(userId));
+            }
+
+            return Unauthorized();
+        }
+
     }
 }

@@ -42,6 +42,7 @@ import AnnouncementsPage from './components/home/AnnouncementsPage';
 import Votings from './components/home/votesAdmin/votings/Votings';
 import AddVotingPage from './components/home/votesAdmin/votings/AddVotingPage';
 import Orders from './components/home/client/Orders';
+import AwardsPage from './components/home/movieCreator/AwardsPage';
 import Voting from './components/home/client/Voting';
 
 const store = createStore(reducer, composeWithDevTools(
@@ -85,6 +86,7 @@ render(
 				<Route path="announcements" component={AnnouncementsPage}/>
 				<Route path="movieCreator/taggedMovies" component={TaggedMoviesPage} />
 				<Route path="movieCreator/pendingMovies" component={PendingMoviesPage} />
+                <Route path="movieCreator/awards" component={AwardsPage} />
 				<Route path="movieCreator/jobOffers" component={JobOffersPage} />
 				<Route path="votesAdmin/votings" component={Votings} />
 				<Route path="votesAdmin/addvoting" component={AddVotingPage} />

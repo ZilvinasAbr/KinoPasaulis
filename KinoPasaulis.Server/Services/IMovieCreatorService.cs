@@ -10,5 +10,6 @@ namespace KinoPasaulis.Server.Services
         List<JobAdvertisement> GetAllJobs();
         List<Movie> GetMovieCreatorPendingMovies(int id);
         bool SetIsConfirmed(string userId, bool value, int movieCreatorId, int movieId);
+        IEnumerable<Voting> GetAwards(string userid);
     }
 }

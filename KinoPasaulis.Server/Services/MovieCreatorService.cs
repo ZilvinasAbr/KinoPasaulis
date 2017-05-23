@@ -89,5 +89,33 @@ namespace KinoPasaulis.Server.Services
             return true;
         }
 
+        public IEnumerable<Voting> GetAwards(string userid)
+        {
+            var movieCreator = _dbContext.Users
+                .Include(user => user.MovieCreator)
+                .SingleOrDefault(user => user.Id == userid)
+                ?.MovieCreator;
+
+            var votings = new List<Voting>();
+
+            foreach (var voting in _votingService.GetAllVotings())
+            {
+                var group = voting.Votes.GroupBy(vot => vot.MovieCreator.Id).ToDictionary(g => g.Key, g => g.ToList());
+
+                if (voting.Votes.Count != 0 && voting.EndDate < DateTime.Now)
+                {
+                    var winner = group.Values.OrderByDescending(g => g.Count).FirstOrDefault().FirstOrDefault().MovieCreator;
+
+                    if (movieCreator.Id == winner.Id)
+                    {
+                        votings.Add(voting);
+                    }
+                }
+
+            }
+
+            return votings;
+        }
+
     }
 }

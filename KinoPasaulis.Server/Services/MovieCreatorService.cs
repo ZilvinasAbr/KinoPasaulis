@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
+using KinoPasaulis.Server.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Services
@@ -116,5 +117,40 @@ namespace KinoPasaulis.Server.Services
             return votings;
         }
 
+        public IEnumerable<object> GetAwardsStatistics()
+        {
+            var result = new List<AwardsStatisticsViewModel>();
+            var movieCreators = _dbContext.MovieCreators.ToList();
+
+            foreach (var movieCreator in movieCreators)
+            {
+
+                var wins = 0;
+
+                foreach (var voting in _votingService.GetEndedVotings())
+                {
+                    var group = voting.Votes.GroupBy(vot => vot.MovieCreator.Id)
+                        .ToDictionary(g => g.Key, g => g.ToList());
+
+                    if (voting.Votes.Count != 0)
+                    {
+                        var winner =
+                            group.Values.OrderByDescending(g => g.Count).FirstOrDefault().FirstOrDefault().MovieCreator;
+
+                        if (movieCreator.Id == winner.Id)
+                        {
+                            wins++;
+                        }
+                    }
+                }
+                if (wins > 0)
+                {
+                    AwardsStatisticsViewModel temp = new AwardsStatisticsViewModel(movieCreator, wins);
+
+                    result.Add(temp);
+                }
+            }
+            return result.OrderByDescending(res => res.Wins);
+        }
     }
 }

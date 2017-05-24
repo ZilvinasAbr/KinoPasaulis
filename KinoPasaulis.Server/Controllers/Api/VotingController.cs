@@ -67,7 +67,7 @@ namespace KinoPasaulis.Server.Controllers.Api
             return false;
         }
 
-        [HttpPost("deletevoting/{id}")]
+        [HttpPost("deletevoting/{votingId}")]
         public bool DeleteVoting(int votingId)
         {
             if (_signInManager.IsSignedIn(User))

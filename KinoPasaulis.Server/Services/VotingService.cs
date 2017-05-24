@@ -111,43 +111,7 @@ namespace KinoPasaulis.Server.Services
             return true;
         }
 
-        /*public bool AddVoting(Voting voting, List<MovieCreator> movieCreators, string userId)
-        {
-            var votingWithSameId = _dbContext.Votings.SingleOrDefault(v => v.Id == voting.Id);
-
-            if (votingWithSameId != null)
-            {
-                return false;
-            }
-
-            voting.CreatedAt = DateTime.Now;
-
-            var votesAdmin = _dbContext.Users
-                .Include(u => u.VotesAdmin)
-                .SingleOrDefault(au => au.Id == userId)
-                .VotesAdmin;
-
-            voting.VotesAdmin = votesAdmin;
-
-            var movieCreatorVotings = new List<MovieCreatorVoting>();
-            foreach (var movieCreator in movieCreators)
-            {
-                var movieCreatorVoting = new MovieCreatorVoting
-                {
-                    MovieCreatorId = movieCreator.Id,
-                    Voting = voting
-                };
-                movieCreatorVotings.Add(movieCreatorVoting);
-            }
-            voting.MovieCreatorVotings = movieCreatorVotings;
-
-            _dbContext.Votings.Add(voting);
-            _dbContext.SaveChanges();
-
-            return true;
-        }*/
-
-        public List<MovieCreator> GetMovieCreators(List<int> movieCreatorsId)
+        /*public List<MovieCreator> GetMovieCreators(List<int> movieCreatorsId)
         {
             List<MovieCreator> movieCreators = new List<MovieCreator>();
 
@@ -158,7 +122,7 @@ namespace KinoPasaulis.Server.Services
             }
 
             return movieCreators;
-        }
+        }*/
 
         public void AddVoting(VotingViewModel voting, string userId)
         {

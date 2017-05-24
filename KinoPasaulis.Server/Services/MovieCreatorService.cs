@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
-using KinoPasaulis.Server.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace KinoPasaulis.Server.Services

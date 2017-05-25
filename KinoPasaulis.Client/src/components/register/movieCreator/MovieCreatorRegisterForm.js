@@ -141,8 +141,8 @@ MovieCreatorRegisterForm.propTypes = {
   handleSubmit: React.PropTypes.func.isRequired
 };
 
-const config = { // <----- THIS IS THE IMPORTANT PART!
-  form: 'registerMovieCreator',                   // a unique name for this form
+const config = {
+  form: 'registerMovieCreator',
   fields: [
     'userName',
     'email',
@@ -154,7 +154,7 @@ const config = { // <----- THIS IS THE IMPORTANT PART!
     'birthDate',
     'description',
     'specialty'
-  ] // all the fields in your form
+  ]
 };
 
 export default reduxForm(config)(MovieCreatorRegisterForm);

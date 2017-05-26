@@ -15,7 +15,7 @@ class RegisterPage extends React.Component {
         <LoggedOfNavigationBar changePageToLanding={this.props.changePageToLanding} changePageToLogin={this.props.changePageToLogin} changePageToRegister={this.props.changePageToRegister} />
         <div className="container">
           <div className="row">
-            <Button bsStyle="primary" onClick={this.props.changePageToClient} block>Vartotojo registracija</Button>
+            <Button bsStyle="primary" onClick={this.props.changePageToClient} block>Kliento registracija</Button>
             <Button bsStyle="primary" onClick={this.props.changePageToTheather} block>Kino teatro registracija</Button>
             <Button bsStyle="primary" onClick={this.props.changePageToCinemaStudio} block>Kino studijos registracija</Button>
             <Button bsStyle="primary" onClick={this.props.changePageToMovieCreator} block>Kino kūrėjo registracija</Button>

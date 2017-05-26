@@ -24,7 +24,7 @@ class ClientRegisterPage extends React.Component {
           changePageToRegister={this.props.changePageToRegister} />
         <div>
           <div className="container col-md-4 col-md-offset-4">
-            <h1> Vartotojo registracija </h1>
+            <h1> Kliento registracija </h1>
             <hr />
             {this.props.message && <ErrorMessage message={this.props.message} />}
             <ClientRegisterForm />

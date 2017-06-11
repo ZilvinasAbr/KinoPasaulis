@@ -1,7 +1,7 @@
 import React from 'react';
-import { Table, Button } from 'react-bootstrap';
+import {Table, Button} from 'react-bootstrap';
 
-const MovieCreatorsTable = ({ movieCreators, removeMovieCreator}) => {
+const MovieCreatorsTable = ({movieCreators, removeMovieCreator}) => {
   function renderMovieCreator(movieCreator, index) {
     return (
       <tr key={index}>
@@ -27,12 +27,12 @@ const MovieCreatorsTable = ({ movieCreators, removeMovieCreator}) => {
       </thead>
       <tbody>
       {movieCreators.length ? movieCreators.map(renderMovieCreator) : (
-          <tr>
-            <td colSpan={3}>
-              Nepasirinkta filmų kūrėjų
-            </td>
-          </tr>
-        )}
+        <tr>
+          <td colSpan={3}>
+            Nepasirinkta filmų kūrėjų
+          </td>
+        </tr>
+      )}
       </tbody>
     </Table>
   );

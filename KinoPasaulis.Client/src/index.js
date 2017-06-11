@@ -1,12 +1,11 @@
 import React from 'react';
-import { render } from 'react-dom';
+import {render} from 'react-dom';
 import thunkMiddleware from 'redux-thunk';
-import { createStore, compose, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
-import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-
+import {createStore, compose, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import {Router, Route, browserHistory, IndexRoute} from 'react-router';
+import {syncHistoryWithStore, routerMiddleware} from 'react-router-redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
 import {reducer, initialState} from './reducers/index';
 import HomePage from './components/home/HomePage';
 import LandingPage from './components/landing/LandingPage';
@@ -47,55 +46,55 @@ import Voting from './components/home/client/Voting';
 import AwardsStatisticsPage from './components/home/movieCreator/AwardsStatisticsPage';
 
 const store = createStore(reducer, composeWithDevTools(
-	applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware)
+  applyMiddleware(routerMiddleware(browserHistory), thunkMiddleware)
 ));
 
 const history = syncHistoryWithStore(browserHistory, store);
 
 render(
   (
-		<Provider store={store}>
+    <Provider store={store}>
       { /* Tell the Router to use our enhanced history */}
-			<Router history={history}>
-				<Route path="/" component={LandingPage} />
-				<Route path="home" component={HomePage} />
-				<Route path="register" component={RegisterPage} />
-				<Route path="register/cinemastudio" component={CinemaStudioRegisterPage} />
-				<Route path="register/theather" component={TheatherRegisterPage} />
-				<Route path="register/moviecreator" component={MovieCreatorRegisterPage} />
-				<Route path="register/votesadmin" component={VotesAdminRegisterPage} />
-				<Route path="register/client" component={ClientRegisterPage} />
-				<Route path="login" component={LoginPage} />
-				<Route path="theather/auditoriums" component={Auditoriums} />
-				<Route path="theather/events" component={Events} />
-				<Route path="theather/subscriptions" component={Subscriptions} />
-				<Route path="theather/newEvent" component={NewEvent} />
-				<Route path="theather/eventDetails/:id" component={EventDetails}/>
-				<Route path="cinemaStudio/movies" component={MoviesPage} />
-				<Route path="cinemaStudio/movie/:id" component={MoviePage} />
-				<Route path="cinemaStudio/editMovie/:id" component={EditMoviePage} />
-				<Route path="cinemaStudio/addMovie" component={AddMoviePage} />
-				<Route path="cinemaStudio/statistics" component={CinemaStudiosStatisticsPage} />
-				<Route path="cinemaStudio/moviesStatistics" component={CinemaStudiosMoviesStatisticsPage} />
-				<Route path="cinemaStudio/jobAdvertisements" component={JobAdvertisementsPage} />
-				<Route path="cinemaStudio/addJobAdvertisement" component={AddJobAdvertisementPage} />
-				<Route path="cinemaStudio/messages" component={MessagesPage} />
-				<Route path="theathers/:id" component={Theathers}/>
-				<Route path="eventDetails/:id" component={EventDetails2}/>
-				<Route path="movies" component={Movies}/>
-				<Route path="movie/:id" component={MoviesDetail}/>
-				<Route path="announcements" component={AnnouncementsPage}/>
-				<Route path="movieCreator/taggedMovies" component={TaggedMoviesPage} />
-				<Route path="movieCreator/pendingMovies" component={PendingMoviesPage} />
-                <Route path="movieCreator/awards" component={AwardsPage} />
-				<Route path="movieCreator/jobOffers" component={JobOffersPage} />
-				<Route path="movieCreator/awardsStatistics" component={AwardsStatisticsPage} />
-				<Route path="votesAdmin/votings" component={Votings} />
-				<Route path="votesAdmin/addvoting" component={AddVotingPage} />
-				<Route path="client/orders" component={Orders} />
-				<Route path="client/voting" component={Voting} />
-			</Router>
-		</Provider>
+      <Router history={history}>
+        <Route path="/" component={LandingPage}/>
+        <Route path="home" component={HomePage}/>
+        <Route path="register" component={RegisterPage}/>
+        <Route path="register/cinemastudio" component={CinemaStudioRegisterPage}/>
+        <Route path="register/theather" component={TheatherRegisterPage}/>
+        <Route path="register/moviecreator" component={MovieCreatorRegisterPage}/>
+        <Route path="register/votesadmin" component={VotesAdminRegisterPage}/>
+        <Route path="register/client" component={ClientRegisterPage}/>
+        <Route path="login" component={LoginPage}/>
+        <Route path="theather/auditoriums" component={Auditoriums}/>
+        <Route path="theather/events" component={Events}/>
+        <Route path="theather/subscriptions" component={Subscriptions}/>
+        <Route path="theather/newEvent" component={NewEvent}/>
+        <Route path="theather/eventDetails/:id" component={EventDetails}/>
+        <Route path="cinemaStudio/movies" component={MoviesPage}/>
+        <Route path="cinemaStudio/movie/:id" component={MoviePage}/>
+        <Route path="cinemaStudio/editMovie/:id" component={EditMoviePage}/>
+        <Route path="cinemaStudio/addMovie" component={AddMoviePage}/>
+        <Route path="cinemaStudio/statistics" component={CinemaStudiosStatisticsPage}/>
+        <Route path="cinemaStudio/moviesStatistics" component={CinemaStudiosMoviesStatisticsPage}/>
+        <Route path="cinemaStudio/jobAdvertisements" component={JobAdvertisementsPage}/>
+        <Route path="cinemaStudio/addJobAdvertisement" component={AddJobAdvertisementPage}/>
+        <Route path="cinemaStudio/messages" component={MessagesPage}/>
+        <Route path="theathers/:id" component={Theathers}/>
+        <Route path="eventDetails/:id" component={EventDetails2}/>
+        <Route path="movies" component={Movies}/>
+        <Route path="movie/:id" component={MoviesDetail}/>
+        <Route path="announcements" component={AnnouncementsPage}/>
+        <Route path="movieCreator/taggedMovies" component={TaggedMoviesPage}/>
+        <Route path="movieCreator/pendingMovies" component={PendingMoviesPage}/>
+        <Route path="movieCreator/awards" component={AwardsPage}/>
+        <Route path="movieCreator/jobOffers" component={JobOffersPage}/>
+        <Route path="movieCreator/awardsStatistics" component={AwardsStatisticsPage}/>
+        <Route path="votesAdmin/votings" component={Votings}/>
+        <Route path="votesAdmin/addvoting" component={AddVotingPage}/>
+        <Route path="client/orders" component={Orders}/>
+        <Route path="client/voting" component={Voting}/>
+      </Router>
+    </Provider>
   ),
   document.getElementById('app')
 );

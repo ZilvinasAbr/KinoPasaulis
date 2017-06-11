@@ -1,8 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import {connect} from 'react-redux';
+import {push} from 'react-router-redux';
 import LoggedOfNavigationBar from '../common/LoggedOfNavigationBar';
-import { Button } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -12,14 +12,19 @@ class RegisterPage extends React.Component {
   render() {
     return (
       <div>
-        <LoggedOfNavigationBar changePageToLanding={this.props.changePageToLanding} changePageToLogin={this.props.changePageToLogin} changePageToRegister={this.props.changePageToRegister} />
+        <LoggedOfNavigationBar changePageToLanding={this.props.changePageToLanding}
+                               changePageToLogin={this.props.changePageToLogin}
+                               changePageToRegister={this.props.changePageToRegister}/>
         <div className="container">
           <div className="row">
             <Button bsStyle="primary" onClick={this.props.changePageToClient} block>Kliento registracija</Button>
             <Button bsStyle="primary" onClick={this.props.changePageToTheather} block>Kino teatro registracija</Button>
-            <Button bsStyle="primary" onClick={this.props.changePageToCinemaStudio} block>Kino studijos registracija</Button>
-            <Button bsStyle="primary" onClick={this.props.changePageToMovieCreator} block>Kino kūrėjo registracija</Button>
-            <Button bsStyle="primary" onClick={this.props.changePageToVotesAdmin} block>Balsavimų administratoriaus registracija</Button>
+            <Button bsStyle="primary" onClick={this.props.changePageToCinemaStudio} block>Kino studijos
+              registracija</Button>
+            <Button bsStyle="primary" onClick={this.props.changePageToMovieCreator} block>Kino kūrėjo
+              registracija</Button>
+            <Button bsStyle="primary" onClick={this.props.changePageToVotesAdmin} block>Balsavimų administratoriaus
+              registracija</Button>
           </div>
         </div>
       </div>
@@ -28,8 +33,7 @@ class RegisterPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {
-  }
+  return {}
 }
 
 function mapDispatchToProps(dispatch) {

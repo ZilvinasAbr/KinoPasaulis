@@ -1,15 +1,15 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
-import { Button } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
   }
 };
 
@@ -31,10 +31,6 @@ class MovieCreatorAutosuggest extends React.Component {
     this.renderSuggestion = this.renderSuggestion.bind(this);
   }
 
-  componentDidMount() {
-
-  }
-
   getSuggestions(value) {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
@@ -43,7 +39,7 @@ class MovieCreatorAutosuggest extends React.Component {
 
       const selectedMovieCreators = this.props.selectedMovieCreators;
       const isSelected = selectedMovieCreators.filter(selected => selected.id == mc.id).length;
-      if(isSelected){
+      if (isSelected) {
         return false;
       }
 
@@ -53,7 +49,12 @@ class MovieCreatorAutosuggest extends React.Component {
   };
 
   renderSuggestion(suggestion) {
-    const fullName = `${suggestion.firstName} ${suggestion.lastName}`;
+    var fullName = `${suggestion.firstName} ${suggestion.lastName} `;
+
+    if (suggestion.specialty != null) {
+      fullName = `${suggestion.firstName} ${suggestion.lastName} (${suggestion.specialty.title}) `;
+    }
+
     return (
       <div>
         {fullName}
@@ -64,13 +65,13 @@ class MovieCreatorAutosuggest extends React.Component {
     );
   };
 
-  onChange(event, { newValue }) {
+  onChange(event, {newValue}) {
     this.setState({
       value: newValue
     })
   };
 
-  onSuggestionsFetchRequested({ value }) {
+  onSuggestionsFetchRequested({value}) {
     this.setState({
       suggestions: this.getSuggestions(value)
     });
@@ -84,7 +85,7 @@ class MovieCreatorAutosuggest extends React.Component {
   };
 
   render() {
-    const { value, suggestions } = this.state;
+    const {value, suggestions} = this.state;
 
     const inputProps = {
       placeholder: 'Ieškoti kino kūrėjo',

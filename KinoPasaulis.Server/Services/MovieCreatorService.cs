@@ -22,6 +22,7 @@ namespace KinoPasaulis.Server.Services
         public IEnumerable<MovieCreator> GetMovieCreators()
         {
             var movieCreators = _dbContext.MovieCreators
+                .Include(mc => mc.Specialty)
                 .ToList();
 
             return movieCreators;

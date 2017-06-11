@@ -1,25 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import
-{
+import {connect} from 'react-redux';
+import {
   Row,
   Button,
   FormGroup,
   FormControl,
   ControlLabel
 } from 'react-bootstrap';
-import { DateRangePicker } from 'react-dates';
-import DatePicker from 'react-bootstrap-date-picker';
-import axios from 'axios';
-
-import {
-  fetchMovieCreators
-} from '../../../../cinemaStudio/actions/movieActions';
-import {
-    addVoting
-} from '../../../../actions/votesAdmin/votingActions';
+import {DateRangePicker} from 'react-dates';
+import {fetchMovieCreators} from '../../../../cinemaStudio/actions/movieActions';
+import {addVoting} from '../../../../actions/votesAdmin/votingActions';
 import MovieCreatorsTable from './MovieCreatorsTable';
 import MovieCreatorAutosuggest from './MovieCreatorAutosuggest';
+import moment from 'moment';
 
 class AddVotingForm extends React.Component {
   constructor(props) {
@@ -45,19 +38,6 @@ class AddVotingForm extends React.Component {
     this.onFocusChange = this.onFocusChange.bind(this);
   }
 
-  /*fetchMovieCreators() {
-      axios.get('/api/movieCreator/')
-          .then(response => {
-            console.log(response.data);
-            this.setState({
-              movieCreators: response.data
-            })
-          })
-          .catch(error => {
-            console.log(error);
-          })
-  }*/
-
   componentDidMount() {
     this.props.dispatch(fetchMovieCreators());
   }
@@ -67,25 +47,25 @@ class AddVotingForm extends React.Component {
       title: e.target.value
     })
   }
+
   handleOnStartDateChange(value, formattedValue) {
     this.setState({
       releaseDate: value
     })
   }
+
   handleOnEndDateChange(e) {
     this.setState({
       budget: e.target.value
     })
   }
 
-  onDatesChange({ startDate, endDate }) {
-    console.log(startDate);
-    console.log(endDate);
-    this.setState({ startDate: startDate, endDate: endDate });
+  onDatesChange({startDate, endDate}) {
+    this.setState({startDate: startDate, endDate: endDate});
   }
 
   onFocusChange(focusedInput) {
-    this.setState({ focusedInput });
+    this.setState({focusedInput});
   }
 
   selectMovieCreator(suggestion) {
@@ -97,30 +77,32 @@ class AddVotingForm extends React.Component {
       }]
     });
   }
+
   removeMovieCreator(index) {
     this.setState({
       selectedMovieCreators: this.state.selectedMovieCreators.filter((creator, index2) => index2 !== index)
     });
   }
+
   handleSubmit() {
-    if(this.state.selectedMovieCreators.length < 2)
-    {
+    if (this.state.selectedMovieCreators.length < 2) {
       alert("Pasirinkite bent 2 kandidatus!");
     }
     else {
       this.props.dispatch(
-          addVoting(
-              this.state.title,
-              this.state.startDate,
-              this.state.endDate,
-              this.state.selectedMovieCreators
-          )
+        addVoting(
+          this.state.title,
+          this.state.startDate,
+          this.state.endDate,
+          this.state.selectedMovieCreators
+        )
       );
     }
   }
 
   render() {
-    const { focusedInput, startDate, endDate } = this.state;
+    const {focusedInput, startDate, endDate} = this.state;
+    moment.locale('lt');
     return (
       <div className="row">
         <FormGroup controlId="title">
@@ -135,17 +117,21 @@ class AddVotingForm extends React.Component {
           />
         </FormGroup>
 
-          <h3> Pasirinkite balsavimo laikotarpį </h3>
-          <FormGroup>
-            <DateRangePicker
-                {...this.props}
-                onDatesChange={this.onDatesChange}
-                onFocusChange={this.onFocusChange}
-                focusedInput={focusedInput}
-                startDate={startDate}
-                endDate={endDate}
-            />
-          </FormGroup>
+        <h3> Pasirinkite balsavimo laikotarpį </h3>
+        <FormGroup>
+          <DateRangePicker
+            {...this.props}
+            onDatesChange={this.onDatesChange}
+            onFocusChange={this.onFocusChange}
+            focusedInput={focusedInput}
+            startDate={startDate}
+            endDate={endDate}
+            startDatePlaceholderText="Pradžia"
+            endDatePlaceholderText="Pabaiga"
+            monthFormat="YYYY MMMM"
+            showClearDates={true}
+          />
+        </FormGroup>
 
         <FormGroup>
           <ControlLabel>

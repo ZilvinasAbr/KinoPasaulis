@@ -1,9 +1,9 @@
 import React from 'react';
-import { Navbar, Nav, NavItem} from 'react-bootstrap';
-import { push } from 'react-router-redux';
-import { connect } from 'react-redux';
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import {push} from 'react-router-redux';
+import {connect} from 'react-redux';
 
-import { logout } from '../../../actions/account/logoutActions';
+import {logout} from '../../../actions/account/logoutActions';
 import LogoutButton from '../../common/LogoutButton';
 
 const VotesAdminNavigationBar = ({logout, changePageToHome, goToVotings, goToAddVoting, changePageToProfile}) => {
@@ -22,7 +22,7 @@ const VotesAdminNavigationBar = ({logout, changePageToHome, goToVotings, goToAdd
         </Nav>
         <Nav pullRight>
           <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
-          <LogoutButton onLogout={logout} eventKey={1} />
+          <LogoutButton onLogout={logout} eventKey={1}/>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

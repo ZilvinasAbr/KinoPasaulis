@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import {connect} from 'react-redux';
+import {push} from 'react-router-redux';
 import LoggedOfNavigationBar from '../../common/LoggedOfNavigationBar';
 import VotesAdminRegisterForm from './VotesAdminRegisterForm';
 import ErrorMessage from '../ErrorMessage';
-import { deleteErrorMessage } from '../../../actionCreators/registerLoginError';
+import {deleteErrorMessage} from '../../../actionCreators/registerLoginError';
 
 class VotesAdminRegisterPage extends React.Component {
   constructor(props) {

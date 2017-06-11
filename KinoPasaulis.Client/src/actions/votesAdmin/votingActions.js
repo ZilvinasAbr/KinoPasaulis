@@ -1,10 +1,5 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
-/*import {
-  receiveMovies,
-  removeMovie,
-  receiveMovieCreators
-} from '../../actionCreators';*/
 import request from 'superagent';
 
 export function addVoting
@@ -28,7 +23,6 @@ export function addVoting
             return;
           }
           if(res.body) {
-            console.log('successful addVoting');
             dispatch(push('/votesAdmin/votings'));
           }else {
             console.log('unsuccessful addVoting');
@@ -37,7 +31,7 @@ export function addVoting
   };
 }
 
-export function deleteMovie(id) {
+/*export function deleteMovie(id) {
   return dispatch => {
     axios.delete(`/api/movie/${id}`)
       .then(response => {
@@ -60,4 +54,4 @@ export function fetchMovieCreators() {
         console.log(error);
       })
   }
-}
+}*/

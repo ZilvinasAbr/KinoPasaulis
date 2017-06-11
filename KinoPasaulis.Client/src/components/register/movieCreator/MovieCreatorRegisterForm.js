@@ -1,7 +1,8 @@
 import React from 'react';
-import { reduxForm } from 'redux-form';
-import { registerMovieCreator } from '../../../actions/account/registerActions';
-import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import {reduxForm} from 'redux-form';
+import {registerMovieCreator} from '../../../actions/account/registerActions';
+import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import DatePicker from 'react-bootstrap-date-picker';
 
 class MovieCreatorRegisterForm extends React.Component {
   constructor(props) {
@@ -57,81 +58,86 @@ class MovieCreatorRegisterForm extends React.Component {
     } = this.props;
 
     return (
-          <div className="row">
+      <div className="row">
 
-            <FormGroup controlId="userName">
-              <ControlLabel>
-                Vartotojo vardas
-              </ControlLabel>
-              <FormControl type="text" placeholder="Vartotojo vardas" { ...userName } />
-            </FormGroup>
+        <FormGroup controlId="userName">
+          <ControlLabel>
+            Vartotojo vardas
+          </ControlLabel>
+          <FormControl type="text" placeholder="Vartotojo vardas" { ...userName } />
+        </FormGroup>
 
-            <FormGroup controlId="email">
-              <ControlLabel>
-                Elektroninis paštas
-              </ControlLabel>
-              <FormControl type="email" placeholder="El. paštas" { ...email } />
-            </FormGroup>
+        <FormGroup controlId="email">
+          <ControlLabel>
+            Elektroninis paštas
+          </ControlLabel>
+          <FormControl type="email" placeholder="El. paštas" { ...email } />
+        </FormGroup>
 
-            <FormGroup controlId="password">
-              <ControlLabel>
-                Slaptažodis
-              </ControlLabel>
-              <FormControl type="password" placeholder="Slaptažodis" { ...password } />
-            </FormGroup>
+        <FormGroup controlId="password">
+          <ControlLabel>
+            Slaptažodis
+          </ControlLabel>
+          <FormControl type="password" placeholder="Slaptažodis" { ...password } />
+        </FormGroup>
 
-            <FormGroup controlId="password">
-              <ControlLabel>
-                Pakartoti slaptažodį
-              </ControlLabel>
-              <FormControl type="password" placeholder="Pakartoti slaptažodį" { ...confirmPassword } />
-            </FormGroup>
+        <FormGroup controlId="password">
+          <ControlLabel>
+            Pakartoti slaptažodį
+          </ControlLabel>
+          <FormControl type="password" placeholder="Pakartoti slaptažodį" { ...confirmPassword } />
+        </FormGroup>
 
-            <FormGroup controlId="firstName">
-              <ControlLabel>
-                Vardas
-              </ControlLabel>
-              <FormControl type="text" placeholder="Vardas" { ...firstName } />
-            </FormGroup>
+        <FormGroup controlId="firstName">
+          <ControlLabel>
+            Vardas
+          </ControlLabel>
+          <FormControl type="text" placeholder="Vardas" { ...firstName } />
+        </FormGroup>
 
-            <FormGroup controlId="lastName">
-              <ControlLabel>
-                Pavardė
-              </ControlLabel>
-              <FormControl type="text" placeholder="Pavardė" { ...lastName } />
-            </FormGroup>
+        <FormGroup controlId="lastName">
+          <ControlLabel>
+            Pavardė
+          </ControlLabel>
+          <FormControl type="text" placeholder="Pavardė" { ...lastName } />
+        </FormGroup>
 
-            <FormGroup controlId="phone">
-              <ControlLabel>
-                Telefonas
-              </ControlLabel>
-              <FormControl type="text" placeholder="Telefonas" { ...phone } />
-            </FormGroup>
+        <FormGroup controlId="phone">
+          <ControlLabel>
+            Telefonas
+          </ControlLabel>
+          <FormControl type="text" placeholder="Telefonas" { ...phone } />
+        </FormGroup>
 
-            <FormGroup controlId="birthDate">
-              <ControlLabel>
-                Gimimo data
-              </ControlLabel>
-              <FormControl type="date" placeholder="Gimimo data" { ...birthDate } />
-            </FormGroup>
+        <FormGroup controlId="birthDate">
+          <ControlLabel>
+            Gimimo data1
+          </ControlLabel>
+          <DatePicker
+            dateFormat="YYYY-MM-DD"
+            dayLabels={['Sk', 'Pr', 'An', 'Tr', 'Kt', 'Pn', 'Št']}
+            weekStartsOnMonday={true}
+            monthLabels={['Sausis', 'Vasaris', 'Kovas', 'Balandis', 'Gegužė', 'Birželis', 'Liepa', 'Rugpjūtis', 'Rugsėjis', 'Spalis', 'Lapkritis', 'Gruodis']}
+            { ...birthDate } />
+        </FormGroup>
 
-            <FormGroup controlId="description">
-              <ControlLabel>
-                Aprašymas
-              </ControlLabel>
-              <FormControl componentClass="textarea" placeholder="Aprašymas" { ...description } />
-            </FormGroup>
+        <FormGroup controlId="description">
+          <ControlLabel>
+            Aprašymas
+          </ControlLabel>
+          <FormControl componentClass="textarea" placeholder="Aprašymas" { ...description } />
+        </FormGroup>
 
-              <FormGroup controlId="specialty">
-                  <ControlLabel>
-                      Specialybė
-                  </ControlLabel>
-                  <FormControl type="text" placeholder="Specialybė" { ...specialty } />
-              </FormGroup>
+        <FormGroup controlId="specialty">
+          <ControlLabel>
+            Specialybė
+          </ControlLabel>
+          <FormControl type="text" placeholder="Specialybė" { ...specialty } />
+        </FormGroup>
 
-            <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}>Registruotis</Button>
+        <Button bsStyle="primary" bsSize="large" onClick={this.handleSubmit}>Registruotis</Button>
 
-          </div>
+      </div>
     );
   }
 }

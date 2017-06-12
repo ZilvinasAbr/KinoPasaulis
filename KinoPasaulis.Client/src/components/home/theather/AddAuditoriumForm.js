@@ -27,7 +27,7 @@ class AddAuditoriumForm extends React.Component {
             </FormGroup>
 
             <FormGroup>
-              <FormControl type="number" placeholder="Vietu skaicius" { ...seats } />
+              <FormControl type="number" placeholder="Vietų skaičius" { ...seats } />
             </FormGroup>
 
             <FormGroup>

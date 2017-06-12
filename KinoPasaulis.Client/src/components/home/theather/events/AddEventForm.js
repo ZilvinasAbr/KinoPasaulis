@@ -168,7 +168,7 @@ class AddEventForm extends React.Component {
           <h3> Pasirinkite norimas auditorijas </h3>
           <Row> {this.renderAuditoriums()} </Row>
           <Row>
-            <h3> Pasirinkite norima rodymo laikotarpi </h3>
+            <h3> Pasirinkite norimą rodymo laikotarpį </h3>
             <FormGroup>
               <DateRangePicker
                 {...this.props}
@@ -180,7 +180,7 @@ class AddEventForm extends React.Component {
               />
             </FormGroup>
           </Row>
-          <h3> Pasirinkite filma </h3>
+          <h3> Pasirinkite filmą </h3>
           <Autosuggest
             suggestions={suggestions}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}

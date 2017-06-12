@@ -123,7 +123,7 @@ class Auditoriums extends React.Component {
 }
 
 const addNewForm = (
-  <Popover id="popover-positioned-left" title="Prideti nauja auditorija">
+  <Popover id="popover-positioned-left" title="Pridėti naują auditoriją">
     <AddAuditoriumForm/>
   </Popover>
 );

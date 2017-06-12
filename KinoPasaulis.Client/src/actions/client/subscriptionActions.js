@@ -16,7 +16,7 @@ export function getSubscriptions() {
         dispatch(receiveSubscriptions(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -32,12 +32,11 @@ export function addSubscription(id) {
       }
     })
       .then(response => {
-        console.log('success');
         alert('Sėkmingai užprenumeravote teatrą!');
         dispatch(push('/home'));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -53,12 +52,11 @@ export function removeSubscription(id) {
       }
     })
       .then(response => {
-        console.log('success');
         alert('Sėkmingai atšaukėte prenumeratą!');
         dispatch(push('/home'));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -72,7 +70,7 @@ export function isSubscribedToTheather(id) {
         dispatch(receiveSubscribed(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }

@@ -16,15 +16,12 @@ export function addAuditorium(name, seats) {
     })
       .then(response => {
         if(response.data === true) {
-          console.log('success');
           dispatch(addAuditoriumToAuditoriums({name, seats}));
           dispatch(getAuditoriums());
-        }else {
-          console.log('response.data returned false')
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -38,7 +35,7 @@ export function getAuditoriums() {
         dispatch(receiveShowAuditoriums(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }

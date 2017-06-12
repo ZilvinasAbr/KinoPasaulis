@@ -28,13 +28,12 @@ class MoviePage extends React.Component {
   componentDidMount() {
     axios.get(`/api/cinemaStudio/movie/${this.props.params.id}`)
       .then(response => {
-        console.log(response.data);
         this.setState({
           movie: response.data
         });
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 

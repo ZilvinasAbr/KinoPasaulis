@@ -59,7 +59,7 @@ class PendingMoviesPage extends React.Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
         alert("Įvyko klaida.");
       })
   }
@@ -73,7 +73,7 @@ class PendingMoviesPage extends React.Component {
         })
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 

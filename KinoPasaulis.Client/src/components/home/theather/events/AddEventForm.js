@@ -146,8 +146,6 @@ class AddEventForm extends React.Component {
   }
 
   onDatesChange({ startDate, endDate }) {
-    console.log(startDate);
-    console.log(endDate);
     this.setState({ startDate: startDate, endDate: endDate });
   }
 

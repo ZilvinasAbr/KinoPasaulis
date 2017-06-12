@@ -71,8 +71,6 @@ class AddMovieForm extends React.Component {
   }
 
   onImageDrop(files) {
-    console.log('Received files:', files);
-
     this.setState({
       droppedFiles: [ ...this.state.droppedFiles, ...files],
       imageTitles: [...this.state.imageTitles, ...files.map(() => '')],

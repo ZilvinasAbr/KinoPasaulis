@@ -28,7 +28,7 @@ class Voting extends React.Component {
           });
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
 
     axios.get(`/api/client/isVoted`)
@@ -38,7 +38,7 @@ class Voting extends React.Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -57,7 +57,7 @@ class Voting extends React.Component {
                 });
               })
               .catch(error => {
-                console.log(error);
+                console.error(error);
               });
 			window.location.reload();
           } else {
@@ -65,7 +65,7 @@ class Voting extends React.Component {
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         })
   }
 

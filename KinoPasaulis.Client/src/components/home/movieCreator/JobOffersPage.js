@@ -40,7 +40,7 @@ class JobOffersPage extends React.Component {
         })
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
 
     axios.get('/api/cinemaStudio/specialties')
@@ -50,7 +50,7 @@ class JobOffersPage extends React.Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -179,7 +179,7 @@ class JobOffersPage extends React.Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 

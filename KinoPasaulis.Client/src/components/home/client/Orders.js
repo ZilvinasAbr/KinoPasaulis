@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import axios from 'axios';
-import { Table } from 'react-bootstrap';
+import { Table, Col } from 'react-bootstrap';
 import moment from 'moment';
 
 import NavigationBar from '../../../components/common/NavigationBar';
@@ -47,36 +47,38 @@ class Orders extends React.Component {
     return (
       <div>
         <NavigationBar/>
-        <Table striped bordered condensed hover>
-          <thead>
-            <tr>
-              <td>
-                Užsakymo data
-              </td>
-              <td>
-                Kino teatras
-              </td>
-              <td>
-                Salė
-              </td>
-              <td>
-                Filmas
-              </td>
-              <td>
-                Seanso pradžios data
-              </td>
-              <td>
-                Bilietų kiekis
-              </td>
-              <td>
-                Kaina
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-          {this.renderOrders()}
-          </tbody>
-        </Table>
+		<Col md={12}>
+          <Table striped bordered condensed hover>
+            <thead>
+              <tr>
+                <td>
+                  Užsakymo data
+                </td>
+                <td>
+                  Kino teatras
+                </td>
+                <td>
+                  Salė
+                </td>
+                <td>
+                  Filmas
+                </td>
+                <td>
+                  Seanso pradžios data
+                </td>
+                <td>
+                  Bilietų kiekis
+                </td>
+                <td>
+                  Kaina
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+            {this.renderOrders()}
+            </tbody>
+          </Table>
+		</Col>
       </div>
     );
   }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Table, Col } from 'react-bootstrap';
 import VotingTable from './VotingTable';
+import moment from 'moment';
 
 import NavigationBar from '../../../components/common/NavigationBar';
 
@@ -58,6 +59,7 @@ class Voting extends React.Component {
               .catch(error => {
                 console.log(error);
               });
+			window.location.reload();
           } else {
             alert('Pasirinkite įvertinimą');
           }
@@ -82,6 +84,7 @@ class Voting extends React.Component {
     return votes.map((vote, index) => {
       return <tr key={index}>
         <td>{vote.voting.title}</td>
+		<td>{moment(vote.voteChangedOn).format('YYYY/MM/DD HH:mm:ss')}</td>
         <td>{vote.movieCreator.firstName} {vote.movieCreator.lastName}</td>
       </tr>
     });
@@ -91,11 +94,12 @@ class Voting extends React.Component {
     return (
       <div>
         <NavigationBar/>
-        <Col md={5}><h3>Mano balsai</h3>
+        <Col md={6}><h3>Mano balsai</h3>
           <Table striped bordered condensed hover>
             <thead>
             <tr>
               <td>Balsavimas</td>
+			  <td>Balsavimo data</td>
               <td>Pasirinkimas</td>
             </tr>
             </thead>
@@ -104,7 +108,7 @@ class Voting extends React.Component {
             </tbody>
           </Table>
         </Col>
-        <Col md={5}>
+        <Col md={6}>
         {this.state.votings.map((voting, index) =>
           <VotingTable
             key={index}

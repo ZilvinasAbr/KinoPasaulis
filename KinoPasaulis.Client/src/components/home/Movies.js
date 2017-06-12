@@ -46,7 +46,6 @@ class Movies extends React.Component {
 
   renderMovies() {
     let movies = this.state.movies;
-    console.log(movies);
     return movies
       .filter(movie => movie.title.toLowerCase().indexOf(this.state.query.toLowerCase()) >= 0)
       .map((movie, index) => {

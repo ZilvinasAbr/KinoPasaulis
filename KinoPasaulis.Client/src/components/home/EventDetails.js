@@ -36,7 +36,7 @@ class EventDetails extends React.Component {
                 });
             })
             .catch(error => {
-              console.log(error);
+              console.error(error);
             });
           this.props.getEvent(this.props.params.id);
         } else {
@@ -44,7 +44,7 @@ class EventDetails extends React.Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 
@@ -58,7 +58,7 @@ class EventDetails extends React.Component {
           });
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
 
     this.props.getEvent(this.props.params.id);

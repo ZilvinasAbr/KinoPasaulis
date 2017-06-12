@@ -16,7 +16,7 @@ export function receiveSubscribers() {
                 dispatch(receiveTheaterSubscribers(response.data));
             })
             .catch(error => {
-                console.log(error);
+                console.error(error);
             })
     }
 }
@@ -35,6 +35,6 @@ export function sendAnnouncement(subscribers, message) {
         })
         .catch(error => {
           alert('Operacija nesėkminga')
-          console.log(error);
+          console.error(error);
         })
 }

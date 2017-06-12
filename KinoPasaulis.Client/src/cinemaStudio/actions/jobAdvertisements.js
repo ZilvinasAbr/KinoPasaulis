@@ -30,7 +30,7 @@ export function addJobAdvertisement(
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 }
@@ -42,7 +42,7 @@ export function fetchSpecialties() {
         dispatch(receiveSpecialties(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   };
 }
@@ -54,7 +54,7 @@ export function fetchJobAdvertisements() {
         dispatch(receiveJobAdvertisements(response.data))
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   };
 }
@@ -68,7 +68,7 @@ export function deleteJobAdvertisement(id) {
       })
       .catch(error => {
         alert('Nepavyko pašalinti darbo skelbimo');
-        console.log(error);
+        console.error(error);
       });
   };
 }

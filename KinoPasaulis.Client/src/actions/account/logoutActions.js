@@ -8,7 +8,7 @@ export function logout() {
           dispatch(push('/'));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 }

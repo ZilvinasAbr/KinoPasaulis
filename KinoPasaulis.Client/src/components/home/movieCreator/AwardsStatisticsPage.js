@@ -22,7 +22,7 @@ class AwardsStatisticsPage extends React.Component {
         })
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 

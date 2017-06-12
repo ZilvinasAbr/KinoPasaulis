@@ -61,7 +61,6 @@ class EditMovieForm extends React.Component {
   componentDidMount() {
     axios.get(`/api/cinemaStudio/movie/${this.props.movieId}`)
       .then(response => {
-        console.log(response.data);
         const responseMovie = response.data;
         this.setState({
           title: responseMovie.title,
@@ -79,7 +78,7 @@ class EditMovieForm extends React.Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
     this.props.dispatch(fetchMovieCreators());
   }

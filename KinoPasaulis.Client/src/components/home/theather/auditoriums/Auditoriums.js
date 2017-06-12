@@ -27,10 +27,8 @@ class Auditoriums extends React.Component {
   }
 
   assignAuditorium(arrayIndex) {
-    console.log(arrayIndex);
     let auditorium = this.props.auditoriums[arrayIndex];
     this.setState({editAuditorium: auditorium});
-    console.log(this.state.editAuditorium);
   }
 
   _closeModal() {

@@ -27,7 +27,7 @@ class Votings extends React.Component {
 
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
           alert("Balsavimas nebuvo pašalintas.");
         })
     }
@@ -42,7 +42,7 @@ class Votings extends React.Component {
         })
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 

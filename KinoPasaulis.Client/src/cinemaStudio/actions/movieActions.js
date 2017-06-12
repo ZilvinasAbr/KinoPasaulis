@@ -20,7 +20,7 @@ export function fetchMovies(query = '') {
         dispatch(receiveMovies(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 }
@@ -32,7 +32,7 @@ export function fetchCinemaStudioMovies() {
         dispatch(receiveMovies(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -76,14 +76,11 @@ export function addMovie
         .end((err, res) => {
           if(err) {
             alert(res.body);
-            console.log(err);
+            console.error(err);
             return;
           }
           if(res.body) {
-            console.log('successful addMovie');
             dispatch(push('/cinemaStudio/movies'));
-          }else {
-            console.log('unsuccessful addMovie');
           }
         });
       return;
@@ -117,14 +114,11 @@ export function addMovie
           })
           .end((err, res) => {
             if(err) {
-              console.log(err);
+              console.error(err);
               return;
             }
             if(res.body) {
-              console.log('successful addMovie');
               dispatch(push('/cinemaStudio/movies'));
-            }else {
-              console.log('unsuccessful addMovie');
             }
           });
       }
@@ -141,7 +135,7 @@ export function deleteMovie(id) {
       })
       .catch(error => {
         alert('Nepavyko pašalinti filmo: filmas jau naudojamas sistemoje');
-        console.log(error);
+        console.error(error);
       })
   };
 }
@@ -178,7 +172,7 @@ export function editMovie(
       .end((err, res) => {
         if(err) {
           alert(res.body);
-          console.log(err);
+          console.error(err);
           return;
         }
         if(res.body) {
@@ -198,7 +192,7 @@ export function fetchMovieCreators() {
         dispatch(receiveMovieCreators(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }

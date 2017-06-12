@@ -39,7 +39,7 @@ class MoviesDetail extends React.Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
 
     axios.get(`/api/client/isRatedMovie/?id=` + this.props.params.id)
@@ -51,7 +51,7 @@ class MoviesDetail extends React.Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -81,14 +81,14 @@ class MoviesDetail extends React.Component {
               });
             })
             .catch(error => {
-              console.log(error);
+              console.error(error);
             });
         } else {
           alert('Pasirinkite įvertinimą')
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 
@@ -108,14 +108,14 @@ class MoviesDetail extends React.Component {
               });
             })
             .catch(error => {
-              console.log(error);
+              console.error(error);
             });
         } else {
           alert('Pasirinkite įvertinimą')
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 

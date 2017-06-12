@@ -32,7 +32,7 @@ class EventDetails extends React.Component {
           });
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
 
     this.props.getEvent(this.props.params.id);
@@ -75,7 +75,6 @@ class EventDetails extends React.Component {
     for(let i = 0; i<order.length; i++) {
       seatsOrdered += order[i].amount;
     }
-    console.log(seatsOrdered);
     return seatsOrdered;
   }
 
@@ -94,8 +93,6 @@ class EventDetails extends React.Component {
     {
       return `Įvykis dar neprasidėjęs.`;
     }
-
-    console.log(stats);
   }
 
   renderEditDeleteButtons(showOver, showId, index) {

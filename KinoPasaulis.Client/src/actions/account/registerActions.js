@@ -24,7 +24,7 @@ export function registerTheather(userName, password, confirmPassword, city, addr
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -61,7 +61,7 @@ export function registerCinemaStudio(
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 }
@@ -100,7 +100,7 @@ export function registerMovieCreator(
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 }
@@ -133,7 +133,7 @@ export function registerVotesAdmin(
           }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         });
   }
 }
@@ -168,7 +168,7 @@ export function registerClient(
         }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 }

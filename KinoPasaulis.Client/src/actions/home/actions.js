@@ -14,7 +14,7 @@ export function fetchUserData() {
         dispatch(receiveUserData(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 }

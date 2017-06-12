@@ -19,30 +19,24 @@ export function addEvent(movie, times, startTime, endTime, auditoriums) {
       AuditoriumIds: auditoriums
     })
       .then(response => {
-          console.log('success');
           alert('Įvykis sėkmingai sukurtas');
           dispatch(push('/theather/events'));
-          //dispatch(addEventToReducer({name, seats}));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
         alert('Įvykio nesukurtas. Patikrinkite įvestus duomenis');
       })
   }
 }
 
 export function getStatistics(id) {
-  console.log(id);
   return dispatch => {
-    console.log(id);
     return axios.get('/api/theathers/statistics?id=' + id)
       .then(response => {
-        console.log(response);
-        console.log('success');
         dispatch(getSeatStatistics(response.data))
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -56,7 +50,7 @@ export function getEvents() {
         dispatch(receiveShowEvents(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -70,7 +64,7 @@ export function getEventsById(id) {
         dispatch(receiveShowEvents(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -83,7 +77,7 @@ export function getEventById(id) {
         dispatch(receiveOneEvent(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -102,7 +96,7 @@ export function deleteShowById(id, arrayId) {
       dispatch(deleteOneShow(arrayId));
     })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 }

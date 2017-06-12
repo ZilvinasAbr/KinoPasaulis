@@ -14,7 +14,7 @@ export function getTheathers() {
         dispatch(receiveTheathers(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
@@ -27,7 +27,7 @@ export function getTheatherById(id) {
         dispatch(receiveOneTheather(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }

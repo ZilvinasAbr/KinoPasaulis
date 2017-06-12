@@ -12,7 +12,7 @@ export function fetchCinemaStudioStatistics() {
         dispatch(receiveCinemaStudiosStatistics(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 }
@@ -24,7 +24,7 @@ export function fetchCinemaStudiosMoviesStatistics() {
         dispatch(receiveCinemaStudiosMoviesStatistics(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 }

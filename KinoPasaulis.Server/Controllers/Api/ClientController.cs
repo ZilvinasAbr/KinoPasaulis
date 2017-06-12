@@ -204,6 +204,8 @@ namespace KinoPasaulis.Server.Controllers.Api
         {
             if (_signInManager.IsSignedIn(User))
             {
+                if (voteModel == null)
+                    return Ok(false);
                 var userId = HttpContext.User.GetUserId();
                 var client = _userService.GetClientByUserId(userId);
                 var clientVotes = _clientService.GetVotes(client.Id);

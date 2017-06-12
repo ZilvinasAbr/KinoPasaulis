@@ -182,7 +182,7 @@ class AddEventForm extends React.Component {
               />
             </FormGroup>
           </Row>
-          <h3> Pasirinkite filma </h3>
+          <h3> Pasirinkite filmą </h3>
           <Autosuggest
             suggestions={suggestions}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}

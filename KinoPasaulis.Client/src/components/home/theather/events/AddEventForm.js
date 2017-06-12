@@ -156,9 +156,14 @@ class AddEventForm extends React.Component {
   }
 
   render() {
+    moment.locale("lt");
     const {fields: {title, seats} } = this.props;
     const { focusedInput, startDate, endDate } = this.state;
     const { value, suggestions } = this.state;
+    const inputPropsTag = {
+      className: 'react-tagsinput-input',
+      placeholder: 'Laikai'
+    }
     const inputProps = {
       placeholder: 'Įveskite filmą',
       value,
@@ -179,6 +184,10 @@ class AddEventForm extends React.Component {
                 focusedInput={focusedInput}
                 startDate={startDate}
                 endDate={endDate}
+                startDatePlaceholderText="Pradžia"
+                endDatePlaceholderText="Pabaiga"
+                monthFormat="YYYY MMMM"
+                showClearDates={true}
               />
             </FormGroup>
           </Row>
@@ -193,7 +202,7 @@ class AddEventForm extends React.Component {
           />
           <Row>
             <h3> Pasirinkite seansų laikus </h3>
-            <TagsInput value={this.state.showTimes} onChange={this.handleChange} />
+            <TagsInput inputProps={inputPropsTag} value={this.state.showTimes} onChange={this.handleChange} />
           </Row>
           <FormGroup>
             <Button bsStyle="primary" onClick={this.handleSubmit}> Patvirtinti </Button>
@@ -209,9 +218,9 @@ AddEventForm.propTypes = {
   handleSubmit: React.PropTypes.func.isRequired
 };
 
-const config = { // <----- THIS IS THE IMPORTANT PART!
-  form: 'addEvent',                   // a unique name for this form
-  fields: [] // all the fields in your form
+const config = {
+  form: 'addEvent',
+  fields: []
 };
 
 export default reduxForm(config)(AddEventForm);

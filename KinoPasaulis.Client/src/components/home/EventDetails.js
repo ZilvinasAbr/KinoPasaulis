@@ -109,8 +109,7 @@ class EventDetails extends React.Component {
             <h1>{this.props.movie.title}</h1>
             <p> {this.props.movie.description} </p>
             Rodymo laikotarpis:
-            {moment(this.props.event.startTime).format('YYYY/MM/DD')} -
-            {moment(this.props.event.endTime).format('YYYY/MM/DD')}
+            {moment(this.props.event.startTime).format('YYYY-MM-DD')} - {moment(this.props.event.endTime).format('YYYY-MM-DD')}
             <hr/>
           </Col>
           <Col md={7}>

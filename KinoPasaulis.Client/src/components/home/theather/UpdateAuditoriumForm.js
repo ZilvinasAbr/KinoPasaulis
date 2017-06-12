@@ -26,7 +26,7 @@ class UpdateAuditoriumForm extends React.Component {
           </FormGroup>
 
           <FormGroup>
-            <FormControl type="number" placeholder="Vietu skaicius" { ...seats } />
+            <FormControl type="number" placeholder="Vietų skaičius" { ...seats } />
           </FormGroup>
 
           <FormGroup>
@@ -43,9 +43,9 @@ UpdateAuditoriumForm.propTypes = {
   handleSubmit: React.PropTypes.func.isRequired
 };
 
-const config = { // <----- THIS IS THE IMPORTANT PART!
-  form: 'updateAuditorium',                   // a unique name for this form
-  fields: ['id', 'title', 'seats'] // all the fields in your form
+const config = {
+  form: 'updateAuditorium',
+  fields: ['id', 'title', 'seats']
 };
 
 export default reduxForm(config)(UpdateAuditoriumForm);

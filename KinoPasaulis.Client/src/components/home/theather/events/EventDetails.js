@@ -87,12 +87,12 @@ class EventDetails extends React.Component {
     }
     else if(stats.showingNow == true)
     {
-      return `Įvykis prasidėjas ir nepasibaigęs. Nuo rodymo pradžios praėjo ${moment(stats.time).format('D')} diena`;
+      return `Įvykis prasidėjęs ir nepasibaigęs. Nuo rodymo pradžios praėjo ${moment(stats.time).format('D')} diena`;
     }
 
     else if(stats.showingNow == false && stats.over == false)
     {
-      return `Įvykis dar neprasidėjas.`;
+      return `Įvykis dar neprasidėjęs.`;
     }
 
     console.log(stats);
@@ -117,7 +117,7 @@ class EventDetails extends React.Component {
     return shows.map((show, index) => {
       var now = new Date();
       let showOver = null;
-      if(moment(show.startTime).format('YYYY/MM/DD HH:MM') < moment(now).format('YYYY/MM/DD HH:mm'))
+      if(moment(show.startTime).format('YYYY-MM-DD HH:MM') < moment(now).format('YYYY-MM-DD HH:mm'))
       {
         showOver = "showOver";
       }
@@ -127,7 +127,7 @@ class EventDetails extends React.Component {
             <p> Auditorijos pavadinimas: {show.auditorium.name} </p>
             <p> Vietų skaičius: {show.auditorium.seats} </p>
             <p> Užimta vietų: {this.getOrdersCount(show.orders)}</p>
-            <p> Seanso pradžia: {moment(show.startTime).format('YYYY/MM/DD HH:mm')}</p>
+            <p> Seanso pradžia: {moment(show.startTime).format('YYYY-MM-DD HH:mm')}</p>
             <p> Užsakymų skaičius: {show.orders.length} </p>
           </Well>
         </Col>
@@ -149,9 +149,7 @@ class EventDetails extends React.Component {
           <Col md={5}>
             <h1>{this.props.movie.title}</h1>
             <p> {this.props.movie.description} </p>
-            Rodymo laikotarpis:
-            {moment(this.props.event.startTime).format('YYYY/MM/DD')} -
-            {moment(this.props.event.endTime).format('YYYY/MM/DD')}
+            Rodymo laikotarpis: {moment(this.props.event.startTime).format('YYYY-MM-DD')} - {moment(this.props.event.endTime).format('YYYY-MM-DD')}
             <hr/>
             <Button bsStyle="primary" onClick={this.open.bind(this)}> Rodyti statistiką </Button>
           </Col>
@@ -180,27 +178,9 @@ class EventDetails extends React.Component {
             <br/>
             {this.renderDate(this.props.statistics)}
 
-
           </Modal.Body>
           <Modal.Footer>
             <Button bsStyle="danger" onClick={this.close.bind(this)}>Uždaryti</Button>
-          </Modal.Footer>
-        </Modal>
-
-        <Modal
-          show={this.state.modalOpen}
-          container={this}
-          aria-labelledby="contained-modal-title"
-        >
-          <Modal.Header>
-            <Modal.Title id="contained-modal-title">Show is about to be deleted</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Proceed?
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.deleteShow.bind(this)} bsStyle="danger">Delete</Button>
-            <Button onClick={this._closeModal.bind(this)}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>

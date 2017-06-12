@@ -43,6 +43,8 @@ class MessagesPage extends React.Component {
                 <thead>
                 <tr>
                   <th>Siuntėjas</th>
+                  <th>El. paštas</th>
+                  <th>Telefono numeris</th>
                   <th>Išsiuntimo laikas</th>
                   <th>Tekstas</th>
                 </tr>
@@ -52,6 +54,8 @@ class MessagesPage extends React.Component {
                   this.state.messages.map((message, index) => (
                     <tr key={index}>
                       <td>{`${message.movieCreator.firstName} ${message.movieCreator.lastName}`}</td>
+                      <td>{message.movieCreator.email}</td>
+                      <td>{message.movieCreator.phone}</td>
                       <td>{moment(message.sentAt).format('YYYY-MM-D HH:mm')}</td>
                       <td>{message.text}</td>
                     </tr>

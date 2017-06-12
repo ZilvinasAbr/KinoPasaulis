@@ -26,7 +26,6 @@ class EventDetails extends React.Component {
     })
       .then(response => {
         if (response.data == true) {
-          console.log('success');
           alert("Sėkmingai užsisakėte bilietą");
           axios.get('/api/theathers/ThisWeekShows?eventId=' + this.props.params.id)
             .then(response => {
@@ -42,7 +41,6 @@ class EventDetails extends React.Component {
           this.props.getEvent(this.props.params.id);
         } else {
           alert('Pasirinktas blogas bilietų kiekis');
-          console.log('response.data returned false');
         }
       })
       .catch(error => {

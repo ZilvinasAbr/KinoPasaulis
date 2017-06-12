@@ -21,7 +21,6 @@ const VotesAdminNavigationBar = ({logout, changePageToHome, goToVotings, goToAdd
           <NavItem eventKey={2} onClick={goToAddVoting}> Kurti balsavimą </NavItem>
         </Nav>
         <Nav pullRight>
-          <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
           <LogoutButton onLogout={logout} eventKey={1}/>
         </Nav>
       </Navbar.Collapse>

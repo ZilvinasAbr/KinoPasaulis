@@ -58,7 +58,6 @@ const CinemaStudioNavigationBar = ({
           </NavItem>
         </Nav>
         <Nav pullRight>
-          <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
           <LogoutButton
             onLogout={logout}
             eventKey={1}

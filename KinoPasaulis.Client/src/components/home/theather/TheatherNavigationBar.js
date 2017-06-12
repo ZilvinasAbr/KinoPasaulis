@@ -18,7 +18,6 @@ const TheatherNavigationBar = ({logout, changePageToHome, goToAuditoriums, goToE
           <NavItem eventKey={3} onClick={goToSubscriptions}> Prenumeratos </NavItem>
         </Nav>
         <Nav pullRight>
-          <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
           <LogoutButton
             onLogout={logout}
             eventKey={1}

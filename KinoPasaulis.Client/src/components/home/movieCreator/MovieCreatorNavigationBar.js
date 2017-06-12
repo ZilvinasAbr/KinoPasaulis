@@ -23,7 +23,6 @@ const MovieCreatorNavigationBar = ({logout, changePageToHome, goToTaggedMovies, 
           <NavItem eventKey={3} onClick={goToAwardsStatistics}> Apdovanojimų statistika </NavItem>
         </Nav>
         <Nav pullRight>
-          <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
           <LogoutButton onLogout={logout} eventKey={1}/>
         </Nav>
       </Navbar.Collapse>

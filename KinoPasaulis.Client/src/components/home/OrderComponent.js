@@ -22,7 +22,6 @@ class OrderComponent extends React.Component {
     for(let i = 0; i<order.length; i++) {
       seatsOrdered += order[i].amount;
     }
-    /*console.log(seatsOrdered);*/
     return seatsOrdered;
   }
 

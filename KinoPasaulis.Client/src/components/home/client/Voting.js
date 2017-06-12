@@ -32,7 +32,6 @@ class Voting extends React.Component {
 
     axios.get(`/api/client/isVoted`)
       .then(response => {
-        console.log(response.data);
         this.setState({
           voted: response.data,
         });
@@ -50,10 +49,8 @@ class Voting extends React.Component {
         .then(response => {
           if (response.data == true) {
             alert('Ačiū už balsą!');
-            console.log('success');
             axios.get(`/api/client/isVoted`)
               .then(response => {
-                console.log(response.data);
                 this.setState({
                   voted: response.data,
                 });
@@ -63,7 +60,6 @@ class Voting extends React.Component {
               });
           } else {
             alert('Pasirinkite įvertinimą');
-            console.log('response.data returned false');
           }
         })
         .catch(error => {

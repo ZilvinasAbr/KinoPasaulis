@@ -29,7 +29,6 @@ const ClientNavigationBar = ({logout, changePageToHome, goToMovies, changePageTo
           <NavItem eventKey={1} onClick={goToMovies}> Filmai </NavItem>
         </Nav>
         <Nav pullRight>
-          <NavItem eventKey={1} onClick={changePageToProfile}>Profilis</NavItem>
           <LogoutButton
             onLogout={logout}
             eventKey={1}
@@ -69,11 +68,11 @@ function mapDispatchToProps(dispatch) {
     },
 
     goToOrders: () => {
-      dispatch(push('client/orders'));
+      dispatch(push('/client/orders'));
     },
 
     goToVoting: () => {
-      dispatch(push('client/voting'));
+      dispatch(push('/client/voting'));
     },
 
     logout: () => {

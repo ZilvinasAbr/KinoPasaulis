@@ -74,7 +74,6 @@ class MoviesDetail extends React.Component {
       .then(response => {
         if (response.data == true) {
           alert('Įvertinote filmą');
-          console.log('success');
           axios.get(`/api/client/getMovie/?id=` + this.props.params.id)
             .then(response => {
               this.setState({
@@ -86,7 +85,6 @@ class MoviesDetail extends React.Component {
             });
         } else {
           alert('Pasirinkite įvertinimą')
-          console.log('response.data returned false');
         }
       })
       .catch(error => {
@@ -103,7 +101,6 @@ class MoviesDetail extends React.Component {
       .then(response => {
         if (response.data == true) {
           alert('Įvertinote filmą');
-          console.log('success');
           axios.get(`/api/client/getMovie/?id=` + this.props.params.id)
             .then(response => {
               this.setState({
@@ -115,7 +112,6 @@ class MoviesDetail extends React.Component {
             });
         } else {
           alert('Pasirinkite įvertinimą')
-          console.log('response.data returned false');
         }
       })
       .catch(error => {
@@ -193,7 +189,7 @@ class MoviesDetail extends React.Component {
         <tbody>
         <tr>
           <td><h3>Filmo vidutinis įvertinimas: </h3></td>
-          <td><h3>{average}</h3></td>
+          <td><h3>{Math.round(average * 100) / 100}</h3></td>
         </tr>
         </tbody>
       </Table>
@@ -228,7 +224,7 @@ class MoviesDetail extends React.Component {
 
           <Row>
             <Col xs={10} xsOffset={1} sm={8} smOffset={2} md={6} mdOffset={3} lg={8} lgOffset={2}>
-              <h3>Prie filmo prisidėję filmų kūrėjai:</h3>
+              <h3>Prie filmo prisidėję kino kūrėjai:</h3>
             </Col>
             <Col xs={10} xsOffset={1} sm={8} smOffset={2} md={6} mdOffset={3} lg={8} lgOffset={2}>
               <MovieCreatorsTable

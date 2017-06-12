@@ -14,7 +14,7 @@ const TheatherNavigationBar = ({logout, changePageToHome, goToAuditoriums, goToE
       <Navbar.Collapse>
         <Nav pullLeft>
           <NavItem eventKey={1} onClick={goToAuditoriums}> Auditorijos </NavItem>
-          <NavItem eventKey={2} onClick={goToEvents}> Ivykiai </NavItem>
+          <NavItem eventKey={2} onClick={goToEvents}> Įvykiai </NavItem>
           <NavItem eventKey={3} onClick={goToSubscriptions}> Prenumeratos </NavItem>
         </Nav>
         <Nav pullRight>

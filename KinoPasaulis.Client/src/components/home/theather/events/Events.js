@@ -36,7 +36,7 @@ class Events extends React.Component {
             <h2> {event.movie.title} </h2>
             {moment(event.startTime).format('YYYY/MM/DD')} -
             {moment(event.endTime).format('YYYY/MM/DD')}
-            <a className="btn btn-primary" onClick={this.props.goToEventDetails.bind(this, event.id)}> Details </a>
+            <a className="btn btn-primary" onClick={this.props.goToEventDetails.bind(this, event.id)}> Detaliau </a>
           </Well>
         </Col>
       </div>

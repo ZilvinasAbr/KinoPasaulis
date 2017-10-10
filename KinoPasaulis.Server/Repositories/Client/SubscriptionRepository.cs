@@ -4,7 +4,6 @@ using System.Linq;
 using KinoPasaulis.Server.Data;
 using KinoPasaulis.Server.Models;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Versioning;
 
 namespace KinoPasaulis.Server.Repositories.Client
 {

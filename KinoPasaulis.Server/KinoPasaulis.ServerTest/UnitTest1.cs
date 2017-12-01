@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace KinoPasaulis.ServerTests
+namespace KinoPasaulis.ServerTest
 {
     public class UnitTest1
     {

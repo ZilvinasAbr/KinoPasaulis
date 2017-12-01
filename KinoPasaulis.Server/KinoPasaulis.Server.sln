@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KinoPasaulis.Server", "KinoPasaulis.Server\KinoPasaulis.Server.csproj", "{FDD22FF0-8B45-45CD-A613-3AE35B3F18DE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KinoPasaulisServerTest", "KinoPasaulisServerTest\KinoPasaulisServerTest.csproj", "{BD871670-4A4D-491E-8E45-E5D9AF94010F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FDD22FF0-8B45-45CD-A613-3AE35B3F18DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDD22FF0-8B45-45CD-A613-3AE35B3F18DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDD22FF0-8B45-45CD-A613-3AE35B3F18DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD871670-4A4D-491E-8E45-E5D9AF94010F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD871670-4A4D-491E-8E45-E5D9AF94010F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD871670-4A4D-491E-8E45-E5D9AF94010F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD871670-4A4D-491E-8E45-E5D9AF94010F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

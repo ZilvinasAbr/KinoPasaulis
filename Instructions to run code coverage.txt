@@ -1,0 +1,25 @@
+﻿https://docs.microsoft.com/en-us/visualstudio/test/create-unit-tests-menu Nepalaiko .NET Core
+
+install OpenCover
+install ReportGenerator
+
+C:\Users\Zilvinas\AppData\Local\Apps\OpenCover\OpenCover.Console.exe
+-target:"C:\Program Files\dotnet\dotnet.exe"
+-targetargs:"--lib C:\Users\Zilvinas\Desktop\KinoPasaulis\KinoPasaulis.Server\KinoPasaulis.ServerTest\bin\Debug\netcoreapp2.0\KinoPasaulis.ServerTest test"
+-output:coverage.xml
+-register:user
+-filter:"+[*]*
+-[xunit*]*"
+
+
+
+C:\Users\Zilvinas\AppData\Local\Apps\OpenCover\OpenCover.Console.exe \
+  -target:"c:\Program Files\dotnet\dotnet.exe" \
+  -targetargs:"test -f netcoreapp2.0 -c Release test/KinoPasaulis.ServerTest/KinoPasaulis.ServerTest.csproj" \
+  -mergeoutput \
+  -hideskipped:File \
+  -output:coverage/coverage.xml \
+  -oldStyle \
+  -filter:"+[KinoPasaulis.Server*]* -[KinoPasaulis.ServerTest*]*" \
+  -searchdirs:test/KinoPasaulis.ServerTest/bin/Release/netcoreapp2.0 \
+  -register:user

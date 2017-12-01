@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KinoPasaulis.Server", "KinoPasaulis.Server\KinoPasaulis.Server.csproj", "{FDD22FF0-8B45-45CD-A613-3AE35B3F18DE}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "KinoPasaulis.Server", "KinoPasaulis.Server.xproj", "{FDD22FF0-8B45-45CD-A613-3AE35B3F18DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,8 +18,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DE68795B-D310-41CB-83F1-B1374DE5D5E2}
 	EndGlobalSection
 EndGlobal

@@ -25,4 +25,4 @@ C:\Users\Zilvinas\AppData\Local\Apps\OpenCover\OpenCover.Console.exe \
   -register:user
 
 
-C:\Users\Zilvinas\AppData\Local\Apps\OpenCover\OpenCover.Console.exe -target:"c:\Program Files\dotnet\dotnet.exe" -targetargs:"test -f netcoreapp2.0 -c Release test/KinoPasaulis.ServerTest/KinoPasaulis.ServerTest.csproj" -mergeoutput -hideskipped:File -output:coverage/coverage.xml -oldStyle -filter:"+[KinoPasaulis.Server*]* -[KinoPasaulis.ServerTest*]*" -searchdirs:test/KinoPasaulis.ServerTest/bin/Release/netcoreapp2.0 -register:user
+C:\Users\Zilvinas\AppData\Local\Apps\OpenCover\OpenCover.Console.exe -target:"c:\Program Files\dotnet\dotnet.exe" -targetargs:"test -f netcoreapp2.0 -c Release test/KinoPasaulisServerTest/KinoPasaulisServerTest.csproj" -mergeoutput -hideskipped:File -output:coverage/coverage.xml -oldStyle -filter:"+[KinoPasaulis.Server*]* -[KinoPasaulisServerTest*]*" -searchdirs:test/KinoPasaulisServerTest/bin/Release/netcoreapp2.0 -register:user

@@ -67,6 +67,22 @@ namespace KinoPasaulisServerTest.Repositories.CinemaStudio
         }
 
         [Fact]
+        public void GetsMoviesByEmptyTitle()
+        {
+            var mockContext = GetApplicationDbContextMock();
+
+            var movieRepository = new MovieRepository(mockContext.Object);
+
+            var movies = movieRepository.GetMoviesByTitle("").ToList();
+
+            Assert.Equal(4, movies.Count);
+            Assert.Equal("Movie 1", movies[0].Title);
+            Assert.Equal("Movie 2", movies[1].Title);
+            Assert.Equal("Movie 3", movies[2].Title);
+            Assert.Equal("Another One", movies[3].Title);
+        }
+
+        [Fact]
         public void InsertsAMovie()
         {
             var mockContext = GetApplicationDbContextMock();
@@ -94,6 +110,19 @@ namespace KinoPasaulisServerTest.Repositories.CinemaStudio
             Assert.True(result);
             Assert.Null(mockContext.Object.Movies.SingleOrDefault(m => m.Id == 2));
             Assert.Equal(3, mockContext.Object.Movies.Count());
+        }
+
+        [Fact]
+        public void DoesNotDeleteWhenNotFound()
+        {
+            var mockContext = GetApplicationDbContextMock();
+
+            var movieRepository = new MovieRepository(mockContext.Object);
+
+            var result = movieRepository.DeleteMovie(10);
+
+            Assert.False(result);
+            Assert.Equal(4, mockContext.Object.Movies.Count());
         }
 
         [Fact]

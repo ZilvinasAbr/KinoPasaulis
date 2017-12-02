@@ -17,7 +17,7 @@ namespace KinoPasaulis.Server.Repositories.CinemaStudio
 
         public IEnumerable<Movie> GetMovies()
         {
-            throw new NotImplementedException();
+            return _dbContext.Movies.AsEnumerable();
         }
 
         public Movie GetMovieById(int movieId)
@@ -53,12 +53,22 @@ namespace KinoPasaulis.Server.Repositories.CinemaStudio
 
         public bool DeleteMovie(int movieId)
         {
-            throw new NotImplementedException();
+            var movie = GetMovieById(movieId);
+            
+            if (movie == null)
+            {
+                return false;
+            }
+
+            _dbContext.Movies.Remove(movie);
+            _dbContext.SaveChanges();
+
+            return true;
         }
 
         public void UpdateMovie(Movie movie)
         {
-            throw new NotImplementedException();
+            _dbContext.Movies.Update(movie);
         }
     }
 }

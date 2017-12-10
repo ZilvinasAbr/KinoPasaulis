@@ -65,6 +65,7 @@ namespace KinoPasaulis.Server.Repositories.Theather
             var shows = _context.Shows.Where(x => x.Event.Id == eventId);
 
             _context.Shows.RemoveRange(shows);
+            _context.SaveChanges();
         }
 
         #region IDisposable Support

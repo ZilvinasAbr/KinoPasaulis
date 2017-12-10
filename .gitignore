@@ -6,3 +6,7 @@ KinoPasaulis.Client/.idea/
 KinoPasaulis.Server/.vs/
 .idea/
 connectionString.txt
+Testavimas/SS/
+KinoPasaulis.Server/bin/
+KinoPasaulis.Server/obj/
+KinoPasaulis.Server/Backup/

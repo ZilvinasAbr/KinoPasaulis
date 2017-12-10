@@ -133,7 +133,10 @@ namespace KinoPasaulisServerTest.Repositories.Theather
             using (var context = new ApplicationDbContext(_options))
             {
                 var showRepository = new ShowRepository(context);
-                showRepository.DeleteShow(1);
+                var result = showRepository.DeleteShow(1);
+                var result2 = showRepository.DeleteShow(12);
+                Assert.True(result);
+                Assert.False(result2);
             }
 
             using (var context = new ApplicationDbContext(_options))

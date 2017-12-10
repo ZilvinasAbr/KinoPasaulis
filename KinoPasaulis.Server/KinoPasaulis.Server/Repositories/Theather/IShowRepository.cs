@@ -4,7 +4,7 @@ using KinoPasaulis.Server.Models;
 
 namespace KinoPasaulis.Server.Repositories.Theather
 {
-    public interface IShowRepository : IDisposable
+    public interface IShowRepository
     {
         IEnumerable<Show> GetEvents();
         Show GetShowById(int showId);

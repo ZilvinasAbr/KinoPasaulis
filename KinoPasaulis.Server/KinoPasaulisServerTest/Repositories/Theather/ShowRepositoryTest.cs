@@ -28,7 +28,7 @@ namespace KinoPasaulisServerTest.Repositories.Theather
             using (var context = new ApplicationDbContext(_options))
             {
                 var showRepository = new ShowRepository(context);
-                showRepository.InsertShow(new Show{StartTime = dateTime });
+                showRepository.InsertShow(new Show {StartTime = dateTime});
             }
 
             using (var context = new ApplicationDbContext(_options))
@@ -72,8 +72,8 @@ namespace KinoPasaulisServerTest.Repositories.Theather
 
             var mockEvents = new List<Show>
             {
-                new Show{StartTime = dateTime1},
-                new Show{StartTime = dateTime2}
+                new Show {StartTime = dateTime1},
+                new Show {StartTime = dateTime2}
             };
 
             using (var context = new ApplicationDbContext(_options))
@@ -99,8 +99,8 @@ namespace KinoPasaulisServerTest.Repositories.Theather
             using (var context = new ApplicationDbContext(_options))
             {
                 context.Shows.AddRange(
-                    new Show{Id = 1},
-                    new Show{Id = 2}
+                    new Show {Id = 1},
+                    new Show {Id = 2}
                 );
                 context.SaveChanges();
             }
@@ -124,8 +124,8 @@ namespace KinoPasaulisServerTest.Repositories.Theather
             using (var context = new ApplicationDbContext(_options))
             {
                 context.Shows.AddRange(
-                    new Show { Id = 1 },
-                    new Show { Id = 2 }
+                    new Show {Id = 1},
+                    new Show {Id = 2}
                 );
                 context.SaveChanges();
             }
@@ -148,8 +148,8 @@ namespace KinoPasaulisServerTest.Repositories.Theather
         {
             var mockEvents = new List<Event>
             {
-                new Event{Id = 1},
-                new Event{Id = 2}
+                new Event {Id = 1},
+                new Event {Id = 2}
             };
 
             var mockShows = new List<Show>
